@@ -1,0 +1,59 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>134c3a5a-d279-4fbc-a7e3-ddafcca61a7c</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>PythonLintFsm.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>PythonLintFsm</Name>
+    <RootNamespace>PythonLintFsm</RootNamespace>
+    <TestFramework>unittest</TestFramework>
+    <UnitTestPattern>test*.py</UnitTestPattern>
+    <UnitTestRootDirectory>.</UnitTestRootDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="lintABMachine\class_ab_machine.py" />
+    <Compile Include="lintABMachine\__init__.py" />
+    <Compile Include="lintFsm\class_fsm.py" />
+    <Compile Include="lintFsm\__init__.py" />
+    <Compile Include="lintKify\class_base.py" />
+    <Compile Include="lintKify\class_kify.py" />
+    <Compile Include="lintKify\__init__.py" />
+    <Compile Include="PythonLintFsm.py" />
+    <Compile Include="test_lint_ab.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="test_lint_fsm.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lintFsm\" />
+    <Folder Include="lintABMachine\" />
+    <Folder Include="lintKify\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PythonSettings.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

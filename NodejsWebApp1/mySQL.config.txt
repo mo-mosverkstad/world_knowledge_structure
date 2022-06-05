@@ -1,0 +1,100 @@
+https://dev.mysql.com/downloads/installer/
+MySQL Installer 8.0.29
+
+MySQL type and network:
+config type: Development Computer
+TCP/IP port 3306, x Protocol port 33060
+
+Authentication Method:
+Use Strong Password Encryption for Authentication:
+Root Password: mysql
+
+User Name: admin
+Role: DB Admin (maxi right)
+Password: mysql
+
+Windows Service Name: MySQL80
+
+
+
+
+CREATE DATABASE exampleDB;
+
+USE exampleDB;
+CREATE TABLE exampleTable (id int not null AUTO_INCREMENT, item text, PRIMARY KEY(id));
+
+CREATE TABLE exampleDB.exampleTable (id int not null AUTO_INCREMENT, item text, PRIMARY KEY(id));
+
+INSERT INTO exampleDB.exampleTable (item) VALUES ("*"), ("Livet"), ("Gemensam");
+INSERT INTO exampleDB.exampleTable (item) VALUES ("Root");
+
+SELECT * from exampleDB.exampletable;
+
+
+CREATE TABLE exampleDB.relationship (parentId int not null, childId int not null);
+INSERT INTO exampleDB.relationship (parentId, childId) VALUES (1, 2), (1, 3);
+INSERT INTO exampleDB.relationship (parentId, childId) VALUES (10, 1);
+
+USE exampleDb;
+SELECT E1.item AS parent, E2.item AS child
+FROM relationship R
+LEFT JOIN exampleTable E1 ON R.parentId = E1.id
+LEFT JOIN exampleTable E2 ON R.childId = E2.id
+ORDER BY R.parentId, R.childId;
+
+
+
+
+Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysql'
+NOTE: 'mysql' is the password.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var http = require('http');
+var port = process.env.PORT || 1337;
+const host = '';
+
+http.createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World\n');
+}).listen(port, host, () => {
+    console.log(`Server is running on http://${host}:${port}`);
+});
+
+
+/*
+function getAllChildren(results, parentId) {
+    let children = [];
+    for (var data of results) {
+        if (data.parentId == parentId) {
+            children.push({"childId": data.childId, "child": data.child});
+        }
+    }
+    return children;
+}
+*/
+    //console.log(getAllChildren(results, 1));
+
+
+
+
+
+npm install mysql -save
+npm install mysql2 -save
+npm install express -save
+npm install ejs -save

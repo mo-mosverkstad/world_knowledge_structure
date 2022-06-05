@@ -33,6 +33,5 @@ class Test_fsm(unittest.TestCase):
         self.fsm.set_start(CONST_STATE_TEST_2)
         self.assertEqual(self.fsm.run('test'), (CONST_STATE_TEST_ERROR, 'test'))
         
-
 if __name__ == '__main__':
     unittest.main()

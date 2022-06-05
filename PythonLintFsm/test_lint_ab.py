@@ -42,5 +42,6 @@ class Test_ab_abnormal(unittest.TestCase):
     def test_abnormal_invalid_value_miss_dot(self):
         self._check_wrong_result('aabbpbbaa', CONST_ERROR_MESSAGE_INVALID_VALUE + "p")
 
+
 if __name__ == '__main__':
     unittest.main()

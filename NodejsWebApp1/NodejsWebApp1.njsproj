@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>4b6f1eeb-a1bf-4018-b199-82c479336cde</ProjectGuid>
+    <ProjectGuid>a309fe7e-d12f-433e-bffa-28d9e7d79540</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>server.js</StartupFile>
     <SearchPath>
@@ -28,24 +28,48 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="dbConnect.js">
+    <Content Include="database\config.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="dataConvert.js">
+    <Content Include="database\dbBusiness.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="database\sqlCommands.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="helper\dataConvert.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="database\dbConnect.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\css\styles.css" />
+    <Content Include="public\css\treeEdit.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\img\accessWorld.png" />
+    <Content Include="public\js\dataContents.json" />
+    <Content Include="public\js\treeEdit.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\js\script.js" />
     <Content Include="server.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="views\index.ejs">
+    <Content Include="views\index.ejs" />
+    <Content Include="views\login.ejs" />
+    <Content Include="views\edit.ejs">
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="views\" />
+    <Folder Include="database\" />
+    <Folder Include="helper\" />
     <Folder Include="public\" />
     <Folder Include="public\css\" />
     <Folder Include="public\js\" />
+    <Folder Include="public\img\" />
+    <Folder Include="views\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

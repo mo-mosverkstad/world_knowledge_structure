@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/treeEdit.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/dataContents.json"></script>
+    <script src="/js/treeEdit.js"></script>
+</head>
+<body>
+    <form method="POST" action="/additem">
+        <input list="browsers" id="browsers-input" type="text" name="something" placeholder="Add something" required>
+        <datalist id="browsers"></datalist>
+        <button>add</button>
+    </form>
+
+    <form method="GET" action="/logout">
+        <button>logout</button>
+    </form>
+    <p id="mySession"></p>
+    <ul id="myUL"></ul>
+
+
+    <script>
+        let optionValues = [];
+        convertJsonToOptions(parsedData, optionValues);
+        let dataList = document.querySelector( "#browsers" );
+        for( let optionValue of optionValues ) {
+            let newOption = document.createElement( "option" );
+            newOption.value = optionValue;
+            dataList.appendChild(newOption);
+        }
+
+        document.getElementById('browsers-input').addEventListener('input', function () {
+           console.log('changed'); 
+        });
+    </script>
+
+    <script>
+    var result = [];
+    convertJsonToTreeView(parsedData, "caret", "nested", "leaf", result);
+    document.getElementById("myUL").innerHTML = result.join('\n');
+
+    var mySession = document.getElementById("mySession");
+
+    var toggler = document.getElementsByClassName("caret");
+    for (let i = 0; i < toggler.length; i++) {
+      toggler[i].addEventListener("click", function() {
+        this.parentElement.querySelector(".nested").classList.toggle("active");
+        this.classList.toggle("caret-down");
+        mySession.innerHTML = this.innerHTML;
+      });
+    }
+
+    var leaves = document.getElementsByClassName("leaf");
+    for (let j = 0; j < leaves.length; j++) {
+      leaves[j].addEventListener("click", function() {
+        mySession.innerHTML = this.innerHTML;
+      });
+    }
+    </script>
+
+</body>
+</html>

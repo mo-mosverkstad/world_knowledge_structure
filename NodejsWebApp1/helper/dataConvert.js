@@ -42,5 +42,3 @@ function getItem(dataList, id) {
 }
 
 module.exports = { convertTree, getItem };
-
-

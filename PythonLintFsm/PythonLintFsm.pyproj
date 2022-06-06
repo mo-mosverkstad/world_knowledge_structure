@@ -32,6 +32,9 @@
     <Compile Include="lintKify\class_base.py" />
     <Compile Include="lintKify\__init__.py" />
     <Compile Include="PythonLintFsm.py" />
+    <Compile Include="test_lint_kify_statement.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_lint_fsm.py">
       <SubType>Code</SubType>
     </Compile>

@@ -8,22 +8,28 @@ class Test_kify_statement_normal(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test_normal_rect_with_color(self):
-        self._check_correct_result('Rect ( 10 , 20 ,30  , 50   , green)', {'widget_name': 'Rect', 'numbers': [10, 20, 30, 50], 'color': 'green'})
+        self._check_correct_result('Rect ( 10 , 20 ,30  , 50   , green)', {'indentation': 0, 'widget_name': 'Rect', 'numbers': [10, 20, 30, 50], 'color': 'green'})
 
     def test_normal_rect_without_color(self):
-        self._check_correct_result('Rect ( 10 , 20 ,30  , 50  )', {'widget_name': 'Rect', 'numbers': [10, 20, 30, 50]})
+        self._check_correct_result('Rect ( 10 , 20 ,30  , 50  )', {'indentation': 0, 'widget_name': 'Rect', 'numbers': [10, 20, 30, 50]})
 
     def test_normal_circle_with_color(self):
-        self._check_correct_result('Circle ( 10 , 20 ,30  , red  )', {'widget_name': 'Circle', 'numbers': [10, 20, 30], 'color': 'red'})
+        self._check_correct_result('Circle ( 10 , 20 ,30  , red  )', {'indentation': 0, 'widget_name': 'Circle', 'numbers': [10, 20, 30], 'color': 'red'})
 
     def test_normal_circle_without_color(self):
-        self._check_correct_result('Circle ( 10 , 20 ,30   )', {'widget_name': 'Circle', 'numbers': [10, 20, 30]})
+        self._check_correct_result('Circle ( 10 , 20 ,30   )', {'indentation': 0, 'widget_name': 'Circle', 'numbers': [10, 20, 30]})
 
     def test_normal_line_with_color(self):
-        self._check_correct_result('Line ( 10 , 20 ,30,40, 50, 60  , red  )', {'widget_name': 'Line', 'numbers': [10, 20, 30, 40, 50, 60], 'color': 'red'})
+        self._check_correct_result('Line ( 10 , 20 ,30,40, 50, 60  , red  )', {'indentation': 0, 'widget_name': 'Line', 'numbers': [10, 20, 30, 40, 50, 60], 'color': 'red'})
 
     def test_normal_line_without_color(self):
-        self._check_correct_result('Line ( 10 , 20 ,30 ,40, 50, 60  )', {'widget_name': 'Line', 'numbers': [10, 20, 30, 40, 50, 60]})
+        self._check_correct_result('Line ( 10 , 20 ,30 ,40, 50, 60  )', {'indentation': 0, 'widget_name': 'Line', 'numbers': [10, 20, 30, 40, 50, 60]})
+
+    def test_normal_circle_with_indentation(self):
+        self._check_correct_result('    Circle ( 10 , 20 ,30   )', {'indentation': 4, 'widget_name': 'Circle', 'numbers': [10, 20, 30]})
+
+    def test_normal_line_with_indentation(self):
+        self._check_correct_result('        Line ( 10 , 20 ,30,40, 50, 60  , red  )', {'indentation': 8, 'widget_name': 'Line', 'numbers': [10, 20, 30, 40, 50, 60], 'color': 'red'})
 
 
 class Test_kify_statement_abnormal(unittest.TestCase):

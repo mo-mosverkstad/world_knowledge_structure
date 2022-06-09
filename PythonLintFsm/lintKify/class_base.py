@@ -1,9 +1,10 @@
-from typing import cast
 from lintFsm import state_machine
 
+STATE_READ_SPACE = 'state_read_space'
 STATE_READ_WORD = 'state_read_word'
 STATE_READ_NON_SPACE_SYMBOL = 'state_read_non_space_symbol'
 STATE_READ_DIGIT = 'state_read_digit'
+
 STATE_ERROR = "State_error"
 STATE_END = "State_end"
 
@@ -27,6 +28,16 @@ def _skip_spaces(checked, remain):
         checked, remain = _take_first_char(checked, remain)
         
     return checked, remain
+
+def state_read_space(cargo):
+    checked, cache, remain, comp_state, message, result = cargo
+    next_state = STATE_ERROR
+    if _check_first_char(remain, str.isspace):
+        next_state = STATE_READ_SPACE
+        cache, remain = _take_first_char(cache, remain)
+    else:
+        next_state = comp_state.pop()
+    return next_state, (checked, cache, remain, comp_state, message, result)
 
 def state_read_word(cargo):
     checked, cache, remain, comp_state, message, result = cargo
@@ -68,6 +79,7 @@ def state_read_digit(cargo):
 
 fsm = state_machine()
 
+fsm.add_state(STATE_READ_SPACE, state_read_space)
 fsm.add_state(STATE_READ_WORD, state_read_word)
 fsm.add_state(STATE_READ_NON_SPACE_SYMBOL, state_read_non_space_symbol)
 fsm.add_state(STATE_READ_DIGIT, state_read_digit)

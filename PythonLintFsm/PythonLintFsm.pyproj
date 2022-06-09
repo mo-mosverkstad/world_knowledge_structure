@@ -28,7 +28,8 @@
     <Compile Include="lintABMachine\__init__.py" />
     <Compile Include="lintFsm\class_fsm.py" />
     <Compile Include="lintFsm\__init__.py" />
-    <Compile Include="lintKify\class_kify.py" />
+    <Compile Include="lintKify\class_control.py" />
+    <Compile Include="lintKify\class_kify_statement.py" />
     <Compile Include="lintKify\class_base.py" />
     <Compile Include="lintKify\__init__.py" />
     <Compile Include="PythonLintFsm.py" />

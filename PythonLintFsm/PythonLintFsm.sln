@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonLintFsm", "PythonLintFsm.pyproj", "{8DC39467-9FE0-4C41-BF38-A134E36C0C80}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonGuiKify", "PythonGuiKify.pyproj", "{8DC39467-9FE0-4C41-BF38-A134E36C0C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

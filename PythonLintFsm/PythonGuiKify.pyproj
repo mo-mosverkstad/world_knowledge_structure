@@ -3,13 +3,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>8dc39467-9fe0-4c41-bf38-a134e36c0c80</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
-    <StartupFile>PythonLintFsm.py</StartupFile>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>startGui.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>PythonLintFsm</Name>
+    <Name>PythonGuiKify</Name>
     <RootNamespace>PythonLintFsm</RootNamespace>
     <TestFramework>unittest</TestFramework>
     <UnitTestPattern>test*.py</UnitTestPattern>
@@ -24,6 +25,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="commonConstants\commons.py" />
+    <Compile Include="commonConstants\__init__.py" />
+    <Compile Include="guiWidgets\shapes.py" />
+    <Compile Include="guiWidgets\shapeBase.py" />
+    <Compile Include="guiWidgets\__init__.py" />
     <Compile Include="lintABMachine\class_ab_machine.py" />
     <Compile Include="lintABMachine\__init__.py" />
     <Compile Include="lintFsm\class_fsm.py" />
@@ -32,6 +38,7 @@
     <Compile Include="lintKify\class_kify_statement.py" />
     <Compile Include="lintKify\class_base.py" />
     <Compile Include="lintKify\__init__.py" />
+    <Compile Include="startGui.py" />
     <Compile Include="PythonLintFsm.py" />
     <Compile Include="test_lint_kify_statement.py">
       <SubType>Code</SubType>
@@ -50,6 +57,8 @@
     <Folder Include="lintFsm\" />
     <Folder Include="lintABMachine\" />
     <Folder Include="lintKify\" />
+    <Folder Include="commonConstants\" />
+    <Folder Include="guiWidgets\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

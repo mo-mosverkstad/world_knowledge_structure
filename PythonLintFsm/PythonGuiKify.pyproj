@@ -5,7 +5,7 @@
     <ProjectGuid>8dc39467-9fe0-4c41-bf38-a134e36c0c80</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>startGui.py</StartupFile>
+    <StartupFile>PythonLintFsm.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,10 +25,18 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="commonConstants\commons.py" />
-    <Compile Include="commonConstants\__init__.py" />
-    <Compile Include="guiWidgets\shapes.py" />
-    <Compile Include="guiWidgets\shapeBase.py" />
+    <Compile Include="common\common_functions.py" />
+    <Compile Include="common\common_const.py" />
+    <Compile Include="common\__init__.py" />
+    <Compile Include="guiConsole\class_console_customerization.py" />
+    <Compile Include="guiConsole\__init__.py" />
+    <Compile Include="guiPygame\class_pygame_customerization.py" />
+    <Compile Include="guiPygame\class_pygame_draw.py" />
+    <Compile Include="guiPygame\__init__.py" />
+    <Compile Include="guiWidgets\class_layout_base.py" />
+    <Compile Include="guiWidgets\class_default_draw.py" />
+    <Compile Include="guiWidgets\class_shapes.py" />
+    <Compile Include="guiWidgets\class_shape_base.py" />
     <Compile Include="guiWidgets\__init__.py" />
     <Compile Include="lintABMachine\class_ab_machine.py" />
     <Compile Include="lintABMachine\__init__.py" />
@@ -38,8 +46,13 @@
     <Compile Include="lintKify\class_kify_statement.py" />
     <Compile Include="lintKify\class_base.py" />
     <Compile Include="lintKify\__init__.py" />
+    <Compile Include="lintToGui\class_lint_section.py" />
+    <Compile Include="lintToGui\__init__.py" />
     <Compile Include="startGui.py" />
     <Compile Include="PythonLintFsm.py" />
+    <Compile Include="test_common.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_lint_kify_statement.py">
       <SubType>Code</SubType>
     </Compile>
@@ -51,14 +64,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="my image.png" />
     <Content Include="PythonSettings.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lintFsm\" />
     <Folder Include="lintABMachine\" />
     <Folder Include="lintKify\" />
-    <Folder Include="commonConstants\" />
+    <Folder Include="common\" />
     <Folder Include="guiWidgets\" />
+    <Folder Include="guiPygame\" />
+    <Folder Include="guiConsole\" />
+    <Folder Include="lintToGui\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

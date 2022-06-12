@@ -1,5 +1,5 @@
 from .class_control import *
-from commonConstants import *
+from common import *
 
 STATE_KIFY_START = 'state_kify_start'
 STATE_KIFY_CHCK_LEADING_SPACE = 'state_kify_chck_leading_space'

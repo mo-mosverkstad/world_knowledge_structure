@@ -4,49 +4,24 @@ from guiWidgets import Line, Rect, Circle, Ellipse, Image, LayoutBase
 
 WIDGET_OBJECT = 'widget_object'
 
-def generate_widget_rect(result):
-    if not RESULT_COLOR in result.keys():
-        result[RESULT_COLOR] = COLOR_DEFAULT
-    result[WIDGET_OBJECT] = Rect(result[RESULT_NUMBERS], result[RESULT_COLOR])
-    return result
-
-def generate_widget_circle(result):
-    if not RESULT_COLOR in result.keys():
-        result[RESULT_COLOR] = COLOR_DEFAULT
-    result[WIDGET_OBJECT] = Circle(result[RESULT_NUMBERS], result[RESULT_COLOR])
-    return result
-
-def generate_widget_line(result):
-    if not RESULT_COLOR in result.keys():
-        result[RESULT_COLOR] = COLOR_DEFAULT
-    result[WIDGET_OBJECT] = Line(result[RESULT_NUMBERS], result[RESULT_COLOR])
-    return result
-
-def generate_widget_layoutbase(result):
-    if not RESULT_COLOR in result.keys():
-        result[RESULT_COLOR] = COLOR_DEFAULT
-    result[WIDGET_OBJECT] = LayoutBase(result[RESULT_NUMBERS], result[RESULT_COLOR])
-    return result
-
-def generate_widget_ellipse(result):
-    if not RESULT_COLOR in result.keys():
-        result[RESULT_COLOR] = COLOR_DEFAULT
-    result[WIDGET_OBJECT] = Ellipse(result[RESULT_NUMBERS], result[RESULT_COLOR])
-    return result
-
-def generate_widget_image(result):
-    if not RESULT_COLOR in result.keys():
-        result[RESULT_COLOR] = COLOR_DEFAULT
-    result[WIDGET_OBJECT] = None
-    return result
+def create_generate_widget(class_name):
+    def custom_result(result): return None
+    if class_name in [Rect, Circle, Line, LayoutBase, Ellipse]:
+        def custom_result(result): return class_name(result[RESULT_NUMBERS], result[RESULT_COLOR])
+    def generate_widget(result):
+        if not RESULT_COLOR in result.keys():
+            result[RESULT_COLOR] = COLOR_DEFAULT
+        result[WIDGET_OBJECT] = custom_result(result)
+        return result
+    return generate_widget
 
 TYPE_WIDGET_DICT = { \
-    'RECT'      : generate_widget_rect, \
-    'CIRCLE'    : generate_widget_circle, \
-    'LINE'      : generate_widget_line, \
-    'LAYOUTBASE': generate_widget_layoutbase, \
-    'ELLIPSE'   : generate_widget_ellipse, \
-    'IMAGE'     : generate_widget_image, \
+    'RECT'      : create_generate_widget(Rect), \
+    'CIRCLE'    : create_generate_widget(Circle), \
+    'LINE'      : create_generate_widget(Line), \
+    'LAYOUTBASE': create_generate_widget(LayoutBase), \
+    'ELLIPSE'   : create_generate_widget(Ellipse), \
+    'IMAGE'     : create_generate_widget(Image), \
     }
 
 ROOT_CONTENT = {RESULT_INDENTATION: -4, \
@@ -56,6 +31,8 @@ ROOT_CONTENT = {RESULT_INDENTATION: -4, \
 }
 
 ROOT = TYPE_WIDGET_DICT[ROOT_CONTENT[RESULT_WIDGET_NAME].upper()](ROOT_CONTENT)
+
+INDETNTATION = 4
 
 def kify_section_lint(statements):
     statement_number = 0
@@ -84,12 +61,14 @@ def kify_generate_widgets(results):
         current_indentation = current_result[RESULT_INDENTATION]
         child_indentation = child_result[RESULT_INDENTATION]
         parent_indentation = parent_result[RESULT_INDENTATION]
+        delta_indentation = current_indentation - child_indentation
         
-        if current_indentation > child_indentation:
+        if delta_indentation == INDETNTATION:
             stack.append(parent_result)
             parent_result = child_result
-        elif current_indentation < child_indentation:
-            parent_result = stack.pop()
+        elif delta_indentation < 0 and delta_indentation % INDETNTATION == 0:
+            for i in range(abs(int(delta_indentation /  INDETNTATION))):
+                parent_result = stack.pop()
         else:
             pass
 

@@ -22,6 +22,6 @@ sections = [ \
 
 
 
-my_layout = kify_generate_widgets(kify_section_lint(sections))
-canvas = PygameDraw(my_layout)
+root_layout = kify_generate_widgets(kify_section_lint(sections))
+canvas = PygameDraw(root_layout)
 canvas.run()

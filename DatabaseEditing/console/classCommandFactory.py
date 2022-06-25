@@ -10,6 +10,8 @@ from .classCommandDescend import *
 from .classCommandUpdate import *
 from .classCommandUpdateLink import *
 from .classCommandSort import *
+from .classCommandDbexport import *
+from .classCommandDbimport import *
 
 class CommandFactory(object):
     def __init__(self):
@@ -24,7 +26,9 @@ class CommandFactory(object):
             'deletelink': CommandDeleteLink,
             'update': CommandUpdate,
             'updatelink': CommandUpdateLink,
-            'sort': CommandSort
+            'sort': CommandSort,
+            'dbexport': CommandDbexport,
+            'dbimport': CommandDbimport
         }
 
     def build(self, command:str) -> Command:

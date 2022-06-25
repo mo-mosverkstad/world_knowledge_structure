@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="console\classCommandCreate.py" />
     <Compile Include="console\classCommandCreateLink.py" />
+    <Compile Include="console\classCommandDbexport.py" />
     <Compile Include="console\classCommandDelete.py" />
     <Compile Include="console\classCommandDeleteLink.py" />
     <Compile Include="console\classCommandDescend.py" />
@@ -38,6 +39,7 @@
     <Compile Include="console\classCargo.py" />
     <Compile Include="console\classCommandList.py" />
     <Compile Include="console\classConstant.py" />
+    <Compile Include="console\classCommandDbimport.py" />
     <Compile Include="console\__init__.py" />
     <Compile Include="DatabaseEditing.py" />
     <Compile Include="knowledgedb\classConfig.py" />

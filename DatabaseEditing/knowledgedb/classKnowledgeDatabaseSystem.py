@@ -1,11 +1,13 @@
 from .classPair import Pair
 from .classKnowledgeDatabase import KnowledgeDatabase
+import json
 
 class KnowledgeDatabaseSystem:
     def __init__(self):
         self.knowledge_database = KnowledgeDatabase()
         self.root_id = self.knowledge_database.get_root_id()
         self.path = [Pair(self.root_id, self.knowledge_database.name_of(self.root_id))]
+        self.file_name_format = 'dbexport.{}.json'
 
     def generate_name_path_string(self):
         return '/'.join(str(node) for node in self.path)
@@ -49,3 +51,19 @@ class KnowledgeDatabaseSystem:
 
     def update_link(self, childId, new_parentId):
         self.knowledge_database.update_relation(childId, self.path[-1].id, new_parentId)
+
+    def db_export(self):
+        for data in self.knowledge_database.db_export():
+            table_name, json_data = data
+            f = open(self.file_name_format.format(table_name), "w")
+            f.write(json_data)
+            f.close()
+
+    def db_import(self):
+        for table in self.knowledge_database.tables:
+            f = open(self.file_name_format.format(table.name), "r")
+            data = json.load(f)
+            f.close()
+            print(table.name)
+            print(data)
+        

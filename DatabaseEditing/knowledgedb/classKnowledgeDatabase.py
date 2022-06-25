@@ -1,16 +1,13 @@
 from .classDatabase import Database
+from .classConfig import Config
 
-class DbTable:
-    def __init__(self, name:str, columns:list):
-        self.name = name
-        self.columns = columns
 
 class KnowledgeDatabase:
     def __init__(self):
-        self.name_table = DbTable("nametable", ['item'])
-        self.relationship = DbTable("relationship", ['parentId', 'childId', 'sortId'])
-        self.root_table = DbTable("root", ['id'])
-        self.database = Database("localhost", "root", "mysql", "tempdb")
+        self.name_table = Config.name_table()
+        self.relationship = Config.relationship()
+        self.root_table = Config.root_table()
+        self.database = Database(Config.host(), Config.user(), Config.password(), Config.database())
 
     def get_root_id(self):
         return self.database.get(self.root_table.name)[0][0]

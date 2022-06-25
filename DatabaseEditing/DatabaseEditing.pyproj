@@ -40,6 +40,8 @@
     <Compile Include="console\classConstant.py" />
     <Compile Include="console\__init__.py" />
     <Compile Include="DatabaseEditing.py" />
+    <Compile Include="knowledgedb\classConfig.py" />
+    <Compile Include="knowledgedb\classDbTable.py" />
     <Compile Include="knowledgedb\classKnowledgeDatabaseSystem.py" />
     <Compile Include="knowledgedb\classPair.py" />
     <Compile Include="knowledgedb\classKnowledgeDatabase.py" />

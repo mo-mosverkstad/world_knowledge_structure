@@ -43,6 +43,21 @@ class Database(object):
         self.my_cursor.execute(statement)
         self.mydb.commit()
 
+    def drop_table(self, table_name):
+        statement = f'DROP TABLE IF EXISTS {table_name}'
+        self.my_cursor.execute(statement)
+
+    def create_table(self, table_name, column_types, addition = None):
+        statement_column_types = ','.join([f'{column[0]} {column[1]}' for column in column_types])
+        statement_addition = f',{addition}' if addition else ''
+        statement = f'CREATE TABLE {table_name} ({statement_column_types}{statement_addition});'
+        self.my_cursor.execute(statement)
+
+    def close(self):
+        self.my_cursor.close()
+        self.mydb.close()
+
+
 
 
 

@@ -12,23 +12,35 @@ from .classCommandUpdateLink import *
 from .classCommandSort import *
 from .classCommandDbexport import *
 from .classCommandDbimport import *
+from .classCommandHelp import *
 
 class CommandFactory(object):
     def __init__(self):
         self.class_dict = {
             'exit': CommandExit,
             'list': CommandList,
+            'ls':   CommandList,
             'ascend': CommandAscend,
+            'as':     CommandAscend,
             'descend': CommandDescend,
+            'ds':      CommandDescend,
             'create': CommandCreate,
+            'ct':     CommandCreate,
             'createlink': CommandCreateLink,
+            'cl':         CommandCreateLink,
             'delete': CommandDelete,
             'deletelink': CommandDeleteLink,
             'update': CommandUpdate,
+            'ut':     CommandUpdate,
             'updatelink': CommandUpdateLink,
+            'ul':         CommandUpdateLink,
             'sort': CommandSort,
+            'st':   CommandSort,
             'dbexport': CommandDbexport,
-            'dbimport': CommandDbimport
+            'backup': CommandDbexport,
+            'bk': CommandDbexport,
+            'dbimport': CommandDbimport,
+            'help': CommandHelp
         }
 
     def build(self, command:str) -> Command:

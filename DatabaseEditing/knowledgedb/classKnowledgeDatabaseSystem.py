@@ -5,9 +5,20 @@ import json
 class KnowledgeDatabaseSystem:
     def __init__(self):
         self.knowledge_database = KnowledgeDatabase()
-        self.root_id = self.knowledge_database.get_root_id()
-        self.path = [Pair(self.root_id, self.knowledge_database.name_of(self.root_id))]
+        self.root_id = 1
+        self.path = []
+        self.db_load()
         self.file_name_format = 'dbexport.{}.json'
+
+    def has_data(self):
+        return len(self.path) > 0
+
+    def db_load(self):
+        try:
+            self.root_id = self.knowledge_database.get_root_id()
+            self.path = [Pair(self.root_id, self.knowledge_database.name_of(self.root_id))]
+        except:
+            pass
 
     def generate_name_path_string(self):
         return '/'.join(str(node) for node in self.path)
@@ -43,6 +54,9 @@ class KnowledgeDatabaseSystem:
     def delete_link(self, childId):
         self.knowledge_database.delete_relation(self.path[-1].id, childId)
 
+    def get_parents(self, childId):
+        return self.knowledge_database.parents_of(childId)
+
     def update(self, id, new_name):
         self.knowledge_database.update(id, new_name)
 
@@ -59,11 +73,20 @@ class KnowledgeDatabaseSystem:
             f.write(json_data)
             f.close()
 
+    def read_json_file(self, table_name):
+        file_name = self.file_name_format.format(table_name)
+        f = open(file_name, "r")
+        data = json.load(f)
+        f.close()
+        return data
+
     def db_import(self):
-        for table in self.knowledge_database.tables:
-            f = open(self.file_name_format.format(table.name), "r")
-            data = json.load(f)
-            f.close()
-            print(table.name)
-            print(data)
+        self.knowledge_database.db_drop_tables()
+        self.knowledge_database.db_create_tables()
+        hash_map = self.knowledge_database.db_import_nametable(self.read_json_file(self.knowledge_database.name_table.name))
+        self.knowledge_database.db_import_relationship(self.read_json_file(self.knowledge_database.relationship.name), hash_map)
+        self.knowledge_database.db_import_roottable(self.read_json_file(self.knowledge_database.root_table.name), hash_map)
+        self.db_load()
         
+    def db_close(self):
+        self.knowledge_database.close()

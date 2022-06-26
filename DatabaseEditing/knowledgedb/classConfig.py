@@ -3,7 +3,8 @@ from .classDbTable import DbTable
 class Config(object):
     @staticmethod
     def host():
-        return 'localhost'
+        return '127.0.0.1'
+        # return 'localhost'
         # return 'mysql.webcindario.com'
 
     @staticmethod
@@ -23,15 +24,15 @@ class Config(object):
 
     @staticmethod
     def name_table():
-        return DbTable("nametable", ['item'])
+        return DbTable("nametable", ['item'], [('id', 'int not null auto_increment'), ('item', 'text')], 'PRIMARY KEY (id)')
 
     @staticmethod
     def relationship():
-        return DbTable("relationship", ['parentId', 'childId', 'sortId'])
+        return DbTable("relationship", ['parentId', 'childId', 'sortId'], [('parentId', 'int'), ('childId', 'int'), ('sortId', 'int')])
 
     @staticmethod
     def root_table():
-        return DbTable("root", ['id'])
+        return DbTable("root", ['id'], [('id', 'int')])
 
 
 

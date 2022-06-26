@@ -15,20 +15,28 @@ class KnowledgeDatabase:
         return self.database.get(self.root_table.name)[0][0]
 
     def name_of(self, id):
-        return self.database.get(self.name_table.name, "id=" + str(id))[0][1]
+        result = self.database.get(self.name_table.name, "id=" + str(id))
+        return result[0][1] if result and len(result) > 0 else None
 
     def relations_of(self, id):
         results = []
-        for child in self.database.get(self.relationship.name, f'{self.relationship.columns[0]} = {str(id)}', f'{self.relationship.columns[2]}'):
+        for child in self.database.get(self.relationship.name, f'{self.relationship.columns[0]} = {id}', f'{self.relationship.columns[2]}'):
             results.append((child[1], child[2]))
         return results
+
+    def parents_of(self, childId):
+        results = []
+        for parent in self.database.get(self.relationship.name, f'{self.relationship.columns[1]} = {childId}', f'{self.relationship.columns[2]}'):
+            results.append((parent[0], parent[2]))
+        return results
+        
 
     def create(self, item):
         new_id = self.database.insert(self.name_table.name, self.name_table.columns, [item])
         return new_id
 
-    def create_relation(self, parentId, childId):
-        self.database.insert(self.relationship.name, self.relationship.columns, [parentId, childId, 1])
+    def create_relation(self, parentId, childId, sortId = 1):
+        self.database.insert(self.relationship.name, self.relationship.columns, [parentId, childId, sortId])
 
     def delete(self, id):
         self.database.delete(self.name_table.name, "id=" + str(id))
@@ -56,3 +64,31 @@ class KnowledgeDatabase:
 
     def db_export_table(self, table_name):
         return json.dumps(self.database.get(table_name), indent=4)
+
+    def db_drop_tables(self):
+        for table in self.tables:
+            self.database.drop_table(table.name)
+
+    def db_create_tables(self):
+        for table in self.tables:
+            self.database.create_table(table.name, table.column_types, table.addition)
+
+    def db_import_nametable(self, data_list):
+        hash_map = {}
+        for data in data_list:
+            old_id, item = data
+            hash_map[old_id] = self.create(item)
+        return hash_map
+
+    def db_import_relationship(self, data_list, hash_map):
+        for parentId, childId, sortId in data_list:
+            self.create_relation(hash_map[parentId], hash_map[childId], sortId)
+
+    def create_root(self, rootId):
+        self.database.insert(self.root_table.name, self.root_table.columns, [rootId])
+
+    def db_import_roottable(self, data_list, hash_map):
+        self.create_root(hash_map[data_list[0][0]])
+
+    def close(self):
+        self.database.close()

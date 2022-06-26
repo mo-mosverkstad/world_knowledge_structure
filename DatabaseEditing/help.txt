@@ -1,0 +1,20 @@
+Help:
+help			None		Help command
+exit			None		Exiting database system
+
+list		(ls)	None		List all items under current path
+ascend		(as)	None		Ascend
+descend		(ds)	<id>		Descend
+
+create		(ct)	<name>		Create an item under current path
+createlink	(cl)	<id>		Create a link
+delete			<id>		Delete an item with following links
+deletelink		<id>		Deleting a link
+update		(ut)	<id>,<item>	Changing the item of an item
+updatelink	(ul)	<id>,<parentid>	Changing the link to another path (parentid)
+sort		(st)	<id>,<sortid>	Changing sort priority (sortId=1 is the most important)
+
+dbexport		None		Exporting database tables to JSON files
+dbimport		None		Importing database from JSON files
+					(Dropping all databases and load with exported data)
+backup		(bk)	None		Backup the database (Same as dbexport)

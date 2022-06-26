@@ -27,6 +27,7 @@
     <Compile Include="console\classCommandDelete.py" />
     <Compile Include="console\classCommandDeleteLink.py" />
     <Compile Include="console\classCommandDescend.py" />
+    <Compile Include="console\classCommandHelp.py" />
     <Compile Include="console\classCommandUpdateLink.py" />
     <Compile Include="console\classCommandSort.py" />
     <Compile Include="console\classCommandFactory.py" />

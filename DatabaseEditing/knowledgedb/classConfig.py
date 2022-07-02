@@ -19,7 +19,7 @@ class Config(object):
 
     @staticmethod
     def database():
-        return 'tempdb'
+        return 'mosverkstad'
         # return 'mosverkstad'
 
     @staticmethod

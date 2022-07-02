@@ -1,6 +1,5 @@
 from .classDatabase import Database
 from .classConfig import Config
-import json
 
 
 class KnowledgeDatabase:
@@ -60,10 +59,7 @@ class KnowledgeDatabase:
         self.database.update(self.relationship.name, self.relationship.columns[0], new_parentId, f'{self.relationship.columns[0]} = {old_parentId} and {self.relationship.columns[1]} = {childId}')
 
     def db_export(self):
-        return [(table.name, self.db_export_table(table.name)) for table in self.tables]
-
-    def db_export_table(self, table_name):
-        return json.dumps(self.database.get(table_name), indent=4)
+        return [(table, self.database.get(table.name)) for table in self.tables]
 
     def db_drop_tables(self):
         for table in self.tables:

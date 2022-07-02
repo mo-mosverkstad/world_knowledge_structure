@@ -8,7 +8,8 @@ class KnowledgeDatabaseSystem:
         self.root_id = 1
         self.path = []
         self.db_load()
-        self.file_name_format = 'dbexport.{}.json'
+        self.file_name_json_format = 'dbexport.{}.json'
+        self.file_name_sql_format  = 'dbexport.{}.sql'
 
     def has_data(self):
         return len(self.path) > 0
@@ -68,13 +69,30 @@ class KnowledgeDatabaseSystem:
 
     def db_export(self):
         for data in self.knowledge_database.db_export():
-            table_name, json_data = data
-            f = open(self.file_name_format.format(table_name), "w")
-            f.write(json_data)
-            f.close()
+            self.write_json_file(data)
+            self.write_sql_file(data)
+
+    def write_sql_file(self, data):
+        def convert_value(value):
+            return f'{value}' if type(value) == int else f'"{value}"'
+
+        table, raw_data = data
+        f = open(self.file_name_sql_format.format(table.name), "w", encoding="utf-8")
+        f.write(f'DELETE FROM {table.name};\n')
+        columns = ','.join([column_type[0] for column_type in table.column_types])
+        for row in raw_data:
+            values = ','.join(map(convert_value,row))
+            f.write(f'INSERT INTO {table.name} ({columns}) VALUES ({values});\n')
+        f.close()
+
+    def write_json_file(self, data):
+        table, raw_data = data
+        f = open(self.file_name_json_format.format(table.name), "w")
+        f.write(json.dumps(raw_data, indent=4))
+        f.close()
 
     def read_json_file(self, table_name):
-        file_name = self.file_name_format.format(table_name)
+        file_name = self.file_name_json_format.format(table_name)
         f = open(file_name, "r")
         data = json.load(f)
         f.close()

@@ -19,7 +19,8 @@ class Config(object):
 
     @staticmethod
     def database():
-        return 'mosverkstad'
+        # return 'mosverkstad'
+        return 'temp'
         # return 'mosverkstad'
 
     @staticmethod

@@ -20,12 +20,11 @@ class Config(object):
     @staticmethod
     def database():
         # return 'mosverkstad'
-        return 'temp'
-        # return 'mosverkstad'
+        return 'mosverkstad'
 
     @staticmethod
     def name_table():
-        return DbTable("nametable", ['item'], [('id', 'int not null auto_increment'), ('item', 'text')], 'PRIMARY KEY (id)')
+        return DbTable("nameTable", ['item'], [('id', 'int not null auto_increment'), ('item', 'text')], 'PRIMARY KEY (id)')
 
     @staticmethod
     def relationship():

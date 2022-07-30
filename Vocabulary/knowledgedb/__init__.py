@@ -1,0 +1,1 @@
+from .classVocabularyDatabase import VocabularyDatabase

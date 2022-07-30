@@ -1,0 +1,51 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>ba2b63b6-b8ef-4a3c-b7a9-060d7a966468</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>Vocabulary.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>Vocabulary</Name>
+    <RootNamespace>Vocabulary</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="console\classConsole.py" />
+    <Compile Include="console\__init__.py" />
+    <Compile Include="knowledgedb\classConfig.py" />
+    <Compile Include="knowledgedb\classDatabase.py" />
+    <Compile Include="knowledgedb\classDbTable.py" />
+    <Compile Include="knowledgedb\classVocabularyDatabase.py" />
+    <Compile Include="knowledgedb\__init__.py" />
+    <Compile Include="Vocabulary.py" />
+    <Compile Include="vocabulary\classFolder.py" />
+    <Compile Include="vocabulary\classVocabulary.py" />
+    <Compile Include="vocabulary\classWord.py" />
+    <Compile Include="vocabulary\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="knowledgedb\" />
+    <Folder Include="console\" />
+    <Folder Include="vocabulary\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

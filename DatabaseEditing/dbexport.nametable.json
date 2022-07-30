@@ -2733,214 +2733,682 @@
     ],
     [
         684,
-        "Rayan kompetens"
-    ],
-    [
-        685,
-        "3-allt-metoden"
-    ],
-    [
-        686,
-        "D\u00f6da alla"
-    ],
-    [
-        687,
-        "Br\u00e4nn allt"
-    ],
-    [
-        688,
-        "Plundra allt"
-    ],
-    [
-        689,
         "Personlighet(Karakt\u00e4r)"
     ],
     [
-        690,
+        685,
         "Modig"
     ],
     [
-        691,
+        686,
         "\u00c4ventyrlig"
     ],
     [
-        692,
+        687,
         "Feg"
     ],
     [
-        693,
+        688,
         "Sj\u00e4lvst\u00e4ndig"
     ],
     [
-        694,
+        689,
         "Bra karakt\u00e4r"
     ],
     [
-        695,
+        690,
         "D\u00e5liga karakt\u00e4r"
     ],
     [
-        696,
+        691,
         "Resurskrik"
     ],
     [
-        697,
+        692,
         "Framg\u00e5ngsrik"
     ],
     [
-        698,
+        693,
         "Skicklig"
     ],
     [
-        699,
+        694,
         "Fantasifull"
     ],
     [
-        700,
+        695,
         "Kreativ"
     ],
     [
-        701,
+        696,
         "Nyfiken"
     ],
     [
-        702,
+        697,
         "\u00d6dmjuk"
     ],
     [
-        703,
+        698,
         "Respektfull"
     ],
     [
-        704,
+        699,
         "Artig"
     ],
     [
-        705,
+        700,
         "P\u00e5litlig"
     ],
     [
-        706,
+        701,
         "\u00c4rlig"
     ],
     [
-        707,
+        702,
         "Gener\u00f6s"
     ],
     [
-        708,
+        703,
         "Lojal"
     ],
     [
-        709,
+        704,
         "Patrotisk"
     ],
     [
-        710,
+        705,
         "Neutrala karakt\u00e4r"
     ],
     [
-        711,
+        706,
         "Strikt"
     ],
     [
-        712,
+        707,
         "Dominerande"
     ],
     [
-        713,
+        708,
         "Ledare"
     ],
     [
-        714,
+        709,
         "Energisk"
     ],
     [
-        715,
+        710,
         "Hoppfull"
     ],
     [
-        716,
+        711,
         "Ut\u00e5triktad"
     ],
     [
-        717,
+        712,
         "Introvert"
     ],
     [
-        718,
+        713,
         "Allvarlig"
     ],
     [
-        719,
+        714,
         "Lugn"
     ],
     [
-        720,
+        715,
         "Ensam"
     ],
     [
-        721,
+        716,
         "Blyg"
     ],
     [
-        722,
+        717,
         "Lat"
     ],
     [
-        723,
+        718,
         "Stygg"
     ],
     [
-        724,
+        719,
         "Slughet"
     ],
     [
-        725,
+        720,
         "Listig"
     ],
     [
-        726,
+        721,
         "Of\u00f6rsk\u00e4md"
     ],
     [
-        727,
+        722,
         "Sj\u00e4lvisk"
     ],
     [
-        728,
+        723,
         "Envis"
     ],
     [
-        729,
+        724,
         "V\u00e5ldsam(Ut\u00e5tagerande)"
     ],
     [
-        730,
+        725,
         "Materalist"
     ],
     [
-        731,
+        726,
         "Girig"
     ],
     [
-        732,
+        727,
         "O\u00e4rlig"
     ],
     [
-        733,
+        728,
         "Grinig"
     ],
     [
-        734,
+        729,
         "Deprimerad"
     ],
     [
-        735,
+        730,
         "El\u00e4ndig"
     ],
     [
-        736,
+        731,
         "Livet"
+    ],
+    [
+        732,
+        "Ord"
+    ],
+    [
+        733,
+        "Meningar"
+    ],
+    [
+        734,
+        "Skattkammar\u00f6n"
+    ],
+    [
+        735,
+        "1.1"
+    ],
+    [
+        737,
+        "f\u00f6rtiga: tiga om, hemligh\u00e5lla"
+    ],
+    [
+        738,
+        "n\u00e5dens \u00e5r: kalender\u00e5r, herrens \u00e5r"
+    ],
+    [
+        739,
+        "linka: halta, stappla"
+    ],
+    [
+        740,
+        "tj\u00e4ra: ett m\u00f6rkt tjockflytande \u00e4mne som skyddar mot r\u00f6ta (asfalt)"
+    ],
+    [
+        741,
+        "h\u00e5rpiska: fl\u00e4ta"
+    ],
+    [
+        742,
+        "st\u00e4mma upp: pl\u00f6tsligt b\u00f6rja tala (vid talande)"
+    ],
+    [
+        743,
+        "gast: 1. sp\u00f6ke 2. bes\u00e4ttningsman p\u00e5 segelb\u00e5t"
+    ],
+    [
+        744,
+        "gastkrama: h\u00e5lla i stark sp\u00e4nning"
+    ],
+    [
+        745,
+        "ankarspel: mekanisk anordning med vilket ett ankare f\u00e4lls eller lyfts"
+    ],
+    [
+        746,
+        "bulta: banka, dunka, sl\u00e5"
+    ],
+    [
+        747,
+        "spak: st\u00e5ng, handtag"
+    ],
+    [
+        748,
+        "brysk: ov\u00e4nlig, h\u00e4nsynsl\u00f6s"
+    ],
+    [
+        749,
+        "k\u00e4nnare: expert, specialist"
+    ],
+    [
+        750,
+        "bister: h\u00e5rd, str\u00e4ng(k\u00e4rv)"
+    ],
+    [
+        751,
+        "v\u00e5rdad: ansad, ordentlig, prydlig"
+    ],
+    [
+        752,
+        "ov\u00e5rdad: r\u00e5, slafskig, raggig, ruggig, rufsig"
+    ],
+    [
+        753,
+        "matros: sj\u00f6man som arbetar p\u00e5 d\u00e4ck"
+    ],
+    [
+        754,
+        "postdiligens: (anv\u00e4nds ej idag) coach"
+    ],
+    [
+        755,
+        "avsides: l\u00e5ngt \u00e5t sidan, ensligt"
+    ],
+    [
+        756,
+        "grogg: dryck av sprit blandad med l\u00e4skedryck"
+    ],
+    [
+        757,
+        "str\u00f6vt\u00e5g: vandring, uppt\u00e4cksf\u00e4rd"
+    ],
+    [
+        758,
+        "angel\u00e4gen: ivrig"
+    ],
+    [
+        759,
+        "ta in p\u00e5 (hotell): h\u00e4mta in p\u00e5 hotell"
+    ],
+    [
+        760,
+        "p\u00e5 s\u00e4tt och vis: i viss m\u00e5n, p\u00e5 n\u00e5got s\u00e4tt"
+    ],
+    [
+        761,
+        "grundval: underbyggnad, grund, basis, fundament"
+    ],
+    [
+        762,
+        "gestalt: figur, skepnad"
+    ],
+    [
+        763,
+        "dj\u00e4vul: satan, den onde"
+    ],
+    [
+        764,
+        "dj\u00e4vulsk: ond, diabolisk, mefistofelisk"
+    ],
+    [
+        765,
+        "mara: v\u00e4sen som pl\u00e5gar sovande personer (p\u00e5hittad)"
+    ],
+    [
+        766,
+        "utan like: enast\u00e5ende, oerh\u00f6rd, of\u00f6rliknelig, unik"
+    ],
+    [
+        767,
+        "fasa: skr\u00e4ck, fruktan, f\u00f6rf\u00e4ran, f\u00f6rskr\u00e4ckelse, b\u00e4ran, ryslighet"
+    ],
+    [
+        768,
+        "fasansfull: ohygglig, gruvlig, ot\u00e4ck, ruskig"
+    ],
+    [
+        769,
+        "undg\u00e5: l\u00e5ta bli, slippa ifr\u00e5n"
+    ],
+    [
+        770,
+        "despot: tyrann, f\u00f6rtyckare, diktator"
+    ],
+    [
+        771,
+        "despotisk: env\u00e4ldig, egenm\u00e4ktig, h\u00e4rsklysten"
+    ],
+    [
+        772,
+        "rusa upp: rycka till, spritta till, fara upp"
+    ],
+    [
+        773,
+        "ragla: g\u00e5 vingligt, stappla, vackla, vingla"
+    ],
+    [
+        774,
+        "illd\u00e5d: brott"
+    ],
+    [
+        775,
+        "utsago: uttalande"
+    ],
+    [
+        776,
+        "enligt egen utsago: according to him/her"
+    ],
+    [
+        777,
+        "tyrann: despot, f\u00f6rtyckare"
+    ],
+    [
+        778,
+        "tyrranisera: tvinga"
+    ],
+    [
+        779,
+        "frukta: vara r\u00e4dd f\u00f6r"
+    ],
+    [
+        780,
+        "ta mod till sig: v\u00e5ga"
+    ],
+    [
+        781,
+        "ryta: ge ifr\u00e5n sig ett kraftigt hotande ljud"
+    ],
+    [
+        782,
+        "sn\u00e4sa: tllr\u00e4ttavisa p\u00e5 ett irriterat s\u00e4tt"
+    ],
+    [
+        783,
+        "g\u00e5rdfarihandlare: kringresande f\u00f6rs\u00e4ljare"
+    ],
+    [
+        784,
+        "br\u00e4tte: utvikt kant p\u00e5 en hatt"
+    ],
+    [
+        785,
+        "stuka: vricka, skada"
+    ],
+    [
+        786,
+        "allmoge: bondebefolkning"
+    ],
+    [
+        787,
+        "evinnerlig: st\u00e4ndig"
+    ],
+    [
+        788,
+        "hin h\u00e5le: hin onde, satan"
+    ],
+    [
+        789,
+        "reumatism: sjukdomar med sm\u00e4rtor i leder och muskler, ledv\u00e4rk"
+    ],
+    [
+        790,
+        "bloss: drag p\u00e5 en cigarett"
+    ],
+    [
+        791,
+        "s\u00e4lle: grobian, rackare"
+    ],
+    [
+        792,
+        "bli kvitt: radera, sudda"
+    ],
+    [
+        793,
+        "vidrig: f\u00f6rf\u00e4rlig"
+    ],
+    [
+        794,
+        "skurk: f\u00f6rbrytare, ligist, usling, bov"
+    ],
+    [
+        795,
+        "nagla fast: f\u00e4sta mot"
+    ],
+    [
+        796,
+        "utspinna sig: \u00e4ga rum"
+    ],
+    [
+        797,
+        "tvekamp: duell"
+    ],
+    [
+        798,
+        "duka under: g\u00e5 under, ge upp"
+    ],
+    [
+        799,
+        "oh\u00f6vligt: ohyfsad, ouppfostrad, fr\u00e4ck"
+    ],
+    [
+        800,
+        "upptr\u00e4dande: beteende, uppf\u00f6rande"
+    ],
+    [
+        801,
+        "s\u00f6rja f\u00f6r: ta ansvar f\u00f6r"
+    ],
+    [
+        802,
+        "1.2"
+    ],
+    [
+        803,
+        "dingla: h\u00e4nga och sv\u00e4nga"
+    ],
+    [
+        804,
+        "sk\u00f6rt: nedh\u00e4ngande bakstycke av rock"
+    ],
+    [
+        805,
+        "gl\u00e5mig: blek som har sjuklig f\u00e4rg"
+    ],
+    [
+        806,
+        "plira: kisa"
+    ],
+    [
+        807,
+        "sup: ett glas br\u00e4nnvin"
+    ],
+    [
+        808,
+        "missta sig: ta fel"
+    ],
+    [
+        809,
+        "kvickt: snabbt"
+    ],
+    [
+        810,
+        "tycke: substantiv av tycka, ett \u00e5sikt"
+    ],
+    [
+        811,
+        "inst\u00e4llsam: som fj\u00e4skar och smickrar"
+    ],
+    [
+        812,
+        "v\u00e4lsignelse: blessing"
+    ],
+    [
+        813,
+        "morsk: or\u00e4dd, karsk"
+    ],
+    [
+        814,
+        "kippa efter andan: dra andan h\u00e4ftigt"
+    ],
+    [
+        815,
+        "stympa: hugga av"
+    ],
+    [
+        816,
+        "retr\u00e4tt: flykt"
+    ],
+    [
+        817,
+        "f\u00f6refalla: synas, tyckas"
+    ],
+    [
+        818,
+        "stj\u00e4lpa: v\u00e4lta"
+    ],
+    [
+        819,
+        "m\u00e5tta: sikta, rikta"
+    ],
+    [
+        820,
+        "jack: hugg, sk\u00e5ra, hack"
+    ],
+    [
+        821,
+        "befalla: ge order"
+    ],
+    [
+        822,
+        "blessyr: l\u00e4ttare s\u00e5r"
+    ],
+    [
+        823,
+        "l\u00e4gga benen p\u00e5 ryggen: fly"
+    ],
+    [
+        824,
+        "kr\u00f6n: h\u00f6gsta punkt (kanske p\u00e5 backe)"
+    ],
+    [
+        825,
+        "vackla: vara n\u00e4ra att falla"
+    ],
+    [
+        826,
+        "darrh\u00e4nt: darrig"
+    ],
+    [
+        827,
+        "tilldra sig: h\u00e4nda"
+    ],
+    [
+        828,
+        "banes\u00e5r: d\u00f6dande slag"
+    ],
+    [
+        829,
+        "blotta: g\u00f6ra bar"
+    ],
+    [
+        830,
+        "flamma: eldsl\u00e5ga"
+    ],
+    [
+        831,
+        "galge: st\u00e4llning d\u00e4r d\u00f6dsd\u00f6mda h\u00e4ngs"
+    ],
+    [
+        832,
+        "\u00e5der: kanal f\u00f6r blod i kroppen"
+    ],
+    [
+        833,
+        "f\u00f6r en g\u00e5ngs skull: undantagsvis"
+    ],
+    [
+        834,
+        "avs\u00e4ga sig: avst\u00e5 fr\u00e5n, tacka nej"
+    ],
+    [
+        835,
+        "f\u00e4sta sig vid: ta fasta p\u00e5"
+    ],
+    [
+        836,
+        "1.3"
+    ],
+    [
+        837,
+        "eftertryck: extra kraftigt understrykande"
+    ],
+    [
+        838,
+        "kr\u00e4k: skurk, s\u00e4lle, lymmmel, f\u00e4hund"
+    ],
+    [
+        839,
+        "beck: svart, tr\u00f6gflytande \u00e4mne fr\u00e5n tj\u00e4ra"
+    ],
+    [
+        840,
+        "skrov: stomme till ett fartyg"
+    ],
+    [
+        841,
+        "beveka: r\u00f6ra, \u00f6vertala, v\u00e4dja"
+    ],
+    [
+        842,
+        "skv\u00e4tt: liten m\u00e4ngd v\u00e4tska"
+    ],
+    [
+        843,
+        "vara med om: uppleva, erfara, genomleva"
+    ],
+    [
+        844,
+        "medtagen: utmattad, sliten"
+    ],
+    [
+        845,
+        "mutor: g\u00e5vor som man ger f\u00f6r att g\u00f6ra n\u00e5gon hj\u00e4lpa"
+    ],
+    [
+        846,
+        "st\u00f6ta: irritera"
+    ],
+    [
+        847,
+        "koj: sovplats p\u00e5 b\u00e5t"
+    ],
+    [
+        848,
+        "roffa: r\u00f6va"
+    ],
+    [
+        849,
+        "bj\u00e4rt: skarp"
+    ],
+    [
+        850,
+        "yttra: s\u00e4ga"
+    ],
+    [
+        851,
+        "ta k\u00e5l p\u00e5: d\u00f6da"
+    ],
+    [
+        852,
+        "dvala: s\u00f6mn"
+    ],
+    [
+        853,
+        "bek\u00e4nnelse: medgivande, deklaration"
+    ],
+    [
+        854,
+        "bestyr: syssla, uppgifter"
     ]
 ]

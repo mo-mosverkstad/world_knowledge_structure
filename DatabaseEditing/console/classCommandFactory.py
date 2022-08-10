@@ -36,6 +36,8 @@ class CommandFactory(object):
             'ut':     CommandUpdate,
             'updatelink': CommandUpdateLink,
             'ul':         CommandUpdateLink,
+            'move':       CommandUpdateLink,
+            'mv':         CommandUpdateLink,
             'sort': CommandSort,
             'st':   CommandSort,
             'dbexport': CommandDbexport,

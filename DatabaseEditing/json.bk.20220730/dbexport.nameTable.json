@@ -2093,11 +2093,11 @@
     ],
     [
         524,
-        "Objektiv"
+        "Rasterisering"
     ],
     [
         525,
-        "Vetenskap"
+        "Vetenskaplig Rasterisering"
     ],
     [
         526,
@@ -2433,7 +2433,7 @@
     ],
     [
         609,
-        "Livet"
+        "Privatliv"
     ],
     [
         610,
@@ -2465,7 +2465,7 @@
     ],
     [
         617,
-        "Br\u00e5kmakare"
+        "Mot framsteg(br\u00e5kmakare)"
     ],
     [
         618,
@@ -4880,2071 +4880,1495 @@
         "lotsa: styra fartyg genom besv\u00e4rliga farvatten"
     ],
     [
-        1221,
+        1222,
         "plumsa: plaska, falla tungt ner i vatten"
     ],
     [
-        1222,
+        1223,
         "amfiteater: utomhus scen (teater)"
     ],
     [
-        1223,
+        1224,
         "k\u00e4rr: tr\u00e4sk, myr, sumpmark"
     ],
     [
-        1224,
+        1225,
         "kvalmig: kvav, varm och sv\u00e5r att andas"
     ],
     [
-        1225,
+        1226,
         "v\u00e5ga: s\u00e4tta p\u00e5 spel, satsa, riskera"
     ],
     [
-        1226,
+        1227,
         "f\u00f6red\u00f6me: f\u00f6rebild, exempel"
     ],
     [
-        1227,
+        1228,
         "formligen: alldeles, helt, bokstavligen, absolut"
     ],
     [
-        1228,
+        1229,
         "\u00f6vertr\u00e4ffa: vara b\u00e4ttre \u00e4n"
     ],
     [
-        1229,
+        1230,
         "tillm\u00f6tesg\u00e5ende: hj\u00e4lpsam, tj\u00e4nstvillig"
     ],
     [
-        1230,
+        1231,
         "idel: bara, helt och h\u00e5llet, ren, nothing but"
     ],
     [
-        1231,
+        1232,
         "lyster: glans"
     ],
     [
-        1232,
+        1233,
         "pik: elakt ord, spydighet, illvilighet"
     ],
     [
-        1233,
+        1234,
         "vina: ge ifr\u00e5n sig ett h\u00f6gt och g\u00e4llt och ih\u00e5llande ljud"
     ],
     [
-        1234,
+        1235,
         "tala f\u00f6rst\u00e5nd med: 1. ta itu med, 2. f\u00f6rklara f\u00f6r n\u00e5gon (reason with someone)"
     ],
     [
-        1235,
+        1236,
         "sanna mina ord: det kommer att bli som jag har sagt"
     ],
     [
-        1236,
+        1237,
         "inviga: g\u00f6ra n\u00e5gon f\u00f6rtrogen"
     ],
     [
-        1237,
+        1238,
         "snava: snubbla, st\u00f6ta foten mot n\u00e5got och tappa balansen"
     ],
     [
-        1238,
+        1239,
         "maska: s\u00f6la, f\u00f6rhala tiden, mj\u00f6lka"
     ],
     [
-        1239,
+        1240,
         "besittning: innehav, \u00e4gande"
     ],
     [
-        1240,
+        1241,
         "ta i bisittning: occupy, dominate"
     ],
     [
-        1241,
+        1242,
         "infall: (pl\u00f6tslig) id\u00e9, uppslag, nyck"
     ],
     [
-        1242,
+        1243,
         "bem\u00e4ktiga sig: kapa, ta i besittning, er\u00f6vra"
     ],
     [
-        1243,
+        1244,
         "reling: r\u00e4cke, \u00f6vre kant p\u00e5 en b\u00e5tsida"
     ],
     [
-        1244,
+        1245,
         "\u00e5ra: redskap att ro med, oar"
     ],
     [
-        1245,
+        1246,
         "sn\u00e5r: risig sm\u00e5skog, buskage"
     ],
     [
-        1246,
+        1247,
         "g\u00e5 dit n\u00e4san pekar: uttryck f\u00f6r att g\u00e5 utan att t\u00e4nka sig f\u00f6r, utan m\u00e5l"
     ],
     [
-        1247,
+        1248,
         "i kapp: i t\u00e4vling"
     ],
     [
-        1248,
+        1249,
         "f\u00f6rspr\u00e5ng: ledning, ledande st\u00e4llning, f\u00f6rsteg"
     ],
     [
-        1249,
+        1250,
         "3.2 Den f\u00f6rsta striden"
     ],
     [
-        1250,
+        1251,
         "sumpmark: tr\u00e4sk, myr, k\u00e4rr, sankmark"
     ],
     [
-        1251,
+        1252,
         "bevuxen: t\u00e4ckt, bekl\u00e4dd med"
     ],
     [
-        1252,
+        1253,
         "f\u00f6ga: v\u00e4ldigt lite"
     ],
     [
-        1253,
+        1254,
         "dunge: liten samling tr\u00e4d"
     ],
     [
-        1254,
+        1255,
         "t\u00f6rn: tagg"
     ],
     [
-        1255,
+        1256,
         "kontur: ytterlinje"
     ],
     [
-        1256,
+        1257,
         "dis: l\u00e4tt dimma"
     ],
     [
-        1257,
+        1258,
         "soldis: solr\u00f6k"
     ],
     [
-        1258,
+        1259,
         "snattra: l\u00e5ta som ankor, kackel"
     ],
     [
-        1259,
+        1260,
         "fastst\u00e4lla: best\u00e4mma, besluta"
     ],
     [
-        1260,
+        1261,
         "inkr\u00e4ktare: person som tar sig in objuden"
     ],
     [
-        1261,
+        1262,
         "gassa: br\u00e4nna, steka"
     ],
     [
-        1262,
+        1263,
         "fyllig: som har stort omf\u00e5ng, mullig"
     ],
     [
-        1263,
+        1264,
         "beveka: f\u00e5 n\u00e5gon att \u00e4ndra inst\u00e4llning genom k\u00e4nsloargument, v\u00e4dja"
     ],
     [
-        1264,
+        1265,
         "korp: kr\u00e5kf\u00e5gel"
     ],
     [
-        1265,
+        1266,
         "inbilla: f\u00e5 n\u00e5gon att tro"
     ],
     [
-        1266,
+        1267,
         "surrande: brummande, sus, sorl"
     ],
     [
-        1267,
+        1268,
         "v\u00e4lde: makt, rike"
     ],
     [
-        1268,
+        1269,
         "d\u00e5sig: s\u00f6mnig"
     ],
     [
-        1269,
+        1270,
         "sporre: stimulans, vass spets p\u00e5 en ridst\u00f6vel som anv\u00e4nds av ryttare f\u00f6r att driva p\u00e5 h\u00e4st"
     ],
     [
-        1270,
+        1271,
         "sporra: driva p\u00e5, egga, stimulera"
     ],
     [
-        1271,
+        1272,
         "knappn\u00e5l: n\u00e5l med huvud, pin"
     ],
     [
-        1272,
+        1273,
         "brus: starkt v\u00e4sande ljud"
     ],
     [
-        1273,
+        1274,
         "brusa upp: pl\u00f6tsligt bli arg"
     ],
     [
-        1274,
+        1275,
         "Frid vare med: Peace be with"
     ],
     [
-        1275,
+        1276,
         "trotsa: g\u00f6ra \u00f6ppen motst\u00e5nd mot"
     ],
     [
-        1276,
+        1277,
         "slunga: kasta h\u00e4ftigt"
     ],
     [
-        1277,
+        1278,
         "projektil: f\u00f6rem\u00e5l som skjuts iv\u00e4g, skott"
     ],
     [
-        1278,
+        1279,
         "br\u00e4cka: bryta, kn\u00e4cka"
     ],
     [
-        1279,
+        1280,
         "tuva: liten gr\u00e4sbev\u00e4xt upph\u00f6jning i marken"
     ],
     [
-        1280,
+        1281,
         "barmh\u00e4rtig: godhj\u00e4rtd, medlidsam, merciful"
     ],
     [
-        1281,
+        1282,
         "beg\u00e5ngen/beg\u00e5nget: beg\u00e5tt"
     ],
     [
-        1282,
+        1283,
         "3.3 Mannen p\u00e5 \u00f6n"
     ],
     [
-        1283,
+        1284,
         "uppenbarelse: varelse, syn, insikt, vision"
     ],
     [
-        1284,
+        1285,
         "best\u00e4mbar: definierbar, urskiljbar"
     ],
     [
-        1285,
+        1286,
         "sk\u00e4ra: kort halvcirkelformat lie"
     ],
     [
-        1286,
+        1287,
         "utvilad: som har vilat tillr\u00e4ckligt, pigg"
     ],
     [
-        1287,
+        1288,
         "m\u00e4rkv\u00e4rdig: egendomlig, speciell"
     ],
     [
-        1288,
+        1289,
         "hjort: hovdjur med greniga horn, deer"
     ],
     [
-        1289,
+        1290,
         "erinra: komma ih\u00e5g, p\u00e5minna"
     ],
     [
-        1290,
+        1291,
         "vara p\u00e5 vippen att: be on the point of"
     ],
     [
-        1291,
+        1292,
         "anlete: ansikt"
     ],
     [
-        1292,
+        1293,
         "anletsdrag: ansiktsuttryck, utseende"
     ],
     [
-        1293,
+        1294,
         "olikartad: olika slags, different"
     ],
     [
-        1294,
+        1295,
         "stump: kort bit, sista bit, end"
     ],
     [
-        1295,
+        1296,
         "utstyrsel: kl\u00e4der, dr\u00e4kt"
     ],
     [
-        1296,
+        1297,
         "varvid: vid vilket tillf\u00e4lle, och d\u00e5"
     ],
     [
-        1297,
+        1298,
         "rabbla: l\u00e4sa upp snabbt"
     ],
     [
-        1298,
+        1299,
         "katekes: l\u00e4robok i kristendomens huvudstycken"
     ],
     [
-        1299,
+        1300,
         "singla: falla med sv\u00e4ngande r\u00f6relse till marken"
     ],
     [
-        1300,
+        1301,
         "singla slant: kasta ett mynt f\u00f6r att best\u00e4mma"
     ],
     [
-        1301,
+        1302,
         "f\u00f6rsyn: Guds omsorg, \u00f6de"
     ],
     [
-        1302,
+        1303,
         "h\u00f6tta/hytta: hotfullt skaka n\u00e4ven eller fingret"
     ],
     [
-        1303,
+        1304,
         "h\u00e4lsa hem: att det kommer att g\u00e5 vederb\u00f6rande illa"
     ],
     [
-        1304,
+        1305,
         "knipa: tillf\u00e4lligt besv\u00e4rligt situation, sv\u00e5righet"
     ],
     [
-        1305,
+        1306,
         "livr\u00e9: tj\u00e4nstedr\u00e4kt"
     ],
     [
-        1306,
+        1307,
         "b\u00e4ra sig \u00e5t: uppf\u00f6ra sig"
     ],
     [
-        1307,
+        1308,
         "d\u00e4rvid: vid denna"
     ],
     [
-        1308,
+        1309,
         "\u00e5terkasta: reflektera"
     ],
     [
-        1309,
+        1310,
         "beder: bee, b\u00f6na, pray"
     ],
     [
-        1310,
+        1311,
         "gev\u00e4rssalva: samtidigt avfyrning av fera gev\u00e4r"
     ],
     [
-        1311,
+        1314,
         "4.1 Hur skeppet \u00f6vergavs"
     ],
     [
-        1312,
+        1315,
         "\u00f6vermanna: besegra"
     ],
     [
-        1313,
+        1316,
         "slinka: smita"
     ],
     [
-        1314,
+        1317,
         "oviss: inte s\u00e4ker, tveksam"
     ],
     [
-        1315,
+        1318,
         "skarv: gr\u00e4ns mellan tv\u00e5 delar, \u00f6verg\u00e5ng"
     ],
     [
-        1316,
+        1319,
         "stank: vidrig lukt, od\u00f6r"
     ],
     [
-        1317,
+        1320,
         "dysenteri: en tarmsjukdom"
     ],
     [
-        1318,
+        1321,
         "gorma: sk\u00e4lla, gr\u00e4la"
     ],
     [
-        1319,
+        1322,
         "f\u00f6rt\u00f6ja: l\u00e4gga fast med rep"
     ],
     [
-        1320,
+        1323,
         "back: 1. back\u00e5tv\u00e4xel p\u00e5 en b\u00e5t/bil 2. l\u00e5da 3. f\u00f6rsvarsspelare i idrott"
     ],
     [
-        1321,
+        1324,
         "jolle: liten roddb\u00e5t"
     ],
     [
-        1322,
+        1325,
         "rekognoscera: unders\u00f6ka, utforska, recognize"
     ],
     [
-        1323,
+        1326,
         "villr\u00e5dig: os\u00e4ker om hur man ska handla, tveksam"
     ],
     [
-        1324,
+        1327,
         "skjuta ut: sticka fram"
     ],
     [
-        1325,
+        1328,
         "svalka: kyla"
     ],
     [
-        1326,
+        1329,
         "v\u00e4lla: rinna i stora m\u00e4ngder, fl\u00f6da, str\u00f6mma"
     ],
     [
-        1327,
+        1330,
         "r\u00f6ja: 1. st\u00e4da, rensa upp, 2. odla upp, 3. avsl\u00f6ja"
     ],
     [
-        1328,
+        1331,
         "bel\u00e4gra: omringa f\u00f6r att tvinga f\u00f6rsvarare att ge upp"
     ],
     [
-        1329,
+        1332,
         "rapph\u00f6ns: en vilt f\u00e5gel som man gillar att jaga"
     ],
     [
-        1330,
+        1333,
         "f\u00f6rdra: kr\u00e4va, beg\u00e4ra"
     ],
     [
-        1331,
+        1334,
         "proviant: livsmedel, matf\u00f6rr\u00e5d"
     ],
     [
-        1332,
+        1335,
         "\u00f6verrumpla: \u00f6verraska"
     ],
     [
-        1333,
+        1338,
         "ty: eftersom, d\u00e4rf\u00f6r att, f\u00f6r"
     ],
     [
-        1334,
+        1339,
         "hertig: titel f\u00f6r manlig medlem av kungahuset"
     ],
     [
-        1335,
+        1340,
         "uppskakad: chockad, r\u00e4dd"
     ],
     [
-        1336,
+        1341,
         "l\u00e4rft: t\u00e4tv\u00e4vda vita tyger"
     ],
     [
-        1337,
+        1342,
         "vara illa d\u00e4ran: vara sv\u00e5rt skadad eller sjuk"
     ],
     [
-        1338,
+        1343,
         "g\u00e5 till v\u00e4ga: g\u00f6ra n\u00e5got p\u00e5 ett visst s\u00e4tt"
     ],
     [
-        1339,
+        1344,
         "konjak: en dyr spritdryck"
     ],
     [
-        1340,
+        1345,
         "ov\u00e4rderlig: som inte kan v\u00e4rderas i pengar"
     ],
     [
-        1341,
+        1346,
         "anf\u00f6ra: leda, ge order"
     ],
     [
-        1342,
+        1347,
         "han \u00e4r d\u00f6dens: han \u00e4r d\u00f6dens lammunge"
     ],
     [
-        1343,
+        1348,
         "\u00e5tskillig: mycket, en hel del"
     ],
     [
-        1344,
+        1349,
         "r\u00e5dpl\u00e4gning: debatt, samr\u00e5d, diskussion"
     ],
     [
-        1345,
+        1350,
         "tripp: trip"
     ],
     [
-        1346,
+        1351,
         "b\u00f6rda: last, belastning"
     ],
     [
-        1347,
+        1352,
         "fatta posto: inta f\u00f6rsvarsst\u00e4llning, st\u00e4lla sig"
     ],
     [
-        1348,
+        1353,
         "oskadligg\u00f6ra: desarmera"
     ],
     [
-        1349,
+        1354,
         "f\u00e5nglina: f\u00f6rt\u00f6jningslina p\u00e5 b\u00e5t"
     ],
     [
-        1350,
+        1355,
         "f\u00f6r brinnande livet: av alla krafter, i full fart"
     ],
     [
-        1351,
+        1356,
         "l\u00e4mpa \u00f6ver bord: kasta i vattnet fr\u00e5n ett fartyg"
     ],
     [
-        1352,
+        1357,
         "hojta: anropa h\u00f6gt"
     ],
     [
-        1353,
+        1358,
         "bege sig iv\u00e4g: \u00e5ka iv\u00e4g"
     ],
     [
-        1354,
+        1359,
         "vr\u00e4ka: 1. v\u00e5ldsamt kasta, 2. (med lagens hj\u00e4lp) k\u00f6ra ut en hyresg\u00e4sst fr\u00e5n en l\u00e4genhet"
     ],
     [
-        1355,
+        1360,
         "4.2 Jollens sista f\u00e4rd"
     ],
     [
-        1356,
+        1361,
         "d\u00e4rtill: dessutom, \u00e4ven, in addition"
     ],
     [
-        1357,
+        1362,
         "inh\u00e4gnad: omr\u00e5de innanf\u00f6r st\u00e4ngsel"
     ],
     [
-        1358,
+        1363,
         "kantra: v\u00e4lta, kapsejsa"
     ],
     [
-        1359,
+        1364,
         "h\u00e5lla av: 1. edge away (to move contiously away from something), 2. tycka om, \u00e4lska"
     ],
     [
-        1360,
+        1365,
         "st\u00e4v: fartygs f\u00f6r\u00e4nda eller akter\u00e4nda"
     ],
     [
-        1361,
+        1366,
         "orda: tala"
     ],
     [
-        1362,
+        1367,
         "bombaremang: bombardment"
     ],
     [
-        1363,
+        1368,
         "presenning: stort tygstycke som anv\u00e4nds till skydd"
     ],
     [
-        1364,
+        1369,
         "skytt: person som skjuter"
     ],
     [
-        1365,
+        1370,
         "r\u00f6dbrusig: r\u00f6dflammig i ansiktet av uphetning, sprit"
     ],
     [
-        1366,
+        1371,
         "stj\u00e4lpa: v\u00e4lta, kantra"
     ],
     [
-        1367,
+        1372,
         "rodd: ro"
     ],
     [
-        1368,
+        1373,
         "laddstock: stake av tr\u00e4, j\u00e4rn eller fj\u00e4derst\u00e5l varmed skottet medf\u00f6rs i pipan p\u00e5 eldvapen f\u00f6r framladdning"
     ],
     [
-        1369,
+        1374,
         "utst\u00f6ta: 1. frambringa h\u00e4ftigt ljud, 2. utesluta"
     ],
     [
-        1370,
+        1375,
         "s\u00e4ga till: befalla, uppmana, ge order"
     ],
     [
-        1371,
+        1376,
         "\u00e5rtag: rodd, stroke"
     ],
     [
-        1372,
+        1377,
         "betraktande: consideration"
     ],
     [
-        1373,
+        1378,
         "i betraktande av: med h\u00e4nsyn till"
     ],
     [
-        1374,
+        1379,
         "bryn: utkant"
     ],
     [
-        1375,
+        1380,
         "kn\u00e4ppa: sm\u00e4lla, f\u00e4sta ihop"
     ],
     [
-        1376,
+        1381,
         "vada: g\u00e5 i grunt vatten"
     ],
     [
-        1377,
+        1382,
         "4.3 Slutet p\u00e5 f\u00f6rsta dagens strid"
     ],
     [
-        1378,
+        1383,
         "remsa: smalt band"
     ],
     [
-        1379,
+        1384,
         "sammandrabbning: sammanst\u00f6tning"
     ],
     [
-        1380,
+        1385,
         "klinga: blad p\u00e5 sv\u00e4rt, s\u00e5g"
     ],
     [
-        1381,
+        1386,
         "vina: vissla, ge ifr\u00e5n sig ett h\u00f6gt och g\u00e4llt och ih\u00e5llande ljud"
     ],
     [
-        1382,
+        1387,
         "g\u00f6ra sk\u00e4l f\u00f6r: vara v\u00e4rd"
     ],
     [
-        1383,
+        1388,
         "vackla: vara n\u00e4ra att falla, svikta, stappl"
     ],
     [
-        1384,
+        1389,
         "falla p\u00e5 sin post: d\u00f6 av sin tj\u00e4nst"
     ],
     [
-        1385,
+        1390,
         "skingra: splittra \u00e5t olika h\u00e5ll"
     ],
     [
-        1386,
+        1391,
         "st\u00f6na: ge ifr\u00e5n sig ett dovt och utdraget ljud av sm\u00e4rta"
     ],
     [
-        1387,
+        1392,
         "trumpen: butter och missn\u00f6jd, grinig"
     ],
     [
-        1388,
+        1393,
         "sittopp: sm\u00e4ll, slag"
     ],
     [
-        1389,
+        1394,
         "bruklig: vanlig, anv\u00e4ndbar"
     ],
     [
-        1390,
+        1395,
         "urskuldande: urs\u00e4ktande"
     ],
     [
-        1391,
+        1396,
         "inventera: genomg\u00e5 och granska, kontrollera"
     ],
     [
-        1392,
+        1397,
         "v\u00f6rdnad: respekt, heder"
     ],
     [
-        1393,
+        1398,
         "husbonde: herre, arbetsgivare, \u00e4gare"
     ],
     [
-        1394,
+        1399,
         "unds\u00e4tta: r\u00e4dda, befria, hj\u00e4lpa (i sv\u00e5rt)"
     ],
     [
-        1395,
+        1400,
         "unds\u00e4ttningsexpedition: rescue mission"
     ],
     [
-        1396,
+        1401,
         "n\u00e5dig: barmh\u00e4rtig, v\u00e4lvillig"
     ],
     [
-        1397,
+        1402,
         "barskrapad: utfattig"
     ],
     [
-        1398,
+        1403,
         "ranson: tilldelning"
     ],
     [
-        1399,
+        1404,
         "stryka: 1. ta bort, 2. dra med handen \u00f6ver, 3. sl\u00e4ta till med strykj\u00e4rn"
     ],
     [
-        1400,
+        1405,
         "utslag: 1. beslut, 2. uttryck, 3. bl\u00e5sor p\u00e5 huden"
     ],
     [
-        1401,
+        1406,
         "rikoschett: projektil som studsar och forts\u00e4tter i en ny bana"
     ],
     [
-        1402,
+        1407,
         "\u00f6dsla: sl\u00f6sa"
     ],
     [
-        1403,
+        1408,
         "anm\u00e4rka: p\u00e5peka"
     ],
     [
-        1404,
+        1409,
         "upplag: f\u00f6rr\u00e5d"
     ],
     [
-        1405,
+        1410,
         "timmer: grovt os\u00e5gat tr\u00e4, stock"
     ],
     [
-        1406,
+        1411,
         "timmerman: tr\u00e4arbetare p\u00e5 byggarbetsplats, snickare"
     ],
     [
-        1407,
+        1412,
         "de enda: the only ones"
     ],
     [
-        1408,
-        "Ord"
-    ],
-    [
-        1409,
-        "Ord"
-    ],
-    [
-        1410,
-        "coward: a person who is not brave"
-    ],
-    [
-        1411,
-        "timid: shy and nervous without confidence"
-    ],
-    [
-        1412,
-        "reckless: doing something dangerous without considering risks"
-    ],
-    [
         1413,
-        "bold: not frightened of danger"
+        "Ord"
     ],
     [
         1414,
-        "impediment: hurdle, obstacle"
+        "Ord"
     ],
     [
         1415,
-        "amiable: pleasant and friendly"
+        "coward: a person who is not brave"
     ],
     [
         1416,
-        "candid: honest and telling the truth"
+        "timid: shy and nervous without confidence"
     ],
     [
         1417,
-        "gullible: easily decieved"
+        "reckless: doing something dangerous without considering risks"
     ],
     [
         1418,
-        "torture: to cause great pain to someone intentionally"
+        "bold: not frightened of danger"
     ],
     [
         1419,
-        "stingy: unwilling to spend money"
+        "impediment: hurdle, obstacle"
     ],
     [
         1420,
-        "generous: willing to give money, help, kindness"
+        "amiable: pleasant and friendly"
     ],
     [
         1421,
-        "traitor: person who is not loyal"
+        "candid: honest and telling the truth"
     ],
     [
         1422,
-        "cautious: careful, well-considered"
+        "gullible: easily decieved"
     ],
     [
         1423,
-        "decent: socially acceptable and good"
+        "torture: to cause great pain to someone intentionally"
     ],
     [
         1424,
-        "dignity: the importance and value that a person has"
+        "stingy: unwilling to spend money"
     ],
     [
         1425,
-        "abominable: very bad or unpleasant"
-    ],
-    [
-        1426,
-        "apprehensive: feeling worried about something bad happening"
-    ],
-    [
-        1427,
-        "arrogance: proud and having as you are the most important"
+        "generous: willing to give money, help, kindness"
     ],
     [
         1428,
-        "trait: a particular characteristic"
+        "traitor: person who is not loyal"
     ],
     [
         1429,
-        "inferiority: being not good, or not as good as someone else"
+        "cautious: careful, well-considered"
     ],
     [
         1430,
-        "dwelling: a house or place to live in"
+        "decent: socially acceptable and good"
     ],
     [
         1431,
-        "perish: to die in an accident or being killed"
+        "dignity: the importance and value that a person has"
     ],
     [
         1432,
-        "grandstand: seats in stadium or huge buildings"
+        "abominable: very bad or unpleasant"
     ],
     [
         1433,
-        "emit: to send out a beam, noise or gas"
+        "apprehensive: feeling worried about something bad happening"
     ],
     [
         1434,
-        "ignite: to cause starting burning or exploding"
+        "arrogance: proud and having as you are the most important"
     ],
     [
         1435,
-        "dull: not interesting or exciting in any way"
+        "trait: a particular characteristic"
     ],
     [
         1436,
-        "mock: to laugh at someone often copying funnily"
+        "inferiority: being not good, or not as good as someone else"
     ],
     [
         1437,
-        "compousure: calm and confident"
+        "dwelling: a house or place to live in"
     ],
     [
         1438,
-        "diplomatic: controlling 2 opposing sides without upseting anyone"
+        "perish: to die in an accident or being killed"
     ],
     [
         1439,
-        "apparition: the spirit of a dead appearing visibly"
+        "grandstand: seats in stadium or huge buildings"
     ],
     [
         1440,
-        "petal: bright colored parts form a flower"
+        "emit: to send out a beam, noise or gas"
     ],
     [
         1441,
-        "bough: a large branch of a tree"
+        "ignite: to cause starting burning or exploding"
     ],
     [
         1442,
-        "brow: the forehead"
+        "dull: not interesting or exciting in any way"
     ],
     [
         1443,
-        "parting: done while leaving or separating"
+        "mock: to laugh at someone often copying funnily"
     ],
     [
         1444,
-        "thus: with this result"
+        "compousure: calm and confident"
     ],
     [
         1445,
-        "avow: to admit something or say something publicly"
+        "diplomatic: controlling 2 opposing sides without upseting anyone"
     ],
     [
         1446,
-        "deem: to consider or judge something in a particular way"
+        "apparition: the spirit of a dead appearing visibly"
     ],
     [
         1447,
-        "amid: middle surrounded by"
+        "petal: bright colored parts form a flower"
     ],
     [
         1448,
-        "torment: great mental suffering, unhappiness"
+        "bough: a large branch of a tree"
     ],
     [
         1449,
-        "pitiless: cruel, no pity"
+        "brow: the forehead"
     ],
     [
         1450,
-        "lively: full with energy and enthusiasm, interesting, exciting"
+        "parting: done while leaving or separating"
     ],
     [
         1451,
-        "imagery: using words describing ideas or situations"
+        "thus: with this result"
     ],
     [
         1452,
-        "blur: something cannot see clearly"
+        "avow: to admit something or say something publicly"
     ],
     [
         1453,
-        "theme: the subject of a talk, book, film"
+        "deem: to consider or judge something in a particular way"
     ],
     [
         1454,
-        "mimic: to copy the way particular person speaks moves for fun"
+        "amid: middle surrounded by"
     ],
     [
         1455,
-        "depiction: the way that something is represented or shown"
+        "torment: great mental suffering, unhappiness"
     ],
     [
         1456,
-        "homogeneous: consting of parts that are same typed"
+        "pitiless: cruel, no pity"
     ],
     [
         1457,
-        "assess: to judge the amount, value, quality or importance"
+        "lively: full with energy and enthusiasm, interesting, exciting"
     ],
     [
         1458,
-        "juxtapose: to put unsimilar things next to each other"
+        "imagery: using words describing ideas or situations"
     ],
     [
         1459,
-        "prose: written language in its ordinary form rather than poetry"
+        "blur: something cannot see clearly"
     ],
     [
         1460,
-        "assonance: the similarity in sound between 2 syllables dose together"
+        "theme: the subject of a talk, book, film"
     ],
     [
         1461,
-        "fixture: permanently fixed place of furniture in a house"
+        "mimic: to copy the way particular person speaks moves for fun"
     ],
     [
         1462,
-        "denote: to represent something"
+        "depiction: the way that something is represented or shown"
     ],
     [
         1463,
-        "oscillation: repeated movement from one position to another"
+        "homogeneous: consting of parts that are same typed"
     ],
     [
         1464,
-        "superfluous: more than is needed or wanted"
+        "assess: to judge the amount, value, quality or importance"
     ],
     [
         1465,
-        "dorm: a large room with many beds maybe in campus"
+        "juxtapose: to put unsimilar things next to each other"
     ],
     [
         1466,
-        "rely on: depend on"
+        "prose: written language in its ordinary form rather than poetry"
     ],
     [
         1467,
-        "unreliable: cannot be trusted or believed"
+        "assonance: the similarity in sound between 2 syllables dose together"
     ],
     [
         1468,
-        "deteriorate: to become worse"
+        "fixture: permanently fixed place of furniture in a house"
     ],
     [
         1469,
-        "amicable: friendly, harmonious, peaceful"
+        "denote: to represent something"
     ],
     [
         1470,
-        "foreshadowing: small description in beginning that will be meaningsful later"
+        "oscillation: repeated movement from one position to another"
     ],
     [
         1471,
-        "villain: a bad person who harms other people or breaks the law"
+        "superfluous: more than is needed or wanted"
     ],
     [
         1472,
-        "regulate: to control something"
+        "dorm: a large room with many beds maybe in campus"
     ],
     [
         1473,
-        "ratify: to make an agreement official"
+        "rely on: depend on"
     ],
     [
         1474,
-        "stance: a way of thinking about something, especially"
+        "unreliable: cannot be trusted or believed"
     ],
     [
         1475,
-        "fiercely: in a frightening, violent, or powerful way"
+        "deteriorate: to become worse"
     ],
     [
         1476,
-        "sue: to take legal action against someone"
+        "amicable: friendly, harmonious, peaceful"
     ],
     [
         1477,
-        "curb: to control or limit the unwanteds"
+        "foreshadowing: small description in beginning that will be meaningsful later"
     ],
     [
         1478,
-        "in favor of: to support or approve sth"
+        "villain: a bad person who harms other people or breaks the law"
     ],
     [
         1479,
-        "counter: to react to something with opposing opinion"
+        "regulate: to control something"
     ],
     [
         1480,
-        "charges: publicly accuse someone of doing something bad"
+        "ratify: to make an agreement official"
     ],
     [
         1481,
-        "contend: to complete in order to win something"
+        "stance: a way of thinking about something, especially"
     ],
     [
         1482,
-        "grandee: an important person in a particular job"
+        "fiercely: in a frightening, violent, or powerful way"
     ],
     [
         1483,
-        "agitate: to make someone feel worried or angry"
+        "sue: to take legal action against someone"
     ],
     [
         1484,
-        "interpret: to decide what the intended meaning of something is"
+        "curb: to control or limit the unwanteds"
     ],
     [
         1485,
-        "decree: official statement that something must happen"
+        "in favor of: to support or approve sth"
     ],
     [
         1486,
-        "lodge: to make an official complaint"
+        "counter: to react to something with opposing opinion"
     ],
     [
         1487,
-        "remedy: to do correct the mistake"
+        "charges: publicly accuse someone of doing something bad"
     ],
     [
         1488,
-        "fraught: causing or having extreme worry or anxiety"
+        "contend: to complete in order to win something"
     ],
     [
         1489,
-        "supersede: to replace something old"
+        "grandee: an important person in a particular job"
     ],
     [
         1490,
-        "jolly: happy and smiling"
-    ],
-    [
-        1491,
-        "provision: the act of providing something"
+        "agitate: to make someone feel worried or angry"
     ],
     [
         1492,
-        "strike down something: to decide that a law or rule is illegal"
+        "interpret: to decide what the intended meaning of something is"
     ],
     [
         1493,
-        "in jeopardy: in danger of being damaged or destroyed"
+        "decree: official statement that something must happen"
     ],
     [
         1494,
-        "scupper: to cause a plan or opportunity to fail"
+        "lodge: to make an official complaint"
     ],
     [
         1495,
-        "the vanguard: army or navy that leads an attack on an enemy"
+        "remedy: to do correct the mistake"
     ],
     [
         1496,
-        "cap: to put a limit on expenses"
+        "fraught: causing or having extreme worry or anxiety"
     ],
     [
         1497,
-        "controversial: causing disagreement or discussion"
+        "supersede: to replace something old"
     ],
     [
         1498,
-        "odour: an unpleasant smell"
+        "jolly: happy and smiling"
     ],
     [
         1499,
-        "olfactory: connected with the ability to smell"
+        "provision: the act of providing something"
     ],
     [
         1500,
-        "thoroughly: completely"
+        "strike down something: to decide that a law or rule is illegal"
     ],
     [
         1501,
-        "significantly: in a way that is easy to see or by a large amount"
+        "in jeopardy: in danger of being damaged or destroyed"
     ],
     [
         1502,
-        "plausible: seeming likely to be true"
+        "scupper: to cause a plan or opportunity to fail"
     ],
     [
         1503,
-        "hypothesis: an unproven idea or explanation based on facts"
+        "the vanguard: army or navy that leads an attack on an enemy"
     ],
     [
         1504,
-        "exclusively: only"
+        "cap: to put a limit on expenses"
     ],
     [
         1505,
-        "magnitude: the size or importance of something"
+        "controversial: causing disagreement or discussion"
     ],
     [
         1506,
-        "pun: a humorouse use of a word or phrase with several meanings that sounds like another word"
+        "odour: an unpleasant smell"
     ],
     [
         1507,
-        "conservative: not usually liking or trusting change"
+        "olfactory: connected with the ability to smell"
     ],
     [
         1508,
-        "attend: to go to an event, place"
+        "thoroughly: completely"
     ],
     [
         1509,
-        "facility: a place where a particular activity happens"
+        "significantly: in a way that is easy to see or by a large amount"
     ],
     [
         1510,
-        "faculty: the people who teach in a departement in a college"
+        "plausible: seeming likely to be true"
     ],
     [
         1511,
-        "in operation: in working status"
+        "hypothesis: an unproven idea or explanation based on facts"
     ],
     [
         1512,
-        "gutted: extremely disappointed and unhappy"
+        "exclusively: only"
     ],
     [
         1513,
-        "committee: a samll group chosen to represent a larger organization for making decisions"
+        "magnitude: the size or importance of something"
     ],
     [
         1514,
-        "distinguish: to difference between 2 things"
+        "pun: a humorouse use of a word or phrase with several meanings that sounds like another word"
     ],
     [
         1515,
-        "specimen: something shown or examined as an example"
+        "conservative: not usually liking or trusting change"
     ],
     [
         1516,
-        "sort out: put things in order or correct place"
+        "attend: to go to an event, place"
     ],
     [
         1517,
-        "pneumonia: illness which lungs becomes red and swolled filled with liquid"
+        "facility: a place where a particular activity happens"
     ],
     [
         1518,
-        "rubble: the piles of broken stones and bricks"
+        "faculty: the people who teach in a departement in a college"
     ],
     [
         1519,
-        "cope: to deal successful with a difficult situation"
+        "in operation: in working status"
     ],
     [
         1520,
-        "epicenter: the point on the earths surface"
+        "gutted: extremely disappointed and unhappy"
     ],
     [
         1521,
-        "toll: suffering, death or damage"
+        "committee: a samll group chosen to represent a larger organization for making decisions"
     ],
     [
         1522,
-        "tremor: a slight shaking movement in a persons body of nervousness or excitement"
+        "distinguish: to difference between 2 things"
     ],
     [
         1523,
-        "demolish: to comletely destroy a building"
+        "specimen: something shown or examined as an example"
     ],
     [
         1524,
-        "erupt: explodes and flames and rocks come out of it"
+        "sort out: put things in order or correct place"
     ],
     [
         1525,
-        "illumination: giving new information about a subject or making easier to understand"
+        "pneumonia: illness which lungs becomes red and swolled filled with liquid"
     ],
     [
         1526,
-        "illuminate: brighten"
+        "rubble: the piles of broken stones and bricks"
     ],
     [
         1527,
-        "hailstorm: sudden heavy fall of hail"
-    ],
-    [
-        1528,
-        "creek: a narrow area of whater flowing into land"
-    ],
-    [
-        1529,
-        "amid: in the middle, surrounded by"
+        "cope: to deal successful with a difficult situation"
     ],
     [
         1530,
-        "debris: broken or ton pieces of something larger"
+        "epicenter: the point on the earths surface"
     ],
     [
         1531,
-        "satisfactory: good enough for a particular need or purpose"
+        "toll: suffering, death or damage"
     ],
     [
         1532,
-        "undergraduate: student studying for the first degree at college or university"
+        "tremor: a slight shaking movement in a persons body of nervousness or excitement"
     ],
     [
         1533,
-        "venue: the place where a public event or meeting happens"
+        "demolish: to comletely destroy a building"
     ],
     [
         1534,
-        "procedure: a set of action that is official or accepted"
+        "erupt: explodes and flames and rocks come out of it"
     ],
     [
         1535,
-        "proficiency: having skill and experience for doing something"
+        "illumination: giving new information about a subject or making easier to understand"
     ],
     [
         1536,
-        "lounge: a room where people can relax and wait"
+        "illuminate: brighten"
     ],
     [
         1537,
-        "executive: someone in a high position, makes decision and act"
+        "hailstorm: sudden heavy fall of hail"
     ],
     [
         1538,
-        "secretary: someone working in an office, writing letters, call on phone and arranging meetings for the boss"
+        "creek: a narrow area of whater flowing into land"
     ],
     [
         1539,
-        "fare: the money paid for the journey in a vehicle"
+        "amid: in the middle, surrounded by"
     ],
     [
         1540,
-        "transition: change from one form to another"
+        "debris: broken or ton pieces of something larger"
     ],
     [
         1541,
-        "euphoria: extreme happiness"
+        "satisfactory: good enough for a particular need or purpose"
     ],
     [
         1542,
-        "assignment: a piece of work given to someone"
+        "undergraduate: student studying for the first degree at college or university"
     ],
     [
         1543,
-        "understimated: underestimated"
+        "venue: the place where a public event or meeting happens"
     ],
     [
         1544,
-        "forage: to go from place to place searching for things that you can eat or use"
+        "procedure: a set of action that is official or accepted"
     ],
     [
         1545,
-        "circadian: used to describe the process in living form during a day"
+        "proficiency: having skill and experience for doing something"
     ],
     [
         1546,
-        "undergo: to experience somethin that is unpleasant or a change"
+        "lounge: a room where people can relax and wait"
     ],
     [
         1547,
-        "benign: pleasant and kind"
+        "executive: someone in a high position, makes decision and act"
     ],
     [
         1548,
-        "durable: able to last and used without becoming damaged"
+        "secretary: someone working in an office, writing letters, call on phone and arranging meetings for the boss"
     ],
     [
         1549,
-        "breach: an act of breaking a law, promise, agreement or relationship"
+        "fare: the money paid for the journey in a vehicle"
     ],
     [
         1550,
-        "malleable: that can easily be changed into a new shape"
+        "transition: change from one form to another"
     ],
     [
         1551,
-        "pragmatic: solving problems in a sensible way"
+        "euphoria: extreme happiness"
     ],
     [
         1552,
-        "contemprorary: existing or happening now"
+        "assignment: a piece of work given to someone"
     ],
     [
         1553,
-        "subjugate: to defeat people or a country and rule them that allows them no freedom"
+        "understimated: underestimated"
     ],
     [
         1554,
-        "deleterious: harmful"
+        "forage: to go from place to place searching for things that you can eat or use"
     ],
     [
         1555,
-        "whittle: making something from wood cutting off small pieces"
+        "circadian: used to describe the process in living form during a day"
     ],
     [
         1556,
-        "moodiness: easily changing moods"
+        "undergo: to experience somethin that is unpleasant or a change"
     ],
     [
         1557,
-        "shed: to get rid of something unwanted"
+        "benign: pleasant and kind"
     ],
     [
         1558,
-        "adamant: impossible to persuade"
+        "durable: able to last and used without becoming damaged"
     ],
     [
         1559,
-        "pronounced: very noticeable or certain, marked"
+        "breach: an act of breaking a law, promise, agreement or relationship"
     ],
     [
         1560,
-        "deplete: to reduce something in size or amount"
+        "malleable: that can easily be changed into a new shape"
     ],
     [
         1561,
-        "breakdown: failure to work or be successful"
+        "pragmatic: solving problems in a sensible way"
     ],
     [
         1562,
-        "screen out: to prevent something or someone undesirable coming in"
+        "contemprorary: existing or happening now"
     ],
     [
         1563,
-        "IELTS"
+        "subjugate: to defeat people or a country and rule them that allows them no freedom"
     ],
     [
         1564,
-        "General"
+        "deleterious: harmful"
     ],
     [
         1565,
-        "Academy"
+        "whittle: making something from wood cutting off small pieces"
     ],
     [
         1566,
-        "Procedure for evacuation"
+        "moodiness: easily changing moods"
     ],
     [
         1567,
-        "campus: the buildings of a college or university"
+        "shed: to get rid of something unwanted"
     ],
     [
         1568,
-        "in case of: if something happens, or in preperation"
+        "adamant: impossible to persuade"
     ],
     [
         1569,
-        "siren: a device for making a loud warning noise"
+        "pronounced: very noticeable or certain, marked"
     ],
     [
         1570,
-        "roll: an official list of names, turning over and over"
+        "deplete: to reduce something in size or amount"
     ],
     [
         1571,
-        "premises: the land and buildings"
+        "breakdown: failure to work or be successful"
     ],
     [
         1572,
-        "premise: fundamental"
+        "screen out: to prevent something or someone undesirable coming in"
     ],
     [
         1573,
-        "brisk: quick, energetic and active"
+        "IELTS"
     ],
     [
         1574,
-        "account for: to form the total of somethin"
+        "General"
     ],
     [
         1575,
-        "Community education"
+        "Academy"
     ],
     [
         1576,
-        "Progress gold B"
+        "Procedure for evacuation"
     ],
     [
         1577,
-        "Communicate"
+        "campus: the buildings of a college or university"
     ],
     [
         1578,
-        "clich\u00e9d: often said, used, done, not interesting"
+        "in case of: if something happens, or in preperation"
     ],
     [
         1579,
-        "bloke: a man"
+        "siren: a device for making a loud warning noise"
     ],
     [
         1580,
-        "blokey: manly"
+        "roll: an official list of names, turning over and over"
     ],
     [
         1581,
-        "anecdote: a short funny story"
+        "premises: the land and buildings"
     ],
     [
         1582,
-        "all in all: considering all the different parts of the situation together"
+        "premise: fundamental"
     ],
     [
         1583,
-        "plead: to make an urgent emotional statement or request for something"
+        "brisk: quick, energetic and active"
     ],
     [
         1584,
-        "mean: 1. not willing to give/share things 2. unkind"
+        "account for: to form the total of somethin"
     ],
     [
         1585,
-        "Speak"
+        "Community education"
     ],
     [
         1586,
-        "The ambassadors dandruff"
+        "Progress gold B"
     ],
     [
         1587,
-        "I remember"
+        "Communicate"
     ],
     [
         1588,
-        "praised: to express admiration"
+        "Speak"
     ],
     [
         1589,
-        "notorious: infamous, famous for something bad"
+        "clich\u00e9d: often said, used, done, not interesting"
     ],
     [
         1590,
-        "dandruff: small, white, pieces of dead skin from the head collet in the head or on the clothes"
+        "bloke: a man"
     ],
     [
         1591,
-        "well groomed: heaving a neat and pleasant appearance produced by care"
+        "blokey: manly"
     ],
     [
         1592,
-        "embrace: to accept something enthusiastically"
+        "anecdote: a short funny story"
     ],
     [
         1593,
-        "Skal\u00e4r"
+        "all in all: considering all the different parts of the situation together"
     ],
     [
         1594,
-        "Vektor"
+        "plead: to make an urgent emotional statement or request for something"
     ],
     [
         1595,
-        "Tecken"
+        "mean: 1. not willing to give/share things 2. unkind"
     ],
     [
         1596,
-        "Nummer"
+        "Speak"
     ],
     [
         1597,
-        "Bas (Siffrorsystem)"
+        "The ambassadors dandruff"
     ],
     [
         1598,
-        "Variabler"
+        "I remember"
     ],
     [
         1599,
-        "Uttryck och ekvationer"
+        "praised: to express admiration"
     ],
     [
         1600,
-        "+ + = +"
+        "notorious: infamous, famous for something bad"
     ],
     [
         1601,
-        "+ - = -"
+        "dandruff: small, white, pieces of dead skin from the head collet in the head or on the clothes"
     ],
     [
         1602,
-        "- - = +"
+        "well groomed: heaving a neat and pleasant appearance produced by care"
     ],
     [
         1603,
-        "2a + 3a = (2+3)a = 5a"
-    ],
-    [
-        1604,
-        "2a(3+b)-9c(7-3) = 2a3+2ab+(-9)c7+(-9c)3 = 6a+2ab+(-63)c+(-27)c = 6a+21b-90c"
-    ],
-    [
-        1605,
-        "2a+3=5x => 3=5x-2x => 3=3x => 3/3=x => 1=x"
-    ],
-    [
-        1606,
-        "4.4 Garnisonen i blockhuset"
-    ],
-    [
-        1607,
-        "pimpla: 1. dricka, supa, 2. isfiska"
-    ],
-    [
-        1608,
-        "\u00e4ngslig: som k\u00e4nner \u00e4ngslan, nerv\u00f6s, orolig"
-    ],
-    [
-        1609,
-        "f\u00f6rr\u00e5da: svika"
-    ],
-    [
-        1610,
-        "sl\u00e5 l\u00e4ger: t\u00e4lta, campa"
-    ],
-    [
-        1611,
-        "braka: sm\u00e4lla h\u00e4ftigt"
-    ],
-    [
-        1612,
-        "repa: 1. \u00e5terh\u00e4mta, 2. skrapa"
-    ],
-    [
-        1613,
-        "krusa: g\u00f6ra krusig eller v\u00e5ga"
-    ],
-    [
-        1614,
-        "vaja: fladdra, gunga, svaja, vagga"
-    ],
-    [
-        1615,
-        "enslig: som har isolerat l\u00e4ge, ensam"
-    ],
-    [
-        1616,
-        "p\u00e5fallande: anm\u00e4rkningsv\u00e4rt, markant"
-    ],
-    [
-        1617,
-        "furu: virke av tall"
-    ],
-    [
-        1618,
-        "kittel: stort runt kokk\u00e4rl"
-    ],
-    [
-        1619,
-        "urslag: h\u00e4ndelsen att en alltf\u00f6r stor flisa lossnar"
-    ],
-    [
-        1620,
-        "h\u00e4rd: 1. eldstad, 2. centrum"
-    ],
-    [
-        1621,
-        "sk\u00f6vla: f\u00f6rst\u00f6ra, plundra, \u00f6del\u00e4gga"
-    ],
-    [
-        1622,
-        "r\u00e4nnil: mycket liten b\u00e4ck"
-    ],
-    [
-        1623,
-        "ormbunke: br\u00e4cken, en sorts l\u00e5g v\u00e4xt"
-    ],
-    [
-        1624,
-        "inslag: del, inneh\u00e5ll"
-    ],
-    [
-        1625,
-        "uteslutande: endast, enbart"
-    ],
-    [
-        1626,
-        "verksamhet: aktivitet, arbet"
-    ],
-    [
-        1627,
-        "springa: spricka, l\u00e5ngsmal \u00f6ppning"
-    ],
-    [
-        1628,
-        "tillyxad: 1. grov, 2. tillkommen snabbt och med grovt metoder"
-    ],
-    [
-        1629,
-        "kv\u00e4llsvard: middag"
-    ],
-    [
-        1630,
-        "porlande: rinnande, sorlande"
-    ],
-    [
-        1631,
-        "styv: 1. stel, sv\u00e5r att b\u00f6ja, 2. duktig, skicklig"
-    ],
-    [
-        1632,
-        "st\u00e4lla upp: 1. ordna, 2. delta aktivt, 3. vara ett st\u00f6d f\u00f6r n\u00e5gon"
-    ],
-    [
-        1633,
-        "suga p\u00e5 ramarna: leva sparsamt, ha et knappt, m\u00e5ste inskr\u00e4nka sig"
-    ],
-    [
-        1634,
-        "omst\u00e4ndighet: f\u00f6rh\u00e5llande, villkor"
-    ],
-    [
-        1635,
-        "skapt: skapad, formad"
-    ],
-    [
-        1636,
-        "kr\u00e4sen: sv\u00e5r att tillfredsst\u00e4lla, kinkig"
-    ],
-    [
-        1637,
-        "dosa: ask, burk"
-    ],
-    [
-        1638,
-        "utsikt: 1. chans, hopp f\u00f6r framtiden, 2. prognos, 3. view"
-    ],
-    [
-        1639,
-        "bundsf\u00f6rvant: kamrat i kampen, de allierade"
-    ],
-    [
-        1640,
-        "skr\u00e5la: sjunga h\u00f6gt och oartikulerat"
-    ],
-    [
-        1641,
-        "gnugga: gnida, gno"
-    ],
-    [
-        1642,
-        "parlament\u00e4rflagga: vit flagga"
-    ],
-    [
-        1643,
-        "parlament\u00e4r: f\u00f6rhandlare, representant, delegat"
-    ],
-    [
-        1644,
-        "till varje pris: at any cost"
-    ],
-    [
-        1645,
-        "4.5 Silver f\u00f6rhandlar"
-    ],
-    [
-        1646,
-        "sannerligen: verkligen, minsann"
-    ],
-    [
-        1647,
-        "skynke: stort tygstycke, draperi"
-    ],
-    [
-        1648,
-        "adjutant: officer som bitr\u00e4der chef"
-    ],
-    [
-        1649,
-        "f\u00f6rr\u00e4disk: som man misstar sig p\u00e5, l\u00f6msk, bakslug"
-    ],
-    [
-        1650,
-        "desertera: rymma fr\u00e5n krigstj\u00e4nst, smita iv\u00e4g"
-    ],
-    [
-        1651,
-        "d\u00e4rmed j\u00e4mnt: stopp, inget vidare"
-    ],
-    [
-        1652,
-        "\u00f6vermod: alltf\u00f6r stor sj\u00e4lvs\u00e4kerhet"
-    ],
-    [
-        1653,
-        "\u00f6vermodig: arrogant"
-    ],
-    [
-        1654,
-        "f\u00f6rsigg\u00e5: h\u00e4nda, ske, p\u00e5g\u00e5"
-    ],
-    [
-        1655,
-        "ringa: liten, obetydlig"
-    ],
-    [
-        1656,
-        "stagv\u00e4nda: v\u00e4nda mot vinden"
-    ],
-    [
-        1657,
-        "streta: arbeta h\u00e5rt"
-    ],
-    [
-        1658,
-        "stass: festkl\u00e4der"
-    ],
-    [
-        1659,
-        "utstyrd: kl\u00e4dd"
-    ],
-    [
-        1660,
-        "grann: vacker, snygg (lite)"
-    ],
-    [
-        1661,
-        "behaga: \u00f6nska, vilja"
-    ],
-    [
-        1662,
-        "anmoda: be, uppmana"
-    ],
-    [
-        1663,
-        "till er tj\u00e4nst: at your service"
-    ],
-    [
-        1664,
-        "redl\u00f6s: starkt berusad"
-    ],
-    [
-        1665,
-        "ta p\u00e5 bar g\u00e4rning: ertappa"
-    ],
-    [
-        1666,
-        "ligga till: ha visst l\u00e4ge"
-    ],
-    [
-        1667,
-        "ge betalt f\u00f6r gammalt ost: h\u00e4mnas"
-    ],
-    [
-        1668,
-        "konung: kung"
-    ],
-    [
-        1669,
-        "4.6 Anfallet"
-    ],
-    [
-        1670,
-        "rond: rundtur, round"
-    ],
-    [
-        1671,
-        "f\u00f6rvissa: f\u00f6rs\u00e4kra, \u00f6vertyga"
-    ],
-    [
-        1672,
-        "f\u00f6rvissa sig om: se till, f\u00f6rs\u00e4kra sig om"
-    ],
-    [
-        1673,
-        "upprada: st\u00e4lla upp p\u00e5 rad"
-    ],
-    [
-        1674,
-        "k\u00e5da: tjock, klibbig saft i vissa tr\u00e4d"
-    ],
-    [
-        1675,
-        "febrig: het, som har feber"
-    ],
-    [
-        1676,
-        "p\u00e5 helsp\u00e4nn: i sp\u00e4nd v\u00e4ntan"
-    ],
-    [
-        1677,
-        "f\u00f6rr\u00e5da: avsl\u00f6ja"
-    ],
-    [
-        1678,
-        "man\u00f6ver: 1. milit\u00e4r\u00f6vning, 2. handgrepp som \u00e4ndrar riktning"
-    ],
-    [
-        1679,
-        "skenman\u00f6ver: handling utf\u00f6rd i syfte att missleda"
-    ],
-    [
-        1680,
-        "l\u00e4gga beslag p\u00e5: kapa"
-    ],
-    [
-        1681,
-        "skara: grupp m\u00e4nniskor"
-    ],
-    [
-        1682,
-        "i ett huj: genast, snabbt"
-    ],
-    [
-        1683,
-        "bita i gr\u00e4set: d\u00f6"
-    ],
-    [
-        1684,
-        "f\u00e4ste: 1. fast grund, 2. milit\u00e4r st\u00f6djepunkt"
-    ],
-    [
-        1685,
-        "fotf\u00e4ste: fast mark under f\u00f6tterna"
-    ],
-    [
-        1686,
-        "\u00e5tskillig: en hel del, mycket"
-    ],
-    [
-        1687,
-        "inp\u00e5: t\u00e4tt intill"
-    ],
-    [
-        1688,
-        "tord\u00f6n: starkt buller"
-    ],
-    [
-        1689,
-        "bed\u00f6vande: tung, painkilling"
-    ],
-    [
-        1690,
-        "f\u00f6rvirring: oordning, oreda"
-    ],
-    [
-        1691,
-        "knoge: led mellan hand och finger, knuckle"
-    ],
-    [
-        1692,
-        "villervalla: f\u00f6rvirring, kaos"
-    ],
-    [
-        1693,
-        "d\u00f6dskamp: d\u00f6ende, pl\u00e5gor, agony"
-    ],
-    [
-        1694,
-        "undkomma: komma undan"
-    ],
-    [
-        1695,
-        "st\u00e4mma: 1. r\u00f6st, 2. m\u00f6te"
-    ],
-    [
-        1696,
-        "klinga: ringa, ljuda"
-    ],
-    [
-        1697,
-        "Chez Nous"
-    ],
-    [
-        1698,
-        "1"
-    ],
-    [
-        1699,
-        "2"
-    ],
-    [
-        1700,
-        "3"
-    ],
-    [
-        1701,
-        "4"
-    ],
-    [
-        1702,
-        "1A Sur la plage"
-    ],
-    [
-        1703,
-        "husk: the outer dry covering of some seeds"
-    ],
-    [
-        1704,
-        "lingering: lasting a long time"
-    ],
-    [
-        1705,
-        "stark: empty, simple, obvious"
-    ],
-    [
-        1706,
-        "accustomed: familiar with something"
-    ],
-    [
-        1707,
-        "solemnly: serious and without any humour"
-    ],
-    [
-        1708,
-        "cranky: easily annoyed or upset"
-    ],
-    [
-        1709,
-        "shrub: a large plant with a rounded shape from many small branches"
-    ],
-    [
-        1710,
-        "collective: of our shared by every member of a group of people"
-    ],
-    [
-        1711,
-        "ritual: a way of doing in same actions"
-    ],
-    [
-        1712,
-        "graditude: the feeling of being grateful"
-    ],
-    [
-        1713,
-        "adrenaline: a hormone when sb is frightened, angry or excited making heart beat faster"
-    ],
-    [
-        1714,
-        "sizzle: sound like food cooking in hot fat"
-    ],
-    [
-        1715,
-        "hum: making a continous low sound"
-    ],
-    [
-        1716,
-        "wagon: a vehicle with four wheels pulled by horses or oxen, transporting heavy goods"
-    ],
-    [
-        1717,
-        "Empower"
-    ],
-    [
-        1718,
-        "Deadly thoughts"
-    ],
-    [
-        1719,
-        "Lover"
-    ],
-    [
-        1720,
-        "Symptoms of love"
-    ],
-    [
-        1721,
-        "trances: (trans, h\u00e4nryckning)"
-    ],
-    [
-        1722,
-        "whack: to hit someone/something noisily"
-    ],
-    [
-        1723,
-        "slouch: shoulder hanging forward and head bent over"
-    ],
-    [
-        1724,
-        "hunch: lean forward with shoulder raised or to bend your back and shoulders into a round shape"
-    ],
-    [
-        1725,
-        "blister: painful swelling with liquid on skin"
-    ],
-    [
-        1726,
-        "braid: a thin strip of cloth attachd to clothes"
-    ],
-    [
-        1727,
-        "streak: a long thin mark"
-    ],
-    [
-        1728,
-        "migraine: severe continous headache, often with vomiting and difficulty in seeing"
-    ],
-    [
-        1729,
-        "blot sth out: to hide or block from something"
-    ],
-    [
-        1730,
-        "lean: without waste"
-    ],
-    [
-        1731,
-        "laggard: something that is very slow"
-    ],
-    [
-        1732,
-        "omen: sign of future event (negative)"
-    ],
-    [
-        1733,
-        "grief: very great sadness especially at someones death"
-    ],
-    [
-        1734,
-        "recall: suddenly remember (\u00e5terkalla)"
-    ],
-    [
-        1735,
-        "distill: heating a liquid for stronger and purer and cooling"
-    ],
-    [
-        1736,
-        "Rayan 1"
-    ],
-    [
-        1737,
-        "Vanligt liv"
+        "embrace: to accept something enthusiastically"
     ]
 ]

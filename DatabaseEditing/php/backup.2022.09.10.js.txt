@@ -1,0 +1,14 @@
+let begin = new Date();
+let result = new Map();
+let previousParentId = 0;
+let previousParentPointer = null;
+for (let relation of myResult){
+    if (previousParentId != relation.parentid){
+        previousParentId = relation.parentid;
+        previousParentPointer = {name: relation.parent, children: []};
+        result.set(previousParentId, previousParentPointer);
+    }
+    previousParentPointer.children.push({id: relation.childid, name: relation.child});
+}
+let end = new Date();
+console.log(end-begin);

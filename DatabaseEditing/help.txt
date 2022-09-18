@@ -3,8 +3,8 @@ help			None		Help command
 exit			None		Exiting database system
 
 list		(ls)	None		List all items under current path
-ascend		(as)	None		Ascend
-descend		(ds)	<id>		Descend
+ascend		(a, as)	None		Ascend to parent path
+descend		(d, ds)	<id>		Descend to desired child path with <id>
 
 create		(ct)	<name>		Create an item under current path
 createlink	(cl)	<id>		Create a link
@@ -12,6 +12,7 @@ delete			<id>		Delete an item with following links
 deletelink		<id>		Deleting a link
 update		(ut)	<id>,<item>	Changing the item of an item
 updatelink	(ul)	<id>,<parentid>	Changing the link to another path (parentid)
+move		(mv)	<id>,<parentid>	Moving the link to another path (parentid)
 sort		(st)	<id>,<sortid>	Changing sort priority (sortId=1 is the most important)
 
 dbexport		None		Exporting database tables to JSON files

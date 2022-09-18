@@ -88,7 +88,7 @@ class KnowledgeDatabaseSystem:
     def write_json_file(self, data):
         table, raw_data = data
         f = open(self.file_name_json_format.format(table.name), "w")
-        f.write(json.dumps(raw_data, indent=4))
+        f.write(json.dumps(raw_data, separators=(',', ':')))
         f.close()
 
     def read_json_file(self, table_name):

@@ -1,0 +1,9878 @@
+[
+    [
+        1,
+        "Root"
+    ],
+    [
+        2,
+        "Matte"
+    ],
+    [
+        3,
+        "Fysik"
+    ],
+    [
+        4,
+        "Kemi"
+    ],
+    [
+        5,
+        "Biologi"
+    ],
+    [
+        6,
+        "Geografi"
+    ],
+    [
+        7,
+        "Historia"
+    ],
+    [
+        8,
+        "Religion"
+    ],
+    [
+        9,
+        "Samh\u00e4lle"
+    ],
+    [
+        10,
+        "ax+b"
+    ],
+    [
+        11,
+        "ax\u00b2+bx+c"
+    ],
+    [
+        12,
+        "ax\u00b3+bx\u00b2+cx+d"
+    ],
+    [
+        13,
+        "lg(x)"
+    ],
+    [
+        14,
+        "sin(x)"
+    ],
+    [
+        15,
+        "tan(x)"
+    ],
+    [
+        16,
+        "!"
+    ],
+    [
+        17,
+        "(1) Linje"
+    ],
+    [
+        18,
+        "(3) Triangel"
+    ],
+    [
+        19,
+        "(4) Fyrh\u00f6rning"
+    ],
+    [
+        20,
+        "(...) Polygon"
+    ],
+    [
+        21,
+        "Cirkel"
+    ],
+    [
+        22,
+        "Hyperbel"
+    ],
+    [
+        23,
+        "(H) V\u00e4te"
+    ],
+    [
+        24,
+        "(He) Helium"
+    ],
+    [
+        25,
+        "(Li) Litium"
+    ],
+    [
+        26,
+        "(Be) Beryllium"
+    ],
+    [
+        27,
+        "(B) Bor"
+    ],
+    [
+        28,
+        "(C) Kol"
+    ],
+    [
+        29,
+        "(N) Kv\u00e4ve"
+    ],
+    [
+        30,
+        "(O) Syre"
+    ],
+    [
+        31,
+        "(F) Flour"
+    ],
+    [
+        32,
+        "(Ne) Neon"
+    ],
+    [
+        33,
+        "(Na) Natrium"
+    ],
+    [
+        34,
+        "(Mg) Magnesium"
+    ],
+    [
+        35,
+        "(Al) Aluminium"
+    ],
+    [
+        36,
+        "(Si) Kisel"
+    ],
+    [
+        37,
+        "(P) Fosfor"
+    ],
+    [
+        38,
+        "(S) Svavel"
+    ],
+    [
+        39,
+        "(Cl) Klor"
+    ],
+    [
+        40,
+        "(Ar) Argon"
+    ],
+    [
+        41,
+        "Kolv\u00e4te"
+    ],
+    [
+        42,
+        "(-OH) Alkohol"
+    ],
+    [
+        43,
+        "Gummi"
+    ],
+    [
+        44,
+        "Fiber"
+    ],
+    [
+        45,
+        "Plast"
+    ],
+    [
+        46,
+        "Lipid (Fett)"
+    ],
+    [
+        47,
+        "Kolhydrater"
+    ],
+    [
+        48,
+        "Glykos"
+    ],
+    [
+        49,
+        "Fruktos"
+    ],
+    [
+        50,
+        "St\u00e4kelse"
+    ],
+    [
+        51,
+        "Tensid"
+    ],
+    [
+        52,
+        "Protein"
+    ],
+    [
+        53,
+        "Enzym"
+    ],
+    [
+        54,
+        "Vitamin"
+    ],
+    [
+        55,
+        "DNA"
+    ],
+    [
+        56,
+        "L\u00e4kemedel"
+    ],
+    [
+        57,
+        "Giftiga \u00e4mnen"
+    ],
+    [
+        58,
+        "Algebra"
+    ],
+    [
+        59,
+        "Geometri"
+    ],
+    [
+        60,
+        "Analytisk geometri"
+    ],
+    [
+        61,
+        "Objektegenskap"
+    ],
+    [
+        62,
+        "Position och vinklar"
+    ],
+    [
+        63,
+        "Former"
+    ],
+    [
+        64,
+        "F\u00e4rg"
+    ],
+    [
+        65,
+        "Textur"
+    ],
+    [
+        66,
+        "(x, y, z, \u03b1)(bred, h\u00f6jd, l\u00e4ngd)"
+    ],
+    [
+        67,
+        "Gul"
+    ],
+    [
+        68,
+        "R\u00f6d"
+    ],
+    [
+        69,
+        "Gr\u00f6n"
+    ],
+    [
+        70,
+        "Bl\u00e5"
+    ],
+    [
+        71,
+        "Gr\u00e5"
+    ],
+    [
+        72,
+        "Svart"
+    ],
+    [
+        73,
+        "Vit"
+    ],
+    [
+        74,
+        "Brun"
+    ],
+    [
+        75,
+        "Orange"
+    ],
+    [
+        76,
+        "Lila"
+    ],
+    [
+        77,
+        "Beige"
+    ],
+    [
+        78,
+        "Turkos"
+    ],
+    [
+        79,
+        "Kaki"
+    ],
+    [
+        80,
+        "Akvamarin"
+    ],
+    [
+        81,
+        "Crimson"
+    ],
+    [
+        82,
+        "Cream"
+    ],
+    [
+        83,
+        "Scarlet"
+    ],
+    [
+        84,
+        "Fyllning"
+    ],
+    [
+        85,
+        "Gr\u00e4ns"
+    ],
+    [
+        86,
+        "Skugga/Gl\u00f6d"
+    ],
+    [
+        87,
+        "H\u00e5rd"
+    ],
+    [
+        88,
+        "Grov"
+    ],
+    [
+        89,
+        "Mjuk"
+    ],
+    [
+        90,
+        "Sl\u00e4t"
+    ],
+    [
+        91,
+        "Spetsig"
+    ],
+    [
+        92,
+        "Oj\u00e4mn"
+    ],
+    [
+        93,
+        "\u22a5: a1*a2 = -1"
+    ],
+    [
+        94,
+        "\u2225: a1 = a2"
+    ],
+    [
+        95,
+        "^B=^C"
+    ],
+    [
+        96,
+        "AB=AC"
+    ],
+    [
+        97,
+        "Likbent triangel + ^=60\u00b0"
+    ],
+    [
+        98,
+        "AB\u2225CD & AC\u2225BD"
+    ],
+    [
+        99,
+        "^A = ^D & ^B = ^C"
+    ],
+    [
+        100,
+        "x=(-b+\u221a(b\u00b2-4ac)"
+    ],
+    [
+        101,
+        "Kvadreringsregler"
+    ],
+    [
+        102,
+        "(a+b)\u00b2=a\u00b2+2ab+b\u00b2"
+    ],
+    [
+        103,
+        "(a-b)\u00b2=a\u00b2-2ab+b\u00b2"
+    ],
+    [
+        104,
+        "lg(ab) = lg(a)+lg(b)"
+    ],
+    [
+        105,
+        "a/sin(A) = b/sin(B) = c/sin(C)"
+    ],
+    [
+        106,
+        "sin\u00b2(x)+cos\u00b2(x)=1"
+    ],
+    [
+        107,
+        "c\u00b2=a\u00b2+b\u00b2-2abcos(C)"
+    ],
+    [
+        108,
+        "nPr=n!/(n-r)!"
+    ],
+    [
+        109,
+        "nCr=nPr/r!"
+    ],
+    [
+        110,
+        "\u222b"
+    ],
+    [
+        111,
+        "\u0394/\u0394t"
+    ],
+    [
+        112,
+        "\u0394/\u0394x(ax^b) = abx^(b-1)"
+    ],
+    [
+        113,
+        "Jorden"
+    ],
+    [
+        114,
+        "Luft"
+    ],
+    [
+        115,
+        "Jord"
+    ],
+    [
+        116,
+        "Markniv\u00e5"
+    ],
+    [
+        117,
+        "Vatten"
+    ],
+    [
+        118,
+        "Naturresurser"
+    ],
+    [
+        119,
+        "Milj\u00f6 och klimat"
+    ],
+    [
+        120,
+        "Atmosf\u00e4r"
+    ],
+    [
+        121,
+        "Troposf\u00e4r (11km)"
+    ],
+    [
+        122,
+        "Stratosf\u00e4r (30km)"
+    ],
+    [
+        123,
+        "Jonosf\u00e4r (100km)"
+    ],
+    [
+        124,
+        "Inre krafter"
+    ],
+    [
+        125,
+        "Yttre krafter"
+    ],
+    [
+        126,
+        "Vulkanism"
+    ],
+    [
+        127,
+        "Sprickor"
+    ],
+    [
+        128,
+        "Mantel"
+    ],
+    [
+        129,
+        "Magma"
+    ],
+    [
+        130,
+        "F\u00f6rvittring"
+    ],
+    [
+        131,
+        "Deposition"
+    ],
+    [
+        132,
+        "Jordb\u00e4vning"
+    ],
+    [
+        133,
+        "Sprucken jord"
+    ],
+    [
+        134,
+        "Kontinentaldrift"
+    ],
+    [
+        135,
+        "Berggrund"
+    ],
+    [
+        136,
+        "Granit"
+    ],
+    [
+        137,
+        "Sandsten"
+    ],
+    [
+        138,
+        "Gnejs"
+    ],
+    [
+        139,
+        "Olja(Petroleum)"
+    ],
+    [
+        140,
+        "Gas"
+    ],
+    [
+        141,
+        "Kol"
+    ],
+    [
+        142,
+        "Mineraler"
+    ],
+    [
+        143,
+        "Sand"
+    ],
+    [
+        144,
+        "Sten"
+    ],
+    [
+        145,
+        "Vatten"
+    ],
+    [
+        146,
+        "Mark"
+    ],
+    [
+        147,
+        "H\u00f6gre temperatur"
+    ],
+    [
+        148,
+        "H\u00f6gre halt koldioxid"
+    ],
+    [
+        149,
+        "Extrem klimat"
+    ],
+    [
+        150,
+        "Vattenbrist"
+    ],
+    [
+        151,
+        "Verktyg"
+    ],
+    [
+        152,
+        "Penna"
+    ],
+    [
+        153,
+        "Blyertspenna"
+    ],
+    [
+        154,
+        "Pensel"
+    ],
+    [
+        155,
+        "Skrivande"
+    ],
+    [
+        156,
+        "M\u00e4rkpenna"
+    ],
+    [
+        157,
+        "Bl\u00e4ck"
+    ],
+    [
+        158,
+        "Borttagande"
+    ],
+    [
+        159,
+        "Suddgummi"
+    ],
+    [
+        160,
+        "Tipex"
+    ],
+    [
+        161,
+        "Korrektionspenna"
+    ],
+    [
+        162,
+        "Yta"
+    ],
+    [
+        163,
+        "Andra verktyg"
+    ],
+    [
+        164,
+        "Papper"
+    ],
+    [
+        165,
+        "Skrivbok"
+    ],
+    [
+        166,
+        "Tavla"
+    ],
+    [
+        167,
+        "Pennv\u00e4ssare"
+    ],
+    [
+        168,
+        "Linjal"
+    ],
+    [
+        169,
+        "Cirkelpassare"
+    ],
+    [
+        170,
+        "Kl\u00e4mmor"
+    ],
+    [
+        171,
+        "H\u00e4ftare"
+    ],
+    [
+        172,
+        "Dator"
+    ],
+    [
+        173,
+        "GUI"
+    ],
+    [
+        174,
+        "H\u00e5rdvaror"
+    ],
+    [
+        175,
+        "Lagring"
+    ],
+    [
+        176,
+        "Typer"
+    ],
+    [
+        177,
+        "Mjukvaror"
+    ],
+    [
+        178,
+        "CoordinatorLayout"
+    ],
+    [
+        179,
+        "LinearLayout"
+    ],
+    [
+        180,
+        "Text"
+    ],
+    [
+        181,
+        "Img"
+    ],
+    [
+        182,
+        "Knapplista"
+    ],
+    [
+        183,
+        "Tabell"
+    ],
+    [
+        184,
+        "Form"
+    ],
+    [
+        185,
+        "Sidorad"
+    ],
+    [
+        186,
+        "Header"
+    ],
+    [
+        187,
+        "Lightbox"
+    ],
+    [
+        188,
+        "Inmatning"
+    ],
+    [
+        189,
+        "V\u00e4lj"
+    ],
+    [
+        190,
+        "Kryssruta"
+    ],
+    [
+        191,
+        "Mark\u00f6r"
+    ],
+    [
+        192,
+        "Uppl\u00f6sning"
+    ],
+    [
+        193,
+        "Processor"
+    ],
+    [
+        194,
+        "CPU"
+    ],
+    [
+        195,
+        "Grafik"
+    ],
+    [
+        196,
+        "N\u00e4tverk"
+    ],
+    [
+        197,
+        "Powersupply"
+    ],
+    [
+        198,
+        "H\u00e5rddisk"
+    ],
+    [
+        199,
+        "Databas"
+    ],
+    [
+        200,
+        "Mapp"
+    ],
+    [
+        201,
+        "Fil"
+    ],
+    [
+        202,
+        "Genv\u00e4g"
+    ],
+    [
+        203,
+        "Ikon"
+    ],
+    [
+        204,
+        "Verktygsf\u00e4lt"
+    ],
+    [
+        205,
+        "Station\u00e4r Dator"
+    ],
+    [
+        206,
+        "B\u00e4rbar dator"
+    ],
+    [
+        207,
+        "Surfplatta(Padda)"
+    ],
+    [
+        208,
+        "Mobiltelefon"
+    ],
+    [
+        209,
+        "Smartklocka"
+    ],
+    [
+        210,
+        "Robot"
+    ],
+    [
+        211,
+        "Superdator"
+    ],
+    [
+        212,
+        "Mainframe"
+    ],
+    [
+        213,
+        "Programmeringspr\u00e5k"
+    ],
+    [
+        214,
+        "Datastruktur"
+    ],
+    [
+        215,
+        "Algorithm"
+    ],
+    [
+        216,
+        "Vapen"
+    ],
+    [
+        217,
+        "Knivform"
+    ],
+    [
+        218,
+        "Kniv"
+    ],
+    [
+        219,
+        "Machete"
+    ],
+    [
+        220,
+        "Sv\u00e4rd"
+    ],
+    [
+        221,
+        "Sabel"
+    ],
+    [
+        222,
+        "Spear"
+    ],
+    [
+        223,
+        "Hammare"
+    ],
+    [
+        224,
+        "Ringform"
+    ],
+    [
+        225,
+        "Yxform"
+    ],
+    [
+        226,
+        "Projektilvapen"
+    ],
+    [
+        227,
+        "Advancerad projektilvapen"
+    ],
+    [
+        228,
+        "Skjutvapen"
+    ],
+    [
+        229,
+        "Bombform"
+    ],
+    [
+        230,
+        "Knuckles-metall"
+    ],
+    [
+        231,
+        "Shuriken"
+    ],
+    [
+        232,
+        "Lasso"
+    ],
+    [
+        233,
+        "Nunchaku"
+    ],
+    [
+        234,
+        "Yxa"
+    ],
+    [
+        235,
+        "Tomahawk"
+    ],
+    [
+        236,
+        "Mace"
+    ],
+    [
+        237,
+        "Pilb\u00e5ge"
+    ],
+    [
+        238,
+        "Pil"
+    ],
+    [
+        239,
+        "Armborst"
+    ],
+    [
+        240,
+        "Katapult"
+    ],
+    [
+        241,
+        "Bajonett"
+    ],
+    [
+        242,
+        "Ballista"
+    ],
+    [
+        243,
+        "Harpun"
+    ],
+    [
+        244,
+        "Arquebus"
+    ],
+    [
+        245,
+        "Molotov coctail"
+    ],
+    [
+        246,
+        "Hantverksformer"
+    ],
+    [
+        247,
+        "Fordon"
+    ],
+    [
+        248,
+        "Reparera"
+    ],
+    [
+        249,
+        "Typer"
+    ],
+    [
+        250,
+        "Bilar"
+    ],
+    [
+        251,
+        "Motorcyklar"
+    ],
+    [
+        252,
+        "Fyrhjulingar"
+    ],
+    [
+        253,
+        "Husvagnar"
+    ],
+    [
+        254,
+        "Lastbilar"
+    ],
+    [
+        255,
+        "Vattenscooter"
+    ],
+    [
+        256,
+        "Gamla"
+    ],
+    [
+        257,
+        "Lyx"
+    ],
+    [
+        258,
+        "Exotisk"
+    ],
+    [
+        259,
+        "Staden"
+    ],
+    [
+        260,
+        "Regering"
+    ],
+    [
+        261,
+        "Ekonomi"
+    ],
+    [
+        262,
+        "Marknad"
+    ],
+    [
+        263,
+        "Utbilding"
+    ],
+    [
+        264,
+        "Arbetsplats"
+    ],
+    [
+        265,
+        "Underh\u00e5llning"
+    ],
+    [
+        266,
+        "Boende"
+    ],
+    [
+        267,
+        "Kulturer"
+    ],
+    [
+        268,
+        "Turist"
+    ],
+    [
+        269,
+        "Advokat"
+    ],
+    [
+        270,
+        "Ambassad"
+    ],
+    [
+        271,
+        "Kommun"
+    ],
+    [
+        272,
+        "Lokalf\u00f6rvaltningskontor"
+    ],
+    [
+        273,
+        "Tingshuspolisen"
+    ],
+    [
+        274,
+        "F\u00f6rs\u00e4kring"
+    ],
+    [
+        275,
+        "Resebyr\u00e5"
+    ],
+    [
+        276,
+        "Bank"
+    ],
+    [
+        277,
+        "ATM"
+    ],
+    [
+        278,
+        "K\u00f6pcentrum"
+    ],
+    [
+        279,
+        "Bokf\u00f6ring"
+    ],
+    [
+        280,
+        "Postkontor"
+    ],
+    [
+        281,
+        "Supermarket"
+    ],
+    [
+        282,
+        "Butik"
+    ],
+    [
+        283,
+        "Varuhus"
+    ],
+    [
+        284,
+        "Bageri"
+    ],
+    [
+        285,
+        "Tv\u00e4tt"
+    ],
+    [
+        286,
+        "Skoaff\u00e4r"
+    ],
+    [
+        287,
+        "Bilf\u00f6rs\u00e4ljare"
+    ],
+    [
+        288,
+        "Bar"
+    ],
+    [
+        289,
+        "Cafeteria"
+    ],
+    [
+        290,
+        "Resturang"
+    ],
+    [
+        291,
+        "Takeaway"
+    ],
+    [
+        292,
+        "Matleverans"
+    ],
+    [
+        293,
+        "Bibliotek"
+    ],
+    [
+        294,
+        "Universitet"
+    ],
+    [
+        295,
+        "Grundskola"
+    ],
+    [
+        296,
+        "Gymnasieskola"
+    ],
+    [
+        297,
+        "Bokaff\u00e4r"
+    ],
+    [
+        298,
+        "L\u00e5ssmed"
+    ],
+    [
+        299,
+        "Takentrepren\u00f6r"
+    ],
+    [
+        300,
+        "Elektriker"
+    ],
+    [
+        301,
+        "Flyttare"
+    ],
+    [
+        302,
+        "J\u00e4rnaff\u00e4r"
+    ],
+    [
+        303,
+        "Bensinstation"
+    ],
+    [
+        304,
+        "M\u00e5lare"
+    ],
+    [
+        305,
+        "Reparation"
+    ],
+    [
+        306,
+        "Kontor"
+    ],
+    [
+        307,
+        "Datoringeng\u00f6r arbetsplats"
+    ],
+    [
+        308,
+        "Casino"
+    ],
+    [
+        309,
+        "Bio"
+    ],
+    [
+        310,
+        "Night Club"
+    ],
+    [
+        311,
+        "Stadium"
+    ],
+    [
+        312,
+        "Filmuthyrning"
+    ],
+    [
+        313,
+        "Gym"
+    ],
+    [
+        314,
+        "Fastighetsbyr\u00e5"
+    ],
+    [
+        315,
+        "F\u00f6rr\u00e5d"
+    ],
+    [
+        316,
+        "Begravningsbyr\u00e5"
+    ],
+    [
+        317,
+        "Kyrkog\u00e5rd"
+    ],
+    [
+        318,
+        "Hotell"
+    ],
+    [
+        319,
+        "Vandrarhem"
+    ],
+    [
+        320,
+        "Camping"
+    ],
+    [
+        321,
+        "Konstgalleri (Museum)"
+    ],
+    [
+        322,
+        "Museum"
+    ],
+    [
+        323,
+        "Kyrka"
+    ],
+    [
+        324,
+        "Synagoga"
+    ],
+    [
+        325,
+        "N\u00f6jespark"
+    ],
+    [
+        326,
+        "Aquarium"
+    ],
+    [
+        327,
+        "Park"
+    ],
+    [
+        328,
+        "Camping"
+    ],
+    [
+        329,
+        "Zoo"
+    ],
+    [
+        330,
+        "Transport"
+    ],
+    [
+        331,
+        "H\u00e4lsa"
+    ],
+    [
+        332,
+        "Flygplatsbiluthyrning"
+    ],
+    [
+        333,
+        "Biltv\u00e4ttstation"
+    ],
+    [
+        334,
+        "Veterin\u00e4rsv\u00e5rd"
+    ],
+    [
+        335,
+        "Tandl\u00e4kare"
+    ],
+    [
+        336,
+        "L\u00e4kare"
+    ],
+    [
+        337,
+        "Apotek"
+    ],
+    [
+        338,
+        "Fysioterapeut"
+    ],
+    [
+        339,
+        "Sjukhus"
+    ],
+    [
+        340,
+        "Hemma"
+    ],
+    [
+        341,
+        "Niv\u00e5er"
+    ],
+    [
+        342,
+        "Rum"
+    ],
+    [
+        343,
+        "Sovrum"
+    ],
+    [
+        344,
+        "Badrum"
+    ],
+    [
+        345,
+        "K\u00f6k"
+    ],
+    [
+        346,
+        "Mottagande hall"
+    ],
+    [
+        347,
+        "Hemmakontor"
+    ],
+    [
+        348,
+        "Vardagsrum"
+    ],
+    [
+        349,
+        "Andra hemutbygnader"
+    ],
+    [
+        350,
+        "hall"
+    ],
+    [
+        351,
+        "K\u00e4llare"
+    ],
+    [
+        352,
+        "Skorsten"
+    ],
+    [
+        353,
+        "Tak"
+    ],
+    [
+        354,
+        "V\u00e4gg"
+    ],
+    [
+        355,
+        "Sk\u00e5p"
+    ],
+    [
+        356,
+        "Stol"
+    ],
+    [
+        357,
+        "Matta"
+    ],
+    [
+        358,
+        "Lampa"
+    ],
+    [
+        359,
+        "F\u00f6nster"
+    ],
+    [
+        360,
+        "Bord"
+    ],
+    [
+        361,
+        "Dator"
+    ],
+    [
+        362,
+        "Musikuthyrning"
+    ],
+    [
+        363,
+        "S\u00e4nghyllor"
+    ],
+    [
+        364,
+        "Nattduksbord"
+    ],
+    [
+        365,
+        "Gaderob"
+    ],
+    [
+        366,
+        "Skrivbordslampa"
+    ],
+    [
+        367,
+        "V\u00e4ckarklocka"
+    ],
+    [
+        368,
+        "Toalett"
+    ],
+    [
+        369,
+        "Dusch"
+    ],
+    [
+        370,
+        "Bad"
+    ],
+    [
+        371,
+        "Handfat"
+    ],
+    [
+        372,
+        "Kylsk\u00e5p"
+    ],
+    [
+        373,
+        "Ugn"
+    ],
+    [
+        374,
+        "Mikrov\u00e5gsugn"
+    ],
+    [
+        375,
+        "Diskmaskin"
+    ],
+    [
+        376,
+        "Spisar"
+    ],
+    [
+        377,
+        "K\u00e5por-k\u00f6k"
+    ],
+    [
+        378,
+        "Krukor"
+    ],
+    [
+        379,
+        "Glas+Bestick"
+    ],
+    [
+        380,
+        "Mat"
+    ],
+    [
+        381,
+        "Matsal"
+    ],
+    [
+        382,
+        "D\u00f6rrmatta"
+    ],
+    [
+        383,
+        "Kl\u00e4dhylla"
+    ],
+    [
+        384,
+        "Kommod"
+    ],
+    [
+        385,
+        "Spegel"
+    ],
+    [
+        386,
+        "Korridor"
+    ],
+    [
+        387,
+        "Matta"
+    ],
+    [
+        388,
+        "TV"
+    ],
+    [
+        389,
+        "Soffa"
+    ],
+    [
+        390,
+        "B\u00f6cker"
+    ],
+    [
+        391,
+        "Vas"
+    ],
+    [
+        392,
+        "Bilder"
+    ],
+    [
+        393,
+        "V\u00e4xter(Krukv\u00e4xter)"
+    ],
+    [
+        394,
+        "Tr\u00e4dg\u00e5rd"
+    ],
+    [
+        395,
+        "Pool"
+    ],
+    [
+        396,
+        "Vindsterrass"
+    ],
+    [
+        397,
+        "F\u00f6rr\u00e5d"
+    ],
+    [
+        398,
+        "Balkong"
+    ],
+    [
+        399,
+        "F\u00f6rvaltning(Administration)"
+    ],
+    [
+        400,
+        "Vattenfallsmetoden"
+    ],
+    [
+        401,
+        "Kravspecifikation"
+    ],
+    [
+        402,
+        "Design"
+    ],
+    [
+        403,
+        "Konstruktion"
+    ],
+    [
+        404,
+        "Integration"
+    ],
+    [
+        405,
+        "Test"
+    ],
+    [
+        406,
+        "Installation"
+    ],
+    [
+        407,
+        "Underh\u00e5ll"
+    ],
+    [
+        408,
+        "Mjukvaror"
+    ],
+    [
+        409,
+        "Mjukvaruprojekt"
+    ],
+    [
+        410,
+        "Spel och datorspel"
+    ],
+    [
+        411,
+        "Fysisk kondition"
+    ],
+    [
+        412,
+        "\u00d6verlevnad"
+    ],
+    [
+        413,
+        "\u00c4tbart"
+    ],
+    [
+        414,
+        "Hasardspel"
+    ],
+    [
+        415,
+        "Kortspel"
+    ],
+    [
+        416,
+        "Spelautomater"
+    ],
+    [
+        417,
+        "Lotteri"
+    ],
+    [
+        418,
+        "Kasinomarker(Kasinochips)"
+    ],
+    [
+        419,
+        "Lotteribiljetter"
+    ],
+    [
+        420,
+        "Sp\u00e5dom"
+    ],
+    [
+        421,
+        "Astrologi"
+    ],
+    [
+        422,
+        "Stj\u00e4rntecken"
+    ],
+    [
+        423,
+        "Oxen"
+    ],
+    [
+        424,
+        "Tvillingarna"
+    ],
+    [
+        425,
+        "Kr\u00e4ftan"
+    ],
+    [
+        426,
+        "Lejonet"
+    ],
+    [
+        427,
+        "Jungfrun"
+    ],
+    [
+        428,
+        "V\u00e5gen"
+    ],
+    [
+        429,
+        "Skorpionen"
+    ],
+    [
+        430,
+        "Skytten"
+    ],
+    [
+        431,
+        "Stenbocken"
+    ],
+    [
+        432,
+        "Vattumannen"
+    ],
+    [
+        433,
+        "Fiskarna"
+    ],
+    [
+        434,
+        "Tarot"
+    ],
+    [
+        435,
+        "Astronomi"
+    ],
+    [
+        436,
+        "Stel mekanik"
+    ],
+    [
+        437,
+        "V\u00e4tskemekanik"
+    ],
+    [
+        438,
+        "Elektricitet"
+    ],
+    [
+        439,
+        "V\u00e5gor"
+    ],
+    [
+        440,
+        "Termodynamik(V\u00e4rme)"
+    ],
+    [
+        441,
+        "K\u00e4rnfysik(Atomer)"
+    ],
+    [
+        442,
+        "P=E/t"
+    ],
+    [
+        443,
+        "E=F*s"
+    ],
+    [
+        444,
+        "F=GMm/r\u00b2"
+    ],
+    [
+        445,
+        "F=ma"
+    ],
+    [
+        446,
+        "\u03c4=Fr*sin(\u03b1)"
+    ],
+    [
+        447,
+        "\u03c4=I\u03b1"
+    ],
+    [
+        448,
+        "Lamin\u00e4r"
+    ],
+    [
+        449,
+        "Turbulens"
+    ],
+    [
+        450,
+        "\u03c1=mV"
+    ],
+    [
+        451,
+        "F1A1=F2A2"
+    ],
+    [
+        452,
+        "Q=dVdt"
+    ],
+    [
+        453,
+        "A1v1=A2v2"
+    ],
+    [
+        454,
+        "P=IV"
+    ],
+    [
+        455,
+        "F=qvB*sin(\u03b1)"
+    ],
+    [
+        456,
+        "\u03a3U=\u03a3IR"
+    ],
+    [
+        457,
+        "Q=CV"
+    ],
+    [
+        458,
+        "\u03c4=RC"
+    ],
+    [
+        459,
+        "\u03b5=\u03a6/t"
+    ],
+    [
+        460,
+        "F=-kx"
+    ],
+    [
+        461,
+        "I=P/A"
+    ],
+    [
+        462,
+        "1/o + 1/i = 1/f"
+    ],
+    [
+        463,
+        "Reflektion"
+    ],
+    [
+        464,
+        "Refraktion"
+    ],
+    [
+        465,
+        "Diffraktion"
+    ],
+    [
+        466,
+        "n*sin(\u03b1)"
+    ],
+    [
+        467,
+        "d*sin(\u03b1)=m\u03bb"
+    ],
+    [
+        468,
+        "Ekonomi"
+    ],
+    [
+        469,
+        "Handel"
+    ],
+    [
+        470,
+        "Politik"
+    ],
+    [
+        471,
+        "Fl\u00f6de"
+    ],
+    [
+        472,
+        "Tre stora branscher"
+    ],
+    [
+        473,
+        "Inkomst"
+    ],
+    [
+        474,
+        "Utgifter"
+    ],
+    [
+        475,
+        "Kontanter"
+    ],
+    [
+        476,
+        "Terminskontrakt(Futures)"
+    ],
+    [
+        477,
+        "Aktie(Stock)"
+    ],
+    [
+        478,
+        "Kryptovaluta"
+    ],
+    [
+        479,
+        "Korruption"
+    ],
+    [
+        480,
+        "Neptism"
+    ],
+    [
+        481,
+        "Mutor"
+    ],
+    [
+        482,
+        "F\u00f6rskingring"
+    ],
+    [
+        483,
+        "Klassisk ekonomi"
+    ],
+    [
+        484,
+        "Neoklassisk ekonomi"
+    ],
+    [
+        485,
+        "1"
+    ],
+    [
+        486,
+        "1\u00bd"
+    ],
+    [
+        487,
+        "2"
+    ],
+    [
+        488,
+        "3"
+    ],
+    [
+        489,
+        "Jordbruk"
+    ],
+    [
+        490,
+        "Skogsbruk"
+    ],
+    [
+        491,
+        "Fiske"
+    ],
+    [
+        492,
+        "Gruvdrift"
+    ],
+    [
+        493,
+        "Arbetskraft"
+    ],
+    [
+        494,
+        "R\u00e5varor"
+    ],
+    [
+        495,
+        "Kunder"
+    ],
+    [
+        496,
+        "Industri Specialisering"
+    ],
+    [
+        497,
+        "Livsmedelindustri"
+    ],
+    [
+        498,
+        "Skogsindustri"
+    ],
+    [
+        499,
+        "Jord-sten"
+    ],
+    [
+        500,
+        "Tekoindustri"
+    ],
+    [
+        501,
+        "Kemiindustri"
+    ],
+    [
+        502,
+        "Information och tj\u00e4nster"
+    ],
+    [
+        503,
+        "Turism"
+    ],
+    [
+        504,
+        "Handel"
+    ],
+    [
+        505,
+        "V\u00e4rldshandel"
+    ],
+    [
+        506,
+        "EU"
+    ],
+    [
+        507,
+        "NAFTA"
+    ],
+    [
+        508,
+        "MERCOSUR"
+    ],
+    [
+        509,
+        "WTO"
+    ],
+    [
+        511,
+        "I/O (Input/Output)"
+    ],
+    [
+        512,
+        "Memory"
+    ],
+    [
+        513,
+        "Disk"
+    ],
+    [
+        514,
+        "OS (Operativsystem)"
+    ],
+    [
+        515,
+        "Kallt vapen"
+    ],
+    [
+        516,
+        "Hett vapen"
+    ],
+    [
+        517,
+        "K\u00e4rnvapen"
+    ],
+    [
+        518,
+        "Kemivapen"
+    ],
+    [
+        519,
+        "Biologivapen"
+    ],
+    [
+        520,
+        "Pappersverk"
+    ],
+    [
+        521,
+        "S\u00e5gverk"
+    ],
+    [
+        522,
+        "Objektiv"
+    ],
+    [
+        523,
+        "Vetenskap"
+    ],
+    [
+        524,
+        "(x-x0)\u00b2+(y-y0)\u00b2=r\u00b2"
+    ],
+    [
+        525,
+        "Applikation"
+    ],
+    [
+        526,
+        "Politisk inriktningar"
+    ],
+    [
+        527,
+        "Anarkistisk"
+    ],
+    [
+        528,
+        "Marxist"
+    ],
+    [
+        529,
+        "Socialistisk"
+    ],
+    [
+        530,
+        "Liberal"
+    ],
+    [
+        531,
+        "Konsvervativ"
+    ],
+    [
+        532,
+        "Monarkistisk"
+    ],
+    [
+        533,
+        "Fascist"
+    ],
+    [
+        534,
+        "Svensk politik"
+    ],
+    [
+        535,
+        "Amerikansk politik"
+    ],
+    [
+        536,
+        "Statsniv\u00e5"
+    ],
+    [
+        537,
+        "Landstingsniv\u00e5 (Regionalniv\u00e5)"
+    ],
+    [
+        538,
+        "Kommunalniv\u00e5"
+    ],
+    [
+        539,
+        "Riksdagen"
+    ],
+    [
+        540,
+        "Regeringen"
+    ],
+    [
+        541,
+        "Statsministern"
+    ],
+    [
+        542,
+        "Estetik"
+    ],
+    [
+        543,
+        "Spr\u00e5k"
+    ],
+    [
+        544,
+        "Diskussioner"
+    ],
+    [
+        545,
+        "Utskott"
+    ],
+    [
+        546,
+        "Departement"
+    ],
+    [
+        547,
+        "Utrikesdepartement"
+    ],
+    [
+        548,
+        "Utf\u00f6r besult"
+    ],
+    [
+        549,
+        "Statliga uppgifter"
+    ],
+    [
+        550,
+        "Partier"
+    ],
+    [
+        551,
+        "Kongressen"
+    ],
+    [
+        552,
+        "Senaten"
+    ],
+    [
+        553,
+        "H\u00f6gsta domstolen"
+    ],
+    [
+        554,
+        "Partier"
+    ],
+    [
+        555,
+        "Demokraterna"
+    ],
+    [
+        556,
+        "Republikanerna"
+    ],
+    [
+        557,
+        "Demografi"
+    ],
+    [
+        558,
+        "Geografi-politik"
+    ],
+    [
+        559,
+        "4 Stadier"
+    ],
+    [
+        560,
+        "H\u00f6g f\u00f6ddantal och h\u00f6g d\u00f6dsantal"
+    ],
+    [
+        561,
+        "H\u00f6g f\u00f6ddantal och l\u00e5g d\u00f6dsantal"
+    ],
+    [
+        562,
+        "L\u00e5g f\u00f6ddantal och l\u00e5g d\u00f6dsantal"
+    ],
+    [
+        563,
+        "J\u00e4mn f\u00f6rdelning"
+    ],
+    [
+        564,
+        "F\u00f6rflyttning"
+    ],
+    [
+        565,
+        "Arbete"
+    ],
+    [
+        566,
+        "Krig"
+    ],
+    [
+        567,
+        "F\u00f6rf\u00f6ljelse"
+    ],
+    [
+        568,
+        "Milj\u00f6"
+    ],
+    [
+        569,
+        "Geografi-ekonomi"
+    ],
+    [
+        570,
+        "Levnadsstandard (HDI)"
+    ],
+    [
+        571,
+        "Kapitalism"
+    ],
+    [
+        572,
+        "Fattigdom"
+    ],
+    [
+        573,
+        "Idealsamh\u00e4lle"
+    ],
+    [
+        574,
+        "Stora ekonomiska klyftor"
+    ],
+    [
+        575,
+        "Or\u00e4ttvisa villkor"
+    ],
+    [
+        576,
+        "Resurser bland rika"
+    ],
+    [
+        577,
+        "V\u00e4rldshandeln gynnar rika"
+    ],
+    [
+        578,
+        "Sjukdom"
+    ],
+    [
+        579,
+        "Korruption"
+    ],
+    [
+        580,
+        "Brist"
+    ],
+    [
+        581,
+        "H\u00f6gt befolkad"
+    ],
+    [
+        582,
+        "Sv\u00e4lt"
+    ],
+    [
+        583,
+        "Jordbrukssamh\u00e4lle"
+    ],
+    [
+        584,
+        "Vattenbrist"
+    ],
+    [
+        585,
+        "L\u00f6sningar"
+    ],
+    [
+        586,
+        "Millenniem\u00e5l"
+    ],
+    [
+        587,
+        "Agenda 2030"
+    ],
+    [
+        588,
+        "L\u00e4nder"
+    ],
+    [
+        589,
+        "Konst"
+    ],
+    [
+        590,
+        "Design"
+    ],
+    [
+        591,
+        "Litteratur"
+    ],
+    [
+        592,
+        "Musik"
+    ],
+    [
+        593,
+        "Arkitektur"
+    ],
+    [
+        594,
+        "USA"
+    ],
+    [
+        595,
+        "Japan"
+    ],
+    [
+        596,
+        "Ryssland"
+    ],
+    [
+        597,
+        "Bergskedjor vid kuster"
+    ],
+    [
+        598,
+        "Inre sl\u00e4tter"
+    ],
+    [
+        599,
+        "Floder"
+    ],
+    [
+        600,
+        "\u00d6versv\u00e4mningar"
+    ],
+    [
+        601,
+        "Skolan"
+    ],
+    [
+        602,
+        "Arbete"
+    ],
+    [
+        603,
+        "Resa"
+    ],
+    [
+        604,
+        "Underh\u00e5llning"
+    ],
+    [
+        605,
+        "Hobby"
+    ],
+    [
+        606,
+        "Livsstil"
+    ],
+    [
+        607,
+        "Livet"
+    ],
+    [
+        608,
+        "Avkopplande Miami"
+    ],
+    [
+        609,
+        "Modernt"
+    ],
+    [
+        610,
+        "Klassiskt"
+    ],
+    [
+        611,
+        "Lantlig"
+    ],
+    [
+        612,
+        "Sommar"
+    ],
+    [
+        613,
+        "Vanligt liv"
+    ],
+    [
+        614,
+        "Ton\u00e5ringar"
+    ],
+    [
+        615,
+        "Br\u00e5kmakare"
+    ],
+    [
+        616,
+        "Rayan"
+    ],
+    [
+        617,
+        "Datorspel-livsstil"
+    ],
+    [
+        618,
+        "Framtidslivsstil"
+    ],
+    [
+        619,
+        "Minimalism"
+    ],
+    [
+        620,
+        "metodik"
+    ],
+    [
+        621,
+        "Tiago-PZK metoden"
+    ],
+    [
+        622,
+        "Vanlig inl\u00e4rningsmetoden"
+    ],
+    [
+        623,
+        "AOORA struktur"
+    ],
+    [
+        624,
+        "[1 2 3 4 5 6]"
+    ],
+    [
+        625,
+        "[a1 a2 a3 a4 a5 a6]"
+    ],
+    [
+        626,
+        "\u00d6versikt"
+    ],
+    [
+        627,
+        "Kunskap"
+    ],
+    [
+        628,
+        "Med andra"
+    ],
+    [
+        629,
+        "Profil f\u00f6r samh\u00e4lle"
+    ],
+    [
+        630,
+        "Skol\u00e4mnen"
+    ],
+    [
+        631,
+        "Tr\u00e4sl\u00f6jd"
+    ],
+    [
+        632,
+        "Svenska"
+    ],
+    [
+        633,
+        "Engelska"
+    ],
+    [
+        634,
+        "Franska"
+    ],
+    [
+        635,
+        "Skol\u00e4mnen"
+    ],
+    [
+        636,
+        "Uppgifter"
+    ],
+    [
+        637,
+        "F\u00f6rh\u00f6r och prov"
+    ],
+    [
+        638,
+        "Inga genv\u00e4gar i skolan"
+    ],
+    [
+        639,
+        "Aktiviteter"
+    ],
+    [
+        640,
+        "Grupparbete"
+    ],
+    [
+        641,
+        "Utflykt"
+    ],
+    [
+        642,
+        "Studiebes\u00f6k"
+    ],
+    [
+        643,
+        "Personer"
+    ],
+    [
+        644,
+        "F\u00f6rberedelser"
+    ],
+    [
+        645,
+        "Struktur (Plan)"
+    ],
+    [
+        646,
+        "Under resan"
+    ],
+    [
+        647,
+        "Vart"
+    ],
+    [
+        648,
+        "Vem"
+    ],
+    [
+        649,
+        "Hur"
+    ],
+    [
+        650,
+        "N\u00e4r"
+    ],
+    [
+        651,
+        "Ok\u00e4nda l\u00e4nder"
+    ],
+    [
+        652,
+        "Kunskap"
+    ],
+    [
+        653,
+        "Sport"
+    ],
+    [
+        654,
+        "Natur"
+    ],
+    [
+        655,
+        "Kultur"
+    ],
+    [
+        656,
+        "Familj"
+    ],
+    [
+        657,
+        "V\u00e4nner"
+    ],
+    [
+        658,
+        "Anv\u00e4nder pengar"
+    ],
+    [
+        659,
+        "F\u00f6r mat"
+    ],
+    [
+        660,
+        "Hur ska man \u00e5ka?"
+    ],
+    [
+        661,
+        "Budget"
+    ],
+    [
+        662,
+        "Transport"
+    ],
+    [
+        663,
+        "\u00d6verlevnad"
+    ],
+    [
+        664,
+        "Boende"
+    ],
+    [
+        665,
+        "Resebyr\u00e5"
+    ],
+    [
+        666,
+        "Problem under resan"
+    ],
+    [
+        667,
+        "Sport"
+    ],
+    [
+        668,
+        "Struktur"
+    ],
+    [
+        669,
+        "Typer"
+    ],
+    [
+        670,
+        "Lag"
+    ],
+    [
+        671,
+        "Strategi"
+    ],
+    [
+        672,
+        "Tr\u00e4ning"
+    ],
+    [
+        673,
+        "Kommunikation"
+    ],
+    [
+        674,
+        "Konversation"
+    ],
+    [
+        675,
+        "Sk\u00e4mt"
+    ],
+    [
+        676,
+        "B\u00f6rjar konversation"
+    ],
+    [
+        677,
+        "\u00c4ndra prattema"
+    ],
+    [
+        678,
+        "Presentationer"
+    ],
+    [
+        679,
+        "Psykologi"
+    ],
+    [
+        680,
+        "\u00c5sikter och tankar"
+    ],
+    [
+        681,
+        "Personlighet(Karakt\u00e4r)"
+    ],
+    [
+        682,
+        "Modig"
+    ],
+    [
+        683,
+        "\u00c4ventyrlig"
+    ],
+    [
+        684,
+        "Feg"
+    ],
+    [
+        685,
+        "Sj\u00e4lvst\u00e4ndig"
+    ],
+    [
+        686,
+        "Bra karakt\u00e4r"
+    ],
+    [
+        687,
+        "D\u00e5liga karakt\u00e4r"
+    ],
+    [
+        688,
+        "Resurskrik"
+    ],
+    [
+        689,
+        "Framg\u00e5ngsrik"
+    ],
+    [
+        690,
+        "Skicklig"
+    ],
+    [
+        691,
+        "Fantasifull"
+    ],
+    [
+        692,
+        "Kreativ"
+    ],
+    [
+        693,
+        "Nyfiken"
+    ],
+    [
+        694,
+        "\u00d6dmjuk"
+    ],
+    [
+        695,
+        "Respektfull"
+    ],
+    [
+        696,
+        "Artig"
+    ],
+    [
+        697,
+        "P\u00e5litlig"
+    ],
+    [
+        698,
+        "\u00c4rlig"
+    ],
+    [
+        699,
+        "Gener\u00f6s"
+    ],
+    [
+        700,
+        "Lojal"
+    ],
+    [
+        701,
+        "Patrotisk"
+    ],
+    [
+        702,
+        "Neutrala karakt\u00e4r"
+    ],
+    [
+        703,
+        "Strikt"
+    ],
+    [
+        704,
+        "Dominerande"
+    ],
+    [
+        705,
+        "Ledare"
+    ],
+    [
+        706,
+        "Energisk"
+    ],
+    [
+        707,
+        "Hoppfull"
+    ],
+    [
+        708,
+        "Ut\u00e5triktad"
+    ],
+    [
+        709,
+        "Introvert"
+    ],
+    [
+        710,
+        "Allvarlig"
+    ],
+    [
+        711,
+        "Lugn"
+    ],
+    [
+        712,
+        "Ensam"
+    ],
+    [
+        713,
+        "Blyg"
+    ],
+    [
+        714,
+        "Lat"
+    ],
+    [
+        715,
+        "Stygg"
+    ],
+    [
+        716,
+        "Slughet"
+    ],
+    [
+        717,
+        "Listig"
+    ],
+    [
+        718,
+        "Of\u00f6rsk\u00e4md"
+    ],
+    [
+        719,
+        "Sj\u00e4lvisk"
+    ],
+    [
+        720,
+        "Envis"
+    ],
+    [
+        721,
+        "V\u00e5ldsam(Ut\u00e5tagerande)"
+    ],
+    [
+        722,
+        "Materalist"
+    ],
+    [
+        723,
+        "Girig"
+    ],
+    [
+        724,
+        "O\u00e4rlig"
+    ],
+    [
+        725,
+        "Grinig"
+    ],
+    [
+        726,
+        "Deprimerad"
+    ],
+    [
+        727,
+        "El\u00e4ndig"
+    ],
+    [
+        728,
+        "Livet"
+    ],
+    [
+        729,
+        "Ord"
+    ],
+    [
+        730,
+        "Meningar"
+    ],
+    [
+        731,
+        "Skattkammar\u00f6n"
+    ],
+    [
+        732,
+        "1.1"
+    ],
+    [
+        733,
+        "f\u00f6rtiga: tiga om, hemligh\u00e5lla"
+    ],
+    [
+        734,
+        "n\u00e5dens \u00e5r: kalender\u00e5r, herrens \u00e5r"
+    ],
+    [
+        735,
+        "linka: halta, stappla"
+    ],
+    [
+        736,
+        "tj\u00e4ra: ett m\u00f6rkt tjockflytande \u00e4mne som skyddar mot r\u00f6ta (asfalt)"
+    ],
+    [
+        737,
+        "h\u00e5rpiska: fl\u00e4ta"
+    ],
+    [
+        738,
+        "st\u00e4mma upp: pl\u00f6tsligt b\u00f6rja tala (vid talande)"
+    ],
+    [
+        739,
+        "gast: 1. sp\u00f6ke 2. bes\u00e4ttningsman p\u00e5 segelb\u00e5t"
+    ],
+    [
+        740,
+        "gastkrama: h\u00e5lla i stark sp\u00e4nning"
+    ],
+    [
+        741,
+        "ankarspel: mekanisk anordning med vilket ett ankare f\u00e4lls eller lyfts"
+    ],
+    [
+        742,
+        "bulta: banka, dunka, sl\u00e5"
+    ],
+    [
+        743,
+        "spak: st\u00e5ng, handtag"
+    ],
+    [
+        744,
+        "brysk: ov\u00e4nlig, h\u00e4nsynsl\u00f6s"
+    ],
+    [
+        745,
+        "k\u00e4nnare: expert, specialist"
+    ],
+    [
+        746,
+        "bister: h\u00e5rd, str\u00e4ng(k\u00e4rv)"
+    ],
+    [
+        747,
+        "v\u00e5rdad: ansad, ordentlig, prydlig"
+    ],
+    [
+        748,
+        "ov\u00e5rdad: r\u00e5, slafskig, raggig, ruggig, rufsig"
+    ],
+    [
+        749,
+        "matros: sj\u00f6man som arbetar p\u00e5 d\u00e4ck"
+    ],
+    [
+        750,
+        "postdiligens: (anv\u00e4nds ej idag) coach"
+    ],
+    [
+        751,
+        "avsides: l\u00e5ngt \u00e5t sidan, ensligt"
+    ],
+    [
+        752,
+        "grogg: dryck av sprit blandad med l\u00e4skedryck"
+    ],
+    [
+        753,
+        "str\u00f6vt\u00e5g: vandring, uppt\u00e4cksf\u00e4rd"
+    ],
+    [
+        754,
+        "angel\u00e4gen: ivrig"
+    ],
+    [
+        755,
+        "ta in p\u00e5 (hotell): h\u00e4mta in p\u00e5 hotell"
+    ],
+    [
+        756,
+        "p\u00e5 s\u00e4tt och vis: i viss m\u00e5n, p\u00e5 n\u00e5got s\u00e4tt"
+    ],
+    [
+        757,
+        "grundval: underbyggnad, grund, basis, fundament"
+    ],
+    [
+        758,
+        "gestalt: figur, skepnad"
+    ],
+    [
+        759,
+        "dj\u00e4vul: satan, den onde"
+    ],
+    [
+        760,
+        "dj\u00e4vulsk: ond, diabolisk, mefistofelisk"
+    ],
+    [
+        761,
+        "mara: v\u00e4sen som pl\u00e5gar sovande personer (p\u00e5hittad)"
+    ],
+    [
+        762,
+        "utan like: enast\u00e5ende, oerh\u00f6rd, of\u00f6rliknelig, unik"
+    ],
+    [
+        763,
+        "fasa: skr\u00e4ck, fruktan, f\u00f6rf\u00e4ran, f\u00f6rskr\u00e4ckelse, b\u00e4ran, ryslighet"
+    ],
+    [
+        764,
+        "fasansfull: ohygglig, gruvlig, ot\u00e4ck, ruskig"
+    ],
+    [
+        765,
+        "undg\u00e5: l\u00e5ta bli, slippa ifr\u00e5n"
+    ],
+    [
+        766,
+        "despot: tyrann, f\u00f6rtyckare, diktator"
+    ],
+    [
+        767,
+        "despotisk: env\u00e4ldig, egenm\u00e4ktig, h\u00e4rsklysten"
+    ],
+    [
+        768,
+        "rusa upp: rycka till, spritta till, fara upp"
+    ],
+    [
+        769,
+        "ragla: g\u00e5 vingligt, stappla, vackla, vingla"
+    ],
+    [
+        770,
+        "illd\u00e5d: brott"
+    ],
+    [
+        771,
+        "utsago: uttalande"
+    ],
+    [
+        772,
+        "enligt egen utsago: according to him/her"
+    ],
+    [
+        773,
+        "tyrann: despot, f\u00f6rtyckare"
+    ],
+    [
+        774,
+        "tyrranisera: tvinga"
+    ],
+    [
+        775,
+        "frukta: vara r\u00e4dd f\u00f6r"
+    ],
+    [
+        776,
+        "ta mod till sig: v\u00e5ga"
+    ],
+    [
+        777,
+        "ryta: ge ifr\u00e5n sig ett kraftigt hotande ljud"
+    ],
+    [
+        778,
+        "sn\u00e4sa: tllr\u00e4ttavisa p\u00e5 ett irriterat s\u00e4tt"
+    ],
+    [
+        779,
+        "g\u00e5rdfarihandlare: kringresande f\u00f6rs\u00e4ljare"
+    ],
+    [
+        780,
+        "br\u00e4tte: utvikt kant p\u00e5 en hatt"
+    ],
+    [
+        781,
+        "stuka: vricka, skada"
+    ],
+    [
+        782,
+        "allmoge: bondebefolkning"
+    ],
+    [
+        783,
+        "evinnerlig: st\u00e4ndig"
+    ],
+    [
+        784,
+        "hin h\u00e5le: hin onde, satan"
+    ],
+    [
+        785,
+        "reumatism: sjukdomar med sm\u00e4rtor i leder och muskler, ledv\u00e4rk"
+    ],
+    [
+        786,
+        "bloss: drag p\u00e5 en cigarett"
+    ],
+    [
+        787,
+        "s\u00e4lle: grobian, rackare"
+    ],
+    [
+        788,
+        "bli kvitt: radera, sudda"
+    ],
+    [
+        789,
+        "vidrig: f\u00f6rf\u00e4rlig"
+    ],
+    [
+        790,
+        "skurk: f\u00f6rbrytare, ligist, usling, bov"
+    ],
+    [
+        791,
+        "nagla fast: f\u00e4sta mot"
+    ],
+    [
+        792,
+        "utspinna sig: \u00e4ga rum"
+    ],
+    [
+        793,
+        "tvekamp: duell"
+    ],
+    [
+        794,
+        "duka under: g\u00e5 under, ge upp"
+    ],
+    [
+        795,
+        "oh\u00f6vligt: ohyfsad, ouppfostrad, fr\u00e4ck"
+    ],
+    [
+        796,
+        "upptr\u00e4dande: beteende, uppf\u00f6rande"
+    ],
+    [
+        797,
+        "s\u00f6rja f\u00f6r: ta ansvar f\u00f6r"
+    ],
+    [
+        798,
+        "1.2"
+    ],
+    [
+        799,
+        "dingla: h\u00e4nga och sv\u00e4nga"
+    ],
+    [
+        800,
+        "sk\u00f6rt: nedh\u00e4ngande bakstycke av rock"
+    ],
+    [
+        801,
+        "gl\u00e5mig: blek som har sjuklig f\u00e4rg"
+    ],
+    [
+        802,
+        "plira: kisa"
+    ],
+    [
+        803,
+        "sup: ett glas br\u00e4nnvin"
+    ],
+    [
+        804,
+        "missta sig: ta fel"
+    ],
+    [
+        805,
+        "kvickt: snabbt"
+    ],
+    [
+        806,
+        "tycke: substantiv av tycka, ett \u00e5sikt"
+    ],
+    [
+        807,
+        "inst\u00e4llsam: som fj\u00e4skar och smickrar"
+    ],
+    [
+        808,
+        "v\u00e4lsignelse: blessing"
+    ],
+    [
+        809,
+        "morsk: or\u00e4dd, karsk"
+    ],
+    [
+        810,
+        "kippa efter andan: dra andan h\u00e4ftigt"
+    ],
+    [
+        811,
+        "stympa: hugga av"
+    ],
+    [
+        812,
+        "retr\u00e4tt: flykt"
+    ],
+    [
+        813,
+        "f\u00f6refalla: synas, tyckas"
+    ],
+    [
+        814,
+        "stj\u00e4lpa: v\u00e4lta"
+    ],
+    [
+        815,
+        "m\u00e5tta: sikta, rikta"
+    ],
+    [
+        816,
+        "jack: hugg, sk\u00e5ra, hack"
+    ],
+    [
+        817,
+        "befalla: ge order"
+    ],
+    [
+        818,
+        "blessyr: l\u00e4ttare s\u00e5r"
+    ],
+    [
+        819,
+        "l\u00e4gga benen p\u00e5 ryggen: fly"
+    ],
+    [
+        820,
+        "kr\u00f6n: h\u00f6gsta punkt (kanske p\u00e5 backe)"
+    ],
+    [
+        821,
+        "vackla: vara n\u00e4ra att falla"
+    ],
+    [
+        822,
+        "darrh\u00e4nt: darrig"
+    ],
+    [
+        823,
+        "tilldra sig: h\u00e4nda"
+    ],
+    [
+        824,
+        "banes\u00e5r: d\u00f6dande slag"
+    ],
+    [
+        825,
+        "blotta: g\u00f6ra bar"
+    ],
+    [
+        826,
+        "flamma: eldsl\u00e5ga"
+    ],
+    [
+        827,
+        "galge: st\u00e4llning d\u00e4r d\u00f6dsd\u00f6mda h\u00e4ngs"
+    ],
+    [
+        828,
+        "\u00e5der: kanal f\u00f6r blod i kroppen"
+    ],
+    [
+        829,
+        "f\u00f6r en g\u00e5ngs skull: undantagsvis"
+    ],
+    [
+        830,
+        "avs\u00e4ga sig: avst\u00e5 fr\u00e5n, tacka nej"
+    ],
+    [
+        831,
+        "f\u00e4sta sig vid: ta fasta p\u00e5"
+    ],
+    [
+        832,
+        "1.3"
+    ],
+    [
+        833,
+        "eftertryck: extra kraftigt understrykande"
+    ],
+    [
+        834,
+        "kr\u00e4k: skurk, s\u00e4lle, lymmmel, f\u00e4hund"
+    ],
+    [
+        835,
+        "beck: svart, tr\u00f6gflytande \u00e4mne fr\u00e5n tj\u00e4ra"
+    ],
+    [
+        836,
+        "skrov: stomme till ett fartyg"
+    ],
+    [
+        837,
+        "beveka: r\u00f6ra, \u00f6vertala, v\u00e4dja"
+    ],
+    [
+        838,
+        "skv\u00e4tt: liten m\u00e4ngd v\u00e4tska"
+    ],
+    [
+        839,
+        "vara med om: uppleva, erfara, genomleva"
+    ],
+    [
+        840,
+        "medtagen: utmattad, sliten"
+    ],
+    [
+        841,
+        "mutor: g\u00e5vor som man ger f\u00f6r att g\u00f6ra n\u00e5gon hj\u00e4lpa"
+    ],
+    [
+        842,
+        "st\u00f6ta: irritera"
+    ],
+    [
+        843,
+        "koj: sovplats p\u00e5 b\u00e5t"
+    ],
+    [
+        844,
+        "roffa: r\u00f6va"
+    ],
+    [
+        845,
+        "bj\u00e4rt: skarp"
+    ],
+    [
+        846,
+        "yttra: s\u00e4ga"
+    ],
+    [
+        847,
+        "ta k\u00e5l p\u00e5: d\u00f6da"
+    ],
+    [
+        848,
+        "dvala: s\u00f6mn"
+    ],
+    [
+        849,
+        "bek\u00e4nnelse: medgivande, deklaration"
+    ],
+    [
+        850,
+        "bestyr: syssla, uppgifter"
+    ],
+    [
+        851,
+        "lynne: karakt\u00e4r, hum\u00f6r"
+    ],
+    [
+        852,
+        "vid: bred"
+    ],
+    [
+        853,
+        "vanskapt: deformerad, missbildad"
+    ],
+    [
+        854,
+        "egendom: fastighet p\u00e5 landet"
+    ],
+    [
+        855,
+        "egendomlig: konstig"
+    ],
+    [
+        856,
+        "upplysa: informera, f\u00f6rklara"
+    ],
+    [
+        857,
+        "\u00f6verrumpla: \u00f6verraska"
+    ],
+    [
+        858,
+        "omt\u00f6cknad: halvt medvetsl\u00f6s"
+    ],
+    [
+        859,
+        "kl\u00e4nga: klamra sig fast"
+    ],
+    [
+        860,
+        "nykter: motsatsord av berusad"
+    ],
+    [
+        861,
+        "vaja: gunga fram och tillbaka"
+    ],
+    [
+        862,
+        "stupa: ramla, falla, d\u00f6"
+    ],
+    [
+        863,
+        "strupe: fr\u00e4mre delen av halsen"
+    ],
+    [
+        864,
+        "1.4"
+    ],
+    [
+        865,
+        "f\u00f6refalla: synas, tyckas"
+    ],
+    [
+        866,
+        "annalkande: n\u00e4rmande"
+    ],
+    [
+        867,
+        "k\u00e5re: vindpust (breeze)"
+    ],
+    [
+        868,
+        "sagt och gjort: f\u00e4rdigt"
+    ],
+    [
+        869,
+        "tilltagande: \u00f6kande, stigande, v\u00e4xande"
+    ],
+    [
+        870,
+        "skymning: kv\u00e4llning, halvm\u00f6rker"
+    ],
+    [
+        871,
+        "f\u00f6rmodligen: antagligen"
+    ],
+    [
+        872,
+        "skvalp: plask"
+    ],
+    [
+        873,
+        "kraxande: som ljud av kr\u00e5ka"
+    ],
+    [
+        874,
+        "ta till schappen: ta till flykten, fly"
+    ],
+    [
+        875,
+        "loggert: ett mindre tremastat fartyg"
+    ],
+    [
+        876,
+        "inge: framkalla, fylla medviss k\u00e4nsla"
+    ],
+    [
+        877,
+        "harhj\u00e4rtad: feg, r\u00e4dd"
+    ],
+    [
+        878,
+        "r\u00e4ttm\u00e4tig: laglig, ber\u00e4ttigad"
+    ],
+    [
+        879,
+        "dumdristig: \u00f6vermodig, obet\u00e4nksam"
+    ],
+    [
+        880,
+        "snyfta: gr\u00e5ta med h\u00e4ftiga och st\u00f6tvisa andetag"
+    ],
+    [
+        881,
+        "frist: (deadline)"
+    ],
+    [
+        882,
+        "fingerborg: ett redskap som skyddar fingertopp fr\u00e5n stick n\u00e4r n\u00e5len sticks genom tyget"
+    ],
+    [
+        883,
+        "don: redskap, verktyg"
+    ],
+    [
+        884,
+        "misstr\u00f6sta: ge upp hoppet, tappa modet"
+    ],
+    [
+        885,
+        "gl\u00f6dga: g\u00f6ra gl\u00f6dhet"
+    ],
+    [
+        886,
+        "st\u00f6tt: s\u00e5rad, kr\u00e4nkt"
+    ],
+    [
+        887,
+        "brokig: f\u00e4rgglad, blandad"
+    ],
+    [
+        888,
+        "kvadrant: 1/4 cirkel"
+    ],
+    [
+        889,
+        "tacka: gjutet metallstycke"
+    ],
+    [
+        890,
+        "ringa: liten, sm\u00e5, obetydlig, otillr\u00e4cklig"
+    ],
+    [
+        891,
+        "m\u00e4ssing: legering av koppar och zink"
+    ],
+    [
+        892,
+        "gruppla: t\u00e4nka djupt, fundera"
+    ],
+    [
+        893,
+        "kringflackande: som reser hit och dit"
+    ],
+    [
+        894,
+        "syndig: elak, ond"
+    ],
+    [
+        895,
+        "ta i: k\u00e4nna, feel"
+    ],
+    [
+        896,
+        "klinga: ringa, ljuda, tona"
+    ],
+    [
+        897,
+        "styver: \u00f6re, slant, mynt"
+    ],
+    [
+        898,
+        "tids\u00f6dande: som tar l\u00e5ng tid"
+    ],
+    [
+        899,
+        "regel: anv\u00e4nds i en stomme f\u00f6r v\u00e4ggen"
+    ],
+    [
+        900,
+        "regla: l\u00e5sa, st\u00e4nga med d\u00f6rr och v\u00e4gganordning"
+    ],
+    [
+        901,
+        "sv\u00e4rm: grupp av flygande djur"
+    ],
+    [
+        902,
+        "treva: fumla, os\u00e4kert leta reda p\u00e5"
+    ],
+    [
+        903,
+        "kulle: rundad h\u00f6jd"
+    ],
+    [
+        904,
+        "s\u00e4nka: dal, dalg\u00e5ng"
+    ],
+    [
+        905,
+        "klandra: kritisera, anklaga, beskylla"
+    ],
+    [
+        906,
+        "stappla: g\u00e5 ostadigt och snubblande, vackla"
+    ],
+    [
+        907,
+        "h\u00e5rdh\u00e4nt: str\u00e4ng, h\u00e5rd, med j\u00e4rnhand"
+    ],
+    [
+        908,
+        "1.5"
+    ],
+    [
+        909,
+        "uppeh\u00e5ll: avbrott, oaus"
+    ],
+    [
+        910,
+        "ryslig: f\u00f6rskr\u00e4cklig, ot\u00e4ck"
+    ],
+    [
+        911,
+        "s\u00f6la: vara l\u00e5ngsam, dr\u00f6ja"
+    ],
+    [
+        912,
+        "s\u00f6lkorv: person som \u00e4r l\u00e5ngsam och dr\u00f6jer"
+    ],
+    [
+        913,
+        "kl\u00f6sa: riva med klor eller naglar"
+    ],
+    [
+        914,
+        "snoka: rota i andras bostad, gr\u00e4va"
+    ],
+    [
+        915,
+        "sluttning: lutande markomr\u00e5de"
+    ],
+    [
+        916,
+        "f\u00e4hund: kr\u00e4k, elak och usel person"
+    ],
+    [
+        917,
+        "v\u00e4djan: b\u00f6n, uppmaning, upprop"
+    ],
+    [
+        918,
+        "fena: simorgan hos fisk"
+    ],
+    [
+        919,
+        "r\u00f6ra inte en fena: helt stilla"
+    ],
+    [
+        920,
+        "snylta: tigga"
+    ],
+    [
+        921,
+        "ruter: kraft, energi"
+    ],
+    [
+        922,
+        "gasta: skrika, vr\u00e5la"
+    ],
+    [
+        923,
+        "inv\u00e4nda: s\u00e4ga emot"
+    ],
+    [
+        924,
+        "ta \u00f6verhand: bli dominerande"
+    ],
+    [
+        925,
+        "f\u00f6rg\u00e4ves: utan resultat"
+    ],
+    [
+        926,
+        "utefter: l\u00e4ngs med"
+    ],
+    [
+        927,
+        "ryttare: person som rider"
+    ],
+    [
+        928,
+        "v\u00e4ja: vika undan, undvika"
+    ],
+    [
+        929,
+        "yngling: pojke, ung man"
+    ],
+    [
+        930,
+        "omst\u00e4ndighet: f\u00f6rh\u00e5llande"
+    ],
+    [
+        931,
+        "luktsalt: anv\u00e4nds att v\u00e4cka medvetsl\u00f6sa personer"
+    ],
+    [
+        932,
+        "bakh\u00e5ll: anfall fr\u00e5n ett g\u00f6mst\u00e4lle"
+    ],
+    [
+        933,
+        "udde: liten halv\u00f6"
+    ],
+    [
+        934,
+        "kutter: snabbsegelb\u00e5t"
+    ],
+    [
+        935,
+        "liktorn: f\u00f6rtjockning av \u00f6verhuden (kanske p\u00e5 t\u00e5rna)"
+    ],
+    [
+        936,
+        "penning: mynt, pengar"
+    ],
+    [
+        937,
+        "krita: vit och mjuk kalksten"
+    ],
+    [
+        938,
+        "n\u00e4r det kommer till kritan: n\u00e4r det verkligen g\u00e4ller"
+    ],
+    [
+        939,
+        "majest\u00e4t: h\u00f6ghet"
+    ],
+    [
+        940,
+        "rask: snabb, fort"
+    ],
+    [
+        941,
+        "trampa p\u00e5 t\u00e5rna: behandla neds\u00e4ttande"
+    ],
+    [
+        942,
+        "1.6"
+    ],
+    [
+        943,
+        "avl\u00f6vad: utan l\u00f6v, bar"
+    ],
+    [
+        944,
+        "betj\u00e4nt: manservant, uppassare"
+    ],
+    [
+        945,
+        "bel\u00e4gga: t\u00e4cka"
+    ],
+    [
+        946,
+        "byst: skulptur p\u00e5 br\u00f6stbild"
+    ],
+    [
+        947,
+        "brasa: eld"
+    ],
+    [
+        948,
+        "munter: synbart glad och obekymrad"
+    ],
+    [
+        949,
+        "v\u00e4derbiten: som f\u00e5tt f\u00e4rg av v\u00e4der och vind"
+    ],
+    [
+        950,
+        "garva: f\u00e4rgar hudar till l\u00e4der"
+    ],
+    [
+        951,
+        "garvard: h\u00e4rdad (experienced)"
+    ],
+    [
+        952,
+        "f\u00e5ra: rynka, r\u00e4nna"
+    ],
+    [
+        953,
+        "tyda p\u00e5: ge sk\u00e4l att tro, peka mot"
+    ],
+    [
+        954,
+        "givakt: formalposition som soldat"
+    ],
+    [
+        955,
+        "Vilka vindar f\u00f6r er hit: en mening d\u00e5 man besvarar n\u00e4r n\u00e5gon kommer ov\u00e4ntat"
+    ],
+    [
+        956,
+        "spiselkrans: dekorativ ramen runt \u00f6ppen spis"
+    ],
+    [
+        957,
+        "snagga: klippa mycket kort"
+    ],
+    [
+        958,
+        "vederv\u00e4rdig: avskyv\u00e4rd, \u00e4cklig, vidrig"
+    ],
+    [
+        959,
+        "f\u00f6rtj\u00e4nst: god egenskap"
+    ],
+    [
+        960,
+        "det kliar i fingarna p\u00e5 honom att: han har v\u00e4ldig lust att genast g\u00f6ra"
+    ],
+    [
+        961,
+        "f\u00f6rtj\u00e4nt: v\u00e4rd"
+    ],
+    [
+        962,
+        "stygn: (stitch)"
+    ],
+    [
+        963,
+        "f\u00f6rsegla: tillsluta med sigill, seal"
+    ],
+    [
+        964,
+        "kr\u00e5kf\u00f6tter: klotter"
+    ],
+    [
+        965,
+        "inf\u00f6ra: b\u00f6rjar anv\u00e4nda, till\u00e4mpa"
+    ],
+    [
+        966,
+        "f\u00f6rv\u00e4xling: sammanblandning"
+    ],
+    [
+        967,
+        "f\u00f6rtydligande: klarl\u00e4ggande till\u00e4gg"
+    ],
+    [
+        968,
+        "kapa: er\u00f6vra under vapenhot (hijack)"
+    ],
+    [
+        969,
+        "berest: som har rest mest"
+    ],
+    [
+        970,
+        "sigill: avtryck i lack vid f\u00f6rsegling"
+    ],
+    [
+        971,
+        "varsam: f\u00f6rsiktig, aktsam"
+    ],
+    [
+        972,
+        "lodning: m\u00e4tning av vattendjup"
+    ],
+    [
+        973,
+        "sund: smalt vattenomr\u00e5de mellan tv\u00e5 landsomr\u00e5den"
+    ],
+    [
+        974,
+        "inlopp: infartsled till hamn (entrance)"
+    ],
+    [
+        975,
+        "m\u00e4sspojke: pojke som \u00e4r servit\u00f6r i fartygsmatsal"
+    ],
+    [
+        976,
+        "gynnsam: lyckosam"
+    ],
+    [
+        977,
+        "skonert: segelfartyg"
+    ],
+    [
+        978,
+        "2.1 Jag reser till Bristol"
+    ],
+    [
+        979,
+        "hush\u00e5llerska: vaktm\u00e4stare"
+    ],
+    [
+        980,
+        "omv\u00e4xlande: varierande"
+    ],
+    [
+        981,
+        "vilde: person som \u00e4r f\u00f6dd och lever i primitiv kultur"
+    ],
+    [
+        982,
+        "knyffel: skojig ben\u00e4mning p\u00e5 pojke"
+    ],
+    [
+        983,
+        "f\u00e5 nys om: h\u00f6ra talas om"
+    ],
+    [
+        984,
+        "spottstyver: liten summa av pengar"
+    ],
+    [
+        985,
+        "synnerligen: mycket, i h\u00f6gsta grad"
+    ],
+    [
+        986,
+        "avog: fientlig, avvisande"
+    ],
+    [
+        987,
+        "of\u00f6rsk\u00e4md: fr\u00e4ck och oartig, shameless"
+    ],
+    [
+        988,
+        "rena rama: ingenting mindre \u00e4n"
+    ],
+    [
+        989,
+        "f\u00f6rtal: l\u00f6gnaktigt skvaller"
+    ],
+    [
+        990,
+        "bestrida: f\u00f6rneka"
+    ],
+    [
+        991,
+        "retfull: f\u00f6rarglig"
+    ],
+    [
+        992,
+        "rigga: montera, s\u00e4tta upp, g\u00f6ra i ordning"
+    ],
+    [
+        993,
+        "inf\u00f6ding: person som \u00e4r inf\u00f6dd h\u00e4r, native"
+    ],
+    [
+        994,
+        "f\u00f6rd\u00f6md: f\u00f6rbaskad"
+    ],
+    [
+        995,
+        "kolossal: j\u00e4ttestor, enorm"
+    ],
+    [
+        996,
+        "medlidande: medk\u00e4nsla, empati, sympati"
+    ],
+    [
+        997,
+        "fregatt: krigsskepp, eskortfartyg"
+    ],
+    [
+        998,
+        "tjusning: charm, fascination, f\u00f6rtrollning"
+    ],
+    [
+        999,
+        "f\u00f6rvrida: deformera, vanst\u00e4lla, g\u00f6ra tokig"
+    ],
+    [
+        1000,
+        "omg\u00e5ende: genast"
+    ],
+    [
+        1001,
+        "aktning: respekt"
+    ],
+    [
+        1002,
+        "\u00f6rlogsfartyg: fregatt, krigskepp"
+    ],
+    [
+        1003,
+        "v\u00e4lb\u00e4rgad: ganska rik"
+    ],
+    [
+        1004,
+        "\u00f6verskrida: g\u00e5 \u00f6ver en gr\u00e4ns"
+    ],
+    [
+        1005,
+        "fruntimmer: neds\u00e4ttande ord f\u00f6r kvinna"
+    ],
+    [
+        1006,
+        "f\u00e4rgad: som inte tillh\u00f6r vit ras"
+    ],
+    [
+        1007,
+        "f\u00f6rhandling: disussion f\u00f6r att n\u00e5 en \u00f6verenskommelse"
+    ],
+    [
+        1008,
+        "g\u00e5ngspel: ankarspel"
+    ],
+    [
+        1009,
+        "bege sig: g\u00e5 fara, resa"
+    ],
+    [
+        1010,
+        "v\u00e5lla: framkalla, orsaka"
+    ],
+    [
+        1011,
+        "karm: ram runt f\u00f6nster eller d\u00f6rr"
+    ],
+    [
+        1012,
+        "karmstol: f\u00e5t\u00f6lj, stol med armst\u00f6d"
+    ],
+    [
+        1013,
+        "st\u00e4lla till besv\u00e4r: trassla, make a mess, play up"
+    ],
+    [
+        1014,
+        "g\u00f6ra livet surt f\u00f6r: trakassera, mobba"
+    ],
+    [
+        1015,
+        "tillr\u00e4ttavisa: f\u00f6rebr\u00e5, l\u00e4gga skulden p\u00e5"
+    ],
+    [
+        1016,
+        "trycka ner i skorna: mobba"
+    ],
+    [
+        1017,
+        "ta avsked av: s\u00e4ga hejd\u00e5 till"
+    ],
+    [
+        1018,
+        "hed: tr\u00e4dl\u00f6s sl\u00e4ttmark"
+    ],
+    [
+        1019,
+        "rigg: anordning f\u00f6r att f\u00f6ra segel p\u00e5 en b\u00e5t"
+    ],
+    [
+        1020,
+        "galjonsbild: en allegorisk bild snidad i tr\u00e4, f\u00f6rest\u00e4ller vanligen en figur relaterad till fartygs namn eller en kvinnogestalt"
+    ],
+    [
+        1021,
+        "polisong: kindsk\u00e4gg"
+    ],
+    [
+        1022,
+        "svajig: vinglig, instabil"
+    ],
+    [
+        1023,
+        "manskap: bes\u00e4ttning, trupp, arbetslag"
+    ],
+    [
+        1024,
+        "fulltaglig: komplett, som har fullt antal"
+    ],
+    [
+        1025,
+        "vanka: g\u00e5 l\u00e5ngsamt"
+    ],
+    [
+        1026,
+        "2.2 P\u00e5 v\u00e4rdshuset kikaren"
+    ],
+    [
+        1027,
+        "vimmel: stor oordnad m\u00e4ngd"
+    ],
+    [
+        1028,
+        "vimlet av folk: mycket folk"
+    ],
+    [
+        1029,
+        "bal: f\u00f6rpackning"
+    ],
+    [
+        1030,
+        "br\u00e5d: busy, sudden"
+    ],
+    [
+        1031,
+        "vid f\u00f6rsta anblick: at first sight"
+    ],
+    [
+        1032,
+        "alldaglig: vanlig"
+    ],
+    [
+        1033,
+        "blekfet: tjock, svullen, \u00f6verviktig"
+    ],
+    [
+        1034,
+        "inte ett dyft; inte alls"
+    ],
+    [
+        1035,
+        "mahogny: ett r\u00f6d/m\u00f6rkbrun \u00e4deltr\u00e4"
+    ],
+    [
+        1036,
+        "slok\u00f6rad: som sk\u00e4ms, skamsen"
+    ],
+    [
+        1037,
+        "tuggbuss: en mindre bit tuggtobak"
+    ],
+    [
+        1038,
+        "k\u00f6l: b\u00e5ts understa del"
+    ],
+    [
+        1039,
+        "hala: dra"
+    ],
+    [
+        1040,
+        "k\u00f6lhalning: bestraffningsform att dra under fartygs k\u00f6l"
+    ],
+    [
+        1041,
+        "sl\u00e5 sig i backen p\u00e5: vara \u00f6vertygad om"
+    ],
+    [
+        1042,
+        "sl\u00f6fock: sl\u00f6 person, latmask"
+    ],
+    [
+        1043,
+        "slipad: listig, slug"
+    ],
+    [
+        1044,
+        "g\u00e5 i god f\u00f6r: garantera, ansvara, intyga"
+    ],
+    [
+        1045,
+        "tappa hakan: bli st\u00e4lld, gapa av f\u00f6rv\u00e5ning"
+    ],
+    [
+        1046,
+        "f\u00f6ljeslagare: s\u00e4llskap"
+    ],
+    [
+        1047,
+        "tonnage: fartygs lastningsf\u00f6rm\u00e5ga"
+    ],
+    [
+        1048,
+        "lossa: lasta av"
+    ],
+    [
+        1049,
+        "hysa: ge plats \u00e5t, ha, k\u00e4nna"
+    ],
+    [
+        1050,
+        "f\u00f6rtjusning: gl\u00e4dje"
+    ],
+    [
+        1051,
+        "f\u00f6rtrolig: confidence"
+    ],
+    [
+        1052,
+        "farstu: f\u00f6rstuga, tambur"
+    ],
+    [
+        1053,
+        "2.3 Krut och vapen"
+    ],
+    [
+        1054,
+        "redd: ankringsplats utanf\u00f6r hamn"
+    ],
+    [
+        1055,
+        "akter: bakre del p\u00e5 en b\u00e5t"
+    ],
+    [
+        1056,
+        "tross: grovt rep"
+    ],
+    [
+        1057,
+        "vind\u00f6gd: som tittar i korst, skel\u00f6gd"
+    ],
+    [
+        1058,
+        "komma underfund med: fatta"
+    ],
+    [
+        1059,
+        "uppriktig: \u00e4rlig, rak, frank"
+    ],
+    [
+        1060,
+        "seglats: segeltur, sj\u00f6resa"
+    ],
+    [
+        1061,
+        "farkost: fortskaffningsmedel i vatten eller luft"
+    ],
+    [
+        1062,
+        "s\u00e4mja: v\u00e4nskap, samf\u00f6rst\u00e5ng, harmoni"
+    ],
+    [
+        1063,
+        "f\u00f6r om masten: d\u00e4r manskap befinner sig"
+    ],
+    [
+        1064,
+        "r\u00e5dfr\u00e5ga: konsultera, be om r\u00e5d"
+    ],
+    [
+        1065,
+        "f\u00f6rsummelse: underl\u00e5tenhet, v\u00e5rdsl\u00f6shet (neglect)"
+    ],
+    [
+        1066,
+        "stuva: packa, lasta omsorgsfullt i ett lastutrymme"
+    ],
+    [
+        1067,
+        "kajuta: rum i aktern, chefens rum p\u00e5 \u00f6rlogsfartyg"
+    ],
+    [
+        1068,
+        "skans: manskapsrum"
+    ],
+    [
+        1069,
+        "avseende: h\u00e4nsyn, attention"
+    ],
+    [
+        1070,
+        "f\u00e4sta avseende vid: l\u00e4gga vikt vid"
+    ],
+    [
+        1071,
+        "anh\u00e5lla: be, beg\u00e4ra"
+    ],
+    [
+        1072,
+        "garnison: milit\u00e4rf\u00f6rl\u00e4ggning"
+    ],
+    [
+        1073,
+        "myteri: uppror, v\u00e4gran att lyda order"
+    ],
+    [
+        1074,
+        "f\u00f6rol\u00e4mpa: s\u00e5ra, kr\u00e4nka, insultera, offend"
+    ],
+    [
+        1075,
+        "bestrida: f\u00f6rneka, opponera sig emot"
+    ],
+    [
+        1076,
+        "l\u00e4gga ord i min mun: uttryck f\u00f6r jag har aldrig sagt det"
+    ],
+    [
+        1077,
+        "ombordvarande: personer ombord"
+    ],
+    [
+        1078,
+        "befattning: tj\u00e4nst, arbete, positiion"
+    ],
+    [
+        1079,
+        "intim: som \u00e4r i n\u00e4ra kontakt"
+    ],
+    [
+        1080,
+        "supa: dricka mycket sprit"
+    ],
+    [
+        1081,
+        "fabel: djursaga"
+    ],
+    [
+        1082,
+        "klipsk: klok, klart\u00e4nkt, snabbt\u00e4nkt"
+    ],
+    [
+        1083,
+        "dra \u00e5t skogen: dra \u00e5t helvete"
+    ],
+    [
+        1084,
+        "falla sig: r\u00e5ka vara, r\u00e5ka bli, intr\u00e4ffa"
+    ],
+    [
+        1085,
+        "avl\u00e4gsna: f\u00e5 att f\u00f6rsvinna, ta bort"
+    ],
+    [
+        1086,
+        "avl\u00e4gsna sig: l\u00e4mna"
+    ],
+    [
+        1087,
+        "farh\u00e5ga: fruktan, \u00e4ngslan"
+    ],
+    [
+        1088,
+        "humbug: bluffmakare, svindlare"
+    ],
+    [
+        1089,
+        "f\u00f6ga: v\u00e4ldigt lite"
+    ],
+    [
+        1090,
+        "v\u00e4rdig: allvarlig, h\u00f6gtidlig, passande"
+    ],
+    [
+        1091,
+        "kabyss: skeppsk\u00f6k"
+    ],
+    [
+        1092,
+        "babord: v\u00e4nster sida p\u00e5 en b\u00e5t sett fr\u00e5n aktern"
+    ],
+    [
+        1093,
+        "kapp: \u00f6verbyggnad \u00f6ver luckor och nedg\u00e5ngar p\u00e5 fartygsd\u00e4ck"
+    ],
+    [
+        1094,
+        "utvidga: expandera, ut\u00f6ka"
+    ],
+    [
+        1095,
+        "vig: r\u00f6rlig, smidig, sp\u00e4nstig"
+    ],
+    [
+        1096,
+        "honn\u00f6r: milit\u00e4r h\u00e4lsning"
+    ],
+    [
+        1097,
+        "m\u00e4ssingpj\u00e4s: tyngre eldvapen av legering av koppar och zink"
+    ],
+    [
+        1098,
+        "gullg\u00f6sse: kelgris, bortsk\u00e4mt barn"
+    ],
+    [
+        1099,
+        "2.4 Resan"
+    ],
+    [
+        1100,
+        "gryning: tidig morgon n\u00e4r det b\u00f6rjar ljusning"
+    ],
+    [
+        1101,
+        "lanterna: ljus som lyser p\u00e5 fartyg eller flygplan"
+    ],
+    [
+        1102,
+        "st\u00e4mma upp en s\u00e5ng: intonera, b\u00f6rja sjunga, ange tonen"
+    ],
+    [
+        1103,
+        "stekv\u00e4ndaren: stekkcok"
+    ],
+    [
+        1104,
+        "redog\u00f6ra f\u00f6r: ber\u00e4tta om"
+    ],
+    [
+        1105,
+        "i h\u00f6jd med: j\u00e4ms med (at the same height)"
+    ],
+    [
+        1106,
+        "kommendera: beordra"
+    ],
+    [
+        1107,
+        "krypin: litet rum, vr\u00e5"
+    ],
+    [
+        1108,
+        "g\u00e5ta: mysterium, hemlighet"
+    ],
+    [
+        1109,
+        "sl\u00e5 n\u00e5gon i j\u00e4rn: l\u00e5sa fast n\u00e5gon"
+    ],
+    [
+        1110,
+        "befordra: f\u00f6rflytta till h\u00f6gre tj\u00e4nst"
+    ],
+    [
+        1111,
+        "slup: loggert"
+    ],
+    [
+        1112,
+        "anf\u00f6rtro: delegera, l\u00e4mna med f\u00f6rtroende"
+    ],
+    [
+        1113,
+        "kila fast: s\u00e4tta fast/fixera med en kil"
+    ],
+    [
+        1114,
+        "skott: skiljev\u00e4gg"
+    ],
+    [
+        1115,
+        "invalidisera: handikappa, disable"
+    ],
+    [
+        1116,
+        "rorg\u00e4ngare: styrman"
+    ],
+    [
+        1117,
+        "hugga tag i: hantera, tackle"
+    ],
+    [
+        1118,
+        "fr\u00f6jd: stor gl\u00e4dje"
+    ],
+    [
+        1119,
+        "borda: l\u00e4gga till vid och kl\u00e4ttra ett annat fartyg"
+    ],
+    [
+        1120,
+        "osa: stinka, lukta, sprida os"
+    ],
+    [
+        1121,
+        "pannlugg: h\u00e5r p\u00e5 framme (panna)"
+    ],
+    [
+        1122,
+        "sluddra: prata otydligt"
+    ],
+    [
+        1123,
+        "sp\u00e4nne: (buckle)"
+    ],
+    [
+        1124,
+        "barsk: str\u00e4ng, bister"
+    ],
+    [
+        1125,
+        "s\u00e4tta n\u00e4san i v\u00e4dret: ett uttryck f\u00f6r att vara f\u00f6r stolt"
+    ],
+    [
+        1126,
+        "l\u00e4tta ankar: b\u00f6rja en sj\u00f6resa, avsegla"
+    ],
+    [
+        1127,
+        "ranson: tilldelning, andel, portion"
+    ],
+    [
+        1128,
+        "i lovart: det h\u00e5ll fr\u00e5n vilket vinden bl\u00e5ser"
+    ],
+    [
+        1129,
+        "i l\u00e4: det motsatta h\u00e5ll fr\u00e5n vilket vinden bl\u00e5ser"
+    ],
+    [
+        1130,
+        "kurs: fartygsriktning"
+    ],
+    [
+        1131,
+        "bogspr\u00f6t: rundhult som sticker ut fram\u00e5t fr\u00e5n ett fartyg"
+    ],
+    [
+        1132,
+        "yra: virvla runt i luften"
+    ],
+    [
+        1133,
+        "klut: segel"
+    ],
+    [
+        1134,
+        "s\u00e4tta till alla klutar: uttryck f\u00f6r att anstr\u00e4nga sig, uppbjuda all krafter"
+    ],
+    [
+        1135,
+        "roder: styranordning p\u00e5 en b\u00e5t"
+    ],
+    [
+        1136,
+        "bog: fr\u00e4msta delen p\u00e5 en b\u00e5t"
+    ],
+    [
+        1137,
+        "sorl: brus"
+    ],
+    [
+        1138,
+        "medge: ers\u00e4nna"
+    ],
+    [
+        1139,
+        "2.5 Vad jag h\u00f6rde i \u00e4ppeltunnan"
+    ],
+    [
+        1140,
+        "bredsida: bombanfall, skottlossning, avfyrning av kanoner"
+    ],
+    [
+        1141,
+        "v\u00e4lbeh\u00e5llen: oskadad, hel"
+    ],
+    [
+        1142,
+        "neds\u00f6lad: smutsig"
+    ],
+    [
+        1143,
+        "l\u00e4gga undan: spara"
+    ],
+    [
+        1144,
+        "matros: sj\u00f6man"
+    ],
+    [
+        1145,
+        "emmellertid: however, \u00e4nd\u00e5, i alla fall"
+    ],
+    [
+        1146,
+        "furste: h\u00f6ving, person som regerar en stat"
+    ],
+    [
+        1147,
+        "sorgl\u00f6s: bekymmersfri, obet\u00e4nksam"
+    ],
+    [
+        1148,
+        "inventarier; l\u00f6s egendom i ett hus"
+    ],
+    [
+        1149,
+        "korrumpera: muta, f\u00f6rd\u00e4rva"
+    ],
+    [
+        1150,
+        "prima: f\u00f6rstaklassig"
+    ],
+    [
+        1151,
+        "dumbom: dum person"
+    ],
+    [
+        1152,
+        "hunsa: mobba"
+    ],
+    [
+        1153,
+        "amputera: operera bort till exempel ett ben vid skada"
+    ],
+    [
+        1154,
+        "skuta: mindre fartyg"
+    ],
+    [
+        1155,
+        "g\u00e5 bet p\u00e5: f\u00f6rlora spelet, misslyckas, inte klara av n\u00e5got"
+    ],
+    [
+        1156,
+        "galgbacke: galgberg"
+    ],
+    [
+        1157,
+        "kupp: \u00f6verraskande handling f\u00f6r att ta makten"
+    ],
+    [
+        1158,
+        "p\u00e5 kuppen: p\u00e5 grund d\u00e4rav, som resultat"
+    ],
+    [
+        1159,
+        "predika: tala i en kyrka, f\u00f6rkunna, uttala sin mening offentligt"
+    ],
+    [
+        1160,
+        "h\u00e5rding: tuff kille"
+    ],
+    [
+        1161,
+        "kverulant: person som gn\u00e4ller och klagar"
+    ],
+    [
+        1162,
+        "ombedas: passiv, bli h\u00f6vligt uppmanad"
+    ],
+    [
+        1163,
+        "omg\u00e5ng: runda, parti"
+    ],
+    [
+        1164,
+        "kagge: balja, liten tunna"
+    ],
+    [
+        1165,
+        "l\u00f6sryckt: ensam, ofullst\u00e4ndig"
+    ],
+    [
+        1166,
+        "skalda: dikta"
+    ],
+    [
+        1167,
+        "huld: tillgiven, ljuv, gynnsam"
+    ],
+    [
+        1168,
+        "f\u00f6rsilvra: \u00f6verdra med silver"
+    ],
+    [
+        1169,
+        "f\u00f6rgylla: \u00f6verdra med guld"
+    ],
+    [
+        1170,
+        "mesan: den aktersta masten p\u00e5 segelfartyg"
+    ],
+    [
+        1171,
+        "fock: segel"
+    ],
+    [
+        1172,
+        "2.6 Krigsr\u00e5d"
+    ],
+    [
+        1173,
+        "krigsr\u00e5d: (war council)"
+    ],
+    [
+        1174,
+        "bog: fr\u00e4mste delen p\u00e5 en b\u00e5t"
+    ],
+    [
+        1175,
+        "k\u00e4gla: koniskt tr\u00e4stycke som ska sl\u00e5s omkull i vissa spel till exempel bowling"
+    ],
+    [
+        1176,
+        "brassa: vrida segeln och r\u00e5r med vind"
+    ],
+    [
+        1177,
+        "brassa p\u00e5: satsa f\u00f6r fullt"
+    ],
+    [
+        1178,
+        "holme: liten \u00f6"
+    ],
+    [
+        1179,
+        "tillh\u00e5ll: g\u00f6mst\u00e4lle"
+    ],
+    [
+        1180,
+        "dreja: 1. minska ett segelfartygs fart till minsta, 2. forma lergods p\u00e5 roterade skiva"
+    ],
+    [
+        1181,
+        "farvatten: vattenv\u00e4g (hav)"
+    ],
+    [
+        1182,
+        "f\u00f6rev\u00e4ndning: sk\u00e4l, urs\u00e4kt, excuse"
+    ],
+    [
+        1183,
+        "skifta: byta, v\u00e4xla"
+    ],
+    [
+        1184,
+        "frikostig: gener\u00f6s"
+    ],
+    [
+        1185,
+        "till v\u00e4ders: i h\u00f6jden, upp\u00e5t, mot skyn"
+    ],
+    [
+        1186,
+        "bolma: r\u00f6ka, ryka kraftigt"
+    ],
+    [
+        1187,
+        "k\u00f6lvatten: svallv\u00e5g"
+    ],
+    [
+        1188,
+        "avvakta: v\u00e4nta p\u00e5"
+    ],
+    [
+        1189,
+        "m\u00e5tt och steg: \u00e5tg\u00e4rd, disposition"
+    ],
+    [
+        1190,
+        "r\u00e5nock; spets p\u00e5 en skogsbacke, tr\u00e4stycke"
+    ],
+    [
+        1191,
+        "storsint: gener\u00f6s, tolerant"
+    ],
+    [
+        1192,
+        "sammanst\u00f6tning: kollision, strid, konflikt"
+    ],
+    [
+        1193,
+        "p\u00e5frestande: besv\u00e4rlig, anstr\u00e4ngande, slitig"
+    ],
+    [
+        1194,
+        "vaken: uppm\u00e4rksam (alert)"
+    ],
+    [
+        1195,
+        "3.1 Hur mitt \u00e4ventyr i land b\u00f6rjade"
+    ],
+    [
+        1196,
+        "mojna: bli stilla"
+    ],
+    [
+        1197,
+        "stiltje: vindstilla, calm"
+    ],
+    [
+        1198,
+        "gr\u00e5aktig: f\u00e4rgl\u00f6s, blek, matt, gr\u00e5"
+    ],
+    [
+        1199,
+        "sandrevel: sandrev, sand\u00e5s, sandbank"
+    ],
+    [
+        1200,
+        "vegetation: v\u00e4xtlighet"
+    ],
+    [
+        1201,
+        "spira: smal rund stav, pole"
+    ],
+    [
+        1202,
+        "sockel: underlag, fundament, base"
+    ],
+    [
+        1203,
+        "dyning: sj\u00f6h\u00e4vning, havsv\u00e5gor som vandrat fr\u00e5n det vindomr\u00e5de d\u00e4r de bildats"
+    ],
+    [
+        1204,
+        "guppa: gunga p\u00e5 vattenytan"
+    ],
+    [
+        1205,
+        "fastande mage: tom mage"
+    ],
+    [
+        1206,
+        "i synnerhet: s\u00e4rskilt"
+    ],
+    [
+        1207,
+        "melankoli: dyster, djup nedst\u00e4mdhet"
+    ],
+    [
+        1208,
+        "br\u00e4nning: v\u00e5g som bryts mot strand"
+    ],
+    [
+        1209,
+        "envar: var och en, alla"
+    ],
+    [
+        1210,
+        "blotta: bara, avsl\u00f6ja"
+    ],
+    [
+        1211,
+        "tillstymmelse: (i nekande uttryck) aning, antydan"
+    ],
+    [
+        1212,
+        "bogsera: dra sl\u00e4pa"
+    ],
+    [
+        1213,
+        "knota: klaga l\u00e5gm\u00e4lt, gn\u00e4lla"
+    ],
+    [
+        1214,
+        "f\u00f6ra bef\u00e4l: be in command, bli officer"
+    ],
+    [
+        1215,
+        "\u00e5syn: syn, anblick"
+    ],
+    [
+        1216,
+        "rorsman: styrman, f\u00f6rare"
+    ],
+    [
+        1217,
+        "lotsa: styra fartyg genom besv\u00e4rliga farvatten"
+    ],
+    [
+        1218,
+        "plumsa: plaska, falla tungt ner i vatten"
+    ],
+    [
+        1219,
+        "amfiteater: utomhus scen (teater)"
+    ],
+    [
+        1220,
+        "k\u00e4rr: tr\u00e4sk, myr, sumpmark"
+    ],
+    [
+        1221,
+        "kvalmig: kvav, varm och sv\u00e5r att andas"
+    ],
+    [
+        1222,
+        "v\u00e5ga: s\u00e4tta p\u00e5 spel, satsa, riskera"
+    ],
+    [
+        1223,
+        "f\u00f6red\u00f6me: f\u00f6rebild, exempel"
+    ],
+    [
+        1224,
+        "formligen: alldeles, helt, bokstavligen, absolut"
+    ],
+    [
+        1225,
+        "\u00f6vertr\u00e4ffa: vara b\u00e4ttre \u00e4n"
+    ],
+    [
+        1226,
+        "tillm\u00f6tesg\u00e5ende: hj\u00e4lpsam, tj\u00e4nstvillig"
+    ],
+    [
+        1227,
+        "idel: bara, helt och h\u00e5llet, ren, nothing but"
+    ],
+    [
+        1228,
+        "lyster: glans"
+    ],
+    [
+        1229,
+        "pik: elakt ord, spydighet, illvilighet"
+    ],
+    [
+        1230,
+        "vina: ge ifr\u00e5n sig ett h\u00f6gt och g\u00e4llt och ih\u00e5llande ljud"
+    ],
+    [
+        1231,
+        "tala f\u00f6rst\u00e5nd med: 1. ta itu med, 2. f\u00f6rklara f\u00f6r n\u00e5gon (reason with someone)"
+    ],
+    [
+        1232,
+        "sanna mina ord: det kommer att bli som jag har sagt"
+    ],
+    [
+        1233,
+        "inviga: g\u00f6ra n\u00e5gon f\u00f6rtrogen"
+    ],
+    [
+        1234,
+        "snava: snubbla, st\u00f6ta foten mot n\u00e5got och tappa balansen"
+    ],
+    [
+        1235,
+        "maska: s\u00f6la, f\u00f6rhala tiden, mj\u00f6lka"
+    ],
+    [
+        1236,
+        "besittning: innehav, \u00e4gande"
+    ],
+    [
+        1237,
+        "ta i bisittning: occupy, dominate"
+    ],
+    [
+        1238,
+        "infall: (pl\u00f6tslig) id\u00e9, uppslag, nyck"
+    ],
+    [
+        1239,
+        "bem\u00e4ktiga sig: kapa, ta i besittning, er\u00f6vra"
+    ],
+    [
+        1240,
+        "reling: r\u00e4cke, \u00f6vre kant p\u00e5 en b\u00e5tsida"
+    ],
+    [
+        1241,
+        "\u00e5ra: redskap att ro med, oar"
+    ],
+    [
+        1242,
+        "sn\u00e5r: risig sm\u00e5skog, buskage"
+    ],
+    [
+        1243,
+        "g\u00e5 dit n\u00e4san pekar: uttryck f\u00f6r att g\u00e5 utan att t\u00e4nka sig f\u00f6r, utan m\u00e5l"
+    ],
+    [
+        1244,
+        "i kapp: i t\u00e4vling"
+    ],
+    [
+        1245,
+        "f\u00f6rspr\u00e5ng: ledning, ledande st\u00e4llning, f\u00f6rsteg"
+    ],
+    [
+        1246,
+        "3.2 Den f\u00f6rsta striden"
+    ],
+    [
+        1247,
+        "sumpmark: tr\u00e4sk, myr, k\u00e4rr, sankmark"
+    ],
+    [
+        1248,
+        "bevuxen: t\u00e4ckt, bekl\u00e4dd med"
+    ],
+    [
+        1249,
+        "f\u00f6ga: v\u00e4ldigt lite"
+    ],
+    [
+        1250,
+        "dunge: liten samling tr\u00e4d"
+    ],
+    [
+        1251,
+        "t\u00f6rn: tagg"
+    ],
+    [
+        1252,
+        "kontur: ytterlinje"
+    ],
+    [
+        1253,
+        "dis: l\u00e4tt dimma"
+    ],
+    [
+        1254,
+        "soldis: solr\u00f6k"
+    ],
+    [
+        1255,
+        "snattra: l\u00e5ta som ankor, kackel"
+    ],
+    [
+        1256,
+        "fastst\u00e4lla: best\u00e4mma, besluta"
+    ],
+    [
+        1257,
+        "inkr\u00e4ktare: person som tar sig in objuden"
+    ],
+    [
+        1258,
+        "gassa: br\u00e4nna, steka"
+    ],
+    [
+        1259,
+        "fyllig: som har stort omf\u00e5ng, mullig"
+    ],
+    [
+        1260,
+        "beveka: f\u00e5 n\u00e5gon att \u00e4ndra inst\u00e4llning genom k\u00e4nsloargument, v\u00e4dja"
+    ],
+    [
+        1261,
+        "korp: kr\u00e5kf\u00e5gel"
+    ],
+    [
+        1262,
+        "inbilla: f\u00e5 n\u00e5gon att tro"
+    ],
+    [
+        1263,
+        "surrande: brummande, sus, sorl"
+    ],
+    [
+        1264,
+        "v\u00e4lde: makt, rike"
+    ],
+    [
+        1265,
+        "d\u00e5sig: s\u00f6mnig"
+    ],
+    [
+        1266,
+        "sporre: stimulans, vass spets p\u00e5 en ridst\u00f6vel som anv\u00e4nds av ryttare f\u00f6r att driva p\u00e5 h\u00e4st"
+    ],
+    [
+        1267,
+        "sporra: driva p\u00e5, egga, stimulera"
+    ],
+    [
+        1268,
+        "knappn\u00e5l: n\u00e5l med huvud, pin"
+    ],
+    [
+        1269,
+        "brus: starkt v\u00e4sande ljud"
+    ],
+    [
+        1270,
+        "brusa upp: pl\u00f6tsligt bli arg"
+    ],
+    [
+        1271,
+        "Frid vare med: Peace be with"
+    ],
+    [
+        1272,
+        "trotsa: g\u00f6ra \u00f6ppen motst\u00e5nd mot"
+    ],
+    [
+        1273,
+        "slunga: kasta h\u00e4ftigt"
+    ],
+    [
+        1274,
+        "projektil: f\u00f6rem\u00e5l som skjuts iv\u00e4g, skott"
+    ],
+    [
+        1275,
+        "br\u00e4cka: bryta, kn\u00e4cka"
+    ],
+    [
+        1276,
+        "tuva: liten gr\u00e4sbev\u00e4xt upph\u00f6jning i marken"
+    ],
+    [
+        1277,
+        "barmh\u00e4rtig: godhj\u00e4rtd, medlidsam, merciful"
+    ],
+    [
+        1278,
+        "beg\u00e5ngen/beg\u00e5nget: beg\u00e5tt"
+    ],
+    [
+        1279,
+        "3.3 Mannen p\u00e5 \u00f6n"
+    ],
+    [
+        1280,
+        "uppenbarelse: varelse, syn, insikt, vision"
+    ],
+    [
+        1281,
+        "best\u00e4mbar: definierbar, urskiljbar"
+    ],
+    [
+        1282,
+        "sk\u00e4ra: kort halvcirkelformat lie"
+    ],
+    [
+        1283,
+        "utvilad: som har vilat tillr\u00e4ckligt, pigg"
+    ],
+    [
+        1284,
+        "m\u00e4rkv\u00e4rdig: egendomlig, speciell"
+    ],
+    [
+        1285,
+        "hjort: hovdjur med greniga horn, deer"
+    ],
+    [
+        1286,
+        "erinra: komma ih\u00e5g, p\u00e5minna"
+    ],
+    [
+        1287,
+        "vara p\u00e5 vippen att: be on the point of"
+    ],
+    [
+        1288,
+        "anlete: ansikt"
+    ],
+    [
+        1289,
+        "anletsdrag: ansiktsuttryck, utseende"
+    ],
+    [
+        1290,
+        "olikartad: olika slags, different"
+    ],
+    [
+        1291,
+        "stump: kort bit, sista bit, end"
+    ],
+    [
+        1292,
+        "utstyrsel: kl\u00e4der, dr\u00e4kt"
+    ],
+    [
+        1293,
+        "varvid: vid vilket tillf\u00e4lle, och d\u00e5"
+    ],
+    [
+        1294,
+        "rabbla: l\u00e4sa upp snabbt"
+    ],
+    [
+        1295,
+        "katekes: l\u00e4robok i kristendomens huvudstycken"
+    ],
+    [
+        1296,
+        "singla: falla med sv\u00e4ngande r\u00f6relse till marken"
+    ],
+    [
+        1297,
+        "singla slant: kasta ett mynt f\u00f6r att best\u00e4mma"
+    ],
+    [
+        1298,
+        "f\u00f6rsyn: Guds omsorg, \u00f6de"
+    ],
+    [
+        1299,
+        "h\u00f6tta/hytta: hotfullt skaka n\u00e4ven eller fingret"
+    ],
+    [
+        1300,
+        "h\u00e4lsa hem: att det kommer att g\u00e5 vederb\u00f6rande illa"
+    ],
+    [
+        1301,
+        "knipa: tillf\u00e4lligt besv\u00e4rligt situation, sv\u00e5righet"
+    ],
+    [
+        1302,
+        "livr\u00e9: tj\u00e4nstedr\u00e4kt"
+    ],
+    [
+        1303,
+        "b\u00e4ra sig \u00e5t: uppf\u00f6ra sig"
+    ],
+    [
+        1304,
+        "d\u00e4rvid: vid denna"
+    ],
+    [
+        1305,
+        "\u00e5terkasta: reflektera"
+    ],
+    [
+        1306,
+        "beder: bee, b\u00f6na, pray"
+    ],
+    [
+        1307,
+        "gev\u00e4rssalva: samtidigt avfyrning av fera gev\u00e4r"
+    ],
+    [
+        1308,
+        "4.1 Hur skeppet \u00f6vergavs"
+    ],
+    [
+        1309,
+        "\u00f6vermanna: besegra"
+    ],
+    [
+        1310,
+        "slinka: smita"
+    ],
+    [
+        1311,
+        "oviss: inte s\u00e4ker, tveksam"
+    ],
+    [
+        1312,
+        "skarv: gr\u00e4ns mellan tv\u00e5 delar, \u00f6verg\u00e5ng"
+    ],
+    [
+        1313,
+        "stank: vidrig lukt, od\u00f6r"
+    ],
+    [
+        1314,
+        "dysenteri: en tarmsjukdom"
+    ],
+    [
+        1315,
+        "gorma: sk\u00e4lla, gr\u00e4la"
+    ],
+    [
+        1316,
+        "f\u00f6rt\u00f6ja: l\u00e4gga fast med rep"
+    ],
+    [
+        1317,
+        "back: 1. back\u00e5tv\u00e4xel p\u00e5 en b\u00e5t/bil 2. l\u00e5da 3. f\u00f6rsvarsspelare i idrott"
+    ],
+    [
+        1318,
+        "jolle: liten roddb\u00e5t"
+    ],
+    [
+        1319,
+        "rekognoscera: unders\u00f6ka, utforska, recognize"
+    ],
+    [
+        1320,
+        "villr\u00e5dig: os\u00e4ker om hur man ska handla, tveksam"
+    ],
+    [
+        1321,
+        "skjuta ut: sticka fram"
+    ],
+    [
+        1322,
+        "svalka: kyla"
+    ],
+    [
+        1323,
+        "v\u00e4lla: rinna i stora m\u00e4ngder, fl\u00f6da, str\u00f6mma"
+    ],
+    [
+        1324,
+        "r\u00f6ja: 1. st\u00e4da, rensa upp, 2. odla upp, 3. avsl\u00f6ja"
+    ],
+    [
+        1325,
+        "bel\u00e4gra: omringa f\u00f6r att tvinga f\u00f6rsvarare att ge upp"
+    ],
+    [
+        1326,
+        "rapph\u00f6ns: en vilt f\u00e5gel som man gillar att jaga"
+    ],
+    [
+        1327,
+        "f\u00f6rdra: kr\u00e4va, beg\u00e4ra"
+    ],
+    [
+        1328,
+        "proviant: livsmedel, matf\u00f6rr\u00e5d"
+    ],
+    [
+        1329,
+        "\u00f6verrumpla: \u00f6verraska"
+    ],
+    [
+        1330,
+        "ty: eftersom, d\u00e4rf\u00f6r att, f\u00f6r"
+    ],
+    [
+        1331,
+        "hertig: titel f\u00f6r manlig medlem av kungahuset"
+    ],
+    [
+        1332,
+        "uppskakad: chockad, r\u00e4dd"
+    ],
+    [
+        1333,
+        "l\u00e4rft: t\u00e4tv\u00e4vda vita tyger"
+    ],
+    [
+        1334,
+        "vara illa d\u00e4ran: vara sv\u00e5rt skadad eller sjuk"
+    ],
+    [
+        1335,
+        "g\u00e5 till v\u00e4ga: g\u00f6ra n\u00e5got p\u00e5 ett visst s\u00e4tt"
+    ],
+    [
+        1336,
+        "konjak: en dyr spritdryck"
+    ],
+    [
+        1337,
+        "ov\u00e4rderlig: som inte kan v\u00e4rderas i pengar"
+    ],
+    [
+        1338,
+        "anf\u00f6ra: leda, ge order"
+    ],
+    [
+        1339,
+        "han \u00e4r d\u00f6dens: han \u00e4r d\u00f6dens lammunge"
+    ],
+    [
+        1340,
+        "\u00e5tskillig: mycket, en hel del"
+    ],
+    [
+        1341,
+        "r\u00e5dpl\u00e4gning: debatt, samr\u00e5d, diskussion"
+    ],
+    [
+        1342,
+        "tripp: trip"
+    ],
+    [
+        1343,
+        "b\u00f6rda: last, belastning"
+    ],
+    [
+        1344,
+        "fatta posto: inta f\u00f6rsvarsst\u00e4llning, st\u00e4lla sig"
+    ],
+    [
+        1345,
+        "oskadligg\u00f6ra: desarmera"
+    ],
+    [
+        1346,
+        "f\u00e5nglina: f\u00f6rt\u00f6jningslina p\u00e5 b\u00e5t"
+    ],
+    [
+        1347,
+        "f\u00f6r brinnande livet: av alla krafter, i full fart"
+    ],
+    [
+        1348,
+        "l\u00e4mpa \u00f6ver bord: kasta i vattnet fr\u00e5n ett fartyg"
+    ],
+    [
+        1349,
+        "hojta: anropa h\u00f6gt"
+    ],
+    [
+        1350,
+        "bege sig iv\u00e4g: \u00e5ka iv\u00e4g"
+    ],
+    [
+        1351,
+        "vr\u00e4ka: 1. v\u00e5ldsamt kasta, 2. (med lagens hj\u00e4lp) k\u00f6ra ut en hyresg\u00e4sst fr\u00e5n en l\u00e4genhet"
+    ],
+    [
+        1352,
+        "4.2 Jollens sista f\u00e4rd"
+    ],
+    [
+        1353,
+        "d\u00e4rtill: dessutom, \u00e4ven, in addition"
+    ],
+    [
+        1354,
+        "inh\u00e4gnad: omr\u00e5de innanf\u00f6r st\u00e4ngsel"
+    ],
+    [
+        1355,
+        "kantra: v\u00e4lta, kapsejsa"
+    ],
+    [
+        1356,
+        "h\u00e5lla av: 1. edge away (to move contiously away from something), 2. tycka om, \u00e4lska"
+    ],
+    [
+        1357,
+        "st\u00e4v: fartygs f\u00f6r\u00e4nda eller akter\u00e4nda"
+    ],
+    [
+        1358,
+        "orda: tala"
+    ],
+    [
+        1359,
+        "bombaremang: bombardment"
+    ],
+    [
+        1360,
+        "presenning: stort tygstycke som anv\u00e4nds till skydd"
+    ],
+    [
+        1361,
+        "skytt: person som skjuter"
+    ],
+    [
+        1362,
+        "r\u00f6dbrusig: r\u00f6dflammig i ansiktet av uphetning, sprit"
+    ],
+    [
+        1363,
+        "stj\u00e4lpa: v\u00e4lta, kantra"
+    ],
+    [
+        1364,
+        "rodd: ro"
+    ],
+    [
+        1365,
+        "laddstock: stake av tr\u00e4, j\u00e4rn eller fj\u00e4derst\u00e5l varmed skottet medf\u00f6rs i pipan p\u00e5 eldvapen f\u00f6r framladdning"
+    ],
+    [
+        1366,
+        "utst\u00f6ta: 1. frambringa h\u00e4ftigt ljud, 2. utesluta"
+    ],
+    [
+        1367,
+        "s\u00e4ga till: befalla, uppmana, ge order"
+    ],
+    [
+        1368,
+        "\u00e5rtag: rodd, stroke"
+    ],
+    [
+        1369,
+        "betraktande: consideration"
+    ],
+    [
+        1370,
+        "i betraktande av: med h\u00e4nsyn till"
+    ],
+    [
+        1371,
+        "bryn: utkant"
+    ],
+    [
+        1372,
+        "kn\u00e4ppa: sm\u00e4lla, f\u00e4sta ihop"
+    ],
+    [
+        1373,
+        "vada: g\u00e5 i grunt vatten"
+    ],
+    [
+        1374,
+        "4.3 Slutet p\u00e5 f\u00f6rsta dagens strid"
+    ],
+    [
+        1375,
+        "remsa: smalt band"
+    ],
+    [
+        1376,
+        "sammandrabbning: sammanst\u00f6tning"
+    ],
+    [
+        1377,
+        "klinga: blad p\u00e5 sv\u00e4rt, s\u00e5g"
+    ],
+    [
+        1378,
+        "vina: vissla, ge ifr\u00e5n sig ett h\u00f6gt och g\u00e4llt och ih\u00e5llande ljud"
+    ],
+    [
+        1379,
+        "g\u00f6ra sk\u00e4l f\u00f6r: vara v\u00e4rd"
+    ],
+    [
+        1380,
+        "vackla: vara n\u00e4ra att falla, svikta, stappl"
+    ],
+    [
+        1381,
+        "falla p\u00e5 sin post: d\u00f6 av sin tj\u00e4nst"
+    ],
+    [
+        1382,
+        "skingra: splittra \u00e5t olika h\u00e5ll"
+    ],
+    [
+        1383,
+        "st\u00f6na: ge ifr\u00e5n sig ett dovt och utdraget ljud av sm\u00e4rta"
+    ],
+    [
+        1384,
+        "trumpen: butter och missn\u00f6jd, grinig"
+    ],
+    [
+        1385,
+        "sittopp: sm\u00e4ll, slag"
+    ],
+    [
+        1386,
+        "bruklig: vanlig, anv\u00e4ndbar"
+    ],
+    [
+        1387,
+        "urskuldande: urs\u00e4ktande"
+    ],
+    [
+        1388,
+        "inventera: genomg\u00e5 och granska, kontrollera"
+    ],
+    [
+        1389,
+        "v\u00f6rdnad: respekt, heder"
+    ],
+    [
+        1390,
+        "husbonde: herre, arbetsgivare, \u00e4gare"
+    ],
+    [
+        1391,
+        "unds\u00e4tta: r\u00e4dda, befria, hj\u00e4lpa (i sv\u00e5rt)"
+    ],
+    [
+        1392,
+        "unds\u00e4ttningsexpedition: rescue mission"
+    ],
+    [
+        1393,
+        "n\u00e5dig: barmh\u00e4rtig, v\u00e4lvillig"
+    ],
+    [
+        1394,
+        "barskrapad: utfattig"
+    ],
+    [
+        1395,
+        "ranson: tilldelning"
+    ],
+    [
+        1396,
+        "stryka: 1. ta bort, 2. dra med handen \u00f6ver, 3. sl\u00e4ta till med strykj\u00e4rn"
+    ],
+    [
+        1397,
+        "utslag: 1. beslut, 2. uttryck, 3. bl\u00e5sor p\u00e5 huden"
+    ],
+    [
+        1398,
+        "rikoschett: projektil som studsar och forts\u00e4tter i en ny bana"
+    ],
+    [
+        1399,
+        "\u00f6dsla: sl\u00f6sa"
+    ],
+    [
+        1400,
+        "anm\u00e4rka: p\u00e5peka"
+    ],
+    [
+        1401,
+        "upplag: f\u00f6rr\u00e5d"
+    ],
+    [
+        1402,
+        "timmer: grovt os\u00e5gat tr\u00e4, stock"
+    ],
+    [
+        1403,
+        "timmerman: tr\u00e4arbetare p\u00e5 byggarbetsplats, snickare"
+    ],
+    [
+        1404,
+        "de enda: the only ones"
+    ],
+    [
+        1405,
+        "Ord"
+    ],
+    [
+        1406,
+        "Ord"
+    ],
+    [
+        1407,
+        "coward: a person who is not brave"
+    ],
+    [
+        1408,
+        "timid: shy and nervous without confidence"
+    ],
+    [
+        1409,
+        "reckless: doing something dangerous without considering risks"
+    ],
+    [
+        1410,
+        "bold: not frightened of danger"
+    ],
+    [
+        1411,
+        "impediment: hurdle, obstacle"
+    ],
+    [
+        1412,
+        "amiable: pleasant and friendly"
+    ],
+    [
+        1413,
+        "candid: honest and telling the truth"
+    ],
+    [
+        1414,
+        "gullible: easily decieved"
+    ],
+    [
+        1415,
+        "torture: to cause great pain to someone intentionally"
+    ],
+    [
+        1416,
+        "stingy: unwilling to spend money"
+    ],
+    [
+        1417,
+        "generous: willing to give money, help, kindness"
+    ],
+    [
+        1418,
+        "traitor: person who is not loyal"
+    ],
+    [
+        1419,
+        "cautious: careful, well-considered"
+    ],
+    [
+        1420,
+        "decent: socially acceptable and good"
+    ],
+    [
+        1421,
+        "dignity: the importance and value that a person has"
+    ],
+    [
+        1422,
+        "abominable: very bad or unpleasant"
+    ],
+    [
+        1423,
+        "apprehensive: feeling worried about something bad happening"
+    ],
+    [
+        1424,
+        "arrogance: proud and having as you are the most important"
+    ],
+    [
+        1425,
+        "trait: a particular characteristic"
+    ],
+    [
+        1426,
+        "inferiority: being not good, or not as good as someone else"
+    ],
+    [
+        1427,
+        "dwelling: a house or place to live in"
+    ],
+    [
+        1428,
+        "perish: to die in an accident or being killed"
+    ],
+    [
+        1429,
+        "grandstand: seats in stadium or huge buildings"
+    ],
+    [
+        1430,
+        "emit: to send out a beam, noise or gas"
+    ],
+    [
+        1431,
+        "ignite: to cause starting burning or exploding"
+    ],
+    [
+        1432,
+        "dull: not interesting or exciting in any way"
+    ],
+    [
+        1433,
+        "mock: to laugh at someone often copying funnily"
+    ],
+    [
+        1434,
+        "compousure: calm and confident"
+    ],
+    [
+        1435,
+        "diplomatic: controlling 2 opposing sides without upseting anyone"
+    ],
+    [
+        1436,
+        "apparition: the spirit of a dead appearing visibly"
+    ],
+    [
+        1437,
+        "petal: bright colored parts form a flower"
+    ],
+    [
+        1438,
+        "bough: a large branch of a tree"
+    ],
+    [
+        1439,
+        "brow: the forehead"
+    ],
+    [
+        1440,
+        "parting: done while leaving or separating"
+    ],
+    [
+        1441,
+        "thus: with this result"
+    ],
+    [
+        1442,
+        "avow: to admit something or say something publicly"
+    ],
+    [
+        1443,
+        "deem: to consider or judge something in a particular way"
+    ],
+    [
+        1444,
+        "amid: middle surrounded by"
+    ],
+    [
+        1445,
+        "torment: great mental suffering, unhappiness"
+    ],
+    [
+        1446,
+        "pitiless: cruel, no pity"
+    ],
+    [
+        1447,
+        "lively: full with energy and enthusiasm, interesting, exciting"
+    ],
+    [
+        1448,
+        "imagery: using words describing ideas or situations"
+    ],
+    [
+        1449,
+        "blur: something cannot see clearly"
+    ],
+    [
+        1450,
+        "theme: the subject of a talk, book, film"
+    ],
+    [
+        1451,
+        "mimic: to copy the way particular person speaks moves for fun"
+    ],
+    [
+        1452,
+        "depiction: the way that something is represented or shown"
+    ],
+    [
+        1453,
+        "homogeneous: consting of parts that are same typed"
+    ],
+    [
+        1454,
+        "assess: to judge the amount, value, quality or importance"
+    ],
+    [
+        1455,
+        "juxtapose: to put unsimilar things next to each other"
+    ],
+    [
+        1456,
+        "prose: written language in its ordinary form rather than poetry"
+    ],
+    [
+        1457,
+        "assonance: the similarity in sound between 2 syllables dose together"
+    ],
+    [
+        1458,
+        "fixture: permanently fixed place of furniture in a house"
+    ],
+    [
+        1459,
+        "denote: to represent something"
+    ],
+    [
+        1460,
+        "oscillation: repeated movement from one position to another"
+    ],
+    [
+        1461,
+        "superfluous: more than is needed or wanted"
+    ],
+    [
+        1462,
+        "dorm: a large room with many beds maybe in campus"
+    ],
+    [
+        1463,
+        "rely on: depend on"
+    ],
+    [
+        1464,
+        "unreliable: cannot be trusted or believed"
+    ],
+    [
+        1465,
+        "deteriorate: to become worse"
+    ],
+    [
+        1466,
+        "amicable: friendly, harmonious, peaceful"
+    ],
+    [
+        1467,
+        "foreshadowing: small description in beginning that will be meaningsful later"
+    ],
+    [
+        1468,
+        "villain: a bad person who harms other people or breaks the law"
+    ],
+    [
+        1469,
+        "regulate: to control something"
+    ],
+    [
+        1470,
+        "ratify: to make an agreement official"
+    ],
+    [
+        1471,
+        "stance: a way of thinking about something, especially"
+    ],
+    [
+        1472,
+        "fiercely: in a frightening, violent, or powerful way"
+    ],
+    [
+        1473,
+        "sue: to take legal action against someone"
+    ],
+    [
+        1474,
+        "curb: to control or limit the unwanteds"
+    ],
+    [
+        1475,
+        "in favor of: to support or approve sth"
+    ],
+    [
+        1476,
+        "counter: to react to something with opposing opinion"
+    ],
+    [
+        1477,
+        "charges: publicly accuse someone of doing something bad"
+    ],
+    [
+        1478,
+        "contend: to complete in order to win something"
+    ],
+    [
+        1479,
+        "grandee: an important person in a particular job"
+    ],
+    [
+        1480,
+        "agitate: to make someone feel worried or angry"
+    ],
+    [
+        1481,
+        "interpret: to decide what the intended meaning of something is"
+    ],
+    [
+        1482,
+        "decree: official statement that something must happen"
+    ],
+    [
+        1483,
+        "lodge: to make an official complaint"
+    ],
+    [
+        1484,
+        "remedy: to do correct the mistake"
+    ],
+    [
+        1485,
+        "fraught: causing or having extreme worry or anxiety"
+    ],
+    [
+        1486,
+        "supersede: to replace something old"
+    ],
+    [
+        1487,
+        "jolly: happy and smiling"
+    ],
+    [
+        1488,
+        "provision: the act of providing something"
+    ],
+    [
+        1489,
+        "strike down something: to decide that a law or rule is illegal"
+    ],
+    [
+        1490,
+        "in jeopardy: in danger of being damaged or destroyed"
+    ],
+    [
+        1491,
+        "scupper: to cause a plan or opportunity to fail"
+    ],
+    [
+        1492,
+        "the vanguard: army or navy that leads an attack on an enemy"
+    ],
+    [
+        1493,
+        "cap: to put a limit on expenses"
+    ],
+    [
+        1494,
+        "controversial: causing disagreement or discussion"
+    ],
+    [
+        1495,
+        "odour: an unpleasant smell"
+    ],
+    [
+        1496,
+        "olfactory: connected with the ability to smell"
+    ],
+    [
+        1497,
+        "thoroughly: completely"
+    ],
+    [
+        1498,
+        "significantly: in a way that is easy to see or by a large amount"
+    ],
+    [
+        1499,
+        "plausible: seeming likely to be true"
+    ],
+    [
+        1500,
+        "hypothesis: an unproven idea or explanation based on facts"
+    ],
+    [
+        1501,
+        "exclusively: only"
+    ],
+    [
+        1502,
+        "magnitude: the size or importance of something"
+    ],
+    [
+        1503,
+        "pun: a humorouse use of a word or phrase with several meanings that sounds like another word"
+    ],
+    [
+        1504,
+        "conservative: not usually liking or trusting change"
+    ],
+    [
+        1505,
+        "attend: to go to an event, place"
+    ],
+    [
+        1506,
+        "facility: a place where a particular activity happens"
+    ],
+    [
+        1507,
+        "faculty: the people who teach in a departement in a college"
+    ],
+    [
+        1508,
+        "in operation: in working status"
+    ],
+    [
+        1509,
+        "gutted: extremely disappointed and unhappy"
+    ],
+    [
+        1510,
+        "committee: a samll group chosen to represent a larger organization for making decisions"
+    ],
+    [
+        1511,
+        "distinguish: to difference between 2 things"
+    ],
+    [
+        1512,
+        "specimen: something shown or examined as an example"
+    ],
+    [
+        1513,
+        "sort out: put things in order or correct place"
+    ],
+    [
+        1514,
+        "pneumonia: illness which lungs becomes red and swolled filled with liquid"
+    ],
+    [
+        1515,
+        "rubble: the piles of broken stones and bricks"
+    ],
+    [
+        1516,
+        "cope: to deal successful with a difficult situation"
+    ],
+    [
+        1517,
+        "epicenter: the point on the earths surface"
+    ],
+    [
+        1518,
+        "toll: suffering, death or damage"
+    ],
+    [
+        1519,
+        "tremor: a slight shaking movement in a persons body of nervousness or excitement"
+    ],
+    [
+        1520,
+        "demolish: to comletely destroy a building"
+    ],
+    [
+        1521,
+        "erupt: explodes and flames and rocks come out of it"
+    ],
+    [
+        1522,
+        "illumination: giving new information about a subject or making easier to understand"
+    ],
+    [
+        1523,
+        "illuminate: brighten"
+    ],
+    [
+        1524,
+        "hailstorm: sudden heavy fall of hail"
+    ],
+    [
+        1525,
+        "creek: a narrow area of whater flowing into land"
+    ],
+    [
+        1526,
+        "amid: in the middle, surrounded by"
+    ],
+    [
+        1527,
+        "debris: broken or ton pieces of something larger"
+    ],
+    [
+        1528,
+        "satisfactory: good enough for a particular need or purpose"
+    ],
+    [
+        1529,
+        "undergraduate: student studying for the first degree at college or university"
+    ],
+    [
+        1530,
+        "venue: the place where a public event or meeting happens"
+    ],
+    [
+        1531,
+        "procedure: a set of action that is official or accepted"
+    ],
+    [
+        1532,
+        "proficiency: having skill and experience for doing something"
+    ],
+    [
+        1533,
+        "lounge: a room where people can relax and wait"
+    ],
+    [
+        1534,
+        "executive: someone in a high position, makes decision and act"
+    ],
+    [
+        1535,
+        "secretary: someone working in an office, writing letters, call on phone and arranging meetings for the boss"
+    ],
+    [
+        1536,
+        "fare: the money paid for the journey in a vehicle"
+    ],
+    [
+        1537,
+        "transition: change from one form to another"
+    ],
+    [
+        1538,
+        "euphoria: extreme happiness"
+    ],
+    [
+        1539,
+        "assignment: a piece of work given to someone"
+    ],
+    [
+        1540,
+        "understimated: underestimated"
+    ],
+    [
+        1541,
+        "forage: to go from place to place searching for things that you can eat or use"
+    ],
+    [
+        1542,
+        "circadian: used to describe the process in living form during a day"
+    ],
+    [
+        1543,
+        "undergo: to experience somethin that is unpleasant or a change"
+    ],
+    [
+        1544,
+        "benign: pleasant and kind"
+    ],
+    [
+        1545,
+        "durable: able to last and used without becoming damaged"
+    ],
+    [
+        1546,
+        "breach: an act of breaking a law, promise, agreement or relationship"
+    ],
+    [
+        1547,
+        "malleable: that can easily be changed into a new shape"
+    ],
+    [
+        1548,
+        "pragmatic: solving problems in a sensible way"
+    ],
+    [
+        1549,
+        "contemprorary: existing or happening now"
+    ],
+    [
+        1550,
+        "subjugate: to defeat people or a country and rule them that allows them no freedom"
+    ],
+    [
+        1551,
+        "deleterious: harmful"
+    ],
+    [
+        1552,
+        "whittle: making something from wood cutting off small pieces"
+    ],
+    [
+        1553,
+        "moodiness: easily changing moods"
+    ],
+    [
+        1554,
+        "shed: to get rid of something unwanted"
+    ],
+    [
+        1555,
+        "adamant: impossible to persuade"
+    ],
+    [
+        1556,
+        "pronounced: very noticeable or certain, marked"
+    ],
+    [
+        1557,
+        "deplete: to reduce something in size or amount"
+    ],
+    [
+        1558,
+        "breakdown: failure to work or be successful"
+    ],
+    [
+        1559,
+        "screen out: to prevent something or someone undesirable coming in"
+    ],
+    [
+        1560,
+        "IELTS"
+    ],
+    [
+        1561,
+        "General"
+    ],
+    [
+        1562,
+        "Academy"
+    ],
+    [
+        1563,
+        "Procedure for evacuation"
+    ],
+    [
+        1564,
+        "campus: the buildings of a college or university"
+    ],
+    [
+        1565,
+        "in case of: if something happens, or in preperation"
+    ],
+    [
+        1566,
+        "siren: a device for making a loud warning noise"
+    ],
+    [
+        1567,
+        "roll: an official list of names, turning over and over"
+    ],
+    [
+        1568,
+        "premises: the land and buildings"
+    ],
+    [
+        1569,
+        "premise: fundamental"
+    ],
+    [
+        1570,
+        "brisk: quick, energetic and active"
+    ],
+    [
+        1571,
+        "account for: to form the total of somethin"
+    ],
+    [
+        1572,
+        "Community education"
+    ],
+    [
+        1573,
+        "Progress gold B"
+    ],
+    [
+        1574,
+        "Communicate"
+    ],
+    [
+        1575,
+        "clich\u00e9d: often said, used, done, not interesting"
+    ],
+    [
+        1576,
+        "bloke: a man"
+    ],
+    [
+        1577,
+        "blokey: manly"
+    ],
+    [
+        1578,
+        "anecdote: a short funny story"
+    ],
+    [
+        1579,
+        "all in all: considering all the different parts of the situation together"
+    ],
+    [
+        1580,
+        "plead: to make an urgent emotional statement or request for something"
+    ],
+    [
+        1581,
+        "mean: 1. not willing to give/share things 2. unkind"
+    ],
+    [
+        1582,
+        "Speak"
+    ],
+    [
+        1583,
+        "The ambassadors dandruff"
+    ],
+    [
+        1584,
+        "I remember"
+    ],
+    [
+        1585,
+        "praised: to express admiration"
+    ],
+    [
+        1586,
+        "notorious: infamous, famous for something bad"
+    ],
+    [
+        1587,
+        "dandruff: small, white, pieces of dead skin from the head collet in the head or on the clothes"
+    ],
+    [
+        1588,
+        "well groomed: heaving a neat and pleasant appearance produced by care"
+    ],
+    [
+        1589,
+        "embrace: to accept something enthusiastically"
+    ],
+    [
+        1590,
+        "Skal\u00e4r"
+    ],
+    [
+        1591,
+        "Vektor"
+    ],
+    [
+        1592,
+        "Tecken"
+    ],
+    [
+        1593,
+        "Nummer"
+    ],
+    [
+        1594,
+        "Bas (Siffrorsystem)"
+    ],
+    [
+        1595,
+        "Variabler"
+    ],
+    [
+        1596,
+        "Uttryck och ekvationer"
+    ],
+    [
+        1597,
+        "+ + = +"
+    ],
+    [
+        1598,
+        "+ - = -"
+    ],
+    [
+        1599,
+        "- - = +"
+    ],
+    [
+        1600,
+        "2a + 3a = (2+3)a = 5a"
+    ],
+    [
+        1601,
+        "2a(3+b)-9c(7-3) = 2a3+2ab+(-9)c7+(-9c)3 = 6a+2ab+(-63)c+(-27)c = 6a+21b-90c"
+    ],
+    [
+        1602,
+        "2a+3=5x => 3=5x-2x => 3=3x => 3/3=x => 1=x"
+    ],
+    [
+        1603,
+        "4.4 Garnisonen i blockhuset"
+    ],
+    [
+        1604,
+        "pimpla: 1. dricka, supa, 2. isfiska"
+    ],
+    [
+        1605,
+        "\u00e4ngslig: som k\u00e4nner \u00e4ngslan, nerv\u00f6s, orolig"
+    ],
+    [
+        1606,
+        "f\u00f6rr\u00e5da: svika"
+    ],
+    [
+        1607,
+        "sl\u00e5 l\u00e4ger: t\u00e4lta, campa"
+    ],
+    [
+        1608,
+        "braka: sm\u00e4lla h\u00e4ftigt"
+    ],
+    [
+        1609,
+        "repa: 1. \u00e5terh\u00e4mta, 2. skrapa"
+    ],
+    [
+        1610,
+        "krusa: g\u00f6ra krusig eller v\u00e5ga"
+    ],
+    [
+        1611,
+        "vaja: fladdra, gunga, svaja, vagga"
+    ],
+    [
+        1612,
+        "enslig: som har isolerat l\u00e4ge, ensam"
+    ],
+    [
+        1613,
+        "p\u00e5fallande: anm\u00e4rkningsv\u00e4rt, markant"
+    ],
+    [
+        1614,
+        "furu: virke av tall"
+    ],
+    [
+        1615,
+        "kittel: stort runt kokk\u00e4rl"
+    ],
+    [
+        1616,
+        "urslag: h\u00e4ndelsen att en alltf\u00f6r stor flisa lossnar"
+    ],
+    [
+        1617,
+        "h\u00e4rd: 1. eldstad, 2. centrum"
+    ],
+    [
+        1618,
+        "sk\u00f6vla: f\u00f6rst\u00f6ra, plundra, \u00f6del\u00e4gga"
+    ],
+    [
+        1619,
+        "r\u00e4nnil: mycket liten b\u00e4ck"
+    ],
+    [
+        1620,
+        "ormbunke: br\u00e4cken, en sorts l\u00e5g v\u00e4xt"
+    ],
+    [
+        1621,
+        "inslag: del, inneh\u00e5ll"
+    ],
+    [
+        1622,
+        "uteslutande: endast, enbart"
+    ],
+    [
+        1623,
+        "verksamhet: aktivitet, arbet"
+    ],
+    [
+        1624,
+        "springa: spricka, l\u00e5ngsmal \u00f6ppning"
+    ],
+    [
+        1625,
+        "tillyxad: 1. grov, 2. tillkommen snabbt och med grovt metoder"
+    ],
+    [
+        1626,
+        "kv\u00e4llsvard: middag"
+    ],
+    [
+        1627,
+        "porlande: rinnande, sorlande"
+    ],
+    [
+        1628,
+        "styv: 1. stel, sv\u00e5r att b\u00f6ja, 2. duktig, skicklig"
+    ],
+    [
+        1629,
+        "st\u00e4lla upp: 1. ordna, 2. delta aktivt, 3. vara ett st\u00f6d f\u00f6r n\u00e5gon"
+    ],
+    [
+        1630,
+        "suga p\u00e5 ramarna: leva sparsamt, ha et knappt, m\u00e5ste inskr\u00e4nka sig"
+    ],
+    [
+        1631,
+        "omst\u00e4ndighet: f\u00f6rh\u00e5llande, villkor"
+    ],
+    [
+        1632,
+        "skapt: skapad, formad"
+    ],
+    [
+        1633,
+        "kr\u00e4sen: sv\u00e5r att tillfredsst\u00e4lla, kinkig"
+    ],
+    [
+        1634,
+        "dosa: ask, burk"
+    ],
+    [
+        1635,
+        "utsikt: 1. chans, hopp f\u00f6r framtiden, 2. prognos, 3. view"
+    ],
+    [
+        1636,
+        "bundsf\u00f6rvant: kamrat i kampen, de allierade"
+    ],
+    [
+        1637,
+        "skr\u00e5la: sjunga h\u00f6gt och oartikulerat"
+    ],
+    [
+        1638,
+        "gnugga: gnida, gno"
+    ],
+    [
+        1639,
+        "parlament\u00e4rflagga: vit flagga"
+    ],
+    [
+        1640,
+        "parlament\u00e4r: f\u00f6rhandlare, representant, delegat"
+    ],
+    [
+        1641,
+        "till varje pris: at any cost"
+    ],
+    [
+        1642,
+        "4.5 Silver f\u00f6rhandlar"
+    ],
+    [
+        1643,
+        "sannerligen: verkligen, minsann"
+    ],
+    [
+        1644,
+        "skynke: stort tygstycke, draperi"
+    ],
+    [
+        1645,
+        "adjutant: officer som bitr\u00e4der chef"
+    ],
+    [
+        1646,
+        "f\u00f6rr\u00e4disk: som man misstar sig p\u00e5, l\u00f6msk, bakslug"
+    ],
+    [
+        1647,
+        "desertera: rymma fr\u00e5n krigstj\u00e4nst, smita iv\u00e4g"
+    ],
+    [
+        1648,
+        "d\u00e4rmed j\u00e4mnt: stopp, inget vidare"
+    ],
+    [
+        1649,
+        "\u00f6vermod: alltf\u00f6r stor sj\u00e4lvs\u00e4kerhet"
+    ],
+    [
+        1650,
+        "\u00f6vermodig: arrogant"
+    ],
+    [
+        1651,
+        "f\u00f6rsigg\u00e5: h\u00e4nda, ske, p\u00e5g\u00e5"
+    ],
+    [
+        1652,
+        "ringa: liten, obetydlig"
+    ],
+    [
+        1653,
+        "stagv\u00e4nda: v\u00e4nda mot vinden"
+    ],
+    [
+        1654,
+        "streta: arbeta h\u00e5rt"
+    ],
+    [
+        1655,
+        "stass: festkl\u00e4der"
+    ],
+    [
+        1656,
+        "utstyrd: kl\u00e4dd"
+    ],
+    [
+        1657,
+        "grann: vacker, snygg (lite)"
+    ],
+    [
+        1658,
+        "behaga: \u00f6nska, vilja"
+    ],
+    [
+        1659,
+        "anmoda: be, uppmana"
+    ],
+    [
+        1660,
+        "till er tj\u00e4nst: at your service"
+    ],
+    [
+        1661,
+        "redl\u00f6s: starkt berusad"
+    ],
+    [
+        1662,
+        "ta p\u00e5 bar g\u00e4rning: ertappa"
+    ],
+    [
+        1663,
+        "ligga till: ha visst l\u00e4ge"
+    ],
+    [
+        1664,
+        "ge betalt f\u00f6r gammalt ost: h\u00e4mnas"
+    ],
+    [
+        1665,
+        "konung: kung"
+    ],
+    [
+        1666,
+        "4.6 Anfallet"
+    ],
+    [
+        1667,
+        "rond: rundtur, round"
+    ],
+    [
+        1668,
+        "f\u00f6rvissa: f\u00f6rs\u00e4kra, \u00f6vertyga"
+    ],
+    [
+        1669,
+        "f\u00f6rvissa sig om: se till, f\u00f6rs\u00e4kra sig om"
+    ],
+    [
+        1670,
+        "upprada: st\u00e4lla upp p\u00e5 rad"
+    ],
+    [
+        1671,
+        "k\u00e5da: tjock, klibbig saft i vissa tr\u00e4d"
+    ],
+    [
+        1672,
+        "febrig: het, som har feber"
+    ],
+    [
+        1673,
+        "p\u00e5 helsp\u00e4nn: i sp\u00e4nd v\u00e4ntan"
+    ],
+    [
+        1674,
+        "f\u00f6rr\u00e5da: avsl\u00f6ja"
+    ],
+    [
+        1675,
+        "man\u00f6ver: 1. milit\u00e4r\u00f6vning, 2. handgrepp som \u00e4ndrar riktning"
+    ],
+    [
+        1676,
+        "skenman\u00f6ver: handling utf\u00f6rd i syfte att missleda"
+    ],
+    [
+        1677,
+        "l\u00e4gga beslag p\u00e5: kapa"
+    ],
+    [
+        1678,
+        "skara: grupp m\u00e4nniskor"
+    ],
+    [
+        1679,
+        "i ett huj: genast, snabbt"
+    ],
+    [
+        1680,
+        "bita i gr\u00e4set: d\u00f6"
+    ],
+    [
+        1681,
+        "f\u00e4ste: 1. fast grund, 2. milit\u00e4r st\u00f6djepunkt"
+    ],
+    [
+        1682,
+        "fotf\u00e4ste: fast mark under f\u00f6tterna"
+    ],
+    [
+        1683,
+        "\u00e5tskillig: en hel del, mycket"
+    ],
+    [
+        1684,
+        "inp\u00e5: t\u00e4tt intill"
+    ],
+    [
+        1685,
+        "tord\u00f6n: starkt buller"
+    ],
+    [
+        1686,
+        "bed\u00f6vande: tung, painkilling"
+    ],
+    [
+        1687,
+        "f\u00f6rvirring: oordning, oreda"
+    ],
+    [
+        1688,
+        "knoge: led mellan hand och finger, knuckle"
+    ],
+    [
+        1689,
+        "villervalla: f\u00f6rvirring, kaos"
+    ],
+    [
+        1690,
+        "d\u00f6dskamp: d\u00f6ende, pl\u00e5gor, agony"
+    ],
+    [
+        1691,
+        "undkomma: komma undan"
+    ],
+    [
+        1692,
+        "st\u00e4mma: 1. r\u00f6st, 2. m\u00f6te"
+    ],
+    [
+        1693,
+        "klinga: ringa, ljuda"
+    ],
+    [
+        1694,
+        "Chez Nous"
+    ],
+    [
+        1695,
+        "1"
+    ],
+    [
+        1696,
+        "2"
+    ],
+    [
+        1697,
+        "3"
+    ],
+    [
+        1698,
+        "4"
+    ],
+    [
+        1699,
+        "1A Sur la plage"
+    ],
+    [
+        1700,
+        "husk: the outer dry covering of some seeds"
+    ],
+    [
+        1701,
+        "lingering: lasting a long time"
+    ],
+    [
+        1702,
+        "stark: empty, simple, obvious"
+    ],
+    [
+        1703,
+        "accustomed: familiar with something"
+    ],
+    [
+        1704,
+        "solemnly: serious and without any humour"
+    ],
+    [
+        1705,
+        "cranky: easily annoyed or upset"
+    ],
+    [
+        1706,
+        "shrub: a large plant with a rounded shape from many small branches"
+    ],
+    [
+        1707,
+        "collective: of our shared by every member of a group of people"
+    ],
+    [
+        1708,
+        "ritual: a way of doing in same actions"
+    ],
+    [
+        1709,
+        "graditude: the feeling of being grateful"
+    ],
+    [
+        1710,
+        "adrenaline: a hormone when sb is frightened, angry or excited making heart beat faster"
+    ],
+    [
+        1711,
+        "sizzle: sound like food cooking in hot fat"
+    ],
+    [
+        1712,
+        "hum: making a continous low sound"
+    ],
+    [
+        1713,
+        "wagon: a vehicle with four wheels pulled by horses or oxen, transporting heavy goods"
+    ],
+    [
+        1714,
+        "Empower"
+    ],
+    [
+        1715,
+        "Deadly thoughts"
+    ],
+    [
+        1716,
+        "Lover"
+    ],
+    [
+        1717,
+        "Symptoms of love"
+    ],
+    [
+        1718,
+        "trances: (trans, h\u00e4nryckning)"
+    ],
+    [
+        1719,
+        "whack: to hit someone/something noisily"
+    ],
+    [
+        1720,
+        "slouch: shoulder hanging forward and head bent over"
+    ],
+    [
+        1721,
+        "hunch: lean forward with shoulder raised or to bend your back and shoulders into a round shape"
+    ],
+    [
+        1722,
+        "blister: painful swelling with liquid on skin"
+    ],
+    [
+        1723,
+        "braid: a thin strip of cloth attachd to clothes"
+    ],
+    [
+        1724,
+        "streak: a long thin mark"
+    ],
+    [
+        1725,
+        "migraine: severe continous headache, often with vomiting and difficulty in seeing"
+    ],
+    [
+        1726,
+        "blot sth out: to hide or block from something"
+    ],
+    [
+        1727,
+        "lean: without waste"
+    ],
+    [
+        1728,
+        "laggard: something that is very slow"
+    ],
+    [
+        1729,
+        "omen: sign of future event (negative)"
+    ],
+    [
+        1730,
+        "grief: very great sadness especially at someones death"
+    ],
+    [
+        1731,
+        "recall: suddenly remember (\u00e5terkalla)"
+    ],
+    [
+        1732,
+        "distill: heating a liquid for stronger and purer and cooling"
+    ],
+    [
+        1733,
+        "Rayan 1"
+    ],
+    [
+        1734,
+        "Vanligt liv"
+    ],
+    [
+        1735,
+        "Spelteori"
+    ],
+    [
+        1736,
+        "Nash equilibrium"
+    ],
+    [
+        1737,
+        "F\u00e5ngarnas dilemma"
+    ],
+    [
+        1738,
+        "Chicken race"
+    ],
+    [
+        1739,
+        "Boxed Pig Game"
+    ],
+    [
+        1740,
+        "Statistik"
+    ],
+    [
+        1741,
+        "Medelv\u00e4rde"
+    ],
+    [
+        1742,
+        "Median"
+    ],
+    [
+        1743,
+        "Typv\u00e4rde"
+    ],
+    [
+        1744,
+        "Diagram"
+    ],
+    [
+        1745,
+        "Sannolikhet"
+    ],
+    [
+        1746,
+        "L\u00e4gesm\u00e5tt"
+    ],
+    [
+        1747,
+        "\u03a3x/n"
+    ],
+    [
+        1748,
+        "root(n, \u03a0x)"
+    ],
+    [
+        1749,
+        "(1, 3, 5, 11, 15) => 5"
+    ],
+    [
+        1750,
+        "(1, 1, 1, 2, 3, 3) => 1"
+    ],
+    [
+        1751,
+        "F\u2218G(x)"
+    ],
+    [
+        1752,
+        "\u2207"
+    ],
+    [
+        1753,
+        "grad F(x)"
+    ],
+    [
+        1754,
+        "div F(x)"
+    ],
+    [
+        1755,
+        "curl F(x)"
+    ],
+    [
+        1756,
+        "F\u0394t = m\u0394v"
+    ],
+    [
+        1757,
+        "\u2220i = \u2220r"
+    ],
+    [
+        1758,
+        "Grund\u00e4mnen"
+    ],
+    [
+        1759,
+        "Organisk kemi"
+    ],
+    [
+        1760,
+        "M\u00e4nskliga kroppen"
+    ],
+    [
+        1761,
+        "Kroppsdelar"
+    ],
+    [
+        1762,
+        "F\u00f6rbr\u00e4nning"
+    ],
+    [
+        1763,
+        "Cellul\u00e4r"
+    ],
+    [
+        1764,
+        "Mikrobiologi"
+    ],
+    [
+        1765,
+        "V\u00e4vnad"
+    ],
+    [
+        1766,
+        "Skelett"
+    ],
+    [
+        1767,
+        "Andningsorganen"
+    ],
+    [
+        1768,
+        "Kardiovaskul\u00e4r"
+    ],
+    [
+        1769,
+        "Matsm\u00e4ltningssystemet"
+    ],
+    [
+        1770,
+        "Urinsystemet"
+    ],
+    [
+        1771,
+        "Endokrin"
+    ],
+    [
+        1772,
+        "Nervsystem"
+    ],
+    [
+        1773,
+        "5 sinnen"
+    ],
+    [
+        1774,
+        "Hj\u00e4rnan"
+    ],
+    [
+        1775,
+        "Sjukdomar"
+    ],
+    [
+        1776,
+        "Genetik"
+    ],
+    [
+        1777,
+        "DNA"
+    ],
+    [
+        1778,
+        "Reproduktion"
+    ],
+    [
+        1779,
+        "Vind"
+    ],
+    [
+        1780,
+        "Orkan"
+    ],
+    [
+        1781,
+        "H\u00f6gt tryck"
+    ],
+    [
+        1782,
+        "L\u00e5gt tryck"
+    ],
+    [
+        1783,
+        "Atmosf\u00e4rens lager"
+    ],
+    [
+        1784,
+        "Tryck"
+    ],
+    [
+        1785,
+        "Klimattyper"
+    ],
+    [
+        1786,
+        "Biotoper"
+    ],
+    [
+        1787,
+        "Pol\u00e4r"
+    ],
+    [
+        1788,
+        "Tempererad"
+    ],
+    [
+        1789,
+        "Subtropisk"
+    ],
+    [
+        1790,
+        "Tropisk"
+    ],
+    [
+        1791,
+        "Kustklimat"
+    ],
+    [
+        1792,
+        "Inlandsklimat"
+    ],
+    [
+        1793,
+        "Torka"
+    ],
+    [
+        1794,
+        "Sol"
+    ],
+    [
+        1795,
+        "Regnskog"
+    ],
+    [
+        1796,
+        "Sl\u00e4tt"
+    ],
+    [
+        1797,
+        "St\u00e4pp"
+    ],
+    [
+        1798,
+        "Vattnets kretslopp"
+    ],
+    [
+        1799,
+        "Regn"
+    ],
+    [
+        1800,
+        "Havsstr\u00f6mmar"
+    ],
+    [
+        1801,
+        "V\u00e5gor"
+    ],
+    [
+        1802,
+        "Tsunami"
+    ],
+    [
+        1803,
+        "Frontregn"
+    ],
+    [
+        1804,
+        "Kustregn"
+    ],
+    [
+        1805,
+        "Sommarregn"
+    ],
+    [
+        1806,
+        "Tape"
+    ],
+    [
+        1807,
+        "Plasticine"
+    ],
+    [
+        1808,
+        "Laserpekare"
+    ],
+    [
+        1809,
+        "H\u00e4ftare"
+    ],
+    [
+        1810,
+        "Tillv\u00e4xt"
+    ],
+    [
+        1811,
+        "Bek\u00e4mpningsmedel"
+    ],
+    [
+        1812,
+        "Barrtr\u00e4dsb\u00e4ltet"
+    ],
+    [
+        1813,
+        "Skogs\u00e4gande f\u00f6retag"
+    ],
+    [
+        1814,
+        "F\u00e5ngst"
+    ],
+    [
+        1815,
+        "Odling"
+    ],
+    [
+        1816,
+        "Fiskezoner"
+    ],
+    [
+        1817,
+        "Utrotningshotade arter"
+    ],
+    [
+        1818,
+        "Fabrikanl\u00e4ggning"
+    ],
+    [
+        1819,
+        "5.1 Hur min \u00e4ventyr till sj\u00f6ss b\u00f6rjade"
+    ],
+    [
+        1820,
+        "s\u00e5 gott som: n\u00e4rap\u00e5, n\u00e4stan"
+    ],
+    [
+        1821,
+        "ber\u00e4ttigad: som har r\u00e4tt till, beh\u00f6rig"
+    ],
+    [
+        1822,
+        "vaden: underbenets baksida"
+    ],
+    [
+        1823,
+        "bagatell: sm\u00e5sak, struntsak"
+    ],
+    [
+        1824,
+        "r\u00e5dsl\u00e5: diskutera, r\u00e5dg\u00f6ra"
+    ],
+    [
+        1825,
+        "avsmak: motvilja, olust, \u00e4ckel"
+    ],
+    [
+        1826,
+        "bondpermission: olovlig ledighet (fr\u00e5n milit\u00e4rtj\u00e4nst)"
+    ],
+    [
+        1827,
+        "f\u00f6retag: verksamhet, handling, f\u00f6rs\u00f6k, bolag"
+    ],
+    [
+        1828,
+        "vetta: face"
+    ],
+    [
+        1829,
+        "gnissel: skarpt och sk\u00e4rande ljud, tjut"
+    ],
+    [
+        1830,
+        "dyning: sj\u00f6h\u00e4vning, havsv\u00e5gor"
+    ],
+    [
+        1831,
+        "dimbank: avgr\u00e4nsat omr\u00e5de med dimma"
+    ],
+    [
+        1832,
+        "gr\u00e4nsle: sitta med benen p\u00e5 var sida om n\u00e5got"
+    ],
+    [
+        1833,
+        "kuslig: l\u00e4skig, hemsk, skr\u00e4mmande"
+    ],
+    [
+        1834,
+        "l\u00e4te: ljud, skri"
+    ],
+    [
+        1835,
+        "st\u00f6ta: driva, k\u00f6ra"
+    ],
+    [
+        1836,
+        "s\u00e4nka: dalg\u00e5ng, dal"
+    ],
+    [
+        1837,
+        "skev: krokig, sned"
+    ],
+    [
+        1838,
+        "toft: en b\u00e5ts l\u00e4ngs eller tv\u00e4rg\u00e5ende b\u00e4nk att sitta p\u00e5"
+    ],
+    [
+        1839,
+        "vattenbryn: vattnets kant"
+    ],
+    [
+        1840,
+        "coracle: liten, rundad, l\u00e4tt b\u00e5t"
+    ],
+    [
+        1841,
+        "nederlag: f\u00f6rlust"
+    ],
+    [
+        1842,
+        "tyna: avta, f\u00f6rsvagas"
+    ],
+    [
+        1843,
+        "retirera: dra sig tillbaka"
+    ],
+    [
+        1844,
+        "p\u00e5 r\u00e4tt k\u00f6l: i balans"
+    ],
+    [
+        1845,
+        "egenhet: avvikande egenskap"
+    ],
+    [
+        1846,
+        "slak: h\u00e4ngig, slapp"
+    ],
+    [
+        1847,
+        "kardel: repstr\u00e4ng"
+    ],
+    [
+        1848,
+        "skr\u00e4n: g\u00e4llt oartikulerat rop fr\u00e5n flera st\u00e4llen"
+    ],
+    [
+        1849,
+        "5.2 Ebben"
+    ],
+    [
+        1850,
+        "Come on! Complexity"
+    ],
+    [
+        1851,
+        "novelty: the quality of being new and unusual"
+    ],
+    [
+        1852,
+        "apparent: able to be seen/understood"
+    ],
+    [
+        1853,
+        "quotation: a phrase of short piece of writing taken from a longer work"
+    ],
+    [
+        1854,
+        "Tippex: correction liquid"
+    ],
+    [
+        1855,
+        "Hot"
+    ],
+    [
+        1856,
+        "Like every other American family?"
+    ],
+    [
+        1857,
+        "chart: to record something in detail"
+    ],
+    [
+        1858,
+        "beatific: happy and calm in a holy way"
+    ],
+    [
+        1859,
+        "mezmerizing: very attractive"
+    ],
+    [
+        1860,
+        "photogenic: having a face that looks attractive in photographs"
+    ],
+    [
+        1861,
+        "mezmerizing: very attractive"
+    ],
+    [
+        1862,
+        "sentimental: relating to feeling not reason"
+    ],
+    [
+        1863,
+        "tender: gentle, loving or kind"
+    ],
+    [
+        1864,
+        "unadulterated: pure"
+    ],
+    [
+        1865,
+        "squire: gods\u00e4gare"
+    ],
+    [
+        1866,
+        "snore: kikna av skratt, frusta"
+    ],
+    [
+        1867,
+        "doting: k\u00e4rleksfull, avgudande"
+    ],
+    [
+        1868,
+        "enthrall: to keep someone completely interested, trollbinda, f\u00f6rtrolla"
+    ],
+    [
+        1869,
+        "glee: happiness, joy, gl\u00e4dje"
+    ],
+    [
+        1870,
+        "exude: ge ifr\u00e5n sig"
+    ],
+    [
+        1871,
+        "basin: handfat"
+    ],
+    [
+        1872,
+        "astonishing: f\u00f6rv\u00e5nansv\u00e4rd"
+    ],
+    [
+        1873,
+        "solemnly: seriously"
+    ],
+    [
+        1874,
+        "The Execution"
+    ],
+    [
+        1875,
+        "coroner: official that examines reason of persons death"
+    ],
+    [
+        1876,
+        "press: writer, journalist"
+    ],
+    [
+        1877,
+        "padre: a Christian priest in armed faces"
+    ],
+    [
+        1878,
+        "reverend: a title for a priest (pastor)"
+    ],
+    [
+        1879,
+        "shove: push forcefully"
+    ],
+    [
+        1880,
+        "Daglig struktur"
+    ],
+    [
+        1881,
+        "butelj: flaska"
+    ],
+    [
+        1882,
+        "hagla: falla t\u00e4tt"
+    ],
+    [
+        1883,
+        "s\u00e5vitt: s\u00e5 l\u00e5ngt som"
+    ],
+    [
+        1884,
+        "kr\u00e4nga: sv\u00e4nga"
+    ],
+    [
+        1885,
+        "l\u00e5ngskepps: l\u00e4ngs fartygs sida"
+    ],
+    [
+        1886,
+        "besatt: galen, tokig"
+    ],
+    [
+        1887,
+        "ta \u00f6verhand: bli dominerande"
+    ],
+    [
+        1888,
+        "f\u00f6ljeslagare: s\u00e4llskap, follower"
+    ],
+    [
+        1889,
+        "stampa: st\u00f6ta kraftigt med foten"
+    ],
+    [
+        1890,
+        "otalig: or\u00e4knelig, countless"
+    ],
+    [
+        1891,
+        "sv\u00e4nga av och an: sv\u00e4nga hit och dit"
+    ],
+    [
+        1892,
+        "ballad: folkvisa"
+    ],
+    [
+        1893,
+        "decimera: minska tiotal"
+    ],
+    [
+        1894,
+        "dryckenskap: supighet"
+    ],
+    [
+        1895,
+        "h\u00e4rja: plundra, \u00f6del\u00e4gga, r\u00f6ja"
+    ],
+    [
+        1896,
+        "just: precis, exakt"
+    ],
+    [
+        1897,
+        "fosforescerande: sj\u00e4lvlysande"
+    ],
+    [
+        1898,
+        "gir: kurs\u00e4ndring"
+    ],
+    [
+        1899,
+        "fyllbult: berusad person"
+    ],
+    [
+        1900,
+        "miss\u00f6de: mindre olycka"
+    ],
+    [
+        1901,
+        "anf\u00f6rtro: \u00f6verl\u00e4mna"
+    ],
+    [
+        1902,
+        "nalkas: n\u00e4rma sig"
+    ],
+    [
+        1903,
+        "st\u00e5 ut med: orka med, v\u00e5ga"
+    ],
+    [
+        1904,
+        "ta ut sin r\u00e4tt: m\u00e4rka, take its toll"
+    ],
+    [
+        1905,
+        "5.3 Kanotf\u00e4rden"
+    ],
+    [
+        1906,
+        "1 Den gamle sj\u00f6r\u00f6varen"
+    ],
+    [
+        1907,
+        "2 Skeppskocken"
+    ],
+    [
+        1908,
+        "3 Mitt \u00e4ventyr i land"
+    ],
+    [
+        1909,
+        "4 Palissaden"
+    ],
+    [
+        1910,
+        "5 Mitt \u00e4ventyr till sj\u00f6ss"
+    ],
+    [
+        1911,
+        "guppa: gunga p\u00e5 vattenytan"
+    ],
+    [
+        1912,
+        "massiv: 1. solid 2. kraftig, tung"
+    ],
+    [
+        1913,
+        "kaskad: vattenfall, svall"
+    ],
+    [
+        1914,
+        "ol\u00e4ndig: sv\u00e5rt att ta sig fram p\u00e5 marken"
+    ],
+    [
+        1915,
+        "avsats: utskjutande plan yta, klipphylla"
+    ],
+    [
+        1916,
+        "vidunder: odjur"
+    ],
+    [
+        1917,
+        "skall: en hunds l\u00e4te"
+    ],
+    [
+        1918,
+        "\u00e5syn: syn, anblick"
+    ],
+    [
+        1919,
+        "torrl\u00e4gga: g\u00f6ra torr, dr\u00e4nera"
+    ],
+    [
+        1920,
+        "r\u00e5da: finnas, existera, f\u00f6rekomma"
+    ],
+    [
+        1921,
+        "g\u00e5 under: ge upp, d\u00f6"
+    ],
+    [
+        1922,
+        "ruska: skaka"
+    ],
+    [
+        1923,
+        "f\u00f6rkjuta: f\u00f6rflytta ur l\u00e4ge"
+    ],
+    [
+        1924,
+        "hissna: k\u00e4nna sig yr, f\u00e5 svindel"
+    ],
+    [
+        1925,
+        "utf\u00f6r: down"
+    ],
+    [
+        1926,
+        "\u00f6sa: skopa v\u00e4tska fr\u00e5n en beh\u00e5llare till en annan"
+    ],
+    [
+        1927,
+        "st\u00e4nka: skv\u00e4tta, svalpa"
+    ],
+    [
+        1928,
+        "v\u00e4rka: g\u00f6ra ont"
+    ],
+    [
+        1929,
+        "klyvare: ett f\u00f6rsegel p\u00e5 segelfartyg"
+    ],
+    [
+        1930,
+        "drulle: dum person"
+    ],
+    [
+        1931,
+        "kaja: en sort kr\u00e5kf\u00e5gel"
+    ],
+    [
+        1932,
+        "s\u00e4tta fart p\u00e5: stimulera"
+    ],
+    [
+        1933,
+        "idelig: st\u00e4ndig"
+    ],
+    [
+        1934,
+        "ober\u00e4knerlig: om\u00f6jlig att f\u00f6rutse"
+    ],
+    [
+        1935,
+        "hj\u00e4rtat sl\u00e5r volter: hj\u00e4rtat bultar kraftigt"
+    ],
+    [
+        1936,
+        "rorkult: del av styranordningen och f\u00f6rbinder med rodret"
+    ],
+    [
+        1937,
+        "p\u00e5 sistone: p\u00e5 sista tiden"
+    ],
+    [
+        1938,
+        "sacka: fall behind"
+    ],
+    [
+        1939,
+        "f\u00f6rtvivlan: desperation, hoppl\u00f6shet"
+    ],
+    [
+        1940,
+        "lova: gira, styra upp mot vinden"
+    ],
+    [
+        1941,
+        "tillryggal\u00e4gga: f\u00e4rdas, cover"
+    ],
+    [
+        1942,
+        "n\u00e4sta: neighbour"
+    ],
+    [
+        1943,
+        "stag: lina som st\u00f6ttar en mast"
+    ],
+    [
+        1944,
+        "ramma: krocka, k\u00f6ra p\u00e5 och skada"
+    ],
+    [
+        1945,
+        "5.4 Jag halar ner sj\u00f6r\u00f6varflaggan"
+    ],
+    [
+        1946,
+        "slunga: kasta h\u00e4ftigt"
+    ],
+    [
+        1947,
+        "f\u00f6rspilla: sl\u00f6sa bort"
+    ],
+    [
+        1948,
+        "avslagen: 1. trasig 2. nekad 3. unken"
+    ],
+    [
+        1949,
+        "spygatt: h\u00e5l i fartygssida f\u00f6r att vatten ska rinna ut"
+    ],
+    [
+        1950,
+        "kv\u00e4lja: g\u00f6ra att det v\u00e4nder i magen"
+    ],
+    [
+        1951,
+        "skot: lina f\u00e4st i segel (storskot, fockskot)"
+    ],
+    [
+        1952,
+        "talg: fast fett"
+    ],
+    [
+        1953,
+        "hasa: sl\u00e4pa, l\u00e5ngsamt ta sig fram, glida"
+    ],
+    [
+        1954,
+        "hasa ner: glida ner"
+    ],
+    [
+        1955,
+        "yster: mycket livlig"
+    ],
+    [
+        1956,
+        "tovig: okammad, rufsig, trasslig"
+    ],
+    [
+        1957,
+        "rus: berusning, fylla"
+    ],
+    [
+        1958,
+        "kr\u00e4la: krypa som en orm, slingra"
+    ],
+    [
+        1959,
+        "medtagen: utmattad, sliten"
+    ],
+    [
+        1960,
+        "vara p\u00e5 det klara med: inse"
+    ],
+    [
+        1961,
+        "list: 1. tunn ribba av tr\u00e4 2. knep, slughet"
+    ],
+    [
+        1962,
+        "klirra: l\u00e5ta som n\u00e4r glas sl\u00e5r mot glas"
+    ],
+    [
+        1963,
+        "umbra: ett m\u00f6rkbrunt f\u00e4rg\u00e4mne"
+    ],
+    [
+        1964,
+        "klase: klunga, bunt"
+    ],
+    [
+        1965,
+        "kvarter: gammalt rymdm\u00e5tt"
+    ],
+    [
+        1966,
+        "i en handv\u00e4ndning: p\u00e5 ett \u00f6gonblick"
+    ],
+    [
+        1967,
+        "landkrabba: sj\u00f6bj\u00f6rn, n\u00e5gon som saknar sj\u00f6vana"
+    ],
+    [
+        1968,
+        "vink: tecken, r\u00f6relse med handen f\u00f6r att visa"
+    ],
+    [
+        1969,
+        "\u00f6vertag: b\u00e4ttre l\u00e4ge, f\u00f6rdel"
+    ],
+    [
+        1970,
+        "p\u00e5 fl\u00e4cken: genast"
+    ],
+    [
+        1971,
+        "forlig vind: gynnsam vind som kommer akterifr\u00e5n"
+    ],
+    [
+        1972,
+        "surra: 1. g\u00f6ra fast med rep, binda 2. buzz"
+    ],
+    [
+        1973,
+        "repa sig: \u00e5terh\u00e4mta sig"
+    ],
+    [
+        1974,
+        "rang: social st\u00e4llning i en grupp, rank"
+    ],
+    [
+        1975,
+        "f\u00f6rebr\u00e5: l\u00e4gga skulden p\u00e5, klandra"
+    ],
+    [
+        1976,
+        "h\u00e4rjad: sliten, f\u00f6rst\u00f6rd, medtagen"
+    ],
+    [
+        1977,
+        "p\u00e5frestning: fysisk eller psykisk press"
+    ],
+    [
+        1978,
+        "sj\u00f6: stor v\u00e5g, dyning"
+    ],
+    [
+        1979,
+        "grymta: muttra missn\u00f6jt, klaga"
+    ],
+    [
+        1980,
+        "besynnerlig: underlig, konstig"
+    ],
+    [
+        1981,
+        "s\u00e4tta p\u00e5 grund: ankra"
+    ],
+    [
+        1982,
+        "5.5 Israel Hands"
+    ],
+    [
+        1983,
+        "nogr\u00e4knad: 1. kr\u00e4sen 2. nogrann"
+    ],
+    [
+        1984,
+        "f\u00f6rev\u00e4ndning: urs\u00e4kt, sk\u00e4l, excuse"
+    ],
+    [
+        1985,
+        "irra: g\u00e5 omkring planl\u00f6st"
+    ],
+    [
+        1986,
+        "klampa: g\u00e5 med tunga och ljudliga steg, stampa, trampa"
+    ],
+    [
+        1987,
+        "besanna: bekr\u00e4fta, bevisa"
+    ],
+    [
+        1988,
+        "dolk: kort tv\u00e5eggat kniv"
+    ],
+    [
+        1989,
+        "fyra: t\u00e4nda, elda"
+    ],
+    [
+        1990,
+        "overksam: sysslol\u00f6s"
+    ],
+    [
+        1991,
+        "p\u00e5 m\u00e5f\u00e5: at random"
+    ],
+    [
+        1992,
+        "bylte: packe, bunt, knyte"
+    ],
+    [
+        1993,
+        "f\u00e4rdighet: skill"
+    ],
+    [
+        1994,
+        "slurk: munfull, klunk"
+    ],
+    [
+        1995,
+        "g\u00e5 \u00f6verstyr: g\u00e5 omkull, g\u00f6ra konkurs, g\u00e5 under"
+    ],
+    [
+        1996,
+        "lik\u00f6r: sprit, liqueur"
+    ],
+    [
+        1997,
+        "min lik\u00f6r: min smak, passar mig"
+    ],
+    [
+        1998,
+        "lots: pilot"
+    ],
+    [
+        1999,
+        "sk\u00e5da: se"
+    ],
+    [
+        2000,
+        "stadium: fas, stage"
+    ],
+    [
+        2001,
+        "f\u00f6rfall: nederg\u00e5ng, f\u00f6rs\u00e4mring"
+    ],
+    [
+        2002,
+        "drypande: genombl\u00f6ta, droppande"
+    ],
+    [
+        2003,
+        "t\u00e5ng: 1. seaweed 2. gripverktyg"
+    ],
+    [
+        2004,
+        "\u00f6vers\u00e5llad: helt t\u00e4ckt"
+    ],
+    [
+        2005,
+        "krusning: liten v\u00e5g"
+    ],
+    [
+        2006,
+        "styrbord: h\u00f6ger sida p\u00e5 en b\u00e5t fr\u00e5n aktern sett"
+    ],
+    [
+        2007,
+        "\u00e5terh\u00e5llen: beh\u00e4rskad, f\u00f6rsiktig, m\u00e5ttfull"
+    ],
+    [
+        2008,
+        "l\u00e4gga om: \u00e4ndra inriktning"
+    ],
+    [
+        2009,
+        "knarrande: ett gnissel p\u00e5 golv, sn\u00f6"
+    ],
+    [
+        2010,
+        "g\u00e4ll: skarp, genomtr\u00e4ngande"
+    ],
+    [
+        2011,
+        "f\u00f6rd\u00e4rva: f\u00f6rst\u00f6ra, skada"
+    ],
+    [
+        2012,
+        "raseri: v\u00e5ldsam ilska, fury"
+    ],
+    [
+        2013,
+        "anserlig: betydlig, avsev\u00e4rd, considerable"
+    ],
+    [
+        2014,
+        "fint: skenman\u00f6ver, trick, feint"
+    ],
+    [
+        2015,
+        "kosta p\u00e5 sig: till\u00e5ta sig, afford"
+    ],
+    [
+        2016,
+        "skallra: skramla, klirra"
+    ],
+    [
+        2017,
+        "salning: en del av konstruktionen som sammanfogar mast och st\u00e5ng"
+    ],
+    [
+        2018,
+        "personifiera: f\u00f6rkroppsliga, personalize"
+    ],
+    [
+        2019,
+        "kratsa: skrapa, riva"
+    ],
+    [
+        2020,
+        "f\u00f6rehavande: syssels\u00e4ttning, aktivitet"
+    ],
+    [
+        2021,
+        "sluta fred: komma \u00f6verens om fred, make peace"
+    ],
+    [
+        2022,
+        "\u00f6verhalning: kr\u00e4ngning, granskning och reparation"
+    ],
+    [
+        2023,
+        "jungman: l\u00e4gsta manskapsgraden p\u00e5 fartyg"
+    ],
+    [
+        2024,
+        "stryka flagg: ge upp, kapitulera"
+    ],
+    [
+        2025,
+        "beg\u00e4rlig: som n\u00e4stan alla vill ha"
+    ],
+    [
+        2026,
+        "kr\u00e5ma sig: stolt b\u00f6ja p\u00e5 halsen, br\u00f6sta sig"
+    ],
+    [
+        2027,
+        "med vett och vilja: med avsikt"
+    ],
+    [
+        2028,
+        "flyktig: kortvarig"
+    ],
+    [
+        2029,
+        "m\u00f6dosam: anstr\u00e4ngande, besv\u00e4rlig"
+    ],
+    [
+        2030,
+        "vant: rep, vajer eller liknande som st\u00f6ttar mast i sidled"
+    ],
+    [
+        2031,
+        "Invandring"
+    ],
+    [
+        2032,
+        "Flyttande folk"
+    ],
+    [
+        2033,
+        "Produktivitet"
+    ],
+    [
+        2034,
+        "Verksamhet"
+    ],
+    [
+        2035,
+        "Marknad"
+    ],
+    [
+        2036,
+        "Nattliv"
+    ],
+    [
+        2037,
+        "Grundl\u00e4ggande"
+    ],
+    [
+        2038,
+        "Varf\u00f6r"
+    ],
+    [
+        2039,
+        "Vad"
+    ],
+    [
+        2040,
+        "Hur"
+    ],
+    [
+        2041,
+        "Vem"
+    ],
+    [
+        2042,
+        "Livsv\u00e4rderingar"
+    ],
+    [
+        2043,
+        "V\u00e4rde i livet"
+    ],
+    [
+        2044,
+        "Personligheter"
+    ],
+    [
+        2046,
+        "Procedual"
+    ],
+    [
+        2047,
+        "OOP"
+    ],
+    [
+        2048,
+        "class"
+    ],
+    [
+        2049,
+        "class inheritance"
+    ],
+    [
+        2050,
+        "Linj\u00e4r inheritance (is relation)"
+    ],
+    [
+        2051,
+        "Kedje inheritance (has relation)"
+    ],
+    [
+        2052,
+        "Design pattern"
+    ],
+    [
+        2053,
+        "Factory"
+    ],
+    [
+        2054,
+        "Abstract Factory"
+    ],
+    [
+        2055,
+        "Bridge"
+    ],
+    [
+        2056,
+        "Singleton"
+    ],
+    [
+        2057,
+        "Andra typer"
+    ],
+    [
+        2058,
+        "V\u00e4xtform"
+    ],
+    [
+        2059,
+        "Svampform"
+    ],
+    [
+        2060,
+        "Djurform"
+    ],
+    [
+        2061,
+        "Bl\u00e5gr\u00f6na bakterier"
+    ],
+    [
+        2062,
+        "Urv\u00e4xter (encellig)"
+    ],
+    [
+        2063,
+        "Encelliga alger"
+    ],
+    [
+        2064,
+        "Flercelliga alger"
+    ],
+    [
+        2065,
+        "Gr\u00f6nalger"
+    ],
+    [
+        2066,
+        "R\u00f6dalger"
+    ],
+    [
+        2067,
+        "Brunalger"
+    ],
+    [
+        2068,
+        "Mossor"
+    ],
+    [
+        2069,
+        "K\u00e4rlv\u00e4xter"
+    ],
+    [
+        2070,
+        "Ormbunksv\u00e4xter"
+    ],
+    [
+        2071,
+        "Lummerv\u00e4xter"
+    ],
+    [
+        2072,
+        "Fr\u00f6v\u00e4xter"
+    ],
+    [
+        2073,
+        "F\u00f6r\u00f6kar sig med sporer"
+    ],
+    [
+        2074,
+        "F\u00f6r\u00f6kar sig genom befruktning (sj\u00e4lvbefruktning, korsbefruktning)"
+    ],
+    [
+        2075,
+        "Svampar"
+    ],
+    [
+        2076,
+        "Urdjur (encellig)"
+    ],
+    [
+        2077,
+        "Svampdjur"
+    ],
+    [
+        2078,
+        "N\u00e4sseldjur"
+    ],
+    [
+        2079,
+        "Manet"
+    ],
+    [
+        2080,
+        "Korall"
+    ],
+    [
+        2081,
+        "Plattmask (fram bak och ljussensor)"
+    ],
+    [
+        2082,
+        "rundmask (mag tarm)"
+    ],
+    [
+        2083,
+        "Leddjur"
+    ],
+    [
+        2084,
+        "Insekter (6 ben)"
+    ],
+    [
+        2085,
+        "Spindeldjur (8 ben)"
+    ],
+    [
+        2086,
+        "Kr\u00e4ftdjur"
+    ],
+    [
+        2087,
+        "M\u00e5ngfotingar"
+    ],
+    [
+        2088,
+        "Spindlar"
+    ],
+    [
+        2089,
+        "Krabbor"
+    ],
+    [
+        2090,
+        "Kr\u00e4ftor"
+    ],
+    [
+        2091,
+        "5.6 Piastrar"
+    ],
+    [
+        2092,
+        "uppflygen: som har kl\u00e4ttrat, hoppat upp"
+    ],
+    [
+        2093,
+        "rorg\u00e4ngare: slupstyrare"
+    ],
+    [
+        2094,
+        "herre: 1. master 2. man"
+    ],
+    [
+        2095,
+        "bli herre \u00f6ver: beh\u00e4rska, bem\u00e4stra, \u00f6vervinna"
+    ],
+    [
+        2096,
+        "ymnig: \u00f6verfl\u00f6dande, kraftig, riklig"
+    ],
+    [
+        2097,
+        "uppskakad: chockad, r\u00e4dd"
+    ],
+    [
+        2098,
+        "otymplig: klumpig, oformlig"
+    ],
+    [
+        2099,
+        "f\u00f6rjaga: driva bort, skingra"
+    ],
+    [
+        2100,
+        "kli: skal fr\u00e5n s\u00e4desk\u00e4rnor"
+    ],
+    [
+        2101,
+        "ta n\u00e5gon om livet: ta n\u00e5gon vid midjan"
+    ],
+    [
+        2102,
+        "hj\u00e4ssa: huvudets \u00f6versta del"
+    ],
+    [
+        2103,
+        "tackling: master och med de sammanh\u00e4ngande arrangemang s\u00e5som vant och stag p\u00e5 ett skepp"
+    ],
+    [
+        2104,
+        "fira: 1. s\u00e4nka ner 2. skolka 3. festa"
+    ],
+    [
+        2105,
+        "fallen: b\u00f6jd"
+    ],
+    [
+        2106,
+        "rubba: flytta n\u00e5got tungt en liten bit"
+    ],
+    [
+        2107,
+        "gl\u00e4nta: liten \u00f6ppning i skogen"
+    ],
+    [
+        2108,
+        "for gott: forever"
+    ],
+    [
+        2109,
+        "f\u00f6r\u00f6ver: fram, \u00e5t f\u00f6ren till"
+    ],
+    [
+        2110,
+        "dunkel: halvm\u00f6rk"
+    ],
+    [
+        2111,
+        "fura: tall"
+    ],
+    [
+        2112,
+        "bedrift: bragd, great achievement"
+    ],
+    [
+        2113,
+        "ovett: foolishness"
+    ],
+    [
+        2114,
+        "vett: f\u00f6rnuft, sense"
+    ],
+    [
+        2115,
+        "pass: tr\u00e5ng v\u00e4g i bergen"
+    ],
+    [
+        2116,
+        "sn\u00f6plig: som \u00e4r s\u00e4mre \u00e4n v\u00e4ntat och orsakar missr\u00e4kning"
+    ],
+    [
+        2117,
+        "ge efter: ge upp, ge sig"
+    ],
+    [
+        2118,
+        "kumpan: medbrottslig, brottslingars kamrater"
+    ],
+    [
+        2119,
+        "inv\u00e4rtes: inre, som finns inuti kroppen"
+    ],
+    [
+        2120,
+        "uppeh\u00e5ll: 1. avbrott, paus 2. vistelse 3. dry"
+    ],
+    [
+        2121,
+        "i ett k\u00f6r: oavbrutet"
+    ],
+    [
+        2122,
+        "bloss: fackla, torch"
+    ],
+    [
+        2123,
+        "Konto"
+    ],
+    [
+        2124,
+        "Namn"
+    ],
+    [
+        2125,
+        "Anv\u00e4ndarnamn"
+    ],
+    [
+        2126,
+        "L\u00f6senord"
+    ],
+    [
+        2127,
+        "Adress (Postadress)"
+    ],
+    [
+        2128,
+        "Telefonnummer"
+    ],
+    [
+        2129,
+        "Kreditkort"
+    ],
+    [
+        2130,
+        "M\u00e5nad"
+    ],
+    [
+        2131,
+        "\u00c5r"
+    ],
+    [
+        2132,
+        "CVV"
+    ],
+    [
+        2133,
+        "a\u2225b a\u2225c => b\u2225c"
+    ],
+    [
+        2134,
+        "Komplementvinkel"
+    ],
+    [
+        2135,
+        "Supplementvinkel"
+    ],
+    [
+        2136,
+        "A=\u00bdbh"
+    ],
+    [
+        2137,
+        "\u03a3\u03b1=180"
+    ],
+    [
+        2138,
+        "Likbenta trianglar"
+    ],
+    [
+        2139,
+        "Liksidiga trianglar"
+    ],
+    [
+        2141,
+        "R\u00e4tvinkliga trianglar"
+    ],
+    [
+        2142,
+        "Egenskaper"
+    ],
+    [
+        2143,
+        "3^=60"
+    ],
+    [
+        2144,
+        "3/="
+    ],
+    [
+        2145,
+        "a\u00b2+b\u00b2=c\u00b2"
+    ],
+    [
+        2146,
+        "Paraellogram"
+    ],
+    [
+        2147,
+        "Diamant"
+    ],
+    [
+        2148,
+        "Rektangel"
+    ],
+    [
+        2149,
+        "Kvadrat"
+    ],
+    [
+        2150,
+        "Inre sidor vinkelr\u00e4ta"
+    ],
+    [
+        2151,
+        "^=90"
+    ],
+    [
+        2152,
+        "Egenskaper"
+    ],
+    [
+        2153,
+        "A=bh"
+    ],
+    [
+        2154,
+        "\u03a3\u03b1=360"
+    ],
+    [
+        2155,
+        "Kongruens och likformighet"
+    ],
+    [
+        2156,
+        "(3) Triangel"
+    ],
+    [
+        2157,
+        "(4) Fyrh\u00f6rning"
+    ],
+    [
+        2158,
+        "SSS"
+    ],
+    [
+        2159,
+        "SAS"
+    ],
+    [
+        2160,
+        "ASA"
+    ],
+    [
+        2162,
+        "AAS"
+    ],
+    [
+        2163,
+        "RHS(HL)"
+    ],
+    [
+        2164,
+        "SASAS"
+    ],
+    [
+        2165,
+        "ASASA"
+    ],
+    [
+        2166,
+        "AA (Endast f\u00f6r likformighet)"
+    ],
+    [
+        2167,
+        "Konkav Polygon"
+    ],
+    [
+        2168,
+        "Konvex Polygon"
+    ],
+    [
+        2169,
+        "Egenskaper"
+    ],
+    [
+        2170,
+        "\u03a3\u03b1=180(n-2)"
+    ],
+    [
+        2171,
+        "Yttre vinklar \u03a3\u03b1=360"
+    ],
+    [
+        2172,
+        "Cache"
+    ],
+    [
+        2173,
+        "USB-minne"
+    ],
+    [
+        2174,
+        "Enhet"
+    ],
+    [
+        2175,
+        "CD-ROM"
+    ],
+    [
+        2176,
+        "GUI Tr\u00e4dstruktur"
+    ],
+    [
+        2177,
+        "HTML+CSS"
+    ],
+    [
+        2178,
+        "Python"
+    ],
+    [
+        2179,
+        "JavaScript"
+    ],
+    [
+        2180,
+        "V\u00e4der"
+    ],
+    [
+        2181,
+        "Sol"
+    ],
+    [
+        2183,
+        "s=vt"
+    ],
+    [
+        2184,
+        "Kraft"
+    ],
+    [
+        2185,
+        "R\u00f6relse"
+    ],
+    [
+        2186,
+        "Kraftr\u00f6relse"
+    ],
+    [
+        2187,
+        "Krockning"
+    ],
+    [
+        2189,
+        "F=KQq/r\u00b2"
+    ],
+    [
+        2190,
+        "P=\u03c1gh"
+    ],
+    [
+        2191,
+        "P/T V/T"
+    ],
+    [
+        2192,
+        "Electromagnetism"
+    ],
+    [
+        2193,
+        "Atom"
+    ],
+    [
+        2194,
+        "Atomer"
+    ],
+    [
+        2195,
+        "Joner"
+    ],
+    [
+        2196,
+        "Bindningar"
+    ],
+    [
+        2197,
+        "Metaller"
+    ],
+    [
+        2198,
+        "Brasilien"
+    ],
+    [
+        2199,
+        "Kina"
+    ],
+    [
+        2200,
+        "Indien"
+    ],
+    [
+        2201,
+        "Nigeria"
+    ],
+    [
+        2202,
+        "Bygga meningar"
+    ],
+    [
+        2203,
+        "Alla elever var inte angel\u00e4gna om att g\u00e5 till skolan"
+    ],
+    [
+        2204,
+        "Han \u00e4r visserligen liten, men han \u00e4r v\u00e4ldigt stark."
+    ],
+    [
+        2205,
+        "Vad det betr\u00e4ffar..."
+    ],
+    [
+        2206,
+        "Kraft"
+    ],
+    [
+        2207,
+        "R\u00f6relse"
+    ],
+    [
+        2208,
+        "Klassrum"
+    ],
+    [
+        2209,
+        "\u00c4tbart"
+    ],
+    [
+        2210,
+        "Mat"
+    ],
+    [
+        2211,
+        "Dryck"
+    ],
+    [
+        2212,
+        "Mat fr\u00e5n v\u00e4rlden"
+    ],
+    [
+        2213,
+        "Resturang"
+    ],
+    [
+        2214,
+        "Bar"
+    ],
+    [
+        2215,
+        "Matlagning"
+    ],
+    [
+        2216,
+        "Recept"
+    ],
+    [
+        2217,
+        "\u00c4tbara f\u00f6rem\u00e5l"
+    ],
+    [
+        2218,
+        "Vanlig \u00e4tbara f\u00f6rem\u00e5l"
+    ],
+    [
+        2219,
+        "Br\u00f6d"
+    ],
+    [
+        2220,
+        "K\u00f6tt"
+    ],
+    [
+        2221,
+        "Fisk"
+    ],
+    [
+        2222,
+        "Kryddor"
+    ],
+    [
+        2223,
+        "F\u00f6retagsform"
+    ],
+    [
+        2224,
+        "Buisness model"
+    ],
+    [
+        2225,
+        "Buisness model canvas"
+    ],
+    [
+        2226,
+        "Resurs"
+    ],
+    [
+        2227,
+        "Marknad"
+    ],
+    [
+        2228,
+        "Kunder/Klienter"
+    ],
+    [
+        2229,
+        "F\u00f6retagsdelar"
+    ],
+    [
+        2230,
+        "Team section"
+    ],
+    [
+        2231,
+        "Strategier f\u00f6r produktion"
+    ],
+    [
+        2232,
+        "M\u00e4nskliga resurser (Human Resource)(HR)"
+    ],
+    [
+        2233,
+        "Milit\u00e4r"
+    ],
+    [
+        2234,
+        "Internationell politiksamband"
+    ],
+    [
+        2235,
+        "Etik och moral"
+    ],
+    [
+        2236,
+        "Humanism"
+    ],
+    [
+        2237,
+        "Livsfr\u00e5gor/Livs\u00e5sk\u00e5dning"
+    ],
+    [
+        2238,
+        "Konvertering till TIAGO-PZK"
+    ],
+    [
+        2239,
+        "Konvertering fr\u00e5n TIAGO-PZK"
+    ],
+    [
+        2240,
+        "Lagerrekursiv f\u00e5ngning"
+    ],
+    [
+        2241,
+        "Texttyper"
+    ],
+    [
+        2243,
+        "Arkitektur Livsstil (Ytlig livsstil)"
+    ],
+    [
+        2244,
+        "Livsstil"
+    ],
+    [
+        2245,
+        "Saker att g\u00f6ra"
+    ],
+    [
+        2246,
+        "Skuldbetalande (Debt paying)"
+    ],
+    [
+        2247,
+        "Framtidsplaner och ambitioner"
+    ],
+    [
+        2248,
+        "Vanligt text"
+    ],
+    [
+        2249,
+        "Artikel"
+    ],
+    [
+        2250,
+        "B\u00f6rjan"
+    ],
+    [
+        2251,
+        "Mitten (Flera pelare)"
+    ],
+    [
+        2252,
+        "Slutet"
+    ],
+    [
+        2253,
+        "Resonerande text"
+    ],
+    [
+        2254,
+        "Dikter"
+    ],
+    [
+        2255,
+        "Roman"
+    ],
+    [
+        2256,
+        "Novell"
+    ],
+    [
+        2257,
+        "Kr\u00f6nika"
+    ],
+    [
+        2258,
+        "Akademisk livsstil"
+    ],
+    [
+        2259,
+        "Hantverk"
+    ],
+    [
+        2260,
+        "Livsmilj\u00f6"
+    ],
+    [
+        2261,
+        "Heminredning"
+    ],
+    [
+        2262,
+        "Tr\u00e4dg\u00e5rd"
+    ],
+    [
+        2263,
+        "Design"
+    ],
+    [
+        2264,
+        "Jordbruk (Kontraktodling, makt \u00f6ver maten, vattenkonflikt)"
+    ],
+    [
+        2265,
+        "Industri (H\u00e5rd, h\u00f6genergi)"
+    ],
+    [
+        2266,
+        "Handelsnation (75% tj\u00e4nst och service)"
+    ],
+    [
+        2267,
+        "L\u00e5ng bergskedja best\u00e5ende av bergiga \u00f6ar"
+    ],
+    [
+        2268,
+        "(Hokkaido, Honshu, Shikoku, Kyushu)"
+    ],
+    [
+        2269,
+        "\u00be berglandskap, vulkan, tsunami, jordb\u00e4vning"
+    ],
+    [
+        2271,
+        "\u00c5ldrande befolkning"
+    ],
+    [
+        2272,
+        "H\u00f6g befolkningsdensitet, Megast\u00e4der"
+    ],
+    [
+        2273,
+        "D\u00e5lig jordbruk (Terassodling)"
+    ],
+    [
+        2274,
+        "Mycket fisk"
+    ],
+    [
+        2275,
+        "Mycket lite resurser"
+    ],
+    [
+        2276,
+        "Bra industri med billiga h\u00f6gkvalite"
+    ],
+    [
+        2277,
+        "Trappa mot \u00f6ster, Uralberg"
+    ],
+    [
+        2278,
+        "L\u00e5gsl\u00e4tt -> H\u00f6gsl\u00e4tt"
+    ],
+    [
+        2279,
+        "Tundra, taiga, permafrost"
+    ],
+    [
+        2280,
+        "Urbanisering: m\u00e5nga i den Europiska delen"
+    ],
+    [
+        2281,
+        "M\u00e5nga folkgrupper"
+    ],
+    [
+        2282,
+        "D\u00e5lig jordbruk, finns bara i sydv\u00e4st (10%)"
+    ],
+    [
+        2283,
+        "Naturtillg\u00e5ng (olja, kol, skog, malm)"
+    ],
+    [
+        2284,
+        "30% industri"
+    ],
+    [
+        2285,
+        "Motiv (Motif)"
+    ],
+    [
+        2286,
+        "Tema (Theme)"
+    ],
+    [
+        2287,
+        "Komposition"
+    ],
+    [
+        2288,
+        "Vad + hur"
+    ],
+    [
+        2289,
+        "Komplott"
+    ],
+    [
+        2290,
+        "Omgivning"
+    ],
+    [
+        2291,
+        "Karakt\u00e4rer"
+    ],
+    [
+        2292,
+        "F\u00f6delse"
+    ],
+    [
+        2293,
+        "Barn"
+    ],
+    [
+        2294,
+        "Ton\u00e5ring"
+    ],
+    [
+        2295,
+        "Ung person"
+    ],
+    [
+        2296,
+        "Sociologi"
+    ],
+    [
+        2297,
+        "H\u00f6gland"
+    ],
+    [
+        2298,
+        "Amazon tropisk regnskog"
+    ],
+    [
+        2299,
+        "St\u00e4der p\u00e5 \u00f6stra delar"
+    ],
+    [
+        2300,
+        "V\u00e4xande slumomr\u00e5de"
+    ],
+    [
+        2301,
+        "Fazendas, kaffe, monokultur"
+    ],
+    [
+        2302,
+        "Naturtillg\u00e5ngar, mineral, industri(storst\u00e4der)"
+    ],
+    [
+        2303,
+        "F\u00e5 rika och m\u00e5nga fattiga"
+    ],
+    [
+        2304,
+        "Folkrikaste land"
+    ],
+    [
+        2305,
+        "Berg vid inland, l\u00e5glan vid \u00f6ster"
+    ],
+    [
+        2306,
+        "40% jordbruk sv\u00e5r, liten yta"
+    ],
+    [
+        2307,
+        "tar mycket resurs"
+    ],
+    [
+        2308,
+        "handelsnation p\u00e5 allt, men inte p\u00e5 m\u00e5nga r\u00e5varor"
+    ],
+    [
+        2309,
+        "stor satsning p\u00e5 teknik"
+    ],
+    [
+        2311,
+        "FSM (Finite state machine)"
+    ],
+    [
+        2313,
+        "H\u00e5rdvara"
+    ],
+    [
+        2314,
+        "Transistor (Insulated-gate bipolar transistor)"
+    ],
+    [
+        2315,
+        "Logiska grindar (Logic gates)"
+    ],
+    [
+        2316,
+        "Clock"
+    ],
+    [
+        2317,
+        "Sequential"
+    ],
+    [
+        2318,
+        "Truth table, K-Map"
+    ],
+    [
+        2319,
+        "Internet backbone"
+    ],
+    [
+        2320,
+        "Fysisk h\u00e5rdvara"
+    ],
+    [
+        2321,
+        "MAC-niv\u00e5"
+    ],
+    [
+        2322,
+        "IP-niv\u00e5"
+    ],
+    [
+        2323,
+        "TCP/UDP-niv\u00e5"
+    ],
+    [
+        2324,
+        "HTTP-niv\u00e5"
+    ],
+    [
+        2327,
+        "Webpage/Webapplication"
+    ],
+    [
+        2328,
+        "MAC-adress"
+    ],
+    [
+        2329,
+        "IP-adress"
+    ],
+    [
+        2330,
+        "Mittenniv\u00e5adress"
+    ],
+    [
+        2331,
+        "Port"
+    ],
+    [
+        2332,
+        "Front-end"
+    ],
+    [
+        2333,
+        "Back-end"
+    ],
+    [
+        2334,
+        "PHP"
+    ],
+    [
+        2335,
+        "SQL"
+    ],
+    [
+        2336,
+        "Positionstruktur"
+    ],
+    [
+        2337,
+        "Familjetr\u00e4d"
+    ],
+    [
+        2338,
+        "Bergskedja i Norr, Flodsl\u00e4tt, h\u00f6gplat\u00e5"
+    ],
+    [
+        2339,
+        "2 floder: Brahmaputra och Gagnes"
+    ],
+    [
+        2340,
+        "Varmt, monsun"
+    ],
+    [
+        2341,
+        "Folkrik"
+    ],
+    [
+        2342,
+        "Importerad olja"
+    ],
+    [
+        2343,
+        "Industri (milj\u00f6f\u00f6rst\u00f6ring)"
+    ],
+    [
+        2344,
+        "Bra teknik (egen Silicon Valley)"
+    ],
+    [
+        2345,
+        "Tropisk klimat"
+    ],
+    [
+        2346,
+        "Regntid -> Torrperiod"
+    ],
+    [
+        2347,
+        "\u00d6verbefolkning"
+    ],
+    [
+        2348,
+        "Rik p\u00e5 olja"
+    ],
+    [
+        2349,
+        "Fattig land"
+    ],
+    [
+        2350,
+        "6.1 I fiendens l\u00e4ger"
+    ],
+    [
+        2352,
+        "tiofalt: tiofaldigt, tio g\u00e5nger st\u00f6rre"
+    ],
+    [
+        2353,
+        "s\u00e4tta livet till: d\u00f6"
+    ],
+    [
+        2354,
+        "r\u00f6dbrusig: r\u00f6dmosig, r\u00f6dflammig i ansiktet av upphetsning, sprit"
+    ],
+    [
+        2355,
+        "sova ruset av sig: sleep off ones drink"
+    ],
+    [
+        2356,
+        "\u00e5tg\u00e5ng: f\u00f6rbrukning"
+    ],
+    [
+        2357,
+        "nedsmord: nedsmutsad"
+    ],
+    [
+        2358,
+        "upp i dagen: fysiskt sett v\u00e4ldigt lik"
+    ],
+    [
+        2359,
+        "vara f\u00f6rbannad p\u00e5: vara arg p\u00e5"
+    ],
+    [
+        2360,
+        "hundvakt: vakten fr\u00e5n klockan 4"
+    ],
+    [
+        2361,
+        "underhandla: f\u00f6rhandla"
+    ],
+    [
+        2362,
+        "k\u00f6lsvin: en l\u00e4ngsg\u00e5ende planka som \u00e4r f\u00e4st ovanp\u00e5 bottenstockar f\u00f6r att f\u00f6rst\u00e4rka"
+    ],
+    [
+        2363,
+        "utledsen: tr\u00f6tt, utled, uttr\u00e5kad"
+    ],
+    [
+        2364,
+        "g\u00e5 \u00e5t skogen: misslyckats helt"
+    ],
+    [
+        2365,
+        "l\u00e5ga udda vara j\u00e4mnt: sl\u00e4ta \u00f6ver, l\u00e5ta n\u00e5got passera"
+    ],
+    [
+        2366,
+        "f\u00e5raktig: dum, d\u00e5raktig, korkad"
+    ],
+    [
+        2367,
+        "ha ett ord med i laget: have sth to say"
+    ],
+    [
+        2368,
+        "yngling: ung man"
+    ],
+    [
+        2369,
+        "l\u00e4ra n\u00e5gon att veta hut: l\u00e4ra n\u00e5gon att uppf\u00f6ra sig"
+    ],
+    [
+        2371,
+        "g\u00f6ra upp med n\u00e5gon: l\u00f6sa konflikten med, t\u00e4vla med"
+    ],
+    [
+        2372,
+        "fyllkaja: berusad person"
+    ],
+    [
+        2373,
+        "anst\u00e5: vara v\u00e4rdig"
+    ],
+    [
+        2374,
+        "reglemente: lag, regel, samling f\u00f6reskrifter"
+    ],
+    [
+        2375,
+        "reglementsenlig: in accordance with the rules"
+    ],
+    [
+        2376,
+        "n\u00e4tt och j\u00e4mnt: knappt"
+    ],
+    [
+        2377,
+        "kosing: pengar"
+    ],
+    [
+        2378,
+        "v\u00e4ck: bort"
+    ],
+    [
+        2379,
+        "g\u00e5 v\u00e4ck: go away"
+    ],
+    [
+        2380,
+        "vimmelkantig: yr, dizzy"
+    ],
+    [
+        2381,
+        "tennstop: sup, stimulerande dryck"
+    ],
+    [
+        2382,
+        "of\u00f6rst\u00e4lld: odold, uppriktig"
+    ],
+    [
+        2383,
+        "H\u00e4ngande v\u00e4xter"
+    ],
+    [
+        2384,
+        "Ljusning"
+    ],
+    [
+        2385,
+        "M\u00f6bler"
+    ],
+    [
+        2386,
+        "Matta"
+    ],
+    [
+        2387,
+        "Gardiner"
+    ],
+    [
+        2388,
+        "Ideal"
+    ],
+    [
+        2389,
+        "Mindre studio"
+    ],
+    [
+        2391,
+        "Klassisk"
+    ],
+    [
+        2393,
+        "Minimalism"
+    ],
+    [
+        2394,
+        "Art-d\u00e9co"
+    ],
+    [
+        2395,
+        "Mentalitet"
+    ],
+    [
+        2396,
+        "Fotboll"
+    ],
+    [
+        2397,
+        "Basketboll"
+    ],
+    [
+        2398,
+        "Tennis"
+    ],
+    [
+        2399,
+        "Olympiska spelen"
+    ],
+    [
+        2400,
+        "6 Kapten Silver"
+    ],
+    [
+        2401,
+        "6.2 Svarta fl\u00e4cken igen"
+    ],
+    [
+        2402,
+        "l\u00e4gga sig till med: anl\u00e4gga, skaffa"
+    ],
+    [
+        2403,
+        "klunga: t\u00e4tt sammanh\u00e4ngande grupp m\u00e4nniskor"
+    ],
+    [
+        2404,
+        "konspirat\u00f6r: person som deltar i en komplott"
+    ],
+    [
+        2405,
+        "\u00e4go: vara i n\u00e5gons \u00e4go, \u00e4gas av n\u00e5gon"
+    ],
+    [
+        2406,
+        "v\u00e4rdighet: dignity, worthiness"
+    ],
+    [
+        2407,
+        "trumf p\u00e5 hand: \u00f6verl\u00e4ge"
+    ],
+    [
+        2408,
+        "ombud: representant, delegat, f\u00f6retr\u00e4dare"
+    ],
+    [
+        2409,
+        "enh\u00e4llig: med all r\u00f6ster, enig"
+    ],
+    [
+        2410,
+        "h\u00e4rn\u00e4st: next"
+    ],
+    [
+        2411,
+        "f\u00f6raktfull: h\u00e5nfull, nedl\u00e5tande, sarkastisk"
+    ],
+    [
+        2412,
+        "det blev pannkaka av alltihop: det blev totalt misslyckats"
+    ],
+    [
+        2413,
+        "genomsk\u00e5da: avsl\u00f6ja"
+    ],
+    [
+        2414,
+        "ta i: anstr\u00e4nga sig, yttra sig skarpt"
+    ],
+    [
+        2415,
+        "utf\u00f6r: ned\u00e5t"
+    ],
+    [
+        2416,
+        "gisslan: person som h\u00e5lls i f\u00e5ngenskap av n\u00e5gon som vill tvinga sig till f\u00f6rdelar"
+    ],
+    [
+        2417,
+        "frossa: febersjukdom"
+    ],
+    [
+        2419,
+        "inunder: nedanf\u00f6r, undr"
+    ],
+    [
+        2420,
+        "l\u00e4gga n\u00e4san i bl\u00f6t: l\u00e4gga sig i"
+    ],
+    [
+        2421,
+        "h\u00e4mndgirig: ivrig att h\u00e4mnas"
+    ],
+    [
+        2422,
+        "Ord"
+    ],
+    [
+        2423,
+        "Grundl\u00e4ggande"
+    ],
+    [
+        2424,
+        "Tu manges une orange/pizza?"
+    ],
+    [
+        2425,
+        "Paul mange un croissant."
+    ],
+    [
+        2426,
+        "Un gar\u00e7on mange une orange."
+    ],
+    [
+        2427,
+        "Une femme et un homme"
+    ],
+    [
+        2428,
+        "Je suis un gar\u00e7on"
+    ],
+    [
+        2429,
+        "Une fille et un gar\u00e7on"
+    ],
+    [
+        2430,
+        "Je suis Marie"
+    ],
+    [
+        2431,
+        "H\u00e4lsningar"
+    ],
+    [
+        2432,
+        "Bonjour, Anna! Comment \u00e7a va? Je suis Julie."
+    ],
+    [
+        2433,
+        "\u00c7a va tr\u00e8s bien, merci, et toi?"
+    ],
+    [
+        2434,
+        "Tu vas bien?"
+    ],
+    [
+        2435,
+        "Bonsoir, \u00e7a va bien ?"
+    ],
+    [
+        2436,
+        "Je m'appelle Anna. Je parle fran\u00e7ais. C'est Antoine. Antoine parle anglais."
+    ],
+    [
+        2437,
+        "Marc est anglais."
+    ],
+    [
+        2438,
+        "Paul est fran\u00e7ais."
+    ],
+    [
+        2439,
+        "Une femme fran\u00e7aise"
+    ],
+    [
+        2440,
+        "M\u00e4nniskor"
+    ],
+    [
+        2441,
+        "Resa"
+    ],
+    [
+        2442,
+        "J'habite \u00e0 Chicago et tu habites \u00e0 New York."
+    ],
+    [
+        2443,
+        "Je travaille \u00e0 Berlin et tu travailles \u00e0 Paris."
+    ],
+    [
+        2444,
+        "Je suis fran\u00e7aise, j'\u00e9tudie \u00e0 Paris."
+    ],
+    [
+        2445,
+        "Je m'appelle Gabriel. Enchant\u00e9 ! Tu es \u00e9tudiant ? J'\u00e9tudie \u00e0 New York."
+    ],
+    [
+        2446,
+        "Sarah habite \u00e0 Boston et elle est \u00e9tudiante."
+    ],
+    [
+        2447,
+        "Habitez-vous ici?"
+    ],
+    [
+        2448,
+        "Il va \u00e0 Paris en train et je vais \u00e0 Paris en voiture."
+    ],
+    [
+        2449,
+        "Tu vas \u00e0 Berlin."
+    ],
+    [
+        2450,
+        "Tu vas \u00e0 l'a\u00e9roport ou \u00e0 la gare ?"
+    ],
+    [
+        2451,
+        "Tu vas \u00e0 l'h\u00f4tel ? Je vais \u00e0 la gare."
+    ],
+    [
+        2452,
+        "Marie va \u00e0 l'a\u00e9roport en voiture."
+    ],
+    [
+        2453,
+        "- Tu vas o\u00f9 ? - Je vais \u00e0 la gare en taxi."
+    ],
+    [
+        2454,
+        "Taxi ! Je vais \u00e0 la gare, s'il vous pla\u00eet."
+    ],
+    [
+        2455,
+        "O\u00f9 est la gare, s'il vous pla\u00eet ?"
+    ],
+    [
+        2456,
+        "le restaurant espagnol"
+    ],
+    [
+        2457,
+        "Je prends le train et l'avion."
+    ],
+    [
+        2458,
+        "C'est une voiture fran\u00e7aise."
+    ],
+    [
+        2459,
+        "Tu prends une valise ?"
+    ],
+    [
+        2460,
+        "Logotyp"
+    ],
+    [
+        2461,
+        "Produkt"
+    ],
+    [
+        2462,
+        "Webbapplikation design"
+    ],
+    [
+        2463,
+        "Typografi"
+    ],
+    [
+        2464,
+        "Reklamkampanj"
+    ],
+    [
+        2465,
+        "Applikationsikoner"
+    ],
+    [
+        2466,
+        "Notebook-Cover"
+    ],
+    [
+        2467,
+        "Tr\u00e4dg\u00e5rdsarbete"
+    ],
+    [
+        2468,
+        "Gr\u00f6nsakstr\u00e4dg\u00e5rd"
+    ],
+    [
+        2469,
+        "Inuti"
+    ],
+    [
+        2470,
+        "Krukor-Suckulenter"
+    ],
+    [
+        2471,
+        "Konst"
+    ],
+    [
+        2472,
+        "Bers\u00e5"
+    ],
+    [
+        2473,
+        "Hall"
+    ],
+    [
+        2475,
+        "Konst inriktning"
+    ],
+    [
+        2476,
+        "Canvastavlor"
+    ],
+    [
+        2477,
+        "Vattenf\u00e4rg"
+    ],
+    [
+        2478,
+        "M\u00e5lning"
+    ],
+    [
+        2479,
+        "Keramik"
+    ],
+    [
+        2480,
+        "Fotografi"
+    ],
+    [
+        2481,
+        "Gatukonst"
+    ],
+    [
+        2482,
+        "Komposition"
+    ],
+    [
+        2483,
+        "F\u00e4rg"
+    ],
+    [
+        2484,
+        "Ljus"
+    ],
+    [
+        2485,
+        "Penseldrag"
+    ],
+    [
+        2486,
+        "Yta"
+    ],
+    [
+        2487,
+        "Perspektiv"
+    ]
+]

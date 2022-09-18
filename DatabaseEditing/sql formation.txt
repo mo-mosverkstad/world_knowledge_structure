@@ -1,0 +1,23 @@
+SQL:
+
+SELECT E1.id AS parentid, E1.item AS parent, E2.id AS childid, E2.item AS child
+FROM mosverkstad.relationship R
+LEFT JOIN mosverkstad.nameTable E1 ON R.parentId = E1.id
+LEFT JOIN mosverkstad.nameTable E2 ON R.childId = E2.id
+ORDER BY R.parentId, R.sortId, R.childId;
+
+JS:
+
+let graph = new Map()
+let previousParentId = -1;
+let previousParent = null;
+
+for (let relation of myResult){
+    if (previousParentId != relation.parentid){
+        graph.set(relation.parentid, {name: null, children: []});
+        previousParentId = relation.parentid;
+        previousParent = graph.get(previousParentId);
+        previousParent.name = relation.parent;
+    }
+    previousParent.children.push({id: relation.childid, name: relation.child});
+}

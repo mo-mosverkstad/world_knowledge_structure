@@ -74,7 +74,8 @@ class KnowledgeDatabaseSystem:
 
     def write_sql_file(self, data):
         def convert_value(value):
-            return f'{value}' if type(value) == int else f'"{value}"'
+            value = f'{value}' if type(value) == int else f'"{value}"'
+            return value.replace(r"'", r"\'")
 
         table, raw_data = data
         f = open(self.file_name_sql_format.format(table.name), "w", encoding="utf-8")

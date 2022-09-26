@@ -1,0 +1,145 @@
+---
+
+1. Artificiell selektrion
+2. Darwins observationer och slutsatser
+3. Naturlig selektion
+4. Experiment
+
+Evolutionära mekanismer - Darwins finkar
+
+1. Artificiell selektion = mänsklig urval, mänsklig selektion
+Människan bestämmer vem som får föra sina egenskaper vidare till nästa generation
+Man har vetat att egenskaper går i släkt
+Väljer ut individer med önskade egenskaper
+Egenskaper förändras genom tid
+
+Man har gjort med hundar fåglar getter kor grisar hästar
+även vete majs och broccoli ...
+
+vildsvin -> tamsvin (mer kött)
+kor mer mjölk, köttkor
+värphöns (mer ägg och mer kött)
+
+motståndskraft
+bättre temperament
+...
+
+Växtförädling
+Urval av växter med önskvärda egenskaper
+
+större skörd
+tåligare
+godare
+mindre skadliga ämnen
+
+2. Darwins observationer och slutsatser
+
+Fadern till evolutionsteorin
+reste runt jorden under 5 år
+observationer:
+  1. En variation i ärftlig egenskaper i en population
+  2. Alla arter producerar fler avkommor än vad nature kan försörja. Många överlever inte.
+  
+=> slutsatser:
+  1. Individer som ärver egenskaper ger större möjligheter att överleva och reproducer, lämnar fler avkommor
+  2. När naturen kan inte försörja så filtreras/urval så att de bästa stannar kvar
+
+Populationen förändras över tid och blir bättre anpassad
+selektionstryck: rovdjur, konkurrerande arter, patogener (sjukdomar), födotillgång, förändrad livsmiljö
+
+Populationskurva (normalfördelning)
+Kurvan förskjuts när det finns förändringar
+
+--- Begrepp ---
+
+art (organismer som kan fortplanta under naturliga förhållandande med fertil avkomma)
+population (individer som tillhör en viss art i viss område)
+samhälle (alla populationer inom viss område)
+ekosystem (allt med abiotiska faktorer)
+
+Gen (Avsnitt av DNA)
+Allel (genvariant, en variant av en viss gen)
+
+Neodarwinism (DNA ärvande, moderna teorin)
+
+2 förutsättninb
+variation av ärftliga egenskaper
+överproduktion
+
+variation (Yttre faktorer)
+skillnader mellan individer
+
+---
+Ärftlig variation
+slumpen påverkar egenskaper för vidare för att det är olika kromosomer som ärvs vidare. (Krossförökning)
+
+mutationer är ett sätt att skapa nya gener (slumpmässig)
+
+konkurrensen är stor 
+
+mat, boende, yta, näringa, ...
+
+---
+
+fitness: mått på fortplantningsframgång (antal barnbarn, antal fertila avkommor)
+antal ungar en individ får och hur länge sina egna ungar får
+
+---
+Selektionstryck
+miljö som försvårar organismens överlevnad
+- brist på föda, vatten, gömställe
+- rovdjur, sjukdomar, temperatur
+
+Antibiotikaresistenta bakterie
+genetiska variation (antibiotikaresistent) -> blir större och förökar sig
+
+selekteras ur det naturliga urvalet
+
+Det finns en gräns för selektionstryck eftersom andra faktorer kan påverka
+
+Bakteries antibiotikaresistens
+Man studerar bakterier eftersom bakterier har korta livslängd
+
+---
+Biotiska och abiotiska faktorer
+
+biotisk
+samevolution: olika arter påverkar varandras evolution:
+1. Predation (rovdjur) (2 selektionstryck påverkar varandra (rovdjur och bytet))
+- Egenskaper som minskar risken att blir uppäten
+- Snabbare rovdjur
+- Ännu snabbare bytesdjur och ännu snabbare rovdjur
+2. Konkurrens mellan arter (både arter måste bli bättre för att kunna överleva)
+3. Genom mutualism = ömsesidig nytta
+(fågeln äter i huvudsak från blomman för att fågeln får pollen, och pollen kommer att kunna till samma art)
+En evolutionär återvändsgränd, ingen fortsättning
+
+Madagaskarstjärna (sporre, rör 40 cm lång, nektar i botten)
+1862 Darwin tror att en extremlång snabel
+1903 beskrev svärmaren Xanthopan med en lång snabel
+
+abiotisk faktor
+skogsharen (Sverige) vit päls på vintern (vita pälsen styrs av gener)
+fältharen (Tyskland) ingen vit päls
+
+björkmätare (vit), mutationer som är svarta
+ren miljö och nedsmustad miljö
+
+törelväxt, kaktus (varmt och torrt, olika besläktad)
+liten yta och minska avdunstning
+blad blir taggar eför att skydda mot betande djur
+
+människans öga och bläckfiskens öga (utvecklats oberoende)
+
+=> liknande miljö kan ge liknande anpassningar (konvergent evolution)
+
+Konvergent evolution
+Icke närbesläktade organismer med liknande egenskaper
+
+1. Jorden är 4.6 miljader år
+2. Liv har funnits på jorden åtminstone 3 miljader år
+3. Ja, evolutionen pågår eftersom det bildar alltid nya former, från mutationer och nya avkommor som blandar gener. Med den naturliga urvalet så klarar de bästa, och arten kan utveckla vidare.
+4. Nej, den stämmer inte, eftersom enligt Darwins teori så handlar det om att det finns olika former av giraffer, de med korta och de med långa. De långhalsade har lättare att överleva, och det finns mer avkommor för dessa långhalsade.
+5. Populationen betyder antal av en art inom ett viss område. Allel betyder genvariation. Mutation betyder förändringar på DNA och arvsmassan, så att det blir lite annorlunda.
+6 a
+7 Det behövs konkurrens och vissa oanpassad mutationer måste få dö ut och de välanpassade kan få leva och då bidrar det till naturligt urval.

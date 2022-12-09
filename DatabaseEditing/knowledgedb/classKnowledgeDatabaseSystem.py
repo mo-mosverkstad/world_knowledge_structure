@@ -24,6 +24,10 @@ class KnowledgeDatabaseSystem:
     def generate_name_path_string(self):
         return '/'.join(str(node) for node in self.path)
 
+    def generate_short_name_path_string(self):
+        prefix = '.../' if (len(self.path) > 3) else ''
+        return prefix + '/'.join(str(node) for node in self.path[-3:])
+
     def list_items(self):
         results = []
         for child in self.knowledge_database.relations_of(self.path[-1].id):

@@ -20,3 +20,4 @@ dbexport		None		Exporting database tables to JSON files
 dbimport		None		Importing database from JSON files
 					(Dropping all databases and load with exported data)
 backup		(bk)	None		Backup the database (Same as dbexport)
+pwd				None		Print Working Directory

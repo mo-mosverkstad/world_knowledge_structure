@@ -12,6 +12,7 @@ from .classCommandUpdateLink import *
 from .classCommandSort import *
 from .classCommandDbexport import *
 from .classCommandDbimport import *
+from .classCommandPwd import *
 from .classCommandHelp import *
 
 class CommandFactory(object):
@@ -44,6 +45,7 @@ class CommandFactory(object):
             'backup': CommandDbexport,
             'bk': CommandDbexport,
             'dbimport': CommandDbimport,
+            'pwd': CommandPwd,
             'help': CommandHelp
         }
 

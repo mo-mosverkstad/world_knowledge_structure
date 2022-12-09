@@ -6,7 +6,7 @@ from .classConstant import *
 class ConsoleSystem:
     def __init__(self):
         self.system = KnowledgeDatabaseSystem()
-        self.prompt = self.system.generate_name_path_string() + PROMPT
+        self.prompt = self.system.generate_short_name_path_string() + PROMPT
         self.running = True
         self.factory = CommandFactory()
 

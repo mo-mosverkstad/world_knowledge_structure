@@ -1,4 +1,5 @@
 Help:
+Command name	Short	Parameters	Description
 help			None		Help command
 exit			None		Exiting database system
 

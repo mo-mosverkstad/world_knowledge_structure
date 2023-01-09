@@ -1,0 +1,6 @@
+FILES -> Online File Management
+-> htdocs
+index.php
+index2.html
+main.js
+style.css

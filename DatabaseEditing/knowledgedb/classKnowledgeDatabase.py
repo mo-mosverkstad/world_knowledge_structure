@@ -17,6 +17,10 @@ class KnowledgeDatabase:
         result = self.database.get(self.name_table.name, "id=" + str(id))
         return result[0][1] if result and len(result) > 0 else None
 
+    def info_of(self, item):
+        result = self.database.get(self.name_table.name, "item like '%" + str(item) + "%'")
+        return result if result and len(result) > 0 else None
+
     def relations_of(self, id):
         results = []
         for child in self.database.get(self.relationship.name, f'{self.relationship.columns[0]} = {id}', f'{self.relationship.columns[2]}'):

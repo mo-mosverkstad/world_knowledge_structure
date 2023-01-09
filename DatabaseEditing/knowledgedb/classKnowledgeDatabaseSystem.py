@@ -28,6 +28,9 @@ class KnowledgeDatabaseSystem:
         prefix = '.../' if (len(self.path) > 3) else ''
         return prefix + '/'.join(str(node) for node in self.path[-3:])
 
+    def name_of(self, id):
+        return self.knowledge_database.name_of(id)
+
     def list_items(self):
         results = []
         for child in self.knowledge_database.relations_of(self.path[-1].id):
@@ -70,6 +73,10 @@ class KnowledgeDatabaseSystem:
 
     def update_link(self, childId, new_parentId):
         self.knowledge_database.update_relation(childId, self.path[-1].id, new_parentId)
+
+    def find(self, item):
+        return self.knowledge_database.info_of(item)
+
 
     def db_export(self):
         for data in self.knowledge_database.db_export():

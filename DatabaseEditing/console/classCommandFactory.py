@@ -14,6 +14,8 @@ from .classCommandDbexport import *
 from .classCommandDbimport import *
 from .classCommandPwd import *
 from .classCommandHelp import *
+from .classCommandFind import *
+from .classCommandFindup import *
 
 class CommandFactory(object):
     def __init__(self):
@@ -46,7 +48,9 @@ class CommandFactory(object):
             'bk': CommandDbexport,
             'dbimport': CommandDbimport,
             'pwd': CommandPwd,
-            'help': CommandHelp
+            'help': CommandHelp,
+            'find': CommandFind,
+            'findup': CommandFindup
         }
 
     def build(self, command:str) -> Command:

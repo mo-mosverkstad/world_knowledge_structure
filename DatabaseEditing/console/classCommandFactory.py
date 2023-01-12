@@ -54,8 +54,11 @@ class CommandFactory(object):
         }
 
     def build(self, command:str) -> Command:
-        obj = CommandInvalid()
-        if command in self.class_dict.keys():
-            obj = self.class_dict[command]()
-        return obj
+        if command or len(command) > 0:
+            obj = CommandInvalid()
+            if command in self.class_dict.keys():
+                obj = self.class_dict[command]()
+            return obj
+        else:
+            return None
         # return self.class_dict[command] if command in self.class_dict.keys() else None

@@ -16,4 +16,6 @@ class ConsoleSystem:
             cargo = Cargo()
             cargo.console = self
             cargo.values = " ".join(input_value[1:])
-            self.factory.build(input_value[0]).run(cargo)
+            command = self.factory.build(input_value[0])
+            if command:
+                command.run(cargo)

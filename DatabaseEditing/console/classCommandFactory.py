@@ -16,6 +16,7 @@ from .classCommandPwd import *
 from .classCommandHelp import *
 from .classCommandFind import *
 from .classCommandFindup import *
+from .classCommandNone import *
 
 class CommandFactory(object):
     def __init__(self):
@@ -50,15 +51,13 @@ class CommandFactory(object):
             'pwd': CommandPwd,
             'help': CommandHelp,
             'find': CommandFind,
-            'findup': CommandFindup
+            'findup': CommandFindup,
+            '': CommandNone
         }
 
     def build(self, command:str) -> Command:
-        if command or len(command) > 0:
-            obj = CommandInvalid()
-            if command in self.class_dict.keys():
-                obj = self.class_dict[command]()
-            return obj
-        else:
-            return None
+        obj = CommandInvalid()
+        if command in self.class_dict.keys():
+            obj = self.class_dict[command]()
+        return obj
         # return self.class_dict[command] if command in self.class_dict.keys() else None

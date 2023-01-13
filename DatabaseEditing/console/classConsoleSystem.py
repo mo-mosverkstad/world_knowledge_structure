@@ -12,10 +12,8 @@ class ConsoleSystem:
 
     def run(self):
         while self.running:
-            input_value = input(self.prompt).split(" ")
+            input_value = input(self.prompt).strip().split(" ")
             cargo = Cargo()
             cargo.console = self
             cargo.values = " ".join(input_value[1:])
-            command = self.factory.build(input_value[0])
-            if command:
-                command.run(cargo)
+            self.factory.build(input_value[0]).run(cargo)

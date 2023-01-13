@@ -30,6 +30,7 @@
     <Compile Include="console\classCommandFind.py" />
     <Compile Include="console\classCommandFindup.py" />
     <Compile Include="console\classCommandHelp.py" />
+    <Compile Include="console\classCommandNone.py" />
     <Compile Include="console\classCommandPwd.py" />
     <Compile Include="console\classCommandUpdateLink.py" />
     <Compile Include="console\classCommandSort.py" />

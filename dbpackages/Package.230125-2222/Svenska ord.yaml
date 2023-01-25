@@ -11,6 +11,9 @@
       - Idel
       
 - Beskrivning:
+  - De enda:
+    - De enda
+    - (The only ones)
   - Egendomlig:
     - Egenhet:
       - Egenhet
@@ -115,6 +118,10 @@
       - Figurer:
         - Trianglar
         - Kvadrat
+      - Andra figurer:
+        - Remsa:
+          - Remsa
+          - Smalt band
       - Linjemönster:
         - Sicksack
     - Enkla visning:
@@ -353,6 +360,9 @@
         - Bylte
         - Klase
         - Klunga
+      - Förråd:
+        - Förråd
+        - Upplag
       - Stora mängder:
         - Stora mängder
         - Överösa
@@ -556,6 +566,11 @@
           - Klättrat
           - Hoppat upp
         - Falla:
+          - Svikta:
+            - Svikta
+            - Stappla
+            - Vackla
+            - Vara nära på att falla
           - Falla bakom:
             - Falla bakom
             - Sacka
@@ -584,9 +599,6 @@
           - Fallen
           - Böjd
       - Förstörande:
-        - Smälla:
-          - Smälla
-          - Braka
         - Försämring:
           - Försämring
           - Förfalla
@@ -606,6 +618,7 @@
           - Minska
           - Förstöra
           - Ta bort
+          - Stryka -> Ta bort, dra hand över, släta till
       - Stöta, störta, stötta:
         - Stöta:
           - Stöta
@@ -638,6 +651,7 @@
       - Sammansatta sakrörelser:
         - Skingra:
           - Skingra
+          - Splittra åt olika håll
           - Driva bort
           - Förjaga
         - Snurrig:
@@ -669,10 +683,14 @@
           - Dallra med ljus
           - Skimra med hastiga ljusväxlingar
     - Ljud:
-      - Klinga:
-        - Klinga
-        - Ringa
-        - Ljuda
+      - Klingande:
+        - Klinga:
+          - Klinga -> Blad på svärd, såg
+          - Ringa
+          - Ljuda
+        - Vina:
+          - Vina
+          - Vissla
       - Buller:
         - Buller
         - Tordön
@@ -985,6 +1003,7 @@
           - Psoriasis
           - Ett virus
           - En svampbildning
+          - En utslag -> Blåsor på huden, Uttryck, Beslut
         - Sjukdomsutveckling:
           - Inkubationstid -> inkubera (ligga på lur)
         - Sår:
@@ -1033,6 +1052,11 @@
         - Avlossa:
           - Avlossa
           - Fyra av
+        - Projektil:
+          - Projektil
+          - Rikoschett:
+            - Rikoschett
+            - En studsande projektil och fortsätter ny bana
       - Andra former:
         - Korsfästa
     - Kemiska ämnen:
@@ -1892,14 +1916,23 @@
       - Stå ut med
       - Orka med
       - Våga
-    - Värdighet
-    - Vara värdig:
-      - Anstå
-      - Vara värdig
     - Trumf
     - Sätta fart på:
       - Stimulera
       - Sätta fart på
+    - Brassa på:
+      - Brassa på
+      - Satsa för fullt
+      - Skjuta häftigt
+  - Värdighet:
+    - Värdighet:
+      - Värdighet
+    - Vara värdig:
+      - Anstå
+      - Vara värdig
+    - Vara värd:
+      - Vara värd för maten
+      - Göra skäl för maten
   - Hederlig:
     - Heder:
       - Heder
@@ -1911,11 +1944,23 @@
       - Respektabel
     - Gud välsigne honom:
       - Gud välsigne honom
+  - Respekt:
+    - Vördnad:
+      - Vördnad
+      - Respekt
+      - Heder
+    - Respekthandlingar:
+      - Honnör:
+        - Honnör
+        - Salute
   - Plikt:
     - Förpliktigad:
       - Förpliktigad
       - Ansvarig
       - Skyldig
+    - Falla för sin post:
+      - Falla för sin post
+      - Dö för sin tjänst
   - Trogen:
     - Misstrogen:
       - Misstrogen
@@ -1996,6 +2041,11 @@
         - Oförbehållsam
         - Ärlig
         - Öppen
+    - Barmhärtig:
+      - Barmhärtiog
+      - Välvillig
+      - Nådig
+      - (Merciful)
   - Optimism:
     - Optimistisk:
       - Optimistisk
@@ -2269,9 +2319,15 @@
       - Stöna
       - Jämra sig
       - Kvida
+      - Dovt och utdraget smärtljud
     - Jämmer:
+      - Stönande
       - Jämmer
       - Ihållande klaga
+    - Grina:
+      - Grinig
+      - Trumpen
+      - Butter och missnöjd
     - Förnedrande:
       - Förnedrande
       - Neslig
@@ -2307,11 +2363,17 @@
       - Yngling
       - Ung man
     - Mästare:
-      - Man
-      - Herre
-      - Härskare
-      - Mästare
-      - Ägas av någon (i någons ägo)
+      - Mästare:
+        - Man
+        - Herre
+        - Härskare
+        - Mästare
+      - Husbonde:
+        - Arbetsgivare
+        - Ägare
+        - Husbonde
+      - Bli ägd:
+        - Ägas av någon (i någons ägo)
     - Tillskyndare:
       - Tillskyndare
       - Initiativtagare
@@ -2401,23 +2463,35 @@
         - Anmärkningsvärt, markant
     - Anmärkningar:
       - Anmärkning:
-        - Anmärkning
-        - Varning
-        - Kommentar
-        - Påpekande
-        - Förebrå
-        - Vara i luven på någon
-        - Kritisera
+        - Anmärkning:
+          - Anmärkning
+          - Varning
+          - Kommentar
+          - Påpekande
+          - Förebrå
+          - Vara i luven på någon
+        - Att anmärka:
+          - Anmärka
+          - Påpeka
+          - Kritisera
       - Förevändning:
-        - Ursäkt
-        - Skäl
-        - Förevändning
-      - Oantastlig:
-        - Oantastlig
-        - Obegriplig
-        - Omöjligt att kritisera
+        - Förevändning:
+          - Ursäkt
+          - Skäl
+          - Förevändning
+        - Urskuldande:
+          - Urskuldande
+          - Ursäktande
+        - Oantastlig:
+          - Oantastlig
+          - Obegriplig
+          - Omöjligt att kritisera
       - Vittnesmål:
-        - Mened(avsiktlig falsk vittnesmål)
+        - Vittnesmål:
+          - Vittnesmål
+        - Mened:
+          - Avsiktlig falsk vittnesmål
+     
     - Tankar och åsikter:
       - Åsikter:
         - Åsikter
@@ -2511,27 +2585,30 @@
     - Strof
     - Versrader
 
-- Vanliga handlingar:
-  - Tycka om:
-    - Vilja:
-      - Vilja
-      - Önska
-      - Behaga (hjälpverb)
-    - Motvilja:
-      - Motvilja
-      - Avsmak
-      - Olust
-      - Äckel
-  - Småsjunga:
-      - Småsjunga
-      - Gnola
-      - Nynna
-
 - Handlingar:
-  - ...:
+  - Vardagliga handlingar:
+    - Tycka om:
+      - Vilja:
+        - Vilja
+        - Önska
+        - Behaga (hjälpverb)
+      - Motvilja:
+        - Motvilja
+        - Avsmak
+        - Olust
+        - Äckel
+    - Småsjunga:
+        - Småsjunga
+        - Gnola
+        - Nynna
     - Njutande:
       - Njutande
       - Gotta sig
+    - Använda:
+      - Användbar:
+        - Användbar
+        - Bruklig
+        - Vanlig
   - Livsåskådning:
     - Spirituellitet:
       - Spirituel:
@@ -2544,24 +2621,33 @@
       - Öde
       - Ödesmättad (allvarliga känslor)
       - Ödesdiger
-  
   - Räddande:
     - Undsättning:
       - Undsättning
       - Undsättningsexpedition
       - Räddning
       - Hjälp
-    - Frälsa:
+      - (Rescue mission)
+    - Undsätta:
+      - Undsätta
       - Frälsa
       - Värna
       - Skydda
       - Försvara
       - Rädda
+      - Befria
+      - Hjälpa i svårt läge
   - Förstörelse:
     - Att slå:
       - Slå:
         - Slå
         - Dänga
+        - Smälla
+        - Braka
+      - Slag:
+        - Sittopp
+        - Smäll
+        - Slag
       - Slå sönder:
         - Slå/skälla sönder och samman
     - Bråk:
@@ -2622,20 +2708,12 @@
         - Besanna
         - Bekräfta
         - Bevisa
-    - Resursproblem:
-      - Sparsam:
-        - Suga på ramarna
-        - Leva sparsamt
-        - Ha det knappt
-        - Måste inskränka sig
-      - Slöseri:
-        - Slösa
-        - Förspilla
     - Förstörd:
       - Trasig
       - Förstörd
       - Fördärvad
       - Avslagen (nekad unken)
+  - Problemlösningar:
     - Att hindra:
       - Att hindra:
         - Att hindra
@@ -2650,13 +2728,25 @@
           - Förvarna
           - Varsko
           - (Inform)
+    - Investigering:
+      - Investigering:
+        - Investigering
+        - Granskning
+        - Att kontrollera
+      - Inventera:
+        - Inventera
+        - Genomgå och granska
   - Konflikter:
     - Konflikthandlingar:
       - Konflikt:
-        - Konflikt
-        - Kamp
-        - Strid
-        - Dust
+        - Kamp:
+          - Konflikt
+          - Kamp
+          - Dust
+          - Strid
+        - Sammandrabbning:
+          - Sammandrabbning
+          - Sammanstötning
       - Anfall:
         - Anfall
         - Utfall -> Resultat
@@ -2849,10 +2939,6 @@
     - Bestämmare:
       - Lärare
       - Klassföreståndare
-  - Respektera högre status:
-    - Honnör:
-      - Honnör
-      - Salute
   - Familjeträd:
     - Familjeord:
       - Farföräldrar:
@@ -3020,8 +3106,9 @@
       - Förvirring
       - Villervalla
     - Utblottad:
+      - Utblottad
+      - Utfattig
       - Stå på bar backe
-      - Utblottad, utfattig
     - Vardaglig ointressant:
       - Vardaglig ointressant
       - Banal
@@ -3119,7 +3206,10 @@
       - En revisor
     - En arbetare:
       - En skräddare
-      - En snickare
+      - En snickare:
+        - Snickare
+        - Timmerman
+        - Träarbetare
       - En svetsare
       - En mekaniker
       - En rörmockare
@@ -3219,21 +3309,40 @@
       - Undervisningsperiod
     
 - Kostnader:
-  - Begärlig:
-    - Begärlig
-    - Alla vill ha
-  - Pengar:
+  - Plånbok:
+    - Plånbok:
+      - Plånbok
     - Pengar:
-      - Pengar
-      - Kosing
-    - mynt:
-      - Krona
-      - Klave
-  - Vinst:
-    - Vinst
-    - Nytta
-    - Fördel
-    - Till gagn
+      - Pengar:
+        - Pengar
+        - Kosing
+      - Mynt:
+        - Krona
+        - Klave
+    - Utfattig:
+      - Utfattig
+      - Barskrapad
+  - Vinster:
+    - Begärlig:
+      - Begärlig
+      - Alla vill ha
+    - Vinst:
+      - Vinst
+      - Nytta
+      - Fördel
+      - Till gagn
+  - Förlust:
+    - Förluster:
+      - Förlust
+    - Slöseri:
+      - Slösa
+      - Förspilla
+      - Ödsla
+  - Sparsam:
+    - Suga på ramarna
+    - Leva sparsamt
+    - Ha det knappt
+    - Måste inskränka sig
   - Skuld:
     - Skuld lika:
       - Nu är vi kvitt
@@ -3272,6 +3381,11 @@
       - Evavering
     - Tid:
       - Tidsevavering
+  - Tilldelning:
+    - Tilldelning:
+      - Tilldelning
+      - Ranson
+      - (Ration)
         
 - Händelsegrad:
   - I viss mån:
@@ -3690,4 +3804,4 @@
     - åtel
   
 - Kvarstående:
-  - 4.3 Slutet på första dagens strid
+  - 4.2 Jollens sista färd

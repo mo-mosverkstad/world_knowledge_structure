@@ -10596,7 +10596,7 @@ INSERT INTO nameTable (id,item) VALUES (10594,"En bärare är diagonallt halvfyl
 INSERT INTO nameTable (id,item) VALUES (10595,"Inavel");
 INSERT INTO nameTable (id,item) VALUES (10596,"Onormaliteter inom inavel");
 INSERT INTO nameTable (id,item) VALUES (10597,"Kan vara en problem i liten population");
-INSERT INTO nameTable (id,item) VALUES (10598,"Inom Habsburg sista, "Charles av Spanien" uppstod kusingift och systergift");
+INSERT INTO nameTable (id,item) VALUES (10598,"Inom Habsburg sista, ""Charles av Spanien"" uppstod kusingift och systergift");
 INSERT INTO nameTable (id,item) VALUES (10599,"I Cleopatras släkt led de av genetiska sjukdomar av inavel");
 INSERT INTO nameTable (id,item) VALUES (10600,"Kungarna Tsar Nikolaj II och kung Charles IV var kusiner");
 INSERT INTO nameTable (id,item) VALUES (10601,"Blödarsjuka drabbade män inom inavel");

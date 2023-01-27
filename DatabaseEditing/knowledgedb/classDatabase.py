@@ -24,7 +24,7 @@ class Database(object):
     def insert(self, table_name, columns, values):
         statement = 'INSERT INTO {} ({}) VALUES ({});'.format(table_name, \
             ','.join(columns), \
-            ','.join(['"{}"'.format(value) if type(value) == str else str(value) for value in values]))
+            ','.join(['"{}"'.format(value.replace('"', '""')) if type(value) == str else str(value) for value in values]))
         try:
             self.my_cursor.execute(statement)
             self.mydb.commit()

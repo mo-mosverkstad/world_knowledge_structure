@@ -324,9 +324,15 @@
           - Täckt
           - Beklädd med
     - Vätska:
-      - Flaska:
-        - Flaska
-        - Butelj
+      - Vätskebehållare:
+        - Flaska:
+          - Flaska
+          - Butelj
+        - Tunna:
+          - Tunna
+          - Kagge
+          - Balja
+          - Fat
       - Vätskerörelser:
         - Skopa:
           - Ösa
@@ -335,6 +341,11 @@
           - Stänka
           - Skvätta
           - Skvalpa
+        - Välla:
+          - Välla
+          - Flöda
+          - Strömma
+          - Rinna i stora mängder
     - Tvetydliga former:
       - Oformad:
         - Otymplig
@@ -383,6 +394,18 @@
         - Och mera
         - Och dylikt
         - Etcetera (etc)
+    - Värme:
+      - Varm:
+        - Varm:
+          - Varm
+        - Värma:
+          - Värma
+      - Kall:
+        - Kall:
+          - Kall
+        - Kyla:
+          - Kyla
+          - Svalka
     - Positioner:
       - Riktning:
         - Nästa:
@@ -485,7 +508,9 @@
           - Förskjuta
         - Kasta häftigt:
           - Slunga
+          - Vräka -> Köra ut hyresgäst från lägenhet
           - Kasta häftigt
+          - Våldsamt kasta
         - Skaka:
           - Skaka
           - Ruska
@@ -509,6 +534,10 @@
           - Vada:
             - Vada
             - Gå i grunt
+          - Avfärd:
+            - Avfärd
+            - Att åka iväg
+            - Bege sig iväg
           - Gå iväg:
             - Gå väck
             - Gå iväg
@@ -967,21 +996,23 @@
           - Förlossning
           - Nedkomst
       - Liv och död:
-        - Levande:
-          - Levande
-        - Döende:
-          - Död, framliden
-          - Ta av daga
-          - Ta någon om livet
-          - Ta någon om midjan
-          - Dräpa
-        - Efter döden:
-          - På andra sidan efter döden
-          - Hinsides
-        - Gravstenar:
-          - Gravsten
-          - Minnesten
-          - Bautasten (fornnordisk)
+        - Liv:
+          - Levande:
+            - Levande
+        - Död:
+          - Döende:
+            - Död, framliden
+            - Ta av daga
+            - Ta någon om livet
+            - Ta någon om midjan
+            - Dräpa
+          - Efter döden:
+            - På andra sidan efter döden
+            - Hinsides
+          - Gravstenar:
+            - Gravsten
+            - Minnesten
+            - Bautasten (fornnordisk)
     - Hälsa:
       - Bra hälsa:
         - Kosthållning:
@@ -1144,14 +1175,19 @@
           - Boning
       - Arkitektur struktur:
         - Dörrpost
-        - Skott:
-          - Skott
-          - Skiljevägg (knep, slughet)
-        - Kök
-        - Badrum
-        - Toalett:
-          - Toalett
-          - Klosett
+        - Väggar:
+          - Skott:
+            - Skott
+            - Skiljevägg (knep, slughet)
+          - Glugg:
+            - Glugg
+            - Liten öppning i en vägg
+        - Rum:
+          - Kök
+          - Badrum
+          - Toalett:
+            - Toalett
+            - Klosett
       - Möbler:
         - Byrå:
           - Klaffbyrå:
@@ -1220,6 +1256,10 @@
         - Kråka:
           - Kråka
           - Kaja
+        - Rapphöns:
+          - Rapphöns
+          - Rapphöna
+          - Vildart fågel ofta till jakt
         - Ruva:
           - Hönan ruvar
           - Ligga på ägg
@@ -1245,14 +1285,19 @@
 - Util:
   - Ätbart:
     - Ätbart:
-      - Måltid:
-        - Frukost
-        - Lunch
-        - Middag, kvällsvard
-      - Mattyper:
-        - Vanlig mat
-        - Delikatesser
-      - Ätbart:
+      - Ätbartform:
+        - Måltid:
+          - Frukost
+          - Lunch
+          - Middag, kvällsvard
+        - Mattyper:
+          - Vanlig mat
+          - Delikatesser
+        - Proviant:
+          - Proviant
+          - Livsmedel
+          - Matförråd
+      - Ätbarttyper:
         - Vanlig mat:
           - Riset, gröten
           - Spagetti (makaroner)
@@ -1598,19 +1643,25 @@
           - Sprit
           - Likör
         - Alkoholtyper:
-          - (Mörkt) öl
-          - Cider
-          - Vin
-          - Rödvin
-          - Vitvin
-          - Champagne
-          - Whisky
-          - Rom
-          - Brandy
-          - Vodka
-          - Tequila
-          - Gin
-          - Sherry
+          - Vanliga alkohol:
+            - (Mörkt) öl
+            - Cider
+            - Rom
+          - Viner:
+            - Vin
+            - Rödvin
+            - Vitvin
+          - Speciella alkohol:
+            - Champagne
+            - Whisky
+            - Brandy
+            - Vodka
+            - Tequila
+          - Fruktalkohol:
+            - Gin
+            - Sherry
+          - Dyr spritdryck:
+            - Konjak
         - Cocktail:
           - Martinim
           - Cocktail
@@ -1799,6 +1850,10 @@
     - Presenning:
       - Presenning
       - Stort tygstycke för skydd
+    - Lärft:
+      - Lärft
+      - Tätvävda vita tyger
+      - Bomulls linnetyger
   - Visor, sånger:
     - Folkvisa:
       - Folkvisa
@@ -1878,6 +1933,10 @@
       - Salning:
         - Salning
         - Fogning mast + stång
+    - Båttillbehör:
+      - Fånglina:
+        - Fånglina
+        - Förtöjningslina
   - Båtaktiviter:
     - Båtstyrande:
       - Båtriktning:
@@ -1894,6 +1953,11 @@
         - Vända mot vinden:
           - Vända mot vinden
           - Stagvända
+        - Avgå:
+          - Avgång
+          - Avgå
+          - Segla iväg
+          - Kasta loss
         - Hastighetssänkning:
           - Dreja
           - Dreja bi
@@ -1912,6 +1976,14 @@
       - Ankra:
         - Ankra
         - Sätta på grund
+  - Överbord:
+    - Överbord:
+      - Lämpa överbord
+      - Kasta i vattnet från fartyg
+    - Landsatt:
+      - Landsatt
+    - Gå på plankan:
+      - Gå på plankan
   - Skeppmänniskor:
     - Landkrabba:
       - Landkrabba
@@ -1922,6 +1994,38 @@
     - Jungman:
       - Jungman
       - Lägsta manskapsgrad
+      
+- Militär:
+  - Militärträd:
+    - Militärstruktur:
+      - Högsta administration:
+        - Regemente
+        - Förband
+        - Truppstyrka som enhet
+      - Mellanhög:
+        - Bataljon (600 man)
+      - Nedre:
+        - Kompani (150 man)
+      - Underst:
+        - Menig
+        - Obefodrad soldat
+        - Soldat utan befälsgrad
+    - Försvarsgren:
+      - Armé:
+        - Huvuddelar:
+          - Truppslag
+        - Bestånddelar:
+          - Infanteri
+          - Kavalleri
+          - Pansartrupper
+          - Artilleri
+          - Luftvarn
+      - Flygvapen (Flygslag)
+      - Marin
+  - Vanliga handlingar:
+    - Fatta posto:
+      - Inta försvarsställning
+      - Ställa sig
 
 - Religion:
   - Moderna religion:
@@ -2317,6 +2421,10 @@
     - Förbannelse:
       - Vara förbannad på
       - Vara arg på
+    - Förvånelse:
+      - Förvånad
+      - Överraska
+      - Överrumpla
   - Påverkade känslor:
     - Nykter:
       - Nykter
@@ -2530,6 +2638,11 @@
         - Säga till
         - Befalla
         - Ge order
+        - Tilltala
+      - Leda:
+        - Leda
+        - Anföra
+        - Anförare -> Ledare
       - Meddela:
         - Meddela
         - Avisera
@@ -2538,6 +2651,11 @@
       - Påfallande:
         - Påfallande
         - Anmärkningsvärt, markant
+      - Debatt:
+        - Debatt
+        - Samråd
+        - Diskussion
+        - Rådplägning
     - Anmärkningar:
       - Anmärkning:
         - Anmärkning:
@@ -2568,7 +2686,6 @@
           - Vittnesmål
         - Mened:
           - Avsiktlig falsk vittnesmål
-     
     - Tankar och åsikter:
       - Åsikter:
         - Åsikter
@@ -2646,11 +2763,19 @@
       - Redaktion:
         - Redaktion
         - Grupp personer som står för innehåll
-  - Annat:
+  - Komplimanger:
+    - Komplimang:
+      - Komplimang
+      - Ge en komplimang
     - Inställsam:
-      - Inställsam
-      - Överdrivet artig
-      - Honungssöt
+      - Inställsam:
+        - Inställsam
+        - Överdrivet artig
+        - Honungssöt
+      - Smickra:
+        - Smickra
+        - Roa
+        - Glädja
       
 - Konstnärlig:
   - Ikonografi:
@@ -2674,16 +2799,25 @@
 - Handlingar:
   - Vardagliga handlingar:
     - Tycka om:
-      - Vilja:
-        - Vilja
-        - Önska
-        - Behaga (hjälpverb)
-        - Hålla av (...)
-      - Motvilja:
-        - Motvilja
-        - Avsmak
-        - Olust
-        - Äckel
+      - Intresseagera:
+        - Vilja:
+          - Vilja
+          - Önska
+          - Behaga (hjälpverb)
+          - Hålla av (...)
+        - Lockande:
+          - Lockande
+          - Fresta
+        - Tilltala:
+          - Bahaga
+          - Locka
+          - Appellera
+      - Mot intresse:
+        - Motvilja:
+          - Motvilja
+          - Avsmak
+          - Olust
+          - Äckel
     - Småsjunga:
         - Småsjunga
         - Gnola
@@ -2751,6 +2885,9 @@
         - Skälla
         - Gräla
         - Gorma
+    - Desarmera:
+      - Desarmera
+      - Oskadliggöra
     - Bråk:
       - Bråk:
         - Bråk:
@@ -2813,11 +2950,12 @@
         - Besanna
         - Bekräfta
         - Bevisa
-    - Förstörd:
-      - Trasig
-      - Förstörd
-      - Fördärvad
-      - Avslagen (nekad unken)
+    - Problemtyper:
+      - Förstörd:
+        - Trasig
+        - Förstörd
+        - Fördärvad
+        - Avslagen (nekad unken)
   - Problemlösningar:
     - Att hindra:
       - Att hindra:
@@ -2860,6 +2998,12 @@
       - Anfall:
         - Anfall
         - Utfall -> Resultat
+      - Belägra:
+        - Belägra:
+          - Belägra
+          - Belägrare
+        - Omringning:
+          - Omringning, tvingande fiende ge upp
       - Hunsa:
         - Hunsa
         - Mobba
@@ -3025,6 +3169,9 @@
       - Trona -> ha en framträdande placering
       - Tronföljd
       - Successionsordning
+    - Namn och titel:
+      - Hertig
+      - (Duke)
     - Politiker:
       - En politiker
       - En diplomat
@@ -3087,11 +3234,7 @@
         - Ett barnbarn
     - Nedsänkning:
       - Generation (mansålder)
-  - Militärträd:
-    - Underst:
-      - Menig
-      - Obefodrad soldat
-      - Soldat utan befälsgrad
+  
 
 
 - Verksamheter:
@@ -3122,7 +3265,18 @@
       - Företagsam
       - Driftig
       - Energisk
+  - Verksamhetslängd:
+    - Börda:
+      - Börda
+      - Last
+      - Belastning
   - Verksamhetssteg:
+    - Början:
+      - Verksamhetsbörjan:
+        - Verksamhetsbörjan
+      - Gå till väga:
+        - Gå till väga
+        - Starta göra något på ett visst sätt
     - Tillåtelser:
       - Dominera:
         - Ta överhand
@@ -3200,41 +3354,48 @@
       - Rondtur
       - Tur
   - Status:
-    - Ligga till:
-      - Ligga till
-      - Situation
-    - Stadium:
-      - Stadium
-      - Fas
-    - Förhållande:
-      - Status
-      - Omständighet
-      - Förhållande
-      - Villkor
-    - Andra status:
-      - Status quo ante
-      - Kronan på verket (cherry on the cake)
-    - Förvirring:
-      - Oordning
-      - Kaos
-      - Reda
-      - Förvirring
-      - Villervalla
-    - Utblottad:
-      - Utblottad
-      - Utfattig
-      - Stå på bar backe
-    - Vardaglig ointressant:
-      - Vardaglig ointressant
-      - Banal
-    - Ensidighet:
-      - Starkt ensidig
-      - Monoman
-    - Början
-    - Slutet:
-      - Till sluta
-      - Omsider
-      - Så småningom med tiden
+    - Status:
+      - Ligga till:
+        - Ligga till
+        - Situation
+      - Stadium:
+        - Stadium
+        - Fas
+      - Förhållande:
+        - Status
+        - Omständighet
+        - Förhållande
+        - Villkor
+    - Statustyper:
+      - Andra status:
+        - Status quo ante
+        - Kronan på verket (cherry on the cake)
+      - Förvirring:
+        - Oordning
+        - Kaos
+        - Reda
+        - Förvirring
+        - Villervalla
+      - Utblottad:
+        - Utblottad
+        - Utfattig
+        - Stå på bar backe
+      - Sticka fram:
+        - Sticka fram
+        - Skjuta ut
+    - Vardaglig:
+      - Vardaglig ointressant:
+        - Vardaglig ointressant
+        - Banal
+      - Ensidighet:
+        - Starkt ensidig
+        - Monoman
+    - Statussteg:
+      - Början
+      - Slutet:
+        - Till sluta
+        - Omsider
+        - Så småningom med tiden
   - Förbättringar:
     - Städa:
       - Städa
@@ -3441,14 +3602,20 @@
       - Utfattig
       - Barskrapad
   - Vinster:
-    - Begärlig:
-      - Begärlig
-      - Alla vill ha
+    - Begär:
+      - Begära:
+        - Begära
+        - Fordra
+        - Kräva
+      - Begärlig:
+        - Begärlig
+        - Alla vill ha
     - Vinst:
-      - Vinst
-      - Nytta
-      - Fördel
-      - Till gagn
+      - Vinst:
+        - Vinst
+        - Nytta
+        - Fördel
+        - Till gagn
   - Förlust:
     - Förluster:
       - Förlust
@@ -3491,6 +3658,9 @@
         - Kosta på sig
         - Tillåta sig
         - Till varje pris
+      - Ovärderlig:
+        - Ovärderlig
+        - Kan inte värderas med pengar
   - Värdeberäkning:
     - Värdeberäkning:
       - Värdeberäkning
@@ -3537,10 +3707,6 @@
       - Uppförande
       - Beteende
   - Former av agerande:
-    - Intresseagera:
-      - Lockande:
-        - Lockande
-        - Fresta
     - Dåliga agerande:
       - Hänsynslös:
         - Skrumpelfri
@@ -3904,6 +4070,15 @@
   - Medan:
     - Medan
     - Allteftersom
+  - Eftersom:
+    - Eftersom
+    - För att
+    - Därför att
+    - Ty
+    - För
+  - Därför:
+    - Därför
+    - Det resulterar i ...
   
 - Vanliga interjektioner:
   - vips, bums
@@ -3917,6 +4092,16 @@
   - Det är ingen tvekan om:
     - Det är inget tvekan om
     - Det är inte tu tal om det
+  - Vara illa däran:
+    - Vara illa däran
+    - Vara svårt skadad eller sjuk
+  - Han är dödens:
+    - Han är dödens
+    - Han är dödens lammunge
+  - För brinnande livet:
+    - För brinnande livet
+    - Av alla krafter
+    - I full fart
     
 - Vanliga metaforer:
   - Pigg som en mört
@@ -3928,4 +4113,4 @@
     - åtel
   
 - Kvarstående:
-  - 4.1 Hur skeppet övergavs: Skjuta ut
+  - 3.3 Mannen på ön: Uppenbarelse

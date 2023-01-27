@@ -54,6 +54,7 @@ class KnowledgeDatabase:
         return len(self.relations_of(parentId)) != 0
 
     def update(self, id, new_name):
+        new_name = new_name.replace('"', '""')
         self.database.update(self.name_table.name, self.name_table.columns[0], '"' + new_name + '"', "id="+str(id))
 
     def sort(self, parentId, childId, new_sortId):

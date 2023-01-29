@@ -1,6 +1,7 @@
 - Grundläggande ord:
   - Artiga ord:
-    - Till er tjänst
+    - Artiga ord:
+      - Till er tjänst
   - Betonande ord:
     - Vanliga betoningsord:
       - Just
@@ -9,23 +10,45 @@
     - Bara:
       - Bara
       - Idel
+    - De enda:
+      - De enda
+      - (The only ones)
       
 - Beskrivning:
-  - De enda:
-    - De enda
-    - (The only ones)
-  - Egendomlig:
+  
+  - Tillfällen:
+    - Tillfällen
+    - Varvid
+    - Vid vilket tillfälle och då
+  - Unika egenskaper:
+    - Unik:
+      - Unik
+      - Enastående
+    - Speciell:
+      - Speciell
+      - Märkvärdig
+    - Olikartad:
+      - Olikartad
+      - Olika slags
+      - (Different)
+    - Intressant:
+      - Intressant
     - Egenhet:
       - Egenhet
       - Avvikande egenskap
       - Besynnerlighet
     - Konstig:
       - Konstig:
-        - Egendomlig
         - Konstig
+      - Egendomlig:
+        - Egendomlig
         - Underlig
         - Besynnerlig
+      - Grotesk:
         - Grotesk
+        - Förvriden
+        - Vanställd
+        - Sned
       - Orimlig:
         - Orimlig
         - Tokig
@@ -88,7 +111,7 @@
     - Annorlunda
     - Avvikande
       
-- Sakbeskrivning:
+- Konkret sakbeskrivning:
   - Grundläggande:
     - Nummer:
       - Otalig
@@ -122,6 +145,25 @@
         - Remsa:
           - Remsa
           - Smalt band
+      - Färger:
+        - Färglös:
+          - Färglös:
+            - Färglös
+            - Blek
+            - Matt
+            - Grå
+            - Gråaktig
+          - Svärta:
+            - Svärta
+          - Bleknar:
+            - Blekna
+            - Färgen viker
+          - Halvmörk:
+            - Halvmörk
+            - Dunkel
+          - Mörkbrun:
+            - Mörkbrun
+            - Umbra
       - Linjemönster:
         - Sicksack
     - Enkla visning:
@@ -202,6 +244,7 @@
         - Alltid:
           - Alltid
           - Hela tiden
+          - Ideligen
         - Ofta:
           - Ofta
           - Många gånger
@@ -316,6 +359,9 @@
             - Torr
             - Torrlägga
           - Blöt
+        - Jämnhet:
+          - Jämn
+          - Skrovlig
       - Yta:
         - Täckt:
           - Helt täckt
@@ -358,6 +404,11 @@
         - Bloss
         - Fackla
         - Drag på cigarett
+    - Halvsammansatt:
+      - Stump:
+        - Stump
+        - Kort bit
+        - Sista bit
     - Sammansatta saker:
       - Finnas:
         - Det finns (finnas)
@@ -400,6 +451,10 @@
           - Varm
         - Värma:
           - Värma
+        - Brnna:
+          - Bränna
+          - Steka
+          - Gassa
       - Kall:
         - Kall:
           - Kall
@@ -441,8 +496,8 @@
           - Så gott som
         - Vara nära på:
           - Vara nära på
-          - Vara på vippen
-          -  (be on the point of)
+          - Vara på vippen att
+          - (be on the point of)
         - Inpå:
           - Inpå
           - Tätt intill
@@ -633,6 +688,10 @@
           - Köra omkull:
             - Vurpa
             - Köra omkull
+          - Singla:
+            - Singlar (snön singlar ner)
+            - Falla med svängande rörelser till markens
+            - Singla slant
       - Deformerande:
         - Nedsmutsad:
           - Nedsmord
@@ -715,17 +774,6 @@
           - Hissna
           - Få svindel
     - Ljus:
-      - Ljusstyrka:
-        - Svärta
-        - Bleknar:
-          - Blekna
-          - Färgen viker
-        - Halvmörk:
-          - Halvmörk
-          - Dunkel
-        - Mörkbrun:
-          - Mörkbrun
-          - Umbra
       - Självlysande:
         - Fosforescerande
         - Fosforescent
@@ -752,8 +800,12 @@
         - Skrik
         - Skrän
       - Gnissel:
-        - Gnissel
-        - Knarrande
+        - Gnissel:
+          - Gnissel
+          - Knarrande
+        - Gnisslande:
+          - Gnisslande
+          - Knarrig
       - Skall (hunds läte)
       - Skarp:
         - Skarp
@@ -775,8 +827,23 @@
         - Stämma
         - Röst/möte
       - Rörelseljud:
-        - Porlande, sorlande (ljud)
-        - Surra, binda fast (ljuda)
+        - Porlande:
+          - Porlande
+          - Sorlande
+        - Surra:
+          - Surra
+          - Surrade
+          - Brummande
+          - Sus
+          - Sorl
+      - Brus:
+        - Brus:
+          - Brus
+          - Starkt väsande ljud
+        - Brusa:
+          - Brusa
+          - Låta med brus
+          - Brusa upp -> Plötsligt bli arg
       - Inget ljud:
         - Inte ett knyst
         - Inte ett ljud
@@ -829,14 +896,21 @@
           - Verktyg
           - Tillbehör
           - Rekvisita
-        - Förstoringsglas:
-          - Förstoringsglas
-          - Lupp
-        - Håv:
-          - Håv
-          - Sorts nätpåse
-          - Håva -> Fånga med håv
-          - Håva in -> Samla in stora vinster
+        - Vanliga verktyger:
+          - Förstoringsglas:
+            - Förstoringsglas
+            - Lupp
+          - Håv:
+            - Håv
+            - Sorts nätpåse
+            - Håva -> Fånga med håv
+            - Håva in -> Samla in stora vinster
+        - Byggnadsredskap:
+          - Skära:
+            - Skära
+            - Kort halvcirkelformad lie
+          - Hacka:
+            - Hacka
       - Sammanbindande saker:
         - Fogar:
           - Fogning
@@ -912,8 +986,12 @@
               - Porer
               - En födelsemärke
           - Sova:
-            - Sova
-            - Få en blund i ögonen
+            - Sova:
+              - Sova
+              - Få en blund i ögonen
+            - Sömnig:
+              - Sömnig
+              - Dåsig
         - Kroppen centrala delar:
           - Kroppsdelar:
             - En höft
@@ -1101,37 +1179,42 @@
           - Tagg
           - Udd
       - Skjutvapen:
-        - Gevär:
-          - Gevär
-          - Patroner
-          - Fångstredskap
-        - Maskingevär:
-          - Maskingevär
-          - Automatvapen
-          - Mitraljös
-        - Kanon:
-          - Kanon
-          - Laddtock
-        - En gasbrännare
-        - Tända:
-          - Tända
-          - Elda
-          - Fyra
-        - Avlossa:
-          - Avlossa
-          - Fyra av
-          - Utstöta
-        - Skjuta:
-          - Skjutande:
-            - Skjuta
-          - Skytt:
-            - Skytt
-            - Person som skjuter
-        - Projektil:
-          - Projektil
-          - Rikoschett:
-            - Rikoschett
-            - En studsande projektil och fortsätter ny bana
+        - Skjutvapen:
+          - Gevär:
+            - Gevär
+            - Patroner
+            - Fångstredskap
+          - Maskingevär:
+            - Maskingevär
+            - Automatvapen
+            - Mitraljös
+          - Kanon:
+            - Kanon
+            - Laddtock
+          - En gasbrännare
+          - Projektil:
+            - Projektil
+            - Rikoschett:
+              - Rikoschett
+              - En studsande projektil och fortsätter ny bana
+        - Skjutvapenhandlingar:
+          - Tända:
+            - Tända
+            - Elda
+            - Fyra
+          - Avlossa:
+            - Avlossa
+            - Fyra av
+            - Utstöta
+          - Skjuta:
+            - Skjutande:
+              - Skjuta
+            - Skytt:
+              - Skytt
+              - Person som skjuter
+          - Gevärsalva:
+            - Gevärsalva
+            - Samtidig avfyrning av gevär
       - Andra former:
         - Korsfästa
     - Kemiska ämnen:
@@ -1232,21 +1315,52 @@
             - Björkbark:
               - Björkbark
               - Näver
-      - Småbuskar:
-        - Genista, ginst
-        - Ljung
-      - Växter:
-        - Bräken, ormbunke
-        - Strå, halm(från sädesväxter)
-        - Tång (sjöväxter, gripverktyg)
-        - Sädesskal, kli
-      - Taggiga växter:
-        - Törne
-        - Tagg
-        - Vildväxande rosenbuske
-      - Skogsöppning:
-        - Skogsöppning
-        - Glänta
+      - Andra småväxter:
+        - Småbuskar:
+          - Genista, ginst
+          - Ljung
+        - Gräsväxter:
+          - Säv:
+            - Säv
+            - Stor gräsliknande växt
+          - Tuva:
+            - Tuva
+            - Liten gräsbeväxt upphöjning i marken
+          - Ormbunkar:
+            - Bräken
+            - Ormbunke
+        - Sädes:
+          - Strå:
+            - Strå
+            - Halm(från sädesväxter)
+          - Sädesskal:
+            - Sädesskal
+            - Kli
+        - Sjöväxter:
+          - Tång:
+            - Tång (sjöväxter, gripverktyg)
+          - Vass:
+            - Vass
+            - Högt och styvt gräs vid vattnet
+        - Taggiga växter:
+          - Törne:
+            - Törne
+            - Tagg
+          - Törnbuske:
+            - Törnbuske
+            - Vildväxande rosenbuske
+      - Växtlandskap:
+        - Bevuxen:
+          - Bevuxen
+          - Täckt
+          - Beklädd med
+        - Skog:
+          - Skogsöppning:
+            - Skogsöppning
+            - Glänta
+          - Dunge:
+            - Dunge
+            - En lite samling träd
     - Djur:
       - Odjur, vidunder:
         - Odjur
@@ -1254,19 +1368,38 @@
         - Best -> Bestialisk (grym)
       - Fåglar:
         - Kråka:
-          - Kråka
-          - Kaja
+          - Kråka:
+            - Kråka
+            - Kaja
+          - Korp:
+            - Korp
+            - Kråkfågel
         - Rapphöns:
           - Rapphöns
           - Rapphöna
           - Vildart fågel ofta till jakt
-        - Ruva:
-          - Hönan ruvar
-          - Ligga på ägg
-          - (->) Tänka djupt
+        - Beckasin:
+          - Beckasin
+          - Fågel med mycket lång näbb
+        - Hönor:
+          - Höna:
+            - Höna
+          - Ruva:
+            - Hönan ruvar
+            - Ligga på ägg
+            - (->) Tänka djupt
         - Fågelbo:
           - Fågelbo
           - Rede
+        - Ankor:
+          - And:
+            - And
+            - Sjöfågel av släktet Anas
+            - (Wild duck)
+          - Snattra:
+            - Snattra
+            - Låta som ankor
+            - Kackel
       - Bondgårdsdjur:
         - Idisslar:
           - Idisslar
@@ -1281,6 +1414,13 @@
         - Sågad trästock:
           - Sågad trästock
           - Bjälke
+
+- Abstrakt beskrivning:
+  - Definition:
+    - Bestämbar:
+      - Bestämbar
+      - Definierbar
+      - Urskiljbar
 
 - Util:
   - Ätbart:
@@ -1704,6 +1844,9 @@
         - Festkläder
         - Stass
         - Utstyrsel
+      - Livré:
+        - Livré
+        - Tjänstedräkt
       - Frack:
         - En frack
         - En cardigan (gammal)
@@ -1722,7 +1865,6 @@
         - En väst
         - En regnrock
         - En överrock
-        - Byxor
         - Byxor
         - En shorts
         - En jeans
@@ -2028,13 +2170,30 @@
       - Ställa sig
 
 - Religion:
+  - Religion:
+    - Religiös:
+      - Religiös
+      - Gudfruktig
+      - Helig
+      - From
   - Moderna religion:
+    - Kristendom:
+      - Katekes:
+        - Katekes
+        - Lärobok i kristendomens huvudstycke
     - Religösa föremål:
       - En kippa
     - Vallfärd:
       - Vallfärda
       - Resa till helig plats
       - (Make a pilgrimage)
+    - Uppenbarelse:
+      - Uppenbarelse
+      - Gud visar sig som människa
+      - Varelse
+      - Syn
+      - Insikt
+      - Vision
   - Primitiva religioner:
     - Totempåle
 
@@ -2088,9 +2247,16 @@
       - Orka med
       - Våga
     - Trumf
-    - Sätta fart på:
-      - Stimulera
-      - Sätta fart på
+    - Stimulera:
+      - Sätta fart på:
+        - Stimulera
+        - Sätta fart på
+      - Sporre:
+        - Stimulans
+        - Används av ryttare för att driva häst
+      - Sporra:
+        - Driva på
+        - Egga
   - Värdighet:
     - Värdighet:
       - Värdighet
@@ -2150,14 +2316,6 @@
   - Belöning:
     - Belöna
     - Premiera
-    
-- Vanliga ämnen:
-  - Försiktig:
-    - Återhållen
-    - Försiktig
-    - Måttfull
-    - Varsam -> varsamhet
-    - Aktsam
 
 - Personbeskrivning:
   - Grann:
@@ -2180,6 +2338,18 @@
     - Välvårdad
     - Välskött
     - Soignerad
+  - Anlete:
+    - Anlete:
+      - Anlete
+      - Ansikte
+    - Anletsdrag:
+      - Anletsdrag
+      - Ansiktsuttryck
+  - Fyllig:
+    - Fyllig
+    - Rund
+    - Mullig
+    - Har stor omfång
 
 - Personlighet:
   - Interperson:
@@ -2211,6 +2381,8 @@
         - Öppen
     - Barmhärtig:
       - Barmhärtiog
+      - Godhjärtad
+      - Medlidsam
       - Välvillig
       - Nådig
       - (Merciful)
@@ -2317,6 +2489,11 @@
       - Ovett
 
 - Personliga känslor:
+  - Känsloargument:
+    - Ändra inställning med känsloargument
+    - Vädja
+    - Beveka
+    - Bevekande
   - Sentimental:
     - Sentimental:
       - Sentimental
@@ -2354,6 +2531,7 @@
       - Optimistisk
       - Livlig
       - Yster
+      - Utvilad
     - Entusiastisk:
       - Entusiastisk
       - Begeistrad
@@ -2426,20 +2604,32 @@
       - Överraska
       - Överrumpla
   - Påverkade känslor:
-    - Nykter:
-      - Nykter
-      - Uppmärksam
-      - Vaken
-      - Påpasslig
+    - Vaksam:
+      - Vaksam:
+        - Vaksam
+        - Alert
+        - Uppmärksam
+      - Försiktig:
+        - Återhållen
+        - Försiktig
+        - Måttfull
+        - Varsam -> varsamhet
+        - Aktsam
+      - Nykter:
+        - Nykter
+        - Uppmärksam
+        - Vaken
+        - Påpasslig
     - Redlös:
-      - Redlös
-      - Rödbrusig
-      - Upphetsad
-    - Distrahera:
-      - Distrahera
-      - Störa
-      - Avleda
-      - Ingen koncentration
+      - Redlös:
+        - Redlös
+        - Rödbrusig
+        - Upphetsad
+      - Distrahera:
+        - Distrahera
+        - Störa
+        - Avleda
+        - Ingen koncentration
   - Vanlig:
     - Behaglig:
       - Angenäm
@@ -2536,6 +2726,14 @@
     - Yngling:
       - Yngling
       - Ung man
+    - Maktfull:
+      - Makt:
+        - Makt
+        - Välde
+        - Rike
+        - Regim
+        - Reign
+        - Kontrol
     - Mästare:
       - Mästare:
         - Man
@@ -2632,6 +2830,9 @@
     - Talande:
       - Be:
         - Be
+        - Beder (bed/bett/bedja)
+        - Böna
+        - (Pray)
       - Uppmaning:
         - Uppmana
         - Anmoda
@@ -2751,6 +2952,13 @@
   - Texter:
     - Texter återblick:
       - Revy (review)
+    - Att läsa:
+      - Att läsa:
+        - Att läsa
+        - Läsning
+      - Rabbla:
+        - Rabbla
+        - Läsa upp snabbt
     - Berättelser:
       - Roliga:
         - Rolig och skämtsam historia
@@ -2764,6 +2972,10 @@
         - Redaktion
         - Grupp personer som står för innehåll
   - Komplimanger:
+    - Berömma:
+      - Berömma
+      - Prisa
+      - (Praise)
     - Komplimang:
       - Komplimang
       - Ge en komplimang
@@ -2834,6 +3046,10 @@
       - Ge plats åt
       - Ha hos sig
       - Känna inom sig
+    - Bestämma:
+      - Bestämma
+      - Fastställa
+      - Besluta
   - Livsåskådning:
     - Spirituellitet:
       - Spirituel:
@@ -2843,9 +3059,18 @@
         - Religiös
         - (Religious)
     - Öde:
-      - Öde
-      - Ödesmättad (allvarliga känslor)
-      - Ödesdiger
+      - Öde:
+        - Öde
+        - Ödesmättad (allvarliga känslor)
+        - Ödesdiger
+      - Försyn:
+        - Försyns
+        - Guds omsorg
+        - Öde
+    - Reflektion:
+      - Reflektion
+      - Reflektera
+      - Återkasta
   - Räddande:
     - Undsättning:
       - Undsättning
@@ -2862,48 +3087,11 @@
       - Rädda
       - Befria
       - Hjälpa i svårt läge
-  - Förstörelse:
-    - Att slå:
-      - Slå:
-        - Slå
-        - Dänga
-        - Smälla
-        - Braka
-        - Knäppa -> Fästa ihop
-      - Slag:
-        - Sittopp
-        - Smäll
-        - Slag
-      - Slå sönder:
-        - Slå/skälla sönder och samman
-      - Smällning:
-        - Smällning
-        - Sprängning
-        - Bombardering
-        - (Bombardment)
-      - Att skälla:
-        - Skälla
-        - Gräla
-        - Gorma
-    - Desarmera:
-      - Desarmera
-      - Oskadliggöra
-    - Bråk:
-      - Bråk:
-        - Bråk:
-          - Bråk
-        - Smågräl:
-          - Smågräl
-          - Tjat
-          - Gnat
-      - Bråkig:
-        - Olydig
-        - Trotsig
-        - Bråkig
-      - Bråkande:
-        - Bråkande
-        - Leva rövare
   - Problem:
+    - Problem:
+      - Svårighetsproblem:
+        - Knipa
+        - Tillfälligt besvärligt situation
     - Små misstag:
       - Misstag:
         - Misstag
@@ -2985,7 +3173,7 @@
         - Rekognoscera
         - (Recognize)
   - Konflikter:
-    - Konflikthandlingar:
+    - Konflikter:
       - Konflikt:
         - Kamp:
           - Konflikt
@@ -2995,6 +3183,61 @@
         - Sammandrabbning:
           - Sammandrabbning
           - Sammanstötning
+      - Bråk:
+        - Bråk:
+          - Bråk:
+            - Bråk
+          - Smågräl:
+            - Smågräl
+            - Tjat
+            - Gnat
+        - Bråkig:
+          - Olydig
+          - Trotsig
+          - Bråkig
+        - Bråkande:
+          - Bråkande
+          - Leva rövare
+        - Trotsa:
+          - Trotsa
+          - Göra öppet motstånd mot
+    - Konfliktaktioner:
+      - Att slå:
+        - Slå:
+          - Slå
+          - Dänga
+          - Smälla
+          - Braka
+          - Knäppa -> Fästa ihop
+        - Slag:
+          - Sittopp
+          - Smäll
+          - Slag
+        - Slå sönder:
+          - Slå/skälla sönder och samman
+        - Smällning:
+          - Smällning
+          - Sprängning
+          - Bombardering
+          - (Bombardment)
+        - Bräcka:
+          - Bräcka
+          - Bryta
+          - Knäcka
+      - Skälla:
+        - Att skälla:
+          - Skälla
+          - Gräla
+          - Gorma
+      - Andra handlingar:
+        - Desarmera:
+          - Desarmera
+          - Oskadliggöra
+        - Hytta:
+          - Hytta
+          - Hötta
+          - Hotfullt skaka näven
+    - Konflikthändelser:
       - Anfall:
         - Anfall
         - Utfall -> Resultat
@@ -3096,28 +3339,33 @@
       - Uppfatta
       - Betrakta
       - (Consideration)
-  - Förstå:
-    - Genomskåda:
-      - Förråda
-      - Avslöja
-      - Genomskåda
+  - Att förstå:
     - Förstå:
-      - Förstå
-      - Inse
-      - Vara på det klara med
-    - Förstå och vara med:
-      - Förstå och vara med
-      - Vara med på noterna
-  - Kan inte förstå:
-    - Outgrundlig
-    - Ofattbar
-    - Oförståelig
-    - Oförklarlig
+      - Genomskåda:
+        - Förråda
+        - Avslöja
+        - Genomskåda
+      - Förstå:
+        - Förstå
+        - Inse
+        - Vara på det klara med
+      - Förstå och vara med:
+        - Förstå och vara med
+        - Vara med på noterna
+    - Kan inte förstå:
+      - Outgrundlig
+      - Ofattbar
+      - Oförståelig
+      - Oförklarlig
   - Inbillning:
-    - Inbillning
-    - Illusion
-    - Villfarelse
-    - Felaktig föreställning
+    - Inbilla:
+      - Inbilla
+      - Få någon att tro
+    - Inbillning:
+      - Inbillning
+      - Illusion
+      - Villfarelse
+      - Felaktig föreställning
   - Tydlighet:
     - Tydlig:
       - Tydligt
@@ -3125,23 +3373,31 @@
       - Påfallande
       - Tvetydlig
       - Klar
-    - Otydlig:
-      - Otydlig
-      - Tvetydlig
-  - Suddig:
-    - Suddig
-    - Oskarp
-    - Oklar
-    - Diffus
+    - Suddig:
+      - Otydlig:
+        - Otydlig
+        - Tvetydlig
+      - Suddig:
+        - Suddig
+        - Oskarp
+        - Oklar
+        - Diffus
   - Förutse:
     - Förutse
     - Inte förutse:
       - Inte förutse
       - Oberäknerlig
   - Minne:
-    - Minne
-    - Hågkomst
-    - Åtanke
+    - Minne:
+      - Minne
+      - Hågkomst
+      - Åtanke
+    - Komma ihåg:
+      - Komma ihåg
+      - Erinra
+      - Påminna
+    - Glömma:
+      - Glömma
 
 - Vanliga ord:
   - Så långt som:
@@ -3199,6 +3455,7 @@
       - Förbundskapten
   - Skolklass:
     - Bestämmare:
+      - Bestämmare
       - Lärare
       - Klassföreståndare
   - Familjeträd:
@@ -3703,6 +3960,7 @@
       - Uppföra sig
       - Bete sig
       - Framföra
+      - Bära sig åt
     - Uppförande:
       - Uppförande
       - Beteende
@@ -3715,6 +3973,10 @@
         - Vanvördig
       - Underlåtenhet:
         - Försummelse
+  - Dåliga beteende:
+    - Begå:
+      - Begå
+      - Begången (en)/ Begånget (ett)
   - skråla, bröla, vråla, oartikulerat
   - stopp och belägg!, ta det lungt!, låt bli!:
     - stopp och belägg!
@@ -3761,6 +4023,10 @@
     - inackordering
     - helinackordering
     - gästliknande
+  - Inkräktare:
+    - Inkräktare
+    - Intrång
+    - Tar sig in objuden
 - Fritid:
   - löpning
   - en promenad
@@ -3792,6 +4058,9 @@
   - paragliding
   - en biograf
   - en cirkus
+  - Gymnast:
+    - Gymnast
+    - Person ägnar åt gymnastik
   - badhuset:
     - konstsim
     - badbyxor
@@ -3912,6 +4181,10 @@
         - En dimma
         - Dimbank
         - Dimvägg
+        - Dis
+      - Soldis:
+        - Soldis
+        - Solrök
       - Regnbåge:
         - En regnbåge
     - Vindar:
@@ -3959,8 +4232,14 @@
           - En ö
       - Vågor:
         - Vågor:
-          - Våg
-          - Krusning (krusa)
+          - Våg:
+            - Våg
+          - Krusning:
+            - Krusning
+            - Krusa
+          - Bölja:
+            - Bölja
+            - Böljande
         - Stora vågor:
           - Sjö
           - Sjöhävning
@@ -3984,6 +4263,10 @@
         - Sumpmark:
           - En sumpmark
           - Ett kärr
+          - Träsk
+          - Myr
+          - Kärr
+          - Sankmark
         - Stäpp:
           - Stäpp
           - En slätt
@@ -4102,6 +4385,9 @@
     - För brinnande livet
     - Av alla krafter
     - I full fart
+  - Frid vare med ...:
+    - Frid vare med ...
+    - Be peace with ...
     
 - Vanliga metaforer:
   - Pigg som en mört
@@ -4113,4 +4399,4 @@
     - åtel
   
 - Kvarstående:
-  - 3.3 Mannen på ön: Uppenbarelse
+  - 3.1 Hur mitt äventyr i land började: Sandrevel

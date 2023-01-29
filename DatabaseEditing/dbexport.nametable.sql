@@ -5446,7 +5446,7 @@ INSERT INTO nameTable (id,item) VALUES (5444,"comme tu sais");
 INSERT INTO nameTable (id,item) VALUES (5445,"tu ne peux pas savoir");
 INSERT INTO nameTable (id,item) VALUES (5446,"Je comprends (comprendre)");
 INSERT INTO nameTable (id,item) VALUES (5447,"elle ne doit pas comprendre");
-INSERT INTO nameTable (id,item) VALUES (5448,"Contenu");
+INSERT INTO nameTable (id,item) VALUES (5448,"Choses composites");
 INSERT INTO nameTable (id,item) VALUES (5449,"Beaucoup");
 INSERT INTO nameTable (id,item) VALUES (5450,"Tant de");
 INSERT INTO nameTable (id,item) VALUES (5451,"exactement");
@@ -10600,3 +10600,9 @@ INSERT INTO nameTable (id,item) VALUES (10598,"Inom Habsburg sista, ""Charles av
 INSERT INTO nameTable (id,item) VALUES (10599,"I Cleopatras släkt led de av genetiska sjukdomar av inavel");
 INSERT INTO nameTable (id,item) VALUES (10600,"Kungarna Tsar Nikolaj II och kung Charles IV var kusiner");
 INSERT INTO nameTable (id,item) VALUES (10601,"Blödarsjuka drabbade män inom inavel");
+INSERT INTO nameTable (id,item) VALUES (10602,"Lutter pour quelque chose");
+INSERT INTO nameTable (id,item) VALUES (10603,"Intégration");
+INSERT INTO nameTable (id,item) VALUES (10604,"Intégration");
+INSERT INTO nameTable (id,item) VALUES (10605,"Général");
+INSERT INTO nameTable (id,item) VALUES (10606,"Une institution");
+INSERT INTO nameTable (id,item) VALUES (10607,"Le manque de ...");

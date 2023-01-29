@@ -3,6 +3,9 @@ Command name	Short	Parameters	Description
 help			None		Help command
 exit			None		Exiting database system
 
+find			<keyword>	Get id of the search keyword
+findup			<childid>	Get parent(s) id of childid	
+
 list		(ls)	None		List all items under current path
 ascend		(a, as)	None		Ascend to parent path
 descend		(d, ds)	<id>		Descend to desired child path with <id>
@@ -20,4 +23,4 @@ dbexport		None		Exporting database tables to JSON files
 dbimport		None		Importing database from JSON files
 					(Dropping all databases and load with exported data)
 backup		(bk)	None		Backup the database (Same as dbexport)
-pwd				None		Print Working Directory
+pwd			None		Print Working Directory

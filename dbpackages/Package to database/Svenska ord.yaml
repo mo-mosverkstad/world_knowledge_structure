@@ -2,101 +2,97 @@
   - Artiga ord:
     - Artiga ord:
       - Till er tjänst
-  - Betonande ord:
-    - Vanliga betoningsord:
-      - Just
-      - Precis
-      - Exakt
-    - Bara:
-      - Bara
-      - Idel
-    - De enda:
-      - De enda
-      - (The only ones)
+      
+  - Vanliga ord:
+    - Betonande ord:
+      - Vanliga betoningsord:
+        - Just
+        - Precis
+        - Exakt
+      - Bara:
+        - Bara
+        - Idel
+        - Helt och hållet
+        - (Nothing but)
+      - De enda:
+        - De enda
+        - (The only ones)
+      - Formligen:
+        - Formligen
+        - Alldeles
+        - Helt
+        - Bokstavligen
+        - Absolut
+    
+    - Unika egenskaper:
+      - Unik:
+        - Unik
+        - Enastående
+      - Speciell:
+        - Speciell
+        - Märkvärdig
+        - Särskilt
+        - I synnerhet
+      - Olikartad:
+        - Olikartad
+        - Olika slags
+        - (Different)
+      - Intressant:
+        - Intressant
+      - Egenhet:
+        - Egenhet
+        - Avvikande egenskap
+        - Besynnerlighet
+      - Konstig:
+        - Konstig:
+          - Konstig
+        - Egendomlig:
+          - Egendomlig
+          - Underlig
+          - Besynnerlig
+        - Grotesk:
+          - Grotesk
+          - Förvriden
+          - Vanställd
+          - Sned
+        - Orimlig:
+          - Orimlig
+          - Tokig
+          - Fånig
+          - Löjlig
+          - Befängd
+          
+    - Tillsatsord:
+      - Kanske:
+        - Kanske
+        - Kanhända
+        - Måhända
+      - Dessutom:
+        - Dessutom
+        - Även
+        - Därtill
+        - Därtill kommer (någonting)
+        - (In addition)
+      - Egentligen:
+        - Egentligen
+        - Strängt taget
+        - I själva verket
+      - Medan:
+        - Medan
+        - Allteftersom
+      - Eftersom:
+        - Eftersom
+        - För att
+        - Därför att
+        - Ty
+        - För
+      - Därför:
+        - Därför
+        - Det resulterar i ...
+          
+    
       
 - Beskrivning:
-  
-  - Tillfällen:
-    - Tillfällen
-    - Varvid
-    - Vid vilket tillfälle och då
-  - Unika egenskaper:
-    - Unik:
-      - Unik
-      - Enastående
-    - Speciell:
-      - Speciell
-      - Märkvärdig
-    - Olikartad:
-      - Olikartad
-      - Olika slags
-      - (Different)
-    - Intressant:
-      - Intressant
-    - Egenhet:
-      - Egenhet
-      - Avvikande egenskap
-      - Besynnerlighet
-    - Konstig:
-      - Konstig:
-        - Konstig
-      - Egendomlig:
-        - Egendomlig
-        - Underlig
-        - Besynnerlig
-      - Grotesk:
-        - Grotesk
-        - Förvriden
-        - Vanställd
-        - Sned
-      - Orimlig:
-        - Orimlig
-        - Tokig
-        - Fånig
-        - Löjlig
-        - Befängd
-    
-  - Jämförelser:
-    - Bra:
-      - Bäst:
-        - Bäst
-        - Ypperst
-      - Mycket bra:
-        - Mycket bra
-        - Utmärkt
-        - Briljant
-        - Storartad
-        - Storslagen
-    - Uppblåst:
-      - Uppblåst
-      - Pompös
-      - Pampig
-    - Dålig:
-      - Okultiverad:
-        - Okultiverad
-        - Smaklös
-        - Grov
-        - Vulgär
-      - Sämst:
-        - Sämst
-      - Försämring:
-        - Försämring
-        - Degenerera
-    - Ingen jämförelse:
-      - Ingen jämförelse
-      - Det kvittar
-      - (It makes no difference)
-  - Äkthet:
-    - Äkta:
-      - Verklig
-      - Äkta
-      - Riktig
-    - Oäkta:
-      - Oäkta
-      - Pseudo-
-      - Kvasi-
-      - Fiktiv
-      - Påhittad
   - Rationallitet:
     - Rationell:
       - Rationell
@@ -106,10 +102,7 @@
       - Oberäknelig
       - Oförutsägbar
       - Kapriciös
-  - Annat:
-    - Annat
-    - Annorlunda
-    - Avvikande
+  
       
 - Konkret sakbeskrivning:
   - Grundläggande:
@@ -145,27 +138,31 @@
         - Remsa:
           - Remsa
           - Smalt band
-      - Färger:
+          
+    - Färger:
+      - Färglös:
         - Färglös:
-          - Färglös:
-            - Färglös
-            - Blek
-            - Matt
-            - Grå
-            - Gråaktig
-          - Svärta:
-            - Svärta
-          - Bleknar:
-            - Blekna
-            - Färgen viker
-          - Halvmörk:
-            - Halvmörk
-            - Dunkel
-          - Mörkbrun:
-            - Mörkbrun
-            - Umbra
+          - Färglös
+          - Blek
+          - Matt
+          - Grå
+          - Gråaktig
+        - Svärta:
+          - Svärta
+        - Bleknar:
+          - Blekna
+          - Färgen viker
+        - Halvmörk:
+          - Halvmörk
+          - Dunkel
+        - Mörkbrun:
+          - Mörkbrun
+          - Umbra
+          
+    - Mönster:
       - Linjemönster:
         - Sicksack
+        
     - Enkla visning:
       - Tabeller:
         - Tabeller
@@ -173,6 +170,38 @@
           - Tablå
           - Sammanställning i tabellform
       - Figuerer
+    
+    - Jämförelser:
+      - Bra:
+        - Bäst:
+          - Bäst
+          - Ypperst
+        - Mycket bra:
+          - Mycket bra
+          - Utmärkt
+          - Briljant
+          - Storartad
+          - Storslagen
+      - Uppblåst:
+        - Uppblåst
+        - Pompös
+        - Pampig
+      - Dålig:
+        - Okultiverad:
+          - Okultiverad
+          - Smaklös
+          - Grov
+          - Vulgär
+        - Sämst:
+          - Sämst
+        - Försämring:
+          - Försämring
+          - Degenerera
+      - Ingen jämförelse:
+        - Ingen jämförelse
+        - Det kvittar
+        - (It makes no difference)
+    
     - Tid:
       - Vanliga tidord:
         - Tidssträcka:
@@ -234,6 +263,10 @@
           - En midnatt
           - En soluppgång
           - En solnedgång
+      - Tillfällen:
+        - Tillfällen
+        - Varvid
+        - Vid vilket tillfälle och då
       - Frekvens:
         - Varje dag
         - Dagligdags
@@ -286,26 +319,45 @@
         - Arbetsdag
         - Söcken
   - Generella saker:
-    - Obeskriven:
-      - Någonting
-      - Allting
-      - Ingenting:
-        - Ingenting
-        - Intet
-    - Saker:
-      - Sak:
-        - Sak
-        - Någoting (Något)
-        - Föremål
-        - Grej
-      - Tingest:
-        - Tingest
-        - Konstig sak
-      - Ägodel:
-        - Ägodel
-        - Possession
-        - Tillhörighet
-        - Egendom
+    - Generell sak:
+      - Obestämd sak:
+        - Obeskriven:
+          - Någonting
+          - Allting
+          - Ingenting:
+            - Ingenting
+            - Intet
+        - Annat:
+          - Annat
+          - Annorlunda
+          - Avvikande
+        - Äkthet:
+          - Äkta:
+            - Verklig
+            - Äkta
+            - Riktig
+          - Oäkta:
+            - Oäkta
+            - Pseudo-
+            - Kvasi-
+            - Fiktiv
+            - Påhittad
+      
+      - Bestämd sak:
+        - Sak:
+          - Sak
+          - Någoting (Något)
+          - Föremål
+          - Grej
+        - Tingest:
+          - Tingest
+          - Konstig sak
+        - Ägodel:
+          - Ägodel
+          - Possession
+          - Tillhörighet
+          - Egendom
+    
     - Stel föremål:
       - Former:
         - Skev:
@@ -369,6 +421,7 @@
           - Bevuxen
           - Täckt
           - Beklädd med
+    
     - Vätska:
       - Vätskebehållare:
         - Flaska:
@@ -383,6 +436,14 @@
         - Skopa:
           - Ösa
           - Skopa
+        - Plumsa:
+          - Plumsa:
+            - Plumsa
+            - Plaska
+            - Falla tungt ner i vattnet
+          - Plums:
+            - Plums
+            - Pladask
         - Stänka:
           - Stänka
           - Skvätta
@@ -392,6 +453,7 @@
           - Flöda
           - Strömma
           - Rinna i stora mängder
+    
     - Tvetydliga former:
       - Oformad:
         - Otymplig
@@ -404,455 +466,503 @@
         - Bloss
         - Fackla
         - Drag på cigarett
-    - Halvsammansatt:
-      - Stump:
-        - Stump
-        - Kort bit
-        - Sista bit
+    
     - Sammansatta saker:
-      - Finnas:
-        - Det finns (finnas)
-        - Existera
-        - Förekomma
-        - Förehärska
-        - Råda -> Föreslå
-      - På måfå
-      - Packe:
-        - Packe
-        - Bunt
-        - Knyte
-        - Bylte
-        - Klase
-        - Klunga
-        - Back -> Bakåtväxel på bil/båt, försvarspelare idrott
-      - Förråd:
-        - Förråd
-        - Upplag
-      - Stora mängder:
-        - Stora mängder
-        - Överösa
-      - Bestånd:
-       - Bestånd (även fortsatt förekomst)
-      - Fragment:
-        - Ofullständig
-        - Fragmentarisk
-        - Lösryckt
-      - Rester:
-        - Rester
-        - Kvarleva
-      - Och så vidare:
-        - Och så vidare
-        - Och mera
-        - Och dylikt
-        - Etcetera (etc)
+      - Sammansatt beskrivning:
+        - Finnas:
+          - Det finns (finnas)
+          - Existera
+          - Förekomma
+          - Förehärska
+          - Råda -> Föreslå
+        - Och så vidare:
+          - Och så vidare
+          - Och mera
+          - Och dylikt
+          - Etcetera (etc)
+        - Varje:
+          - Varje
+          - Var och en
+          - Vardera
+          - (Everyone)
+        - På måfå
+      - Beståndsdelar:
+        - Bestånd:
+         - Bestånd (även fortsatt förekomst)
+        - Fragment:
+          - Ofullständig
+          - Fragmentarisk
+          - Lösryckt
+        - Rester:
+          - Rester
+          - Kvarleva
+        - Stump:
+          - Stump
+          - Kort bit
+          - Sista bit
+      - Tom sammansatt objekt:
+        - Det finns ingen tillstymmelse
+        - Ingen aning
+        - Ingen antydan
+      - Lagring:
+        - Lagring:
+          - Packe:
+            - Packe
+            - Bunt
+            - Knyte
+            - Bylte
+            - Klase
+            - Klunga
+            - Back -> Bakåtväxel på bil/båt, försvarspelare idrott
+          - Förråd:
+            - Förråd
+            - Upplag
+        - Lagringsmått:
+          - Stora mängder:
+            - Stora mängder
+            - Överösa
+  
+  - Grundläggande sakegenskaper:
     - Värme:
-      - Varm:
+      - Värme:
         - Varm:
-          - Varm
-        - Värma:
-          - Värma
-        - Brnna:
-          - Bränna
-          - Steka
-          - Gassa
-      - Kall:
+          - Varm:
+            - Varm
+          - Värma:
+            - Värma
+          - Brnna:
+            - Bränna
+            - Steka
+            - Gassa
         - Kall:
-          - Kall
-        - Kyla:
-          - Kyla
-          - Svalka
-    - Positioner:
-      - Riktning:
-        - Nästa:
-          - Nästa
-          - Härnäst
-        - Bära uppför/utför:
-          - Bära uppför/utför
-          - Leda uppåt/nedåt
-        - Under:
-          - Under
-          - Inunder
-          - Nedanför
-          - Utför
-        - Fram mot:
-          - An
-          - Fram
-          - Riktning mot
-          - Riktmärke
-          - Pejling
-          - Föröver
-        - Närmande:
-          - Närma sig
-          - Nalkas
-        - Fjärma:
-          - Fjärma
-          - Avlägsna
-          - Skilja åt
-          - Öka avståndet
-        - Nära:
-          - Nära
-          - Närapå
-          - Nästan
-          - Så gott som
-        - Vara nära på:
-          - Vara nära på
-          - Vara på vippen att
-          - (be on the point of)
-        - Inpå:
-          - Inpå
-          - Tätt intill
-        - Utelämning:
-          - Hoppa över
-          - Skippa
-          - Exkludera
-          - Utelämna
-          - Lämna
-        - Överlämning:
-          - Överlämna
-          - Anförtro
-      - Position:
-        - Gränser:
+          - Kall:
+            - Kall
+          - Kyla:
+            - Kyla
+            - Svalka
+    - Rörelser:
+      - Positioner:
+        - Riktning:
+          - Nästa:
+            - Nästa
+            - Härnäst
+          - Bära uppför/utför:
+            - Bära uppför/utför
+            - Leda uppåt/nedåt
+          - Under:
+            - Under
+            - Inunder
+            - Nedanför
+            - Utför
+          - Fram mot:
+            - An
+            - Fram
+            - Riktning mot
+            - Riktmärke
+            - Pejling
+            - Föröver
+          - Närmande:
+            - Närma sig
+            - Nalkas
+          - Fjärma:
+            - Fjärma
+            - Avlägsna
+            - Skilja åt
+            - Öka avståndet
+          - Nära:
+            - Nära
+            - Närapå
+            - Nästan
+            - Så gott som
+          - Vara nära på:
+            - Vara nära på
+            - Vara på vippen att
+            - (be on the point of)
+          - Inpå:
+            - Inpå
+            - Tätt intill
+          - Utelämning:
+            - Hoppa över
+            - Skippa
+            - Exkludera
+            - Utelämna
+            - Lämna
+          - Överlämning:
+            - Överlämna
+            - Anförtro
+        - Position:
           - Gränser:
-            - Gränsle
-            - Gränslös, ohämmad
-            - Kant
-          - Övergång:
-            - Övergång
-            - Gräns mellan två delar
-            - Skarv
-          - Utkant:
-            - Utkant
-            - Bryn
-          - Kontur:
-            - Kontur
-            - Ytterlinje
-          - Limitationer:
-            - Limitation
-            - Restriktiv
-            - Återhållsam
-        - Inhägnad:
-          - Inhägnad
-          - Område innanför stängsel
-        - Rader:
-          - Rad
-          - Upprada
-        - Fäst:
-          - Fäste
-          - Fast grund/militär stödjepunkt
-          - Fotfäste
-    - Vanliga rörelser:
-      - Berörning:
-        - Beröra:
-          - Snudda:
-            - Beröra lätt
-            - Snudda
-            - Tangera
-            - Vidröra
-          - Gnugga:
-            - Gnugga
-            - Gnida
-            - Gno
-        - Räta sig:
-          - Räta på sig
-          - Göra sig rak
-          - Sträcka på sig
+            - Gränser:
+              - Gränsle
+              - Gränslös, ohämmad
+              - Kant
+            - Övergång:
+              - Övergång
+              - Gräns mellan två delar
+              - Skarv
+            - Utkant:
+              - Utkant
+              - Bryn
+            - Kontur:
+              - Kontur
+              - Ytterlinje
+            - Limitationer:
+              - Limitation
+              - Restriktiv
+              - Återhållsam
+          - Inhägnad:
+            - Inhägnad
+            - Område innanför stängsel
+          - Rader:
+            - Rad
+            - Upprada
+          - Fäst:
+            - Fäste
+            - Fast grund/militär stödjepunkt
+            - Fotfäste
       - Krafter:
-        - Rubba:
-          - Flytta tungt
-          - Rubba
-          - Förskjuta
-        - Kasta häftigt:
-          - Slunga
-          - Vräka -> Köra ut hyresgäst från lägenhet
-          - Kasta häftigt
-          - Våldsamt kasta
-        - Skaka:
-          - Skaka
-          - Ruska
-      - Färd:
-        - Hastighet:
-          - Genast:
-            - Genast
-            - Snabbt
-            - I ett huj
-      - Linjära färd:
-        - Att gå:
-          - Att gå:
-            - Gå
-            - Promenera
-            - Vandra
-          - Militär:
-            - Marschera
-          - Traskande:
-            - Traska
-            - Spatsera
-          - Vada:
-            - Vada
-            - Gå i grunt
-          - Avfärd:
-            - Avfärd
-            - Att åka iväg
-            - Bege sig iväg
-          - Gå iväg:
-            - Gå väck
-            - Gå iväg
-            - Försvinn!
-          - Snubbla:
-            - Stappla
-            - Snubbla
-            - Staka sig
-            - Tultande (ungar lär sig gå)
-          - Planlöst vandring:
-            - Irra
-            - Irrväg
-            - Planlös vandring
-          - Trampa:
-            - Klampa
-            - Stampa
-            - Trampa
-          - Slingra:
-            - Snäja
-            - Snara
-            - Slingra
-        - Staka:
-          - Driva fram med stav
-          - Staka
-        - Steg:
-          - Steg
-          - Kliv
-          - Fotspår
-        - Färdas:
-          - Färdas
-          - Täcka förr
-          - Tillrygglägga
-        - Slingra:
-          - Slingra
-          - Kräla
-        - Släpa:
-          - Släpa
-          - Glida
-          - Hasa ner
-          - Lunka
-          - Glida
-        - Att vara stilla:
-          - Bli stilla
-          - Mojna
-          - Stillastående
-          - Stiltje
-        - Att lämna:
-          - Tid att lämna
-          - Uppbrottets tid
-          - (Time to leave)
-      - Cirkulära färd:
-        - Svänga:
-          - Svänga (svänga av och an)
-          - Kränga
-        - snurra:
-          - Rotera
-      - Lägesrörelser:
-        - Hängig:
-          - Slak (slakna)
-          - Hängig
-          - Slapp
-        - Spänd:
-          - Spänd
-        - Fladdra:
-          - Vaja
-          - Fladdra
-          - Gunga
-          - Guppa
-          - Svaja, vagga
-        - Klättrat upp:
-          - Uppflygen
-          - Klättrat
-          - Hoppat upp
-        - Falla:
-          - Svikta:
-            - Svikta
-            - Stappla
-            - Vackla
-            - Vara nära på att falla
-          - Falla bakom:
-            - Falla bakom
-            - Sacka
-          - Falla tätt:
-            - Falla tätt
-            - Hagla
-          - Utslag:
-            - Utslag
-            - Stor filsa lossnar
-          - Spricka:
-            - Springa
-            - Spricka
-            - Långsmal öppning
-          - Köra omkull:
-            - Vurpa
-            - Köra omkull
-          - Singla:
-            - Singlar (snön singlar ner)
-            - Falla med svängande rörelser till markens
-            - Singla slant
-      - Deformerande:
-        - Nedsmutsad:
-          - Nedsmord
-          - Nedsmutsad
-        - Skrapa:
-          - Kratsa
-          - Skrapa, repa
-          - Riva
-        - Böjd:
-          - Fallen
-          - Böjd
-      - Förstörande:
-        - Försämring:
-          - Försämring
-          - Förfalla
-          - Nedgång
-        - Förstörelse, nedgång:
-          - Förstöra
-          - Plundra
-          - Röja -> Avslöja, Städa
-          - Ödelägga
-          - Härja
-        - Krocka:
-          - Krocka
-          - Köra på och skada
-          - Ramma
-        - Välta:
-          - Välta
-          - Stjälpa
-          - Kantra
-          - Kapseja
-        - Förta:
-          - Förta
-          - Minska
-          - Förstöra
-          - Ta bort
-          - Stryka -> Ta bort, dra hand över, släta till
-      - Stöta, störta, stötta:
-        - Stöta:
-          - Stöta
-          - Springa
-          - Driva
-          - Köra
-          - Ränna (stampa)
-        - Stötta
-        - Störta:
-          - Störta
-          - Rasa
-          - Gå omkull
-          - Göra konkurs
-          - Gå överstyr
-      - Binda fast:
-        - Binda fast
-        - Tjudra
-      - Förtöja
-        - Förtöja
-        - Lägga fast med rep
-      - Tecken:
-        - Vink
-        - Tecken
-      - Försvagning:
-        - Urholka:
-          - Urholka
-          - Göra ihålig
-          - Underminera
+        - Berörning:
+          - Beröra:
+            - Snudda:
+              - Beröra lätt
+              - Snudda
+              - Tangera
+              - Vidröra
+            - Gnugga:
+              - Gnugga
+              - Gnida
+              - Gno
+          - Räta sig:
+            - Räta på sig
+            - Göra sig rak
+            - Sträcka på sig
+        - Krafter:
+          - Rubba:
+            - Flytta tungt
+            - Rubba
+            - Förskjuta
+          - Kasta häftigt:
+            - Slunga
+            - Vräka -> Köra ut hyresgäst från lägenhet
+            - Kasta häftigt
+            - Våldsamt kasta
+          - Skaka:
+            - Skaka
+            - Ruska
         - Försvagning:
-          - Avta
-          - Försvagas
-          - Tyna
-      - Sammansatta sakrörelser:
-        - Skingra:
-          - Skingra
-          - Splittra åt olika håll
-          - Driva bort
-          - Förjaga
-        - Snurrig:
-          - Yr
-          - Snurrig
-        - Få svindel:
-          - Hissna
-          - Få svindel
-    - Ljus:
-      - Självlysande:
-        - Fosforescerande
-        - Fosforescent
-        - Självlysande
-      - Rörelseljus:
-        - Flimra:
-          - Flimra
-          - Glittra
-          - Dallra med ljus
-          - Skimra med hastiga ljusväxlingar
-    - Ljud:
-      - Klingande:
-        - Klinga:
-          - Klinga -> Blad på svärd, såg
-          - Ringa
-          - Ljuda
-        - Vina:
-          - Vina
-          - Vissla
-      - Buller:
-        - Buller
-        - Tordön
-      - Skrik:
-        - Skrik
-        - Skrän
-      - Gnissel:
-        - Gnissel:
-          - Gnissel
-          - Knarrande
-        - Gnisslande:
-          - Gnisslande
-          - Knarrig
-      - Skall (hunds läte)
-      - Skarp:
-        - Skarp
-        - Gäll
-        - Genomträngande
-      - Eka:
-        - Eka
-        - Genljuda
-      - Knastra:
-        - Knastra
-        - Gnista
-        - Blixtra
-        - Spraka
-      - Skallra:
-        - Skallra
-        - Skramla
-        - Klirra (glasljud)
-      - Stämma:
-        - Stämma
-        - Röst/möte
-      - Rörelseljud:
-        - Porlande:
-          - Porlande
-          - Sorlande
-        - Surra:
-          - Surra
-          - Surrade
-          - Brummande
-          - Sus
-          - Sorl
-      - Brus:
+          - Urholka:
+            - Urholka
+            - Göra ihålig
+            - Underminera
+          - Försvagning:
+            - Avta
+            - Försvagas
+            - Tyna
+        - Deformering:
+          - Deformerande:
+            - Nedsmutsad:
+              - Nedsmord
+              - Nedsmutsad
+            - Skrapa:
+              - Kratsa
+              - Skrapa, repa
+              - Riva
+            - Böjd:
+              - Fallen
+              - Böjd
+          - Förstörande:
+            - Försämring:
+              - Försämring
+              - Förfalla
+              - Nedgång
+            - Förstörelse, nedgång:
+              - Förstöra
+              - Plundra
+              - Röja -> Avslöja, Städa
+              - Ödelägga
+              - Härja
+            - Krocka:
+              - Krocka
+              - Köra på och skada
+              - Ramma
+            - Välta:
+              - Välta
+              - Stjälpa
+              - Kantra
+              - Kapseja
+            - Förta:
+              - Förta
+              - Minska
+              - Förstöra
+              - Ta bort
+              - Stryka -> Ta bort, dra hand över, släta till
+          - Stöta, störta, stötta:
+            - Stöta:
+              - Stöta
+              - Springa
+              - Driva
+              - Köra
+              - Ränna (stampa)
+            - Stötta
+            - Störta:
+              - Störta
+              - Rasa
+              - Gå omkull
+              - Göra konkurs
+              - Gå överstyr
+            
+      - Vanliga rörelser:
+        - Generell färd:
+          - Hastighet:
+            - Genast:
+              - Genast
+              - Snabbt
+              - I ett huj
+            - Stilla:
+              - Bli stilla
+              - Mojna
+              - Stillastående
+              - Stiltje
+        - Linjära färd:
+          - Att gå:
+            - Att gå:
+              - Gå
+              - Promenera
+              - Vandra
+            - Militär:
+              - Marschera
+            - Traskande:
+              - Traska
+              - Spatsera
+            - Vada:
+              - Vada
+              - Gå i grunt
+            - Avfärd:
+              - Avfärd
+              - Att åka iväg
+              - Bege sig iväg
+            - Gå iväg:
+              - Gå väck
+              - Gå iväg
+              - Försvinn!
+            - Snubbla:
+              - Snubbla:
+                - Stappla
+                - Snubbla
+                - Staka sig
+              - Snava:
+                - Snava
+                - Sätta foten mot något och tappa balansen
+              - Tultande ungar:
+                - Tultande (ungar lär sig gå)
+            - Planlöst vandring:
+              - Irra
+              - Irrväg
+              - Planlös vandring
+            - Trampa:
+              - Klampa
+              - Stampa
+              - Trampa
+            - Slingra:
+              - Snäja
+              - Snara
+              - Slingra
+          - Färdformer:
+            - Staka:
+              - Driva fram med stav
+              - Staka
+            - Steg:
+              - Steg
+              - Kliv
+              - Fotspår
+            - Färdas:
+              - Färdas
+              - Täcka förr
+              - Tillrygglägga
+            - Slingra:
+              - Slingra
+              - Kräla
+          - Objektrörelser:
+            - Släpa:
+              - Dra
+              - Släpa
+              - Glida
+              - Hasa ner
+              - Lunka
+              - Glida
+              - Bogsera
+            - Att lämna:
+              - Tid att lämna
+              - Uppbrottets tid
+              - (Time to leave)
+          
+          
+        - Cirkulära färd:
+          - Svänga:
+            - Svänga (svänga av och an)
+            - Kränga
+          - Snurra:
+            - Snurra
+            - Rotera
+        
+        - Lägesrörelser:
+          - Fastspänd:
+            - Spänd:
+              - Spänd:
+                - Spänd
+              - Hängig:
+                - Slak (slakna)
+                - Hängig
+                - Slapp
+              - Fladdra:
+                - Vaja
+                - Fladdra
+                - Gunga
+                - Guppa
+                - Svaja
+                - Vagga
+            - Hög läge:
+              - Klättrat upp:
+                - Uppflygen
+                - Klättrat
+                - Hoppat upp
+          - Falla:
+            - Falla:
+              - Falla bakom:
+                - Falla bakom
+                - Sacka
+              - Falla tätt:
+                - Falla tätt
+                - Hagla
+              - Singla:
+                - Singlar (snön singlar ner)
+                - Falla med svängande rörelser till markens
+                - Singla slant
+            - Fallande:
+              - Svikta:
+                - Svikta
+                - Stappla
+                - Vackla
+                - Vara nära på att falla
+            - Spricka:
+              - Utslag:
+                - Utslag
+                - Stor filsa lossnar
+              - Spricka:
+                - Springa
+                - Spricka
+                - Långsmal öppning
+            - Omkull:
+              - Köra omkull:
+                - Vurpa
+                - Köra omkull
+        - Sammansatta sakrörelser:
+          - Skingra:
+            - Skingra
+            - Splittra åt olika håll
+            - Driva bort
+            - Förjaga
+          - Snurrig:
+            - Yr
+            - Snurrig
+          - Få svindel:
+            - Hissna
+            - Få svindel
+      - Spändhet:
+        - Töjning:
+          - Binda fast:
+            - Binda fast
+            - Tjudra
+          - Förtöja:
+            - Förtöja
+            - Lägga fast med rep
+    - 5 sinnens uppfattning:
+      - Ljus:
+        - Självlysande:
+          - Fosforescerande
+          - Fosforescent
+          - Självlysande
+        - Rörelseljus:
+          - Flimra:
+            - Flimra
+            - Glittra
+            - Dallra med ljus
+            - Skimra med hastiga ljusväxlingar
+          - Glans:
+            - Glans
+            - Lyster
+      - Ljud:
+        - Klingande:
+          - Klinga:
+            - Klinga -> Blad på svärd, såg
+            - Ringa
+            - Ljuda
+          - Vina:
+            - Vina
+            - Vissla
+            - Ge ifrån sig ett höggt och gällt och ihållande ljud
+        - Obehaglig ljud:
+          - Buller:
+            - Buller
+            - Tordön
+          - Skrik:
+            - Skrik
+            - Skrän
+          - Gnissel:
+            - Gnissel:
+              - Gnissel
+              - Knarrande
+            - Gnisslande:
+              - Gnisslande
+              - Knarrig
+          - Skall (hunds läte)
+          - Skarp:
+            - Skarp
+            - Gäll
+            - Genomträngande
+        - Naturlig ljud:
+          - Eka:
+            - Eka
+            - Genljuda
+          - Knastra:
+            - Knastra
+            - Gnista
+            - Blixtra
+            - Spraka
+          - Skallra:
+            - Skallra
+            - Skramla
+            - Klirra (glasljud)
+          - Stämma:
+            - Stämma
+            - Röst/möte
+        - Rörelseljud:
+          - Porlande:
+            - Porlande
+            - Sorlande
+          - Surra:
+            - Surra
+            - Surrade
+            - Brummande
+            - Sus
+            - Sorl
         - Brus:
-          - Brus
-          - Starkt väsande ljud
-        - Brusa:
-          - Brusa
-          - Låta med brus
-          - Brusa upp -> Plötsligt bli arg
-      - Inget ljud:
-        - Inte ett knyst
-        - Inte ett ljud
-    - Lukter:
-      - Dofter
-      - Odör:
-        - Odör
-        - Stank
-        - Vidrig lukt
+          - Brus:
+            - Brus
+            - Starkt väsande ljud
+          - Brusa:
+            - Brusa
+            - Låta med brus
+            - Brusa upp -> Plötsligt bli arg
+        - Inget ljud:
+          - Inte ett knyst
+          - Inte ett ljud
+      - Lukter:
+        - Dofter
+        - Odör:
+          - Odör
+          - Stank
+          - Vidrig lukt
         
   - Applikationer:
     - Världskarta:
@@ -1054,10 +1164,14 @@
           - Ett andetag
           - En utandning
       - Kroppsbehov:
-        - Hungrig:
-          - Hungrig
-          - Svälta ut
-          - Utsvulten
+        - Hunger:
+          - Hungrig:
+            - Hungrig
+            - Svälta ut
+            - Utsvulten
+          - Fastande mage:
+            - Fastande mage
+            - Tom mage
         - Göra ont:
           - Värka
           - Göra ont
@@ -1217,6 +1331,10 @@
             - Samtidig avfyrning av gevär
       - Andra former:
         - Korsfästa
+    - Försvarsverk:
+      - Palissad:
+        - Palissad
+        - Försvarsverk av pålar
     - Kemiska ämnen:
       - Lipider:
         - Fett
@@ -1286,6 +1404,7 @@
         - Sockel
         - Underlag
         - Fundament
+        - (Base)
     - Stadsarkitektur:
       - Fördämning:
         - Fördämning
@@ -1296,6 +1415,10 @@
           - Stolpe med gatubelysning
         
     - Växter:
+      - Växter:
+        - Växtlighet:
+          - Växtlighet
+          - Vegetation
       - Träd:
         - Trädsorter:
           - Tall
@@ -1361,6 +1484,10 @@
           - Dunge:
             - Dunge
             - En lite samling träd
+          - Snår:
+            - Snår
+            - Ett risig småskog
+            - Buskage
     - Djur:
       - Odjur, vidunder:
         - Odjur
@@ -1926,7 +2053,7 @@
       - en militäruniform
       - en skoluniform
     - reflexkläder
-  - Vanliga föremål:
+  - Vanliga föremål, Vanliga saker:
     - Föremål som tillbehör:
       - Huvudband:
         - Ett huvudband
@@ -1963,6 +2090,11 @@
         - Burk
       - Annat:
         - En näsduk
+    - Konstruktiv:
+      - Spira:
+        - Spira
+        - Smal rund stav
+        - Pole
   - Högtider:
     - Högtider:
       - En bukett
@@ -2037,13 +2169,15 @@
       - Spygatt:
         - Spygatt
         - Hål tömmande vatten
+      - Reling:
+        - Reling
+        - Räcke
+        - Övre kant på en båtsida
     - Fören:
       - För och akterända:
         - Stäv
         - För och akterända
     - Styrande:
-      - Rår:
-        - Rår
       - Brass:
         - Brass:
           - Brass
@@ -2059,6 +2193,11 @@
         - Rodd:
           - Rodd
           - Årtag
+        - Rår:
+          - Rår
+          - Åra
+          - Redskap att ro med
+          - (Oar)
         - Ro:
           - Ro
     - Segeldelar:
@@ -2089,6 +2228,9 @@
           - kursändring
           - gir (gira)
           - lova
+        - Lotsa:
+          - Lotsa
+          - Styra fartyg genom besvärliga farvatten
         - Vind akterifrån:
           - Forlig vind
           - Vind akterifrån
@@ -2136,6 +2278,9 @@
     - Jungman:
       - Jungman
       - Lägsta manskapsgrad
+    - Rorsman:
+      - Styrman
+      - Förare
       
 - Militär:
   - Militärträd:
@@ -2199,29 +2344,39 @@
 
 - Personutvecklande:
   - Kompetent:
-    - Skicklig:
-      - Duktig
-      - Duglig
-      - Skicklig
-    - Samvetsgrann:
-      - Samvetsgrann
-      - Plikttrogen
-      - (Noggrann)
-    - Prestation:
-      - Bragd
-      - Bedrift
-      - Prestation
-    - Färdighet:
-      - Färdighet
-      - Kompetens
-    - Betydelig:
-      - Anserlig
-      - Betydlig
-      - Ansevärd
-    - Verklig:
-      - Verkligen
-      - Sannerligen
-      - Minsann
+    - Kompetens:
+      - Skicklig:
+        - Duktig
+        - Duglig
+        - Skicklig
+      - Samvetsgrann:
+        - Samvetsgrann
+        - Plikttrogen
+        - (Noggrann)
+      - Prestation:
+        - Bragd
+        - Bedrift
+        - Prestation
+      - Färdighet:
+        - Färdighet
+        - Kompetens
+    - Betydlighet:
+      - Betydelig:
+        - Anserlig
+        - Betydlig
+        - Ansevärd
+      - Verklig:
+        - Verkligen
+        - Sannerligen
+        - Minsann
+    - Kompetering:
+      - Överträffa:
+        - Överträffa
+        - Vara bättre än
+        - Vara överlägsen
+      - Överträffa sig själv:
+        - Överträffa sig själv
+        - (Surpass oneself)
   - Kompetensnivå:
     - Starkhet:
       - Stark:
@@ -2237,15 +2392,15 @@
         - Futtig
         - Ynka
   - Krafter:
-    - Plötslig infall:
-      - Plötsligt infall
-      - Påhitt
-      - Nyck
     - Tåla:
       - Tåla
       - Stå ut med
       - Orka med
+    - Våga:
       - Våga
+      - Sätta på spel
+      - Satsa
+      - Riskera
     - Trumf
     - Stimulera:
       - Sätta fart på:
@@ -2307,12 +2462,6 @@
       - Beroende
       - Avhängig
       - (Dependent)
-  - Erövrning:
-    - Inta
-    - Besegra
-    - Övermanna
-    - Ta i besittning
-    - Erövra
   - Belöning:
     - Belöna
     - Premiera
@@ -2368,6 +2517,10 @@
       - Tillgiven (varaktigt visar vänskap)
       - Förbrödring
       - Umgås vännskapligt med
+    - Hjälpsam:
+      - Hjälpsam
+      - Tillmötesgående
+      - Tjänstvilligs
     - Ärlighet:
       - Tystlåten:
         - Tystlåten
@@ -2517,6 +2670,12 @@
     - Ledsen:
       - Ledsen
       - Ledsam
+    - Dyster:
+      - Dyster
+      - Melankoli
+      - Djup nedstämdhet
+    - Depression:
+      - Depression
   - Missnöjelse:
     - Missnöjd, sur
     - Tjura
@@ -2669,7 +2828,7 @@
     - Påfrestning:
       - Press
       - Påfrestning
-  - Jobbiga handlingar:
+  - Jobbiga känslohandlingar:
     - Skrika:
       - Skrika
       - Tjuta
@@ -2684,6 +2843,7 @@
       - Jämra sig
       - Kvida
       - Dovt och utdraget smärtljud
+      - Knota
     - Jämmer:
       - Stönande
       - Jämmer
@@ -2719,13 +2879,18 @@
       - Enig
       - Enhällig
   - Vanliga människor:
+    - Grannar:
+      - Granne
+      - Nästa
+      - I grannskapet
+    - Yngling:
+      - Yngling
+      - Ung man
+  - Viktiga människor:
     - Roliga människor:
       - Komiker
       - Clown
       - Lustigkurre
-    - Yngling:
-      - Yngling
-      - Ung man
     - Maktfull:
       - Makt:
         - Makt
@@ -2750,6 +2915,11 @@
       - Tillskyndare
       - Initiativtagare
       - (Encourager, promoter)*
+    - Förebild:
+      - Förebild
+      - Föredöme
+      - Idol
+      - Exempel
   - Dåliga människor:
     - Krympling:
       - Handikappad
@@ -2765,11 +2935,6 @@
     - Kumpan:
       - Kumpan
       - Medbrottsling
-  - Vanliga människor:
-    - Grannar:
-      - Granne
-      - Nästa
-      - I grannskapet
   - Annat:
     - Brottoffer:
       - Brottoffer
@@ -2779,6 +2944,9 @@
     - Förkroppsliga
 
 - Språklig:
+  - Tecken:
+    - Vink
+    - Tecken
   - Att prata:
     - Prat:
       - Prat
@@ -2805,6 +2973,7 @@
   - Hånfull:
     - Pik:
       - Pik
+      - Elakt ord
       - Spydighet
     - Hånfull:
       - Hånfull
@@ -2857,6 +3026,11 @@
         - Samråd
         - Diskussion
         - Rådplägning
+    - Viktiga ord:
+      - Sanna mina ord:
+        - Sanna mina ord
+        - Det kommer att bli som jag har sagt
+        - (Mark my words)
     - Anmärkningar:
       - Anmärkning:
         - Anmärkning:
@@ -2891,6 +3065,11 @@
       - Åsikter:
         - Åsikter
         - Eftergift(ge åsikt till annan)
+      - Anta:
+        - Anta
+        - Tro
+        - Anse
+        - Förmoda
       - Godta:
         - Godta
         - Antaga
@@ -2905,10 +3084,15 @@
         - Förkasta
         - Avslå
       - Tankar:
-        - Ideer
-        - Tankar
-        - Infall
-        - Snilleblixt (bra ide)
+        - Tankar:
+          - Tankar
+          - Ideer
+        - Bra ideer:
+          - Snilleblixt (bra ide)
+        - Plötslig infall:
+          - Plötsligt infall
+          - Påhitt
+          - Nyck
       - Avsikter:
         - Avsikt:
           - Med avsikt
@@ -3173,123 +3357,146 @@
         - Rekognoscera
         - (Recognize)
   - Konflikter:
-    - Konflikter:
-      - Konflikt:
-        - Kamp:
-          - Konflikt
-          - Kamp
-          - Dust
-          - Strid
-        - Sammandrabbning:
-          - Sammandrabbning
-          - Sammanstötning
-      - Bråk:
+    - Konkurrens:
+      - Konkurrens:
+        - Konkurrens människor:
+          - Konkurrent:
+            - Vanliga konkurrenter:
+              - Konkurrent
+            - Rival:
+              - Rival
+              - Medtävlare om kärlek
+        - Konkurrensstatus:
+          - Försprång:
+            - Försprång
+            - Ledning
+            - Ledande ställning
+            - Försteg
+        - Konkurrensmöte:
+          - Krigsråd:
+            - Krigsråd
+            - (War council)
+      - Konflikter:
+        - Konflikt:
+          - Kamp:
+            - Konflikt
+            - Kamp
+            - Dust
+            - Strid
+          - Sammandrabbning:
+            - Sammandrabbning
+            - Sammanstötning
         - Bråk:
           - Bråk:
-            - Bråk
-          - Smågräl:
-            - Smågräl
-            - Tjat
-            - Gnat
-        - Bråkig:
-          - Olydig
-          - Trotsig
-          - Bråkig
-        - Bråkande:
-          - Bråkande
-          - Leva rövare
-        - Trotsa:
-          - Trotsa
-          - Göra öppet motstånd mot
-    - Konfliktaktioner:
-      - Att slå:
-        - Slå:
-          - Slå
-          - Dänga
-          - Smälla
-          - Braka
-          - Knäppa -> Fästa ihop
-        - Slag:
-          - Sittopp
-          - Smäll
-          - Slag
-        - Slå sönder:
-          - Slå/skälla sönder och samman
-        - Smällning:
-          - Smällning
-          - Sprängning
-          - Bombardering
-          - (Bombardment)
-        - Bräcka:
-          - Bräcka
-          - Bryta
-          - Knäcka
-      - Skälla:
-        - Att skälla:
-          - Skälla
-          - Gräla
-          - Gorma
-      - Andra handlingar:
-        - Desarmera:
-          - Desarmera
-          - Oskadliggöra
-        - Hytta:
-          - Hytta
-          - Hötta
-          - Hotfullt skaka näven
-    - Konflikthändelser:
-      - Anfall:
-        - Anfall
-        - Utfall -> Resultat
-      - Belägra:
+            - Bråk:
+              - Bråk
+            - Smågräl:
+              - Smågräl
+              - Tjat
+              - Gnat
+          - Bråkig:
+            - Olydig
+            - Trotsig
+            - Bråkig
+          - Bråkande:
+            - Bråkande
+            - Leva rövare
+          - Trotsa:
+            - Trotsa
+            - Göra öppet motstånd mot
+      - Konfliktaktioner:
+        - Att slå:
+          - Slå:
+            - Slå
+            - Dänga
+            - Smälla
+            - Braka
+            - Knäppa -> Fästa ihop
+          - Slag:
+            - Sittopp
+            - Smäll
+            - Slag
+          - Slå sönder:
+            - Slå/skälla sönder och samman
+          - Smällning:
+            - Smällning
+            - Sprängning
+            - Bombardering
+            - (Bombardment)
+          - Bräcka:
+            - Bräcka
+            - Bryta
+            - Knäcka
+        - Skälla:
+          - Att skälla:
+            - Skälla
+            - Gräla
+            - Gorma
+        - Andra handlingar:
+          - Desarmera:
+            - Desarmera
+            - Oskadliggöra
+          - Hytta:
+            - Hytta
+            - Hötta
+            - Hotfullt skaka näven
+      - Konflikthändelser:
+        - Anfall:
+          - Anfall
+          - Utfall -> Resultat
         - Belägra:
-          - Belägra
-          - Belägrare
-        - Omringning:
-          - Omringning, tvingande fiende ge upp
-      - Hunsa:
-        - Hunsa
-        - Mobba
-      - Lösa konflikten med:
-        - Göra upp med någon
-        - Lösa konflikten med
-        - Tävla med
-      - Hämnd:
-        - Hämnas
-        - Ge betalt för gammal ost
-        - Hämndgirig
-      - Allierad:
-        - Bundsförvant
-        - Allierad
-        - Kamrat i kampen
-      - Bakslughet:
-        - Bakslug:
-          - Bakslug
-          - (Backstabbing)
-          - Slug
-          - Lömsk
-          - Illistig
-          - Försåtlig
-        - Krypskytt:
-          - Krypskytt
-          - Tjuvskytt
-          - Prickskytt i bakhåll
-    - Konflikt:
-      - Konkurrent:
-        - Vanliga konkurrenter:
-          - Konkurrent
-        - Rival:
-          - Rival
-          - Medtävlare om kärlek
+          - Belägra:
+            - Belägra
+            - Belägrare
+          - Omringning:
+            - Omringning, tvingande fiende ge upp
+        - Hunsa:
+          - Hunsa
+          - Mobba
+        - Lösa konflikten med:
+          - Göra upp med någon
+          - Lösa konflikten med
+          - Tävla med
+        - Hämnd:
+          - Hämnas
+          - Ge betalt för gammal ost
+          - Hämndgirig
+        - Allierad:
+          - Bundsförvant
+          - Allierad
+          - Kamrat i kampen
+        - Bakslughet:
+          - Bakslug:
+            - Bakslug
+            - (Backstabbing)
+            - Slug
+            - Lömsk
+            - Illistig
+            - Försåtlig
+          - Krypskytt:
+            - Krypskytt
+            - Tjuvskytt
+            - Prickskytt i bakhåll
+    - Tävlingar:
+      - I tävling:
+        - I tävling
+        - I kapp
+    
   - Viktiga handlingar:
-    - När det verkligen gäller:
-      - När det verkligen gäller
-      - När det kommer till kritan
-    - Rädda sitt eget skinn:
-      - Rädda sitt eget skinn
-      - Inte utsätta sig för risker
-    - Görande och låtande:
-      - Vad man gör och inte gör (handlingsätt)
+    - Samvetsgranna handlingar:
+      - När det verkligen gäller:
+        - När det verkligen gäller
+        - När det kommer till kritan
+      - Rädda sitt eget skinn:
+        - Rädda sitt eget skinn
+        - Inte utsätta sig för risker
+      - Görande och låtande:
+        - Vad man gör och inte gör (handlingsätt)
+    - Försumliga handlingar:
+      - Gå dit där näsan pekar:
+        - Gå dit där näsan pekar
+        - Inte tänker sig
+        - Utan mål
   - Förhandling:
     - Parlamentärflagg:
       - Parlamentärflagg
@@ -3325,6 +3532,7 @@
       - Se
       - Skåda
       - Syn
+      - Anblick
       - Åsyn
       - Iaktta
     - Kunna:
@@ -3449,6 +3657,10 @@
     - Rang:
       - Rang
       - Social ställning
+    - Föra befäl:
+      - Föra befäl
+      - Bli officer
+      - (Be in command)
   - Lag:
     - Lagledare:
       - Lagledare
@@ -3634,12 +3846,16 @@
         - Förvirring
         - Villervalla
       - Utblottad:
-        - Utblottad
-        - Utfattig
-        - Stå på bar backe
-      - Sticka fram:
-        - Sticka fram
-        - Skjuta ut
+        - Blotta:
+          - Blotta
+          - Avslöja
+        - Utblottad:
+          - Utblottad
+          - Utfattig
+          - Stå på bar backe
+        - Sticka fram:
+          - Sticka fram
+          - Skjuta ut
     - Vardaglig:
       - Vardaglig ointressant:
         - Vardaglig ointressant
@@ -3674,11 +3890,23 @@
         - Smita:
           - Smita
           - Slinka
-      - Ta över:
-        - Lägga beslag på:
+      - Erövring:
+        - Erövring:
+          - Erövra
           - Ta
           - Kapa
           - Lägga beslag på
+          - Inta
+          - Besegra
+          - Övermanna
+          - Ta i besittning
+          - Bemäktiga sig
+          - (Occupy)
+          - (Dominate)
+        - Besittning:
+          - Besittning
+          - Innehav
+          - Ägande
       - Problem med ungar:
         - Rackartyg:
           - Fuffens
@@ -3918,6 +4146,12 @@
       - Ovärderlig:
         - Ovärderlig
         - Kan inte värderas med pengar
+  - Tider:
+    - Förhala tiden:
+      - Förhala tiden
+      - Söla
+      - Mjölka
+      - Maska
   - Värdeberäkning:
     - Värdeberäkning:
       - Värdeberäkning
@@ -3952,8 +4186,8 @@
       - Enklare fest
       - Umgänge
     
-- Agerande, uppförande:
-  - Agerande:
+- Beteende, uppförande, agerande:
+  - Uppförande:
     - Att lära någon agera:
       - Lära någon (att veta hut/ uppföra sig ordentligt)
     - Uppföra sig:
@@ -3964,8 +4198,12 @@
     - Uppförande:
       - Uppförande
       - Beteende
-  - Former av agerande:
-    - Dåliga agerande:
+  - Former av beteende:
+    - Bra beteende:
+      - Lyda:
+        - Lyda
+        - Åtlyda
+    - Dåliga beteende:
       - Hänsynslös:
         - Skrumpelfri
         - Rådlös
@@ -3977,6 +4215,15 @@
     - Begå:
       - Begå
       - Begången (en)/ Begånget (ett)
+  - Tala förstånd med:
+    - Tala förstånd med:
+      - Tala förstånd med
+    - Ta itu med:
+      - Ta itu med
+      - (Get to work on something)
+    - Förklara för någon:
+      - Förklara för någon
+      - (Reason with someone)
   - skråla, bröla, vråla, oartikulerat
   - stopp och belägg!, ta det lungt!, låt bli!:
     - stopp och belägg!
@@ -4083,6 +4330,7 @@
     - musik
     - dans
     - sång
+  - Amfiteater
   - en fotostudio, ett fotografi, fotografier, en fotoram:
     - en fotostudio
     - ett fotografi
@@ -4156,7 +4404,11 @@
     - spett
     - en eld
     - en fickflaska
-  - en jakt
+  - en jakt:
+    - Jakt:
+    - lockbete:
+      - lockbete
+      - åtel
   
 - Naturen:
   - Astronomi:
@@ -4220,6 +4472,7 @@
           - Rännil
           - En sjö
           - Fjord (lång smal vik)
+          - En älv
       - Vattenland:
         - Vattenland:
           - Oländig
@@ -4246,7 +4499,17 @@
           - Stor våg
           - Havsvågor
           - Dyning
-          - En älv
+          - Havsvågor som vandrat från det vindområde där de bildats
+        - Bränningar:
+          - Bränning
+          - Våg bryts mot strand
+      - Tidsvatten:
+        - Flod:
+          - Flod
+          - Hög tidsvatten
+        - Ebb:
+          - Ebb
+          - Låg tidsvatten
       - Vattenfall:
         - Vattenfall:
           - Vattenfall
@@ -4267,6 +4530,11 @@
           - Myr
           - Kärr
           - Sankmark
+        - Sandrevel:
+          - Sandrevel
+          - Sandrev
+          - Sandås
+          - Sandbank
         - Stäpp:
           - Stäpp
           - En slätt
@@ -4334,69 +4602,40 @@
   - rykta, (borsta/sköta en häst)
   - klängig (klänger sig fast)
   - kela (smeka, mysa, gosa)
+
   
-- Tillsatsord:
-  - Kanske:
-    - Kanske
-    - Kanhända
-    - Måhända
-  - Dessutom:
-    - Dessutom
-    - Även
-    - Därtill
-    - Därtill kommer (någonting)
-    - (In addition)
-  - Egentligen:
-    - Egentligen
-    - Strängt taget
-    - I själva verket
-  - Medan:
-    - Medan
-    - Allteftersom
-  - Eftersom:
-    - Eftersom
-    - För att
-    - Därför att
-    - Ty
-    - För
-  - Därför:
-    - Därför
-    - Det resulterar i ...
-  
-- Vanliga interjektioner:
-  - vips, bums
-  - brak, bang, (crash)
-  
-- Vanliga fraser:
-  - Allt vad tygen håller:
-    - Allt vad tygen håller
-    - Så mycket man orkar
-    - Så mycket redskapen tillåter
-  - Det är ingen tvekan om:
-    - Det är inget tvekan om
-    - Det är inte tu tal om det
-  - Vara illa däran:
-    - Vara illa däran
-    - Vara svårt skadad eller sjuk
-  - Han är dödens:
-    - Han är dödens
-    - Han är dödens lammunge
-  - För brinnande livet:
-    - För brinnande livet
-    - Av alla krafter
-    - I full fart
-  - Frid vare med ...:
-    - Frid vare med ...
-    - Be peace with ...
+- Språkliga egenskaper:
+  - Vanliga fraser:
+    - Allt vad tygen håller:
+      - Allt vad tygen håller
+      - Så mycket man orkar
+      - Så mycket redskapen tillåter
+    - Det är ingen tvekan om:
+      - Det är inget tvekan om
+      - Det är inte tu tal om det
+    - Vara illa däran:
+      - Vara illa däran
+      - Vara svårt skadad eller sjuk
+    - Han är dödens:
+      - Han är dödens
+      - Han är dödens lammunge
+    - För brinnande livet:
+      - För brinnande livet
+      - Av alla krafter
+      - I full fart
+    - Frid vare med ...:
+      - Frid vare med ...
+      - Be peace with ...
+      
+  - Vanliga metaforer:
+    - Pigg som en mört
+    - Vig som en apa
     
-- Vanliga metaforer:
-  - Pigg som en mört
-  - Vig som en apa
-  
-- Jakt:
-  - lockbete:
-    - lockbete
-    - åtel
+- Fri språk:
+  - Vanliga interjektioner:
+    - vips, bums
+    - brak, bang, (crash)
+
   
 - Kvarstående:
-  - 3.1 Hur mitt äventyr i land började: Sandrevel
+  - 2.6 Krigsråd: Bog

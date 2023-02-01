@@ -23,7 +23,7 @@ class Config(object):
         return 'mosverkstad'
         # return 'temp'
 
-    staticmethod
+    @staticmethod
     def name_table():
         return DbTable("nameTable", ['item'], [('id', 'int not null auto_increment'), ('item', 'text')], 'PRIMARY KEY (id)')
 

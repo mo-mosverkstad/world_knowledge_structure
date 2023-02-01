@@ -485,6 +485,10 @@
           - Var och en
           - Vardera
           - (Everyone)
+        - Tur och ordning:
+          - I tur och ordning
+          - En efter en
+          - I den ordning som prioritering medger
         - På måfå
       - Beståndsdelar:
         - Bestånd:
@@ -524,16 +528,20 @@
   
   - Grundläggande sakegenskaper:
     - Värme:
-      - Värme:
+      - Generell värme:
         - Varm:
           - Varm:
             - Varm
           - Värma:
             - Värma
-          - Brnna:
+          - Bränna:
             - Bränna
             - Steka
             - Gassa
+          - Röka:
+            - Röka
+            - Bolma
+            - Ryka kraftigt
         - Kall:
           - Kall:
             - Kall
@@ -698,10 +706,13 @@
               - Stryka -> Ta bort, dra hand över, släta till
           - Stöta, störta, stötta:
             - Stöta:
-              - Stöta
-              - Springa
-              - Driva
-              - Köra
+              - Stöta:
+                - Springa
+                - Driva
+                - Köra
+              - Stöta:
+                - Skifta
+                - Bryta mot
               - Ränna (stampa)
             - Stötta
             - Störta:
@@ -710,6 +721,16 @@
               - Gå omkull
               - Göra konkurs
               - Gå överstyr
+          - Välbehållenhet:
+            - Välbehållen:
+              - Välbehållen
+              - Oskadad
+              - Hel
+            - Trasig:
+              - Trasig
+              - Förstörd
+              - Fördärvad
+              - Avslagen (nekad unken)
             
       - Vanliga rörelser:
         - Generell färd:
@@ -876,6 +897,7 @@
           - Förtöja:
             - Förtöja
             - Lägga fast med rep
+            
     - 5 sinnens uppfattning:
       - Ljus:
         - Självlysande:
@@ -965,6 +987,12 @@
           - Vidrig lukt
         
   - Applikationer:
+    - Generell applikation:
+      - Förbrukning:
+        - Byta:
+          - Byta
+          - Skifta
+          - Växla
     - Världskarta:
       - Riktningsord:
         - Nord
@@ -1345,6 +1373,12 @@
           - Trä
           - Timmer
           - Stockar
+        - Rå:
+          - Rå:
+            - Rå
+          - Rånock:
+            - Rånock
+            - Spetsen på en rå
         - Träbygga:
           - Timra (n. Timring)
       - Färg:
@@ -2161,6 +2195,10 @@
         - Babord (vänster sida)
         - Styrbord (höger sida)
         - Akter
+      - Fördelar:
+        - Bog:
+          - Bog
+          - Främsta delen på en båt
     - Nedre delar:
       - Skepp nedersta planka:
         - Kölsvin
@@ -2181,6 +2219,9 @@
       - Brass:
         - Brass:
           - Brass
+        - Brassa:
+          - Brassa
+          - Vända segeln och rår med vind
         - Brassa på:
           - Brassa på
           - Satsa för fullt
@@ -2260,7 +2301,14 @@
       - Ankra:
         - Ankra
         - Sätta på grund
-  - Överbord:
+  - Båtvatten:
+    - Farvatten:
+      - Farvatten
+      - Vattenväg
+    - Kölvatten:
+      - Kölvatten
+      - Vatten bakom skeppets köl
+  - Straff:
     - Överbord:
       - Lämpa överbord
       - Kasta i vattnet från fartyg
@@ -2268,6 +2316,11 @@
       - Landsatt
     - Gå på plankan:
       - Gå på plankan
+    - Kölhala:
+      - Kölhala
+      - Kölhalning
+      - En straff vid skepp
+      - -> Lägga båten på sidan, vända in och ut
   - Skeppmänniskor:
     - Landkrabba:
       - Landkrabba
@@ -2539,6 +2592,14 @@
       - Välvillig
       - Nådig
       - (Merciful)
+    - Generös:
+      - Generös:
+        - Generös
+        - Frikostig
+        - Storsint
+        - Tolerant
+      - Snål:
+        - Snål
   - Optimism:
     - Optimistisk:
       - Optimistisk
@@ -2779,6 +2840,7 @@
         - Uppmärksam
         - Vaken
         - Påpasslig
+        - (Alert)
     - Redlös:
       - Redlös:
         - Redlös
@@ -2802,32 +2864,40 @@
       - I spänd väntan
       - På helspänn
   - Avskyvärd:
-    - Obehaglig:
-      - Obehaglig
-      - Motbjudande
     - Besvärlig:
-      - Jobbig
-      - Mördosam
-      - Besvärlig
-      - Bedövande
-      - Till råga på allt -> Förutom allt besvärligt
-    - Dödskamp:
-      - Dödskamp
-      - Döende
-      - Plågor
-      - I dödskamp
-      - Ängslig
+      - Obehaglig:
+        - Obehaglig
+        - Motbjudande
+      - Besvärlig:
+        - Jobbig
+        - Mördosam
+        - Besvärlig
+        - Bedövande
+        - Till råga på allt -> Förutom allt besvärligt
+      - Besvärlig ansträngande:
+        - Besvärlig
+        - Ansträngande
+        - Slitig
+        - Påfrestande
     - Desperation:
-      - Desperation
-      - Hopplöshet
-      - Förtvivlan
-      - Ängslan
-      - Nervös
-      - Orolig
-      - Att gruva sig
-    - Påfrestning:
-      - Press
-      - Påfrestning
+      - Dödskamp:
+        - Dödskamp
+        - Döende
+        - Plågor
+        - I dödskamp
+        - Ängslig
+      - Desperation:
+        - Desperation
+        - Hopplöshet
+        - Förtvivlan
+        - Ängslan
+        - Nervös
+        - Orolig
+        - Att gruva sig
+    - Påtryck:
+      - Påfrestning:
+        - Press
+        - Påfrestning
   - Jobbiga känslohandlingar:
     - Skrika:
       - Skrika
@@ -3322,12 +3392,6 @@
         - Besanna
         - Bekräfta
         - Bevisa
-    - Problemtyper:
-      - Förstörd:
-        - Trasig
-        - Förstörd
-        - Fördärvad
-        - Avslagen (nekad unken)
   - Problemlösningar:
     - Att hindra:
       - Att hindra:
@@ -3383,6 +3447,7 @@
             - Kamp
             - Dust
             - Strid
+            - Kollision
           - Sammandrabbning:
             - Sammandrabbning
             - Sammanstötning
@@ -3405,41 +3470,51 @@
             - Trotsa
             - Göra öppet motstånd mot
       - Konfliktaktioner:
-        - Att slå:
-          - Slå:
-            - Slå
-            - Dänga
-            - Smälla
-            - Braka
-            - Knäppa -> Fästa ihop
-          - Slag:
-            - Sittopp
-            - Smäll
-            - Slag
-          - Slå sönder:
-            - Slå/skälla sönder och samman
+        - Generella:
+          - Att slå:
+            - Slå:
+              - Slå
+              - Dänga
+              - Smälla
+              - Braka
+              - Knäppa -> Fästa ihop
+            - Slag:
+              - Sittopp
+              - Smäll
+              - Slag
+            - Slå sönder:
+              - Slå/skälla sönder och samman
+            
+            - Bräcka:
+              - Bräcka
+              - Bryta
+              - Knäcka
+          - Skälla:
+            - Att skälla:
+              - Skälla
+              - Gräla
+              - Gorma
+          - Andra handlingar:
+            - Desarmera:
+              - Desarmera
+              - Oskadliggöra
+            - Hytta:
+              - Hytta
+              - Hötta
+              - Hotfullt skaka näven
+        - Stora handlingar:
           - Smällning:
             - Smällning
             - Sprängning
             - Bombardering
             - (Bombardment)
-          - Bräcka:
-            - Bräcka
-            - Bryta
-            - Knäcka
-        - Skälla:
-          - Att skälla:
-            - Skälla
-            - Gräla
-            - Gorma
-        - Andra handlingar:
-          - Desarmera:
-            - Desarmera
-            - Oskadliggöra
-          - Hytta:
-            - Hytta
-            - Hötta
-            - Hotfullt skaka näven
+          - Bredsida:
+            - Bredsida
+            - Bombanfall
+            - Skottlossning
+            - Avfyrning av kanoner
+        
+            
       - Konflikthändelser:
         - Anfall:
           - Anfall
@@ -3497,6 +3572,10 @@
         - Gå dit där näsan pekar
         - Inte tänker sig
         - Utan mål
+  - Väntan:
+    - Avvakta:
+      - Avvkata
+      - Vänta på
   - Förhandling:
     - Parlamentärflagg:
       - Parlamentärflagg
@@ -3734,6 +3813,10 @@
       - Företagsam
       - Driftig
       - Energisk
+    - Åtgärd:
+      - Åtgärd
+      - Mått och steg
+      - Disposition
   - Verksamhetslängd:
     - Börda:
       - Börda
@@ -4365,7 +4448,10 @@
     - Internet
     - dataspel
   - bowling, biljard, domino:
-    - bowling
+    - bowling:
+      - Käglor:
+        - Kägla
+        - Konisk trästycke som ska slås omkull
     - biljard
     - domino
   - pussel
@@ -4439,6 +4525,11 @@
         - Solrök
       - Regnbåge:
         - En regnbåge
+    - Mot himmel:
+      - Mot himmel
+      - Till väders
+      - Uppåt
+      - Mot skyn
     - Vindar:
       - En vind
       - En orkan
@@ -4475,14 +4566,21 @@
           - En älv
       - Vattenland:
         - Vattenland:
-          - Oländig
-        - Kust:
-          - Bukt
-          - Rund havsvik
-          - Kust
-          - Vattenbryn
-        - En ö:
-          - En ö
+          - Oländig:
+            - Oländig
+          - Kust:
+            - Bukt
+            - Rund havsvik
+            - Kust
+            - Vattenbryn
+        - Öar:
+          - En ö:
+            - En ö
+          - En holme:
+            - En liten ö
+          - En udde:
+            - En udde
+            - En halvö
       - Vågor:
         - Vågor:
           - Våg:
@@ -4638,4 +4736,4 @@
 
   
 - Kvarstående:
-  - 2.6 Krigsråd: Bog
+  - 2.5 Vad jag hörde i äppeltunnan: Söla

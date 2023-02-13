@@ -47,9 +47,26 @@
               - Vers à
               - En face
               - Elle donne sur (donner)
-      - Le dimentions:
+      - Les attributs:
         - Les attributs:
-          - Elle est longue/haute de 70 mètres
+          - Mesurer:
+            - Il mesure
+            - Elle est longue/haute de 70 mètres
+          - Doux:
+            - Doux, douce
+          - Faible:
+            - Faible
+            - Vague, vaguement
+          - Fort:
+            - Fort
+            - Vif, vive
+          - Instabilité:
+            - Instabilité
+          - Secret:
+            - Secret
+          - Sécher:
+            - Sécher
+            - Séchés
         - Comparaison:
           - C'est aussi petit/grand/énorme que ...
           - C'est plus court/long que ...
@@ -373,6 +390,11 @@
             - Fouiller
           - Découvirir:
             - Découvirir
+        - Essuyer:
+          - Essuyers
+          - Elle s'essuie
+        - Propre:
+          - Propre
       - Les directions:
         - Questions:
           - En cherchent:
@@ -406,8 +428,154 @@
           - Aider:
             - Pouvez-vous m'aider s'il vous plaît?
   - Des application:
-    - Choses général:
+    - L heure:
+      - Déscription des temps:
+        - Déscription:
+          - La journée de Karim
+          - La montre en or
+        - Expression de temps:
+          - Demain, je vais prendre le train
+          - On passe une journée merveilleuse (passer)
+        - Quelle heure?:
+          - Il est quelle heure?
+          - À quelle heure ?
+          - Combien de temps
+        - Il est ...:
+          - À ... heures
+          - Il est ... heures
+          - Il est minuit/midi
+          - Vers 22 heures
+          - Jusqu'à midi
+      - Actions des temps:
+        - En retard:
+          - Je suis en retard
+          - Toujours en retard
+          - Je n'ai pas le temps
+        - Se dépêcher de:
+          - Dépêche-toi
+          - Tu te dépêches de
+        - Commencer:
+          - Nous avons commencé
+          - Elle se met à
+        - Finir:
+          - Il finit
+          - Il termine
+          - À la fin de
+          - Elle met fin à
+      - Les temps:
+        - Temps:
+          - Maintenant
+          - En même temps
+          - Pendant
+          - Il y a quelque temps
+        - Période de temps:
+          - Ça dure depuis
+          - Une heure, une demi-heure plus tard
+          - Les trois semaines passent vite
+          - Depuis trois semaines
+          - Dans cinq minutes
+          - Au bout d'un an/moment, à ce moment
+          - Un instant
+        - Toujours:
+          - Toujours, tout le temps, permanent
+          - Souvent
+          - Parfois
+          - À peine
+          - Jamais
+        - À les jours:
+          - À jeudi alors
+          - Vendredi après-midi/soir
+        - Les jours relatif:
+          - L'autre jour
+          - Hier
+          - Aujourd'hui
+          - Demain
+          - Avenir
+        - Année:
+          - Chaque année
+          - Tous les deux ans
+        - Le jour:
+          - Le matin
+          - Cet après-midi
+          - L'après-midi
+          - Ce/le soir
+          - Une journée, ce jour-là
+          - Un de ces jours
+        - Les jours de semaine:
+          - Lundi
+          - Mardi
+          - Mercredi
+          - Jeudi
+          - Vendredi
+          - Samedi
+          - Dimanche
+          - À lundi, le lundi
+          - Samedi matin
+          - Le/ce weekend, un weekend sur deux
+        - Les mois de l'année:
+          - Janvier
+          - Février
+          - Mars
+          - Avril
+          - Mai
+          - Juin
+          - Juillet
+          - Aout
+          - Septembre
+          - Octobre
+          - Novembre
+          - Décembre
+          - Fin juin
+        - Saisons:
+          - En hiver
+          - En été (Cet été là)
+        - Positions de temps:
+          - Avant (En avance, à l'avance)
+          - Tôt
+          - Au début
+          - Tard
+          - Trop tard
+          - Il est très tard
+          - Peu de temps avant
+          - Bientôt
+          - Déjà
+    - Les temps:
       - ...
+    - Choses réguliers:
+      - Choses réguliers:
+        - La carte d'identité
+        - Mon numéro de téléphone
+        - Clé
+        - Chèque cadeau
+        - Bijou
+        - Bracelet
+        - La carte postale
+        - Le feuille
+        - Des bougies
+        - Mât
+      - Lumière:
+        - Allumer:
+          - Il allume
+      - Des jeux:
+        - Jeux:
+          - Jeu de mémoire
+        - Les éxpressions en jouant:
+          - Joue à
+          - À toi/moi
+      - Frontière:
+        - La chaîne
+        - La frontière
+        - Entre
+    - Des composites:
+      - Sac:
+        - Dans ton sac
+        - Ton sac de sport
+        - Sac à main
+      - Poche:
+        - Dans ta poche
+        - Poche en papier
+      - Poubelle:
+        - Poubelle
     - Corps humain et santé:
       - Corps humain:
         - La tête:
@@ -487,167 +655,7 @@
           - Surfer sur le web
           - Tu devrais le chercher sur internet
     
-  - Choses géneral:
-    - Sac:
-      - Dans ton sac
-      - Ton sac de sport
-      - Sac à main
-    - Poche:
-      - Dans ta poche
-      - Poche en papier
-    - Choses géneral:
-      - La carte d'identité
-      - Mon numéro de téléphone
-      - Clé
-      - Chèque cadeau
-      - Bijou
-      - Bracelet
-      - La carte postale
-      - Le feuille
-      - Des bougies
-      - Mât
-    - Poubelle
-    - Lumière:
-      - Allumer:
-        - Il allume
-    - Des jeux:
-      - Jeux:
-        - Jeu de mémoire
-      - Les éxpressions en jouant:
-        - Joue à
-        - À toi/moi
-    - Frontière:
-      - La chaîne
-      - La frontière
-      - Entre
-  - Déscription choses:
-    - Mesurer:
-      - Il mesure
-    - Doux:
-      - Doux, douce
-    - Faible:
-      - Faible
-      - Vague, vaguement
-    - Fort:
-      - Fort
-      - Vif, vive
-    - Instabilité
-    - Secret
-    - Sécher:
-      - Sécher
-      - Séchés
-    - Elle s'essuie
-    - Propre
   - Simple:
-    - Mots de temps:
-      - Déscription:
-        - La journée de Karim
-        - La montre en or
-      - Expression de temps:
-        - Demain, je vais prendre le train
-        - On passe une journée merveilleuse (passer)
-      - Quelle heure?:
-        - Il est quelle heure?
-        - À quelle heure ?
-        - Combien de temps
-      - Il est ...:
-        - À ... heures
-        - Il est ... heures
-        - Il est minuit/midi
-        - Vers 22 heures
-        - Jusqu'à midi
-      - En retard:
-        - Je suis en retard
-        - Toujours en retard
-        - Je n'ai pas le temps
-      - Se dépêcher de:
-        - Dépêche-toi
-        - Tu te dépêches de
-      - Toujours:
-        - Toujours, tout le temps, permanent
-        - Souvent
-        - Parfois
-        - À peine
-        - Jamais
-      - Les temps:
-        - Temps:
-          - Maintenant
-          - En même temps
-          - Pendant
-          - Il y a quelque temps
-        - Période de temps:
-          - Ça dure depuis
-          - Une heure, une demi-heure plus tard
-          - Les trois semaines passent vite
-          - Depuis trois semaines
-          - Dans cinq minutes
-          - Au bout d'un an/moment, à ce moment
-          - Un instant
-        - À les jours:
-          - À jeudi alors
-          - Vendredi après-midi/soir
-        - Les jours relatif:
-          - L'autre jour
-          - Hier
-          - Aujourd'hui
-          - Demain
-          - Avenir
-        - Année:
-          - Chaque année
-          - Tous les deux ans
-      - Le jour:
-        - Le matin
-        - Cet après-midi
-        - L'après-midi
-        - Ce/le soir
-        - Une journée, ce jour-là
-        - Un de ces jours
-      - Les jours de semaine:
-        - Lundi
-        - Mardi
-        - Mercredi
-        - Jeudi
-        - Vendredi
-        - Samedi
-        - Dimanche
-        - À lundi, le lundi
-        - Samedi matin
-        - Le/ce weekend, un weekend sur deux
-      - Les mois de l'année:
-        - Janvier
-        - Février
-        - Mars
-        - Avril
-        - Mai
-        - Juin
-        - Juillet
-        - Aout
-        - Septembre
-        - Octobre
-        - Novembre
-        - Décembre
-        - Fin juin
-      - Saisons:
-        - En hiver
-        - En été (Cet été là)
-      - Positions de temps:
-        - Avant (En avance, à l'avance)
-        - Tôt
-        - Au début
-        - Tard
-        - Troå tard
-        - Il est très tard
-        - Peu de temps avant
-        - Bientôt
-        - Déjà
-      - Commencer:
-        - Nous avons commencé
-        - Elle se met à
-      - Finir:
-        - Il finit
-        - Il termine
-        - À la fin de
-        - Elle met fin à
     - Les temps:
       - Déscription
       - Expressions de temps:

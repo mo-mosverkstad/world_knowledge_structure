@@ -1,4 +1,184 @@
 - Déscription choses:
+  - Choses simples:
+    - Numéros:
+      - Compter:
+        - Première
+        - Deuxième
+        - Dernier
+      - Prèmiere:
+        - Première
+        - La prèmiere fois
+        - D'abord
+      - Ordre:
+        - Prochain
+        - Au suivant
+        - à tour de rôle
+      - Scalaire:
+        - Par jour
+        - Au moins
+        - Environ
+    - Les coleurs:
+      - Déscription:
+        - Quelles couleurs ?
+        - De toutes les couleurs
+      - Des couleurs:
+        - Blanc (blanche)
+        - Bleu
+        - Gris
+        - Noir
+        - Vert
+        - Marron
+        - Jaune
+        - Orange
+        - Noir
+        - Sombre
+    - L heure:
+      - Déscription des temps:
+        - Déscription:
+          - La journée de Karim
+          - La montre en or
+        - Expression de temps:
+          - Demain, je vais prendre le train
+          - On passe une journée merveilleuse (passer)
+        - Quelle heure?:
+          - Il est quelle heure?
+          - À quelle heure ?
+          - Combien de temps
+        - Il est ...:
+          - À ... heures
+          - Il est ... heures
+          - Il est minuit/midi
+          - Vers 22 heures
+          - Jusqu'à midi
+      - Actions des temps:
+        - En retard:
+          - Je suis en retard
+          - Toujours en retard
+          - Je n'ai pas le temps
+        - Se dépêcher de:
+          - Dépêche-toi
+          - Tu te dépêches de
+        - Commencer:
+          - Nous avons commencé
+          - Elle se met à
+        - Finir:
+          - Il finit
+          - Il termine
+          - À la fin de
+          - Elle met fin à
+      - Les temps:
+        - Temps:
+          - Maintenant
+          - En même temps
+          - Pendant
+          - Il y a quelque temps
+        - Période de temps:
+          - Ça dure depuis
+          - Une heure, une demi-heure plus tard
+          - Les trois semaines passent vite
+          - Depuis trois semaines
+          - Dans cinq minutes
+          - Au bout d'un an/moment, à ce moment
+          - Un instant
+        - Toujours:
+          - Toujours, tout le temps, permanent
+          - Souvent
+          - Parfois
+          - À peine
+          - Jamais
+        - À les jours:
+          - À jeudi alors
+          - Vendredi après-midi/soir
+        - Les jours relatif:
+          - L'autre jour
+          - Hier
+          - Aujourd'hui
+          - Demain
+          - Avenir
+        - Année:
+          - Chaque année
+          - Tous les deux ans
+        - Le jour:
+          - Le matin
+          - Cet après-midi
+          - L'après-midi
+          - Ce/le soir
+          - Une journée, ce jour-là
+          - Un de ces jours
+        - Les jours de semaine:
+          - Lundi
+          - Mardi
+          - Mercredi
+          - Jeudi
+          - Vendredi
+          - Samedi
+          - Dimanche
+          - À lundi, le lundi
+          - Samedi matin
+          - Le/ce weekend, un weekend sur deux
+        - Les mois de l'année:
+          - Janvier
+          - Février
+          - Mars
+          - Avril
+          - Mai
+          - Juin
+          - Juillet
+          - Aout
+          - Septembre
+          - Octobre
+          - Novembre
+          - Décembre
+          - Fin juin
+        - Saisons:
+          - En hiver
+          - En été (Cet été là)
+        - Positions de temps:
+          - Avant (En avance, à l'avance)
+          - Tôt
+          - Au début
+          - Tard
+          - Trop tard
+          - Il est très tard
+          - Peu de temps avant
+          - Bientôt
+          - Déjà
+    - Les temps:
+      - Expressions de temps:
+        - Ça fait maintenant deux jours qu'il pleut sans arrêt
+        - Malgré la pluie, nous avons tous passé un bon moment
+      - Quel temps fait:
+        - Quel temps fait-il ?
+        - Quelle température fait-il ?
+      - Il fait froid:
+        - Il fait froid?
+        - Il fait un froid de canard
+      - Il fait chaud:
+        - Il fait chaud
+        - À l'ombre
+      - Chaleur:
+        - Chaleur
+        - Chaud
+      - Il pleut:
+        - Il fait un brouillard
+        - Il pleut
+      - Il neige:
+        - Il neige
+        - Beaucoup de neige
+        - Encore l'hiver
+        - Une boule de neige
+        - Une bataille de boules de neige
+        - Air glacial
+        - Tempête de neige
+        - Il ne fait pas si froid que ça
+      - Le soleil:
+        - Le soleil
+        - Il fait soleil
+        - Le soleil brille
+        - Profite du soleil
+        - Soleil de plomb
+        - Il fait beau
+        - Il fait très beau
   - Choses général:
     - Choses général:
       - Position:
@@ -428,119 +608,6 @@
           - Aider:
             - Pouvez-vous m'aider s'il vous plaît?
   - Des application:
-    - L heure:
-      - Déscription des temps:
-        - Déscription:
-          - La journée de Karim
-          - La montre en or
-        - Expression de temps:
-          - Demain, je vais prendre le train
-          - On passe une journée merveilleuse (passer)
-        - Quelle heure?:
-          - Il est quelle heure?
-          - À quelle heure ?
-          - Combien de temps
-        - Il est ...:
-          - À ... heures
-          - Il est ... heures
-          - Il est minuit/midi
-          - Vers 22 heures
-          - Jusqu'à midi
-      - Actions des temps:
-        - En retard:
-          - Je suis en retard
-          - Toujours en retard
-          - Je n'ai pas le temps
-        - Se dépêcher de:
-          - Dépêche-toi
-          - Tu te dépêches de
-        - Commencer:
-          - Nous avons commencé
-          - Elle se met à
-        - Finir:
-          - Il finit
-          - Il termine
-          - À la fin de
-          - Elle met fin à
-      - Les temps:
-        - Temps:
-          - Maintenant
-          - En même temps
-          - Pendant
-          - Il y a quelque temps
-        - Période de temps:
-          - Ça dure depuis
-          - Une heure, une demi-heure plus tard
-          - Les trois semaines passent vite
-          - Depuis trois semaines
-          - Dans cinq minutes
-          - Au bout d'un an/moment, à ce moment
-          - Un instant
-        - Toujours:
-          - Toujours, tout le temps, permanent
-          - Souvent
-          - Parfois
-          - À peine
-          - Jamais
-        - À les jours:
-          - À jeudi alors
-          - Vendredi après-midi/soir
-        - Les jours relatif:
-          - L'autre jour
-          - Hier
-          - Aujourd'hui
-          - Demain
-          - Avenir
-        - Année:
-          - Chaque année
-          - Tous les deux ans
-        - Le jour:
-          - Le matin
-          - Cet après-midi
-          - L'après-midi
-          - Ce/le soir
-          - Une journée, ce jour-là
-          - Un de ces jours
-        - Les jours de semaine:
-          - Lundi
-          - Mardi
-          - Mercredi
-          - Jeudi
-          - Vendredi
-          - Samedi
-          - Dimanche
-          - À lundi, le lundi
-          - Samedi matin
-          - Le/ce weekend, un weekend sur deux
-        - Les mois de l'année:
-          - Janvier
-          - Février
-          - Mars
-          - Avril
-          - Mai
-          - Juin
-          - Juillet
-          - Aout
-          - Septembre
-          - Octobre
-          - Novembre
-          - Décembre
-          - Fin juin
-        - Saisons:
-          - En hiver
-          - En été (Cet été là)
-        - Positions de temps:
-          - Avant (En avance, à l'avance)
-          - Tôt
-          - Au début
-          - Tard
-          - Trop tard
-          - Il est très tard
-          - Peu de temps avant
-          - Bientôt
-          - Déjà
-    - Les temps:
-      - ...
     - Choses réguliers:
       - Choses réguliers:
         - La carte d'identité
@@ -655,74 +722,6 @@
           - Surfer sur le web
           - Tu devrais le chercher sur internet
     
-  - Simple:
-    - Les temps:
-      - Déscription
-      - Expressions de temps:
-        - Ça fait maintenant deux jours qu'il pleut sans arrêt
-        - Malgré la pluie, nous avons tous passé un bon moment
-      - Quel temps fait:
-        - Quel temps fait-il ?
-        - Quelle température fait-il ?
-      - Il fait froid:
-        - Il fait froid?
-        - Il fait un froid de canard
-      - Il fait chaud:
-        - Il fait chaud
-        - À l'ombre
-      - Il neige:
-        - Il neige
-        - Beaucoup de neige
-        - Encore l'hiver
-        - Une boule de neige
-        - Une bataille de boules de neige
-      - Le soleil:
-        - Le soleil
-        - Il fait soleil
-        - Le soleil brille
-        - Profite du soleil
-        - Soleil de plomb
-        - Il fait beau
-        - Il fait très beau
-      - Autre:
-        - Il fait un brouillard
-        - Il pleut
-      - Chaleur:
-        - Chaleur
-        - Chaud
-      - Neige:
-        - Air glacial
-        - Tempête de neige
-        - Il ne fait pas si froid que ça
-    - Numéros:
-      - Compter:
-        - Première:
-          - la prèmiere fois
-          - d'abord
-        - Deuxième
-        - Dernier
-      - Ordre:
-        - Prochain
-        - Au suivant
-        - à tour de rôle
-      - Scalaire:
-        - Par jour
-        - Au moins
-        - Environ
-    - Les coleurs:
-      - Déscription:
-        - Quelles couleurs ?
-        - De toutes les couleurs
-      - Blanc (blanche)
-      - Bleu
-      - Gris
-      - Noir
-      - Vert
-      - Marron
-      - Jaune
-      - Orange
-      - Noir
-      - Sombre
   - La nature:
     - La nature:
       - Écologique:

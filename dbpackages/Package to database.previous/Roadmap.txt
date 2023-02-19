@@ -1,0 +1,15 @@
+--- Roadmap plan for development ---
+
+BBC Learning English
+
+-- Main development of word structures of languages --
+  - "Svenska ord"
+  - "Engelska ord"
+
+-- Scattered --
+
+Iphone:
+  - Notebook 1 (Light)
+  - Notebook 2 (Dark)
+  - Wheel of personality -> "Engelska ord"
+  - Scattered English words -> "Engelska ord"

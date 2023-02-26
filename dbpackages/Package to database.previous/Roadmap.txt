@@ -1,10 +1,48 @@
 --- Roadmap plan for development ---
 
-BBC Learning English
+-- Beginning --
+  - BBC Learning English
+
+-- Quick apps --
+  - Duolingo
 
 -- Main development of word structures of languages --
-  - "Svenska ord"
-  - "Engelska ord"
+  - "Svenska ord" (2.3 Krut och vapen: Redd)
+  - "Engelska ord" ()
+  - "Franska ord" (Refactor: 817)
+
+-- Swedish --
+  - https://xn--lxhjlp-buad.nu/guider/
+
+-- English --
+  - https://www.speaklanguages.com/english/phrases/
+  - https://conversationstartersworld.com/topics-to-talk-about/
+  - https://languagecardgames.com/product/language-guardians/
+  - https://www.oysterenglish.com/ https://www.oysterenglish.com/cosmetics-vocabulary.html
+
+-- French --
+  - https://www.youtube.com/watch?v=e43g6z-xZUc&t=1s
+  - https://www.youtube.com/watch?v=oSulEWeZlPA
+
+-- Other --
+  - Kemilektioner.se (0/4)
+  - Ehinger
+  - https://studerasmart.nu/kurser/fysik-1/lektioner/kraft-fysik-1-studerasmart/
+  - https://www.onlinemath4all.com/cubic-equation-practice-problems.html
+  - The physics hypertextbook
+  - https://www.kjell.com/se/kunskap/hur-funkar-det/elelektronik/starkstrom/elen-i-hemmet
+  - https://www.electrical4u.com/dc-current/
+  - https://www.teachoo.com/10704/3113/Direct-Current-DC-and-Alternating-Current-AC/category/Concepts/
+
+-- Non-educationals --
+  - Spanishdict (10/22)
+  - Spanish for beginners LinDuo HD
+  - Vale ...(Övningsmästaren)
+  - https://www.youtube.com/watch?v=zxGuuJYXl3k
+  - https://www.youtube.com/c/UsefulCharts/videos
+  - https://realpython.com/python-pep8/ https://realpython.com/python-refactoring/ (https://realpython.com/)
+  - https://www.youtube.com/watch?v=XgR-e9dft40
+  - JavaTPoint (...)
 
 -- Scattered --
 
@@ -13,3 +51,9 @@ Iphone:
   - Notebook 2 (Dark)
   - Wheel of personality -> "Engelska ord"
   - Scattered English words -> "Engelska ord"
+
+Structures:
+  - Frijo fuerte (Plata nuevo) + Frijo fuete viejo (Plata viejo)
+  - Permacharts
+  - Khan Academy
+  - The Organic Chemistry Tutor

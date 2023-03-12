@@ -23,8 +23,10 @@
 -- French --
   - https://www.youtube.com/watch?v=e43g6z-xZUc&t=1s
   - https://www.youtube.com/watch?v=oSulEWeZlPA
+  - https://www.youtube.com/watch?v=BS1p-srvK2w (Francais avec Raina)
+  - https://www.podcastfrancaisfacile.com/
 
--- Other --
+-- Science --
   - Kemilektioner.se (0/4)
   - Ehinger
   - https://studerasmart.nu/kurser/fysik-1/lektioner/kraft-fysik-1-studerasmart/
@@ -33,6 +35,18 @@
   - https://www.kjell.com/se/kunskap/hur-funkar-det/elelektronik/starkstrom/elen-i-hemmet
   - https://www.electrical4u.com/dc-current/
   - https://www.teachoo.com/10704/3113/Direct-Current-DC-and-Alternating-Current-AC/category/Concepts/
+  - http://www.vattendag.org/ (http://www.vattendag.org/tips-och-material-vattenpaketet/roligt-med-vatten/vattentryck/) (Världsvattendag)
+  - https://fysik.ugglansno.se/tryck-i-vatten-2/
+  - https://www.experimentarkivet.se/ (https://www.experimentarkivet.se/luft/)
+  - https://www.ozeldersci.com/ (https://www.ozeldersci.com/2016/10/diskriminant-ve-kok-formulleri-nereden.html)
+  - https://www.ozeldersci.com/2022/10/yabanc-kanallarda-1-numara-yumusack.html (Rollcake (not science))
+  - https://mathleaks.se/utbildning/digitala_verktyg_-_TI-raknare
+  - https://www.youtube.com/watch?v=he-7X5tKCFw (Camilla Andersson Biologi 1 + Kemi 1)
+  - https://www.youtube.com/watch?v=WV1rYO9_rCo (Agne Paulsson)
+  - https://www.youtube.com/watch?v=8GR1mdA5mjM (Inaktiv kanal för Vimarskolan)
+
+-- Architecture and home maintanance --
+  - https://ibadrummet.se/ (https://ibadrummet.se/hur/daligt-vattentryck-dusch/) (https://ibadrummet.se/hur/losa-stopp-i-toaletten/)
 
 -- Non-educationals --
   - Spanishdict (10/22)
@@ -43,6 +57,7 @@
   - https://realpython.com/python-pep8/ https://realpython.com/python-refactoring/ (https://realpython.com/)
   - https://www.youtube.com/watch?v=XgR-e9dft40
   - JavaTPoint (...)
+  - https://www.baranekrem.net/ (https://www.baranekrem.net/c-ile-diskriminant/)
 
 -- Scattered --
 
@@ -57,3 +72,5 @@ Structures:
   - Permacharts
   - Khan Academy
   - The Organic Chemistry Tutor
+  - lektion.se (Username: Winnie, Password: Winnie1234)
+  - https://www.liveworksheets.com/

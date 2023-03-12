@@ -1109,6 +1109,7 @@
           - Rep
           - Repsträng
           - Kardel (3~4 rep hopflätat)
+          - Tross (grovt rep)
       - Byggnadsmetoder:
         - Snabb och grov:
           - Tillyxad
@@ -1327,7 +1328,7 @@
           - En kuvös
           - Magnetisk resonanstomografi
       - Problem:
-        - Sjukdomar:
+        - Kroppsliga sjukdomar:
           - Sjuk:
             - Sjuk
             - Krank
@@ -1352,6 +1353,11 @@
             - En utslag -> Blåsor på huden, Uttryck, Beslut
           - Sjukdomsutveckling:
             - Inkubationstid -> inkubera (ligga på lur)
+        - Sjukdomar 5 sinnen:
+          - Skelögd:
+            - Skelögd
+            - Vindögd
+            - Ögonen tittar i kors
         - Sår:
           - Ett skärsår
           - Ett brännsår
@@ -2288,6 +2294,9 @@
     - Loggert:
       - Loggert
       - Slup
+    - Farkost:
+      - Farkost
+      - Fortskaffningsmedel i vatten eller luft
   - Skepp:
     - Generell:
       - Skeppsdelar:
@@ -2379,7 +2388,9 @@
         - Fånglina
         - Förtöjningslina
   - Ankringsplats:
-    - ...
+    - Redd:
+      - Redd
+      - Ankringsplats utanför hamn
   - Båtaktiviter:
     - Båtsegling:
       - Avgång, Avsegla:
@@ -2746,6 +2757,8 @@
         - Oförbehållsam
         - Ärlig
         - Öppen
+        - Rak
+        - Frank
     - Barmhärtig:
       - Barmhärtiog
       - Godhjärtad
@@ -3879,6 +3892,9 @@
       - Förstå och vara med:
         - Förstå och vara med
         - Vara med på noterna
+      - Fatta:
+        - Fatta
+        - Komma uppfund med
     - Kan inte förstå:
       - Outgrundlig
       - Ofattbar
@@ -5026,4 +5042,4 @@
 
   
 - Kvarstående:
-  - 2.3 Krut och vapen: Redd
+  - 2.3 Krut och vapen: Sämja

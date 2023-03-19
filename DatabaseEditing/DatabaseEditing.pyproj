@@ -54,7 +54,8 @@
     <Compile Include="knowledgedb\classKnowledgeDatabase.py" />
     <Compile Include="knowledgedb\classDatabase.py" />
     <Compile Include="knowledgedb\__init__.py" />
-    <Compile Include="problemhandlers\Problemhandle.py" />
+    <Compile Include="problemhandlers\classErrorMessages.py" />
+    <Compile Include="problemhandlers\classProblemHandle.py" />
     <Compile Include="problemhandlers\__init__.py" />
   </ItemGroup>
   <ItemGroup>

@@ -13,5 +13,8 @@ class CommandUpdateLink(Command):
         if not values[1].isnumeric():
             print("Problem (parameters) New parentid parameter <parentid> is not a number")
             return
+        if values[0] == values[1]:
+            print("Problem (parameters) Parameters <childid> and <parentid> cannot not be same")
+            return
         if len(values) >= 2:
             cargo.console.system.update_link(values[0], values[1])

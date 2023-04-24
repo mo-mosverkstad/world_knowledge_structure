@@ -1,37 +1,24 @@
 - Déscription choses:
   - Choses simples:
     - Numéros:
-      - Compter:
-        - Première
-        - Deuxième
-        - Dernier
-      - Prèmiere:
-        - Première
-        - La prèmiere fois
-        - D'abord
+      - Numéros:
+        - Compter:
+          - Première
+          - Deuxième
+          - Dernier
+        - Prèmiere:
+          - Première
+          - La prèmiere fois
+          - D'abord
       - Ordre:
-        - Prochain
-        - Au suivant
-        - à tour de rôle
-      - Scalaire:
-        - Par jour
-        - Au moins
-        - Environ
-    - Les coleurs:
-      - Déscription:
-        - Quelles couleurs ?
-        - De toutes les couleurs
-      - Des couleurs:
-        - Blanc (blanche)
-        - Bleu
-        - Gris
-        - Noir
-        - Vert
-        - Marron
-        - Jaune
-        - Orange
-        - Noir
-        - Sombre
+        - Ordre:
+          - Prochain
+          - Au suivant
+          - à tour de rôle
+        - Scalaire:
+          - Par jour
+          - Au moins
+          - Environ
     - L heure:
       - Déscription des temps:
         - Déscription:
@@ -180,9 +167,9 @@
         - Il fait beau
         - Il fait très beau
   - Choses général:
-    - Choses général:
-      - Position:
-        - Positions:
+    - Objet général:
+      - Les positions:
+        - Position:
           - Position:
             - Située
             - Au même endroit
@@ -191,55 +178,115 @@
             - D'ailleurs
             - Quelque part
             - Loin de
-        - Petit mots:
-          - Petit mots:
-            - Sur:
-              - Sur
-            - Au dessus:
-              - Au dessus de (au-dessus)
-              - Du dessus
-              - En dessus
-            - Sous:
-              - Sous
-            - Dans le chambre:
-              - Dans le chambre ...
-            - Derrière:
-              - Derrière
-              - En bas de
-              - Au fond de
-            - Devant:
-              - Devant
-              - Après
-              - Désormais
-          - Ici et y:
-            - Ici:
-              - Ici
-            - Y:
-              - Y
-          - Autour:
-            - Au milieu:
-              - Au milieu
-              - Dans le centre
-            - Autour de:
-              - Autour de
-              - Entouré
-            - Vers à:
-              - Vers à
-              - En face
-              - Elle donne sur (donner)
-      - Les attributs:
-        - Les attributs:
+        - Taille:
           - Mesurer:
             - Il mesure
             - Elle est longue/haute de 70 mètres
+        - La vitesse:
+          - Vitesse:
+            - C'est vite
+            - Encore plus vite
+            - Est rapide
+            - Doucement
+          - Limité:
+            - Vitesse limité à
+          - Description:
+            - À un vitesse d'environ
+          - Temps à vitesse:
+            - Il est à trois heures de
+            - En une heure
+          - Acceleration:
+            - Il accélère
+      - Chaleur:
+        - Chaleur:
+          - Chaleur:
+            - Chaleur
+          - Brûler:
+            - Brûler
+      - Petit mots:
+        - Petit mots:
+          - Sur:
+            - Sur
+          - Au dessus:
+            - Au dessus de (au-dessus)
+            - Du dessus
+            - En dessus
+          - Sous:
+            - Sous
+          - Dans le chambre:
+            - Dans le chambre ...
+          - Derrière:
+            - Derrière
+            - En bas de
+            - Au fond de
+          - Devant:
+            - Devant
+            - Après
+            - Désormais
+        - Ici et y:
+          - Ici:
+            - Ici
+          - Y:
+            - Y
+        - Autour:
+          - Au milieu:
+            - Au milieu
+            - Dans le centre
+          - Autour de:
+            - Autour de
+            - Entouré
+          - Vers à:
+            - Vers à
+            - En face
+            - Elle donne sur (donner)
+      - Comparaison:
+        - Aussi:
+          - C'est aussi petit/grand/énorme que ...
+        - Plus:
+          - C'est plus court/long que ...
+      - Production:
+        - Créatif:
+          - Créer:
+            - Le Guide Rouge est crée
+          - Construire:
+            - Constructeur
+            - Il construit
+          - Publier:
+            - La Guide publie
+          - Description:
+            - Édition
+            - Jour de l'ouverture
+    - Objet solide:
+      - Objet solide:
+        - Objet rigide
+      - Les attributs:
+        - Les coleurs:
+          - Déscription:
+            - Quelles couleurs ?
+            - De toutes les couleurs
+          - Des couleurs:
+            - Blanc (blanche)
+            - Bleu
+            - Gris
+            - Noir
+            - Vert
+            - Marron
+            - Jaune
+            - Orange
+            - Noir
+            - Sombre
+        - Texture:
           - Doux:
-            - Doux, douce
+            - Doux
+            - Douce
           - Faible:
             - Faible
-            - Vague, vaguement
+            - Vague
+            - Vaguement
           - Fort:
             - Fort
-            - Vif, vive
+            - Vif
+            - Vive
           - Instabilité:
             - Instabilité
           - Secret:
@@ -247,38 +294,6 @@
           - Sécher:
             - Sécher
             - Séchés
-        - Comparaison:
-          - C'est aussi petit/grand/énorme que ...
-          - C'est plus court/long que ...
-      - La vitesse:
-        - Vitesse:
-          - C'est vite
-          - Encore plus vite
-          - Est rapide
-          - Doucement
-        - Limité:
-          - Vitesse limité à
-        - Description:
-          - À un vitesse d'environ
-        - Temps à vitesse:
-          - Il est à trois heures de
-          - En une heure
-        - Acceleration:
-          - Il accélère
-      - Créatif:
-        - Créer:
-          - Le Guide Rouge est crée
-        - Construire:
-          - Constructeur
-          - Il construit
-        - Publier:
-          - La Guide publie
-        - Description:
-          - Édition
-          - Jour de l'ouverture
-    - Objet rigide:
-      - Objet rigide:
-        - Objet rigide
     - Liquide:
       - Liquide:
         - Liquide
@@ -383,9 +398,6 @@
         - Types de odeurs:
           - Ça sent bon
           - Ça schlingue, ça pue
-    - Chaleur:
-      - Brûler:
-        - Brûler
     - Mouvements:
       - La puissance:
         - La puissance:
@@ -411,19 +423,18 @@
               - Il la jette
             - Toucher:
               - Si vous touchez à
-        - Mordre:
-          - Il mord dedans
         - Déformer:
-          - Déformé:
-            - Déformé
-          - Fuite:
-            - Fuite
-        - Élongation:
-          - Étendre:
-            - Elle étend
-          - Allonger:
-            - Allongé
+          - Déformation:
+            - Déformé:
+              - Déformé
+            - Fuite:
+              - Fuite
+          - Composité:
+            - Mordre:
+              - Il mord dedans
       - Mouvements:
+        - Mouvements:
+          - Mouvements
         - Stationnaire:
           - Debout:
             - Debout
@@ -434,8 +445,6 @@
             - Couché
           - Pencher:
             - Ils se penchent sur
-        - Mouvements:
-          - Mouvements
         - Mouvements linéaires:
           - Aller:
             - Aller:
@@ -484,7 +493,7 @@
               - Il quitte
             - Revenir:
               - Elle revient
-        - Mouvements de position:
+        - Mouvements de altitude:
           - Tomber:
             - Je tombe
             - Elle est tombée
@@ -494,6 +503,12 @@
           - Tourner:
             - Elle se tourne vers
             - Madame Joubert s'adresse à
+        - Mouvements de tailles:
+          - Élongation:
+            - Étendre:
+              - Elle étend
+            - Allonger:
+              - Allongé
       - Collision:
         - Collision:
           - Collision
@@ -611,47 +626,6 @@
         - Poche en papier
       - Poubelle:
         - Poubelle
-    - Transport:
-      - Le voiture:
-        - Un automobiliste:
-          - Le chauffeur de l'autre voiture
-          - Le garagiste
-        - Conduire:
-          - Il roule
-          - On roule à gauche
-          - Paul fait deux heures de route
-        - Accélérateur:
-          - Il appuie sur accélérateur (appuyer)
-        - La route:
-          - Route:
-            - La plupart des autoroutes
-            - En plein milieu de la route
-          - Péages:
-            - Payant
-        - Structure:
-          - Les phares
-          - Il met son clignotant
-        - Pièces de rechange
-      - L avion:
-        - En avion:
-          - Class affaires
-          - Le siège (côté fenêtre)
-        - L'aéroport
-        - Voyage de avion:
-          - Jour de départ
-          - Destination
-          - Retour
-          - Arrivée
-        - Structure
-        - Types:
-          - Avion
-          - Avion de chasse
-      - Une moto:
-        - Une moto
-      - Un scooter:
-        - Un scooter
-      - Un vélo:
-        - Un vélo
     - La nature:
       - La nature:
         - Écologique:
@@ -721,6 +695,13 @@
         - Autre:
           - Un bananier
     - Corps humain et santé:
+      - Déscription humaine:
+        - Tatouage (on appliqu, pâtee)
+        - Queue de cheval
+        - Chauvre
+        - Il transpire
+        - Il a enlevé
+        - Quelqu’un lui a coupé la gorge
       - Corps humain:
         - La tête:
           - Tête
@@ -798,245 +779,369 @@
         - Le réseau:
           - Surfer sur le web
           - Tu devrais le chercher sur internet
-  - Architecture:
-    - Des maisons:
+    - Architecture:
+      - Des maisons:
+        - La maison:
+          - Un petit appartement
+          - Leurs lits (Leurs oreillers)
+        - Le jardin:
+          - Jardinier
+        - Formes:
+          - Labyrinthe
+          - Maisonnette
+          - Chalet
       - La maison:
-        - Un petit appartement
-        - Leurs lits (Leurs oreillers)
-      - Le jardin:
-        - Jardinier
-      - Formes:
-        - Labyrinthe
-        - Maisonnette
-        - Chalet
-    - La maison:
-      - Première:
-        - Dehors
-        - Au second
-        - La porte
-        - Je regarde par la fenêtre
-        - Sortie
-      - Chambre:
-        - La chambre voisine
-        - Le lit
-        - Des draps
-      - Cuisine:
-        - Description:
-          - Coin cuisine
-          - Une cuisinière
-        - Appareils électroménagers:
-          - Le frigo
-          - Fourneau
-          - Une casserole
-      - Salle de bains:
-        - La douche
-        - La glace
-        - Le lavabo
-        - Faire leur toilette
-        - Un robinet
-      - Un balcon
-      - Un salon
-      - Des immeubles:
-          - Une chaise
-          - Chaise longue
-          - Le canapé
-          - Un fauteuil
-          - La télévision
-          - Le bureau
-          - Un tiroir
-          - Un placard
-        - Autre choses:
-          - Un tapis chinois
-          - Une tapisserie
-          - Des affiches
-  - La ville:
-    - Le pays et des régions:
-      - Pays:
-        - En Suède
-        - Au Danemark
-        - En Espagne
-        - En Corse
-        - En Angleterre
-        - Les Belges
-        - La Suisse
-        - Autriche
-        - Prusse
-        - Wallonie
-      - Des régions:
-        - La région flamande
-    - La ville:
-      - Description:
-        - Village
-        - La capitale
-        - La vieille ville
-        - La frontière franco-belge
-        - Sans voitures dans le centre-ville
-        - La côte atlantique
-      - Caractéristiques:
-        - Habitants
-        - Beaucoup de Suédois
-      - Des villes:
-        - À Lille
-        - À Annecy
-        - À Copenhague
-        - À Bruxelles
-        - À Londres
-      - Habiter:
-        - Habiter:
-          - J'habite à Nice
-          - Tu habites où ?
-          - Oú habitez-vous?
-          - Qui a habité
-        - Vivre:
-          - Elle vit
-    - Lieu dans la ville:
-      - Le port:
-        - Le port
-      - Le musée:
-        - Le musée
-        - Le plus grand musée du monde
-      - La place:
-        - La place
-        - La plus belle place du monde
-      - La mairie:
-        - La mairie
-      - L adresse:
-        - Un remparte
-      - Pont:
-        - Le tunnel
-        - La manche
-        - Viaduc
-      - La pharmacie:
-        - La pharmacie
-      - La gare:
-        - La gare
-      - Théâtre:
-        - Le théâtre
-        - De théâtre amateur
-    - Des rues:
-      - Description:
-        - Des rues avec des noms allemands
-        - Panneau, à lettres blanches
-      - Dans la rue:
-        - À la cantine
-        - Une boulangerie, le café
-        - La crèche
-        - Quartier
-        - Le coin
-        - Le carrefour, l'intersection
-    - Les directions:
-      - Questions:
-        - En cherchent:
-          - Je cherche la rue ...
-          - Pouvez-vous me montrer sur la carte?
-        - Aller à ...:
-          - Où est le ... ?
-          - Excusez-moi, comment je peux aller à ...
-          - Pouvez-vous me dire où je peux trouver
-          - Pouvez-vous me dire comment aller au centre-ville?
-          - Je veux aller à ...
-        - Souvenir ce lieu:
-          - Pouvez-vous me montrer sur la carte?
-          - Je ne me souviens pas de ce lieu
-          - Je suis sûr que c'est par ce chemin
-      - Choses d orienter:
-        - La carte:
-          - La carte
-          - Le plan
-        - Direction:
-          - Dans le sud/ouest/est/nord de
-          - Le nord-ouest
-          - à gauche/droite de
-          - à côté de, près de
-        - Reponses à orienter:
-          - Allez tout droit
-          - Tournez à gauche/droite (tourner)
-      - Perdu:
-        - Perdu:
-          - Je suis perdu
-        - Aider:
-          - Pouvez-vous m'aider s'il vous plaît?
-    - Aller à la ville:
-      - Traverser:
-        - Traversent
-        - Je traversais
-      - Arriver:
-        - J'arrive
-        - Elles arrivent
-      - Rester:
-        - Rester
-        - Ils restent
-        - On reste
-        - Restera
-      - Entrer:
-        - On entre ?
-        - Entrez
-        - Entrée interdite
-      - Montrer:
-        - Ils ont débarqué
-        - Ils montent
-      - Prendre:
-        - On prend la voiture (En voiture)
-        - En train (le TGV, Train à Grande Vitesse, quai(perrong), le train se remet en marche)
-        - Mon bus, elle prend le bus, j'ai raté le bus
-      - Partir:
-        - Avant de partir
-        - Ils partent  
+        - Première:
+          - Dehors
+          - Au second
+          - La porte
+          - Je regarde par la fenêtre
+          - Sortie
+        - Chambre:
+          - La chambre voisine
+          - Le lit
+          - Des draps
+        - Cuisine:
+          - Description:
+            - Coin cuisine
+            - Une cuisinière
+          - Appareils électroménagers:
+            - Le frigo
+            - Fourneau
+            - Une casserole
+        - Salle de bains:
+          - La douche
+          - La glace
+          - Le lavabo
+          - Faire leur toilette
+          - Un robinet
+        - Un balcon
+        - Un salon
+        - Des immeubles:
+            - Une chaise
+            - Chaise longue
+            - Le canapé
+            - Un fauteuil
+            - La télévision
+            - Le bureau
+            - Un tiroir
+            - Un placard
+          - Autre choses:
+            - Un tapis chinois
+            - Une tapisserie
+            - Des affiches
+    - Les régions:
+      - Le pays et des régions:
+        - Pays:
+          - En Suède
+          - Au Danemark
+          - En Espagne
+          - En Corse
+          - En Angleterre
+          - Les Belges
+          - La Suisse
+          - Autriche
+          - Prusse
+          - Wallonie
+        - Des régions:
+          - La région flamande
+      - La ville:
+        - La ville:
+          - Description:
+            - Village
+            - La capitale
+            - La vieille ville
+            - La frontière franco-belge
+            - Sans voitures dans le centre-ville
+            - La côte atlantique
+          - Caractéristiques:
+            - Habitants
+            - Beaucoup de Suédois
+          - Des villes:
+            - À Lille
+            - À Annecy
+            - À Copenhague
+            - À Bruxelles
+            - À Londres
+          - Habiter:
+            - Habiter:
+              - J'habite à Nice
+              - Tu habites où ?
+              - Oú habitez-vous?
+              - Qui a habité
+            - Vivre:
+              - Elle vit
+        - La structure de la ville:
+          - Lieu dans la ville:
+            - Le port:
+              - Le port
+            - Le musée:
+              - Le musée
+              - Le plus grand musée du monde
+            - La place:
+              - La place
+              - La plus belle place du monde
+            - La mairie:
+              - La mairie
+            - L adresse:
+              - Un remparte
+            - Pont:
+              - Le tunnel
+              - La manche
+              - Viaduc
+            - La pharmacie:
+              - La pharmacie
+            - La gare:
+              - La gare
+            - Théâtre:
+              - Le théâtre
+              - De théâtre amateur
+          - Des rues:
+            - Description:
+              - Des rues avec des noms allemands
+              - Panneau, à lettres blanches
+            - Dans la rue:
+              - À la cantine
+              - Une boulangerie, le café
+              - La crèche
+              - Quartier
+              - Le coin
+              - Le carrefour, l'intersection
+        - Les directions:
+          - Les directions:
+            - Questions:
+              - En cherchent:
+                - Je cherche la rue ...
+                - Pouvez-vous me montrer sur la carte?
+              - Aller à ...:
+                - Où est le ... ?
+                - Excusez-moi, comment je peux aller à ...
+                - Pouvez-vous me dire où je peux trouver
+                - Pouvez-vous me dire comment aller au centre-ville?
+                - Je veux aller à ...
+              - Souvenir ce lieu:
+                - Pouvez-vous me montrer sur la carte?
+                - Je ne me souviens pas de ce lieu
+                - Je suis sûr que c'est par ce chemin
+            - Choses d orienter:
+              - La carte:
+                - La carte
+                - Le plan
+              - Direction:
+                - Dans le sud/ouest/est/nord de
+                - Le nord-ouest
+                - à gauche/droite de
+                - à côté de, près de
+              - Reponses à orienter:
+                - Allez tout droit
+                - Tournez à gauche/droite (tourner)
+            - Perdu:
+              - Perdu:
+                - Je suis perdu
+              - Aider:
+                - Pouvez-vous m'aider s'il vous plaît?
+          - Aller à la ville:
+            - Traverser:
+              - Traversent
+              - Je traversais
+            - Arriver:
+              - J'arrive
+              - Elles arrivent
+            - Rester:
+              - Rester
+              - Ils restent
+              - On reste
+              - Restera
+            - Entrer:
+              - On entre ?
+              - Entrez
+              - Entrée interdite
+            - Montrer:
+              - Ils ont débarqué
+              - Ils montent
+            - Prendre:
+              - On prend la voiture (En voiture)
+              - En train (le TGV, Train à Grande Vitesse, quai(perrong), le train se remet en marche)
+              - Mon bus, elle prend le bus, j'ai raté le bus
+            - Partir:
+              - Avant de partir
+              - Ils partent
+      - Transport:
+        - Le voiture:
+          - Un automobiliste:
+            - Le chauffeur de l'autre voiture
+            - Le garagiste
+          - Conduire:
+            - Il roule
+            - On roule à gauche
+            - Paul fait deux heures de route
+          - Accélérateur:
+            - Il appuie sur accélérateur (appuyer)
+          - La route:
+            - Route:
+              - La plupart des autoroutes
+              - En plein milieu de la route
+            - Péages:
+              - Payant
+          - Structure:
+            - Les phares
+            - Il met son clignotant
+          - Pièces de rechange
+        - L avion:
+          - En avion:
+            - Class affaires
+            - Le siège (côté fenêtre)
+          - L'aéroport
+          - Voyage de avion:
+            - Jour de départ
+            - Destination
+            - Retour
+            - Arrivée
+          - Structure
+          - Types:
+            - Avion
+            - Avion de chasse
+        - Une moto:
+          - Une moto
+        - Un scooter:
+          - Un scooter
+        - Un vélo:
+          - Un vélo
 
 - Des gens:
-  - Déscription humaine:
-    - Tatouage (on appliqu, pâtee)
-    - Queue de cheval
-    - Chauvre
-    - Il transpire
-    - Il a enlevé
-    - Quelqu’un lui a coupé la gorge
+  - Les gens:
+    - Géneral:
+      - Se retrouver:
+        - On a retrouvé
+      - Déscription:
+        - Tout le monde
+        - Trop de monde
+        - Peuple
+        - Foule
+      - Questions:
+        - Qui est-ce ?
+        - C'est qui?
+        - Il y a quelqu'un
+        - Me revoilà
+      - Connaître:
+        - Je ne connais pas
+        - On la connaît
+      - Célébrite:
+        - Célébrite
+        - Populaire
+        - Connu pour
+        - Estimé
+      - Me voir:
+        - Viens me voir
+        - Venez me voir
+        - Se voir
+        - Je rends visite à
+        - On a rendez-vous à six heures
+        - Le rendez-vous
+        - Elle est accompagnée de
+        - Face à face
+        - En privé
+    - Habiter et travailler:
+      - J habite à Chicago et tu habites à New York.
+      - Je travaille à Berlin et tu travailles à Paris.
+      - Je suis française, j'étudie à Paris.
+      - Je m appelle Gabriel. Enchanté ! Tu es étudiant ? J'étudie à New York.
+      - Sarah habite à Boston et elle est étudiante.
+      - Habitez-vous ici?
+    - Socialiser:
+      - Expressions de se prèsenter:
+        - Allons-y!
+        - C'est ton premier voyage en France?
+        - Tu viens d'où?
+        - Ça fait combien de temps que tu es ici ?
+        - Tu resteras combien de temps ici?
+        - Je suis ici pour trois semains
+      - Présenter quelqu'un:
+        - Je suis venu avec quelque amis
+        - Je veux te présenter à un ami
+        - David, voici Julia, voilà
+        - Je vous présente
+        - Me voici, c'est moi
+        - Tu peux m'appeler Sam!
+      - Rencontrer futur:
+        - On peut rencontrer
+        - Je rencontre
+        - Elle a rencontré
+        - On se rencontre enfin!
+        - Si tu veux me voir
+        - Ils me voient
+        - Compte sur moi!
+        - J'en suis!
+        - Je vivais en Espagne quand je l'ai rencontrée
+    - Les choses drôles:
+      - Drôle:
+        - Drôle
+        - Marrant
+        - Rigolo
+        - Je rigole
+        - Ridicule
+      - Pas drôle:
+        - Ce n'était pas super drôle
+      - Cirque:
+        - Cirque:
+          - Le monde de cirque
+        - Clown
+        - Acrobate
+        - Magicien
+        - Faire rire le public
+        - Un jury international
+        - Sans blague?
   - Déscription personnel:
     - Compliments:
-      - Il est mignon
-      - Beau, le plus beau
-      - Joli, jolie
-      - Formidable
-      - Gentil, trop gentil, gentillesse, gentiment, aimable
-      - Timide
-      - Adorable
-      - Calme
-      - Sympa, super sympa
-      - Sympathique
-    - Inséparables:
-      - Inséparables
-      - On perd le contact
-      - Déception
-    - Sévère:
-      - Dangereux
-      - Sévère
-      - Minutieux
-    - Créatif:
-      - Créatif
-      - Imaginatif
-      - Intelligence
-      - Doué
-      - Courageux
-    - Patience:
-      - Patience
-      - Impatient
-    - Mal:
-      - Paresseux
-      - Bon à rien
+      - Compliments:
+        - Il est mignon
+        - Beau, le plus beau
+        - Joli, jolie
+        - Formidable
+        - Gentil, trop gentil, gentillesse, gentiment, aimable
+        - Timide
+        - Adorable
+        - Calme
+        - Sympa, super sympa
+        - Sympathique
+      - Inséparables:
+        - Inséparables
+        - On perd le contact
+        - Déception
     - Compétences:
-      - Surdoué
-    - Sauvetage:
-      - Indomptable
+      - Compétences:
+        - Compétences
+        - Surdoué
+      - Créatif:
+        - Créatif
+        - Imaginatif
+        - Intelligence
+        - Doué
+        - Courageux
+      - Patience:
+        - Patience
+        - Impatient
+    - Mauvais:
+      - Pas d utilisation:
+        - Paresseux
+        - Bon à rien
+      - Sévère:
+        - Dangereux
+        - Sévère
+        - Minutieux
+      - Sauvetage:
+        - Indomptable
   - Personnage:
-    - Personnage
-    - Caractère
-    - Ambiance
+    - Personnage:
+      - Personnage
+      - Caractère
+      - Ambiance
   - Émotions:
     - Sentir:
       - Sentir:
         - Je sens
         - Il se sent
-      - Avoir l'air de:
+      - Avoir l air de:
         - Tu as l'air
         - Elle a l'air de
         - Ça a l'air
@@ -1090,7 +1195,8 @@
         - Il est pressé
         - Stressant
         - Physiquement (physique)
-      - Pénible
+      - Pénible:
+        - Pénible
       - Étonné:
         - À la grande surprise de quelqu'un
         - Les surprend (surprendre)
@@ -1127,145 +1233,91 @@
         - Furieux
       - Mal:
         - Indigné
-    
   - Des gens:
-    - Les gens:
-      - Un garçon
-      - Un homme
-      - Un bonhomme
-      - Une fille
-      - Une femme
-      - Des enfants
-    - Les jeunes:
-      - Les jeunes français
-      - Vous les jeunes
-      - Trois adolescents
-    - Autres:
-      - Vieux
-      - Un génie
-      - Un voisin
-      - Le voisin de palier
-      - Domestique
-    - Postes:
-      - Le roi
-      - Le prince
-      - Sous le nom de
-      - À la tête de
-      - De gens riches
-      - Fauchée
+    - Les gens générals:
+      - Les gens:
+        - Un garçon
+        - Un homme
+        - Un bonhomme
+        - Une fille
+        - Une femme
+        - Des enfants
+      - Les jeunes:
+        - Les jeunes français
+        - Vous les jeunes
+        - Trois adolescents
+      - Autres:
+        - Vieux
+        - Un génie
+        - Un voisin
+        - Le voisin de palier
+        - Domestique
+    - Société:
+      - Postes:
+        - Le roi
+        - Le prince
+        - Sous le nom de
+        - À la tête de
+        - De gens riches
+        - Fauchée
     - La famille:
-      - Toute ma famille
-      - Mon père, ma mère (maman)
-      - Le mari, ma chérie
-      - Mon oncle, ma tante
-      - Mon grand-père, ma grand-mère (papi et mamie)
-      - Mes grands-parents paternels
-      - Ton frère, ma soeur (ma petite soeur), frères et soeurs, jumeaux
-      - Mon cousin, ses cousins
-      - Le fils
-      - Amour et mariage:
+      - La famille:
+        - Toute ma famille
+      - Mes parents:
+        - Mon père
+        - Ma mère (maman)
+      - Mon oncle:
+        - Mon oncle
+        - Ma tante
+      - Mes grand-parents:
+        - Mon grand-père
+        - Ma grand-mère
+        - Mes grands-parents paternels
+        - (papi et mamie)
+      - Frères:
+        - Ton frère
+        - Ma soeur (ma petite soeur)
+        - Frères et soeurs
+        - Jumeaux
+      - Mes cousins:
+        - Mon cousin
+        - Ses cousins
+      - Le fils:
+        - Le fils
+    - Mariage:
+      - Couple:
         - Couple
-        - Se marie avec (se marier avec), me marier à, mariage
+        - Le mari
+        - Ma chérie
+      - Le mari:
+        - Le mari
+        - La marie
+      - Se marie avec:
+        - Se marie avec (se marier avec)
+        - Me marier à
+        - Mariage
+      - Divorcé:
         - Divorcé
-        - Amoureux:
-          - Il est amoureux de (je tombe amoureux)
-          - (tu l'aimes, Je t'aime, le voyage de noces)
-        - Le mari, la marie
+      - Amoureux:
+        - Il est amoureux de (je tombe amoureux)
+        - Tu l'aimes
+        - Je t'aime
+        - Le voyage de noces
         - Tomber folle amoureuse de
     - Les copains:
-      - Mon copain
-      - Mes copains
-      - Tous les copains de Maxime
-      - Je suis partante avec
-      - Sa nouvelle amie
-      - Trois amies
-      - Ils me sautent au cou
-      - Elle caressait
-      - Accueil
-  - Choses regulier:
-    - Gens habiter et travailler:
-      - J habite à Chicago et tu habites à New York.
-      - Je travaille à Berlin et tu travailles à Paris.
-      - Je suis française, j étudie à Paris.
-      - Je m appelle Gabriel. Enchanté ! Tu es étudiant ? J étudie à New York.
-      - Sarah habite à Boston et elle est étudiante.
-      - Habitez-vous ici?
-    - Socialiser:
-      - Expressions de se prèsenter:
-        - Allons-y!
-        - C'est ton premier voyage en France?
-        - Tu viens d'où?
-        - Ça fait combien de temps que tu es ici ?
-        - Tu resteras combien de temps ici?
-        - Je suis ici pour trois semains
-      - Présenter quelqu'un:
-        - Je suis venu avec quelque amis
-        - Je veux te présenter à un ami
-        - David, voici Julia, voilà
-        - Je vous présente
-        - Me voici, c'est moi
-        - Tu peux m'appeler Sam!
-      - Rencontrer futur:
-        - On peut rencontrer
-        - Je rencontre
-        - Elle a rencontré
-        - On se rencontre enfin!
-        - Si tu veux me voir
-        - Ils me voient
-        - Compte sur moi!
-        - J'en suis!
-        - Je vivais en Espagne quand je l'ai rencontrée
-    - Les choses drôles:
-      - Drôle:
-        - Drôle
-        - Marrant
-        - Rigolo
-        - Je rigole
-        - Ridicule
-      - Pas drôle:
-        - Ce n'était pas super drôle
-      - Cirque:
-        - Cirque:
-          - Le monde de cirque
-        - Clown
-        - Acrobate
-        - Magicien
-        - Faire rire le public
-        - Un jury international
-        - Sans blague?
-    - Géneral:
-      - Se retrouver:
-        - On a retrouvé
-      - Déscription:
-        - Tout le monde
-        - Trop de monde
-        - Peuple
-        - Foule
-      - Questions:
-        - Qui est-ce ?
-        - C'est qui?
-        - Il y a quelqu'un
-        - Me revoilà
-      - Connaître:
-        - Je ne connais pas
-        - On la connaît
-      - Célébrite:
-        - Célébrite
-        - Populaire
-        - Connu pour
-        - Estimé
-      - Me voir:
-        - Viens me voir
-        - Venez me voir
-        - Se voir
-        - Je rends visite à
-        - On a rendez-vous à six heures
-        - Le rendez-vous
-        - Elle est accompagnée de
-        - Face à face
-        - En privé
-    - Arbre de gens:
-      - Une gestion
+      - Mon copain:
+        - Mon copain
+        - Mes copains
+        - Tous les copains de Maxime
+      - Mon ami:
+        - Sa nouvelle amie
+        - Trois amies
+      - Accueil:
+        - Accueil
+        - Je suis partante avec
+        - Ils me sautent au cou
+        - Elle caressait
+
 - Voyage:
   - Voyage (Vacances):
     - Le voyage à Londres

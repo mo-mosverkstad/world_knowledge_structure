@@ -1,0 +1,16 @@
+https://superuser.com/questions/647097/notepad-expand-collapse-block-with-keyboard
+
+66
+
+In short:
+Alt+0 folds (collapses) all Blocks
+Alt+1 folds all Level 1
+Alt+2 folds all Level 2
+Alt+x etc.
+
+and
+Alt+Shift+0 Unfolds all
+Alt+Shift+1 Unfolds Level 1
+Alt+Shift+2 Unfolds Level 2
+Alt+Shift+3 Unfolds Level 3
+Alt+Shift+x etc.

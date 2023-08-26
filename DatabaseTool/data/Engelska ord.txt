@@ -1,0 +1,57 @@
+--- Motion ---
+damage, destroy, mar
+---
+
+--- Killing ---
+executed, assassinated
+---
+
+--- Frequency ---
+common, relevant
+strange, mysterius, uncanny
+---
+
+--- Progress ---
+rising, surging
+canceled, rescinded
+---
+
+--- Importance ---
+Important, crucial
+
+---
+
+---# control #---
+control, curb
+
+---
+
+---# truth #---
+truth, ceasefire
+
+---
+
+---# outrageous cruelty #---
+outrageous cruelty, atrocities
+---
+
+--- Politics ---
+outspken defender of, vocal advocate for
+---
+
+--- Natural elements ---
+ravine, gluch
+---
+
+--- Attitude ---
+Disrespectful, blasphemous
+---
+
+--- Lifespan ---
+rebirth, renaissance
+---
+
+--- Genetics ---
+contraceptives (pills), condoms, ...
+---
+

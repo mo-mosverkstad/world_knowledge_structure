@@ -1,0 +1,61 @@
+- '--- Motion ---':
+  - damage, destroy, mar:
+    - damage
+    - destroy
+    - mar
+- '--- Killing ---':
+  - executed, assassinated:
+    - executed
+    - assassinated
+- '--- Frequency ---':
+  - common, relevant:
+    - common
+    - relevant
+  - strange, mysterius, uncanny:
+    - strange
+    - mysterius
+    - uncanny
+- '--- Progress ---':
+  - rising, surging:
+    - rising
+    - surging
+  - canceled, rescinded:
+    - canceled
+    - rescinded
+- '--- Importance ---':
+  - Important, crucial:
+    - Important
+    - crucial
+- '---# control #---':
+  - control, curb:
+    - control
+    - curb
+- '---# truth #---':
+  - truth, ceasefire:
+    - truth
+    - ceasefire
+- '---# outrageous cruelty #---':
+  - outrageous cruelty, atrocities:
+    - outrageous cruelty
+    - atrocities
+- '--- Politics ---':
+  - outspken defender of, vocal advocate for:
+    - outspken defender of
+    - vocal advocate for
+- '--- Natural elements ---':
+  - ravine, gluch:
+    - ravine
+    - gluch
+- '--- Attitude ---':
+  - Disrespectful, blasphemous:
+    - Disrespectful
+    - blasphemous
+- '--- Lifespan ---':
+  - rebirth, renaissance:
+    - rebirth
+    - renaissance
+- '--- Genetics ---':
+  - contraceptives (pills), condoms, ...:
+    - contraceptives (pills)
+    - condoms
+    - '...'

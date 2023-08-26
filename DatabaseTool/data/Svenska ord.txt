@@ -1,0 +1,686 @@
+--- Betonande ord ---
+
+just, precis, exakt
+---
+
+--- Nummer ---
+
+otalig
+tiofalt, tiofaldigat, tio gånger större
+minska tiotal, decimera
+---
+
+--- Tidsträcka ---
+
+i en handvändning, på ett ögonblick
+genast, på fläcken
+kortvarig, flyktig
+
+för evigt, för alltid, för gott, evinnerlig, ständig, kontunerlig, idelig
+i ett kör, oavbrutet
+
+sista tiden, på sistone
+---
+
+--- Riktning ---
+
+nästa, härnäst
+bära uppför/utför, leda uppåt/nedåt
+under, inunder, nedanför, utför
+
+an, fram, riktning mot, riktmärke, pejling, föröver
+
+närma sig, nalkas
+nära, närapå, nästan, så gott som
+
+hoppa över, skippa, exkludera, utelämna
+lämna
+överlämna, anförtro
+---
+
+--- Disposition ---
+
+granne, nästa
+
+gränsle
+---
+
+--- Former ---
+
+skev, krokig, sned
+---
+
+--- Storlek ---
+
+anlägga, skaffa, lägga sig till med
+nätt och jämnt, knappt
+---
+
+--- Textur ---
+Torr, torrlägga
+Blöt
+---
+
+--- Yta ---
+
+helt täckt, översållad, bevuxen, täckt, beklädd med
+---
+
+--- Innehållande ---
+
+Det finns (finnas), existera, förekomma
+
+på måfå
+
+packe, bunt, knyte, bylte, klase, klunga
+massiv, kraftig, tung, (solid)
+---
+
+--- Vätskeinnehålla ---
+
+flaska, butelj
+---
+
+--- Sammanbindande saker ---
+
+fogning
+
+rep, repsträng, kardel (3~4 rep hopflätat)
+---
+
+--- Rörelser ---
+
+beröra lätt, snudda, vidröra
+
+gå väck, gå iväg
+stappla, snubbla, staka sig
+irra, planlös vandring
+klampa, stampa, trampa
+räta på sig, göra sig rak, sträcka på sig
+driva fram med stav, staka
+
+färdas, täcka förr, tillrygglägga
+
+slingra, kräla
+
+släpa, glida, hasa ner
+slak (slakna), hängig, slapp
+spänd
+
+rotera, svänga (svänga av och an), kränga
+snurra
+
+stöta, springa, driva, köra, ränna (stampa)
+stötta
+störta, rasa, gå omkull, göra konkurs, gå överstyr
+försämring, förfalla, nedgång
+krocka, köra på och skada, ramma
+
+falla bakom, sacka
+
+falla tätt, hagla
+
+vink, tecken
+
+uppflygen, klättrat, hoppat upp
+
+guppa, gunga på vattenytan
+
+bli stilla, mojna
+---
+
+--- Vanliga aktiviteter ---
+
+små, smärre
+snäja, snara, slingra
+
+förbrukning
+
+nedsmord, nedsmutsad
+
+kratsa, skrapa, riva
+
+fallen, böjd
+
+flytta tungt, rubba, förskjuta
+slunga, kasta häftigt
+
+skaka, ruska
+
+avta, försvagas, tyna
+skingra, driva bort, förjaga
+
+vimmelkantig, yr, snurrig
+hissna, få svindel
+
+otymplig, klumpig, oformad
+
+odold, oförställd
+
+bloss, fackla, drag på cigarett
+
+surra, binda fast (ljuda)
+---
+
+--- Vätskeaktiviter (Fluider) ---
+
+ösa, skopa
+stänka, skvätta, skvalpa
+---
+
+--- Vapen ---
+
+kniv, dolk
+spets, tagg, udd
+
+tända, elda, fyra
+avlossa, fyra av
+
+korsfästa
+
+---
+
+---~ fett ~---
+
+fett, talg
+
+---
+
+---~ lergodsformning ~---
+
+lergodsformning, dreja
+tennstop, tennkanna
+kagge
+---
+
+--- Drycker ---
+
+slurk, klunk, munfull
+---
+
+--- Alkohol ---
+
+(Dryckenskap, supighet)
+grogg, toddy, sprit, likör
+styrketår, sup, stimulerande dryck
+
+fyllbult
+rus, berusning, fylla
+rödbrusig, rödmosig, rödflammig i ansiktet av upphetsning, sprit, fyllkaja
+sova ruset av sig
+
+(min likör, passar mig)
+---
+
+--- Ljus ---
+
+svärta
+blekna, färgen viker
+halvmörk, dunkel
+mörkbrun, umbra
+
+fosforescerande, fosforescent, självlysande
+---
+
+--- Landskaper ---
+
+oländig
+
+bukt, rund havsvik
+vattenbryn
+
+våg, krusning
+sjö, sjöhävning, stor våg, havsvågor, dyning
+
+vattenfall, svall, kaskad
+
+klipphylla, avsats, utskjutande plan
+
+dimbank, dimvägg
+
+berg
+dal, dalgång, sänka
+---
+
+--- Ljud ---
+
+eka, genljuda
+
+skrik, skrän
+
+skarp, gäll, genomträngande
+
+gnissel, knarrande
+
+skall (hunds läte)
+
+knastra, gnista, blixtra, spraka
+
+skallra, skramla, klirra (glasljud)
+
+---
+
+---~ ofullständig ~---
+
+ofullständig, fragmentarisk, lösryckt
+rester, kvarleva
+
+---
+
+---~ få tag i en vara ~---
+
+få tag i en vara, komma över
+
+trasig, förstörd, fördärvad, avslagen (nekad, unken)
+förlust, nederlag
+---
+
+--- Byggnader ---
+
+dörrpost
+skott, skiljevägg (knep, slughet)
+---
+
+--- Mänskliga kropp ---
+
+upp i dagen, människor fysisk väldigt lik
+ta någon om livet, ta någon om midjan
+
+vaden
+
+kroppens inre, invärtes
+
+rufsig, okammad, trasslig, tovig
+
+hjässa, huvud översta del
+
+ögon, korpgluggar
+
+sova, få en blund i ögonen
+
+värka, göra ont
+kramp, spasm, muskelsammandragning
+
+feber, frossa
+kvälja, magvändande, kräkningskänsla
+
+---
+
+---# tall #---
+
+tall, fura
+
+Genista, ginst
+strå, halm(från sädesväxter)
+tång (sjöväxter, gripverktyg)
+sädesskal, kli
+törne, tagg, vildväxande rosenbuske
+
+skogsöppning, glänta
+---
+
+--- Djur ---
+
+Odjur, vidunder
+kråka, kaja
+mört
+---
+
+--- Båt, skepp, sjöfart ---
+
+sjöresa (under segel), segeltur, seglats
+
+långskepps
+
+pilot, lots
+---
+
+--- Småbåtar ---
+
+jolle
+coracle
+
+toft (sitta på)
+---
+
+--- Skepp ---
+
+styrbord(höger sida), akter
+kölsvin, skepp nedersta planka
+
+sortsegel, focksegel, klyvare (försegel)
+-skot
+
+rorkult
+
+tackling, vant + stag
+salning, fogning mast + stång
+
+spygatt, hål tömmande vatten
+
+rår
+brass, brassa på
+
+i balans, i sunda förhållande, på rätt köl
+---
+
+--- Båtaktiviter ---
+
+kurs
+forlig vind, vind akterifrån
+dreja, dreja bi, hastighetssänkning
+lägga om (ändrar riktning)
+kursändring, gir (gira), lova
+
+länsa(tomma båt vattenlig)
+överhalning, krängning, granskning & reparation (av båt)
+överfart
+
+ankra, sätta på grund
+---
+
+--- Beskrivning ---
+
+egenhet, avvikande egenskap, besynnerlighet
+konstig, underlig, besynnerlig
+---
+
+--- Resurser ---
+
+plundra, röja, ödelägga, härja
+---
+
+--- Kompetent ---
+
+duktig, duglig
+bragd, bedrift, prestation
+färdighet, kompetens
+
+anserlig, betydlig, ansevärd
+---
+
+--- Mental status ---
+
+barsk, bister, hård, korthuggen, kärv
+ödmjuk
+fräck, oförskämd
+
+hurtig, pigg, pigg som en mört, optimistisk, livlig, yster
+återhämta sig, repa sig
+friska upp, energi, livslust, vederkvicka, livsandar
+upplagd, har lust
+
+kråma sig, brösta sig, stolt böja på axeln
+
+hjärtat bultar kraftigt, hjärtat slår volter
+
+angenäm, behaglig, trevlig
+
+anstränga, ta i
+mördosam, besvärlig
+
+noggrann, kräsen, nogräknad
+
+galen (galning), tokig, besatt
+
+bli arg, rasa, raseri, ilska
+vara förbannad på, vara arg på
+
+rädd, dödsrossling/ryckning, uppskakad (ruskig), chockad
+farhåga, fruktan, ängslan
+kuslig, skrämmande, läskig, hemsk
+
+vett, förnuft
+dum, dåraktig, korkad, fåraktig, ovett
+
+utledsen, trött, utled, uttråkad
+utmattad, sliten, blå i ansiktet, medtagen
+
+desperation, hopplöshet, förtvivlan
+
+klaga, grymta, muttra missnöjt
+gnälla, stöna, jämra sig, kvida
+
+förnedrande, neslig, skamlig
+
+press, påfrestning
+---
+
+--- Problem ---
+
+misstag, missöd, mindre olycka
+snöplig, sämre och orsakar missräkning
+
+ta ut sin rätt, märka
+
+besanna, bekräfta, bevisa
+
+misslyckats, det blev pannkaka av alltihop, gå åt skogen
+
+ge upp, ge efter, ge sig, stryka flagg
+sätta livet till, dö, gå under (ge upp)
+dra sig tillbaka, retirera
+
+slösa, förspilla
+---
+
+--- Kraft att göra ---
+
+plötsligt infall, påhitt, nyck
+tåla, stå ut med, orka med, våga
+
+värdighet
+anstå, vara värdig
+trumf
+
+stimulera, sätta fart på
+
+---
+
+---# heder #---
+
+heder, göra en hedersak, sätta en ära i
+Gud välsigne honom
+---
+
+--- Tycka om ---
+
+motvilja, avsmak, olust, äckel
+---
+
+--- Människor ---
+
+vimmel
+klunga
+sällskap, följe, följeslagare
+enig, enhällig
+
+handikappad, krympling
+
+sälle, kurre, lymmel, kräk
+komiker, clown, lustigkurre
+
+landkrabba, sjöbjörn
+
+slupstyrare, rorgängare
+
+yngling, ung man
+jungman, lägsta manskapsgrad
+
+konspiratör, komplott
+kumpan, medbrottsling
+representant: ombud
+rang, social ställning
+
+gisslan
+
+bondpermission, olovlig ledighet
+avsätta, avskeda (reservera, åstadskomma)
+
+personifiera, förkroppsliga
+
+---
+
+---# ägas av någon #---
+
+ägas av någon: vara i någons ägo
+man, herre, härskare, mästare
+återhållen, försiktig, måttfull
+
+inta, besegra, ta i besittning, erövra
+
+---
+
+---# prat #---
+
+prat, tal, talförhet, pratsam
+
+pik, spydighet
+hånfull, nedlåtande, föraktfull
+
+prata skräp/dumheter/i vädret
+
+förebrå, vara i luven på någon
+ursäkt, skäl, förevändning
+
+mened(avsiktlig falsk vittnesmål)
+
+åsikter, eftergift(ge åsikt till annan)
+hetsiga diskussioner, tummelplats
+rådslå, diskutera, rådgöra
+
+ha ett ord med i laget
+
+ha för avsikt, stå i begrepp att
+
+inställsam, överdrivet artig, honungssöt
+---
+
+--- Visor, sånger ---
+
+folkvisa, ballad
+
+---
+
+---# hunsa #---
+
+hunsa, mobba
+göra upp med någon, lösa konflikten med, tävla med
+
+hämndgirig
+
+när det verkligen gäller, när det kommer till kritan
+rädda sitt eget skinn: inte utsätta sig för risker
+
+---
+
+---# bakslug #---
+bakslug, (backstabbing), lömsk, illistig, försåtlig
+
+---
+
+---# se #---
+
+se, skåda, syn, åsyn
+vara i stånd att, kunna, förmå
+avslöja, genomskåda
+
+förstå, inse, vara på det klara med
+
+förutse
+inte förutse, oberäknerlig
+
+---
+
+---# det är inget tvekan om #---
+det är inget tvekan om, det är inte tu tal om det
+
+---
+
+---# honnör #---
+
+honnör, salute
+
+---
+
+---# så långt som #---
+
+så långt som, såvitt
+
+lika, likgiltig
+som ler och långhalm, stark koppling
+
+godta, godkänna
+
+vara tacksam för, hålla ngn räkning för
+
+---
+
+---# verksamhet #---
+verksamhet, förehavande, sysselsättning, aktivitet, företag
+
+overksam, sysslolös
+
+ta överhand, bli dominerande
+
+rätt till, behörig, berättigad
+
+småsak, bagatell
+
+handla, handling
+
+underhandla, förhandla
+uträtta
+
+stadium, fas
+status quo ante
+
+med avsikt, med vett och vilja
+
+lägga sig i, lägga näsan i blöt
+
+begärlig, alla vill ha
+pengar, kosing
+mynt: krona, klave
+nu är vi kvitt
+
+kosta på sig, tillåta sig
+
+gå i gåsmarsch
+fälttåg
+
+kronan på verket (cherry on the cake)
+
+---
+
+---# lära någon #---
+lära någon (att veta hut/ uppföra sig ordentligt)
+uppföra sig, bete sig, framföra
+uppförande, beteende
+
+respektlös, vanvördig
+stopp och belägg!, ta det lungt!, låt bli!
+
+bevare mig, skona mig
+låta udda vara jämnt, släta över, låta något passera
+
+sluta fred, komma överens om fred
+
+övertag, överdrag, trumf på hand
+fastvuxen i golvet, fastnaglad
+
+fintning, skenmanöver
+
+ge svar på, behandla, ta emot, bemöta
+
+inackordering, helinackordering, gästliknande
+
+---
+
+
+---# #---
+hundvakt (vakt midnatt~4:00)
+
+
+4.6 Anfallet
+---

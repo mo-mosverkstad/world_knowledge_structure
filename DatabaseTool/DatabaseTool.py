@@ -18,7 +18,7 @@ from converterOperation import Converter
 #yaml_object = YamlFile('Franska ord2.yaml')
 
 knowledge_object = Knowledge('Root:1')
-yaml_object = YamlFile('Database imported.yaml')
+yaml_object = YamlFile('Database.yaml')
 #Converter.do(knowledge_object, yaml_object)
 Converter.do(yaml_object, knowledge_object)
 

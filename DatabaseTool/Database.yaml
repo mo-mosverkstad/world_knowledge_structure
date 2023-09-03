@@ -3,175 +3,96 @@
     - Matematik/Matte:
       - Tal och siffror:
         - Tal och siffror:
-          - [1 2 3 4 5 6 n]
-          - +(ab-9=a\"b\' 52+39=91)
+          - S[1 2 3 4 5 6 n]
+          - +(52+39=91 xy-9=x″y′)
           - -(723-589=134)
           - (++=+ +-=- --=+)
           - \*(32*21=672 600*7=4200)
-          - /()
-          - ^()
-          - √()
+          - /(4200/70=60)
+          - ^(...)
+          - √(...)
           - log()
           - (|x|)(√(x²))
         - Andel:
-          - [10% 20% 25% 33% 50% n%]
+          - Andel [10% 20% 25% 33% 50% n%]
           - Förläng (5/3 = (5*2)/(3*2))
           - Förkort (12/24 = 1/2)
-          - (1/3<2/3, 1/6<1/5)
-          - (x*(1+p%)^n, x/(1+p%)^n)
-        - Measurements:
-          - Measurements
+          - Jämföra (1/3<2/3, 1/6<1/5)
+          - Ändring (x*(1+p%)^n, x/(1+p%)^n)
       - Algebra:
+        - Algebra symboler:
+          - SIM(Förenkling =>)
+          - FAC(Faktorisera <=)
+          - ANU(x~n=m)
+          - IDE(x~y=x)
+          - ASO(x~y=y~x)
+          - COM(x~(y~z)=(x~y)~z)
+          - DIS((x.y)~z=x.z~y.z)
+          - PAS(1 121 1331 14641 ...)
+          - CON(a.~b.=(a~b)(a~~b).)
+          - OLS(± -> */ -> ^√)
         - Algebra regler:
-          - ASO(a~b=b~a)
-          - EXP(a~(b~c))
-          - COM(a~(b~c)=(a~b)~c)
-          - DIS(a~(b.c)=a.b~a.c)
-          - ±(ASO COM)
-          - \*(ASO COM DIS(±))
-          - /(*)()
-          - Algebra regler:
-            - Förenkling (12x-8)*(-3x) = 12x*(-3x)+(-8)*(-3x) = -36x²+24x
-            - Faktorisering 6x+9 = 3*2x+3*3 = 3(2x+3)
-            - Ekvation 2a+3=5x => 3=5x-2x => 3=3x => 3/3=x => 1=x
-            - Olikhet (-3(x+1) < -9 => x+1 > -9/-3 => x > -3-1 => x > -4)
-          - Grundläggande:
-            - a+b=b+a, a+(b+c)=(a+b)+c
-            - ab=ba, a(bc)=(ab)c
-            - a+(b+c) = a+b+c
-            - a(b±c) = ab±ac
-            - (a±b)/c = a/c±b/c
-            - (a*b)/(c*d) = a/c * b/d
-            - (a/c)/(b/d) = a/c * d/b
-          - Kvadreringsregler:
-            - (a±b)² = a²±2ab+b²
-            - (a+b)(a-b) = a²-b²
-            - (a*b+a*c)² = (a(b+c))² = a²(b+c)²
-          - Kuberingsregler:
-            - (a±b)³ = a³±3a²b+3ab²±b³
-          - Potensregler:
-            - (a*b)^n = a^n*b^n
-            - (a/b)^n = a^n/b^n
-            - a^(b+c) = a^b*a^c
-            - a^(b-c) = a^b/a^c
-            - (a^m)^n = a^(mn)
-            - a^(1/n) = n^√a
-            - a^0 = 1
-            - a^(-b) = 1/(a^b)
-          - Rotlagar:
-            - √(a*b) = √a*√b
-            - √(a/b) = √a/√b
-          - Logaritmlagar:
-            - log(ab) = log(a)+log(b)
-            - log(a/b) = log(a)-log(b)
-            - log(a^b)=b*log(a)
-            - log(n^√x = 1/n*log(x))
-            - log(10^n) = n
-            - log_a(x) = log(x)/log(a)
-          - Komplexa tal:
-            - i = √(-1), z = a+bi = r(cos(α)+i*sin(α))
-            - i²=-1, i³=-i, i^4=1, i^-1=-1, i^-2=-1
-            - a+bi = c+di (a=c, b=d)
-            - (a+bi)+(c+di) = (a+c)+(b+d)i
-            - (a+bi)(a-bi) = a²+b²
-        - Funktioner och ekvationer:
-          - Funktioner:
-            - f(x) => (y) f funktion av x
-            - Definitionsmängd (Tillåtna x-värden)
-            - Värdemängd (Där värden som y kan anta)
-          - Polynomer (y=a_n*x^n + ... + a_1*x + a_0):
-            - p(x) = 5x^7+3x^2+8
-            - Variabelterm, konstanterm
-          - Linjära funktioner (y=kx+m, Ax+By+C=0):
-            - k = dy/dx = (y2-y1)/(x2-x1)
-            - m (skärning med y-axeln)
-            - k1 = k2, m1 ≠ m2 (paraell)
-            - k1*k2 = -1 (vinkelrät)
-            - k1 = k2, m1 = m2 (överlappande)
-          - Kvadratisk funktion (y=ax²+bx+c=a(x-h)²+k=a(x-p)(x-q)):
-            - Vertex (-b/a (Symmetri), -Δ/4a)
-            - Δ = b²-4ac = (p/2)²-q
-            - x = (-b±√Δ)/(2a) = -p/2±√Δ =>[COS]
-            - x²+ax+9=0, Δ>0 => a1>±6
-            - x+√(2x-1)=2 => (√(2x-1))²=(2-x)² => x=1 (x≠5)
-          - Kubisk funktion/Tredjegradsfunktion (ax³+bx²+cx+d):
-            - ...
-          - Exponentiella funktioner (y=a*b^x):
-            - Radioaktiv N = N0 * 2^(-t/T½)
-        - Ekvationsystem:
-          - Ekvation:
-            - ...
-          - Ekvationsystem:
-            - y + x = 13
-            - y - x = 3
-          - Substitution:
-            - y = x+3 => (x+3)+x = 13 => ...
-          - Addition:
-            - (y+x=13)+(y-x=3)=(2y=16) => y=8, x=5
-          - Subtraktion:
-            - (y+x=13)-(y-x=3)=(2x=10) => x=5, y=8
-        - Talföljder:
-          - Arithmetic:
-            - (a)1 3 5 7 9 (a+(n-1)*d)
-            - Σ = ½n(2a+(n-1)d)
-          - Geometric:
-            - (a)1 2 4 8 16 (ar^(n-1))
-            - Σ = a/(1-r^n)/(1-r)
-            - Σ lim n->∞ = a/(1-r^n)/(1-r)
+          - +(IDE0 ASO COM)
+          - \*(IDE1 ASO COM ±DIS)
+          - /(IDE1 ±DIS COM')
+          - ^√(IDE1 *DIS ±PAS -CON-1)
+          - ^(ANU0.1 OLS+ a^(-b)=1/(a^b))
+          - log(OLS- ly(x)=lx/ly)
+        - Komplexa tal (√(-1) a+ib):
+          - r(cos(α)+i*sin(α) +CON2)
+          - i^(-1 ... i -1 -i 1)
+        - Funktioner (av x) (f(x)):
+          - Funktion (ΣAn*x+ΣBn*y+C)
+          - Definition(x)/Värdemängd(y)
+          - Asymptot
+          - Polynom(Σan*x^n Π(ax+b))
+          - Rationell(r(x)=p(x)/q(x) q(x)≠0)
+          - P1(∥k1=k2 ⊥k1k2=-1)
+          - P2(Δ=b²-4ac -b/(2a) -Δ/(4a) x=(-b±√Δ)/(2a)[COS])
+          - P3(...)
+          - E^(y=ab^x N0*½^(t/T½))
+          - RT(x+√(2x-1)=2 (√(2x-1))²=(2-x)²)
+        - Ekvationer:
+          - EQA(2x+3=5x 3=5x-2x x=1)
+          - NEQ(-3(x+1)<-9 x+1>3 x>-4)
+          - EQS(y+x=13&y-x=3 x=8&y=5)
+          - SUB(y=x+3 (x+3)+x)
+          - (y+x=13)+(y-x=3)=(2y=16)
+          - (y+x=13)-(y-x=3)=(2x=10)
         - Algebra modeller:
-          - Förenkling [=>]:
-            - 2a(3+b)-9c(7-3) = [...] = 6a+21b-90c
-          - Faktorisering [(=>)]:
-            - 2x²-8 = 2(x²-4) = 2(x²-2²) = 2(x+2)(x-2)
-            - (y²-16)(x²+10x+25) = (y+4)(y-4)(x+5)²
-            - (x-1)(x+2)²-(x-1)²(x+2) = (x-1)(x+2)((x+2)-(x-1)) = (x-1)(x+2)3
-            - a^(2+n) + a^n = a²*a^n + a^n = a^n(a² + 1)
-          - Substitution [SUB]:
-            - x^4-13x²+36=0 (t=x²)
-            - t²-13t+36=0
-            - t1 = 9, t2 = 4
-            - x1 = 3, x2 = -3, x3 = 2, x4 = -2
-          - Nollprodukt[ZRP]:
-            - x²-5x=0 -> x(x-5)=0 -> x1=0, x2=5
-          - Omvänd nollprodukt [RZP]:
-            - (x²-2x-3 = 0) -> x1=3, x2=-1
-            - x²-2x-3 = (x-3)(x+1)
-          - Kvadratkomplettering [COS]:
-            - x²+ax+b = x²+ax+(a/2)²-(a/2)²+b = (x+a/2)²+b-(a/2)²
-          - Ekvationer med nämnare [FRA]:
-            - 3/x+x/2=9x/2 => 6/(2x)+x²/(2x)=9x²/(2x) => 6+x²=9x²
-            - (x+1)/(x-1)=9 => x+1=9(x-1)
-          - Modellering Andragradsfunktion [QUA]:
-            - 3 punkter => Ekvationsystem eller (2 + (0, c))
-            - Faktorisering a(x-x1)(x-x2)
-            - Kvadratkomplettering y = a(x-h)²+k
+          - SUT(x^4-13x²+36=0(t=x²) t²-13t+36=0)
+          - ZRP(x²-5x=0 x(x-5)=0 x=3=-1)
+          - RZP(x²-2x-3=0 x=3=-1 (x-3)(x+1))
+          - COS(x²+ax[+(½a)²-(½2)²]+b=(x+½a)²+b-(½a)²)
+          - FRA((x+1)/(x-1)=9 x+1=9(x-1))
+          - AFR((1/x+x/2=9/x 2+x²=18 x=±4)
+          - PFR(3/x+x/2=9x/2 (6+x²=9x²)/(2x))
+          - TES(...)
       - Geometri:
+        - Linjer (L1):
+          - ⊥ (...)
+          - L1∥L2 (1∥2&1∥3=2∥3)
+        - Vinklar (α):
+          - (^A=^BAC Spets/ben)
+          - (Spetsig Rät90 Trubbig Rak180)
+        - Linje och vinklar:
+          - Sido(α+β=180°)
+          - Vertikal(α=β)
+          - Transversal(α=β=γ)
+          - Likbelägna(α=β)
+          - Alternat(α=γ)
+          - Bisektris(α/2)
+        - Plangeometri:
+          - n(Area(A) Omkrets(P) Vinkelsumma(Σα))
+          - 3(½bh=√3/4s² AB+AC+BC 180)
+          - 4()
+          - 3I Likben(^B=^C AB=AC)
+          - 3E Liksid(3I+^60 3^=60 3/=)
+          - 3R Rät(a²+b²=c²)
         - Plangeometriska figurer:
-          - Linje:
-            - Linjerna skär varandra
-            - Vinkelräta (⊥)
-            - Paraella (a∥b a∥c => b∥c)
-            - Överlappande
-          - Vinklar:
-            - Vinklar (Vinkelspets, Vinkelben) (^A = ^BAC)
-            - Spetsig (0° < x < 90°)
-            - Rät (x = 90°)
-            - Trubbig (90° < x < 180°)
-            - Rak vinkel (x = 180°)
-          - Linje och vinklar:
-            - Bisektris (Vinkeldelning 2 delar)
-            - Sido (α + β = 180°)
-            - Vertikal (α = β)
-            - Transversal (α, β, γ) α=β=γ
-            - Likbelägna α = β
-            - Alternat α = γ
           - Triangel:
-            - Trianglar (A=½bh=√3/4s², P=AB+AC+BC, Σα=180)
-            - Likbenta trianglar (^B=^C, AB=AC)
-            - Liksidiga trianglar (IST + ^=60°, 3^=60, 3/=)
             - Spetsvinkliga trianglar
             - Trubbelvinklig triangel
-            - Rätvinkliga trianglar (a²+b²=c²)
           - Kongruenta och likformiga trianglar:
             - Trianglar överensstämmer varandra i ...
             - SSS (3 sidor)
@@ -444,8 +365,8 @@
         - div F(x)
         - curl F(x)
         - Σ:
-          - Σ(x) = ½x² + ½x
-          - Σ(ab^x) = a(1-b^n)/(1-b)
+          - x(½x² + ½x)
+          - a^x((b^n-1)/(b-1)[TES])
         - Series:
           - 1-x+x²-x³+... = (1+x)^(-1) (-1<x<1)
           - 1-1/2x+(1*3)x²/(2*4)-(1*3*5)x³/(2*4*6)+... = (1+x)^(-1/2) (-1<x<1)
@@ -969,7 +890,7 @@
             - 3 T=0K -> S=0
         - Reaktionstyper:
           - Reaktion:
-            - Kollisionsteori (Gynnsam geometisk)
+            - Kollisionsteori (Snabb, stark, Gynnsam geometisk)
             - Övergångsteori (Aktiverat komplex/Tillstånd)
             - Strävan efter energiminimum
           - Reaktionshastighet:
@@ -980,6 +901,23 @@
             - 4. Temperatur (T_H (Fler kollisioner), T_L)
             - 5. Koncentration (Tätt -> Fler kollisioner)
             - 6. Katalysator (Deltar i reaktion utan förbruk)
+          - Jämviktsreaktioner:
+            - A + B <-> C + D
+            - 1. Reaktionstart (A+B) Hög Hastighet
+            - 2. Δ[A]&[B]<0 Δ[C]&[D]>0
+            - 3. Dynamisk jämvikt (Fortfarande reaktion)
+            - 4. Hastigheter(v_AB=v_CD)
+            - Q = ([C]^c[D]^d)/([A]^a*[B]^b)
+            - K (Jämviktskonstant)
+            - G° = -RT*ln(K)
+            - ΔG = ΔG°+RT*ln(Q) = RT*ln(Q/K)
+            - ln(K) ~ -1/T (ΔT>0, ΔK>0)(ΔH>0)
+            - ln(K) ~ -T (ΔT<0, Δ>0)(ΔH<0)
+          - Syrabasreaktioner:
+            - Syrakonstant (K_a) = K[H2O] = [H3O+][A-]/[HA]
+            - Baskonstant (K_b) = K[H2O] = [HB+][OH-]/[B]
+            - Vattnet autoprotolys (K_w) = [H3O+][OH-] = 1e14M
+            - pK_w = pK_a + pK_b = pH + pOH = 14
           - Exotermisk reaktion (ΔH<0)(ΔS>0):
             - 2H2 + O2 -> 2H2O(g)
             - ΔG<0 -> Spontan
@@ -994,17 +932,6 @@
           - Jämvikt reaktion 2 (ΔH<0)(ΔS<0):
             - N2(g) + 3H2(g) -> 2NH3(g)
             - ΔG -> (T_H Icke-spontan, T_L Spontan)
-          - Jämviktsreaktioner:
-            - Q = ([C]^c[D]^d)/([A]^a*[B]^b)
-            - K (Jämviktskonstant)
-            - G° = -RT*ln(K)
-            - ΔG = ΔG°+RT*ln(Q) = RT*ln(Q/K)
-            - ln(K) ~ -1/T (ΔT>0, ΔK>0)(ΔH>0)
-            - ln(K) ~ -T (ΔT<0, Δ>0)(ΔH<0)
-            - Syrakonstant (K_a) = K[H2O] = [H3O+][A-]/[HA]
-            - Baskonstant (K_b) = K[H2O] = [HB+][OH-]/[B]
-            - Vattnet autoprotolys (K_w) = [H3O+][OH-] = 1e14M
-            - pK_w = pK_a + pK_b = pH + pOH = 14
         - Modeller:
           - Kolvmodell:
             - ΔQ=0, W<0 (ΔU>0, ΔT>0, ΔV<0)
@@ -1118,6 +1045,10 @@
           - Destillation
           - Papperskromatografi
       - Atomer/Grundämnen:
+        - Utseende[TRA]
+        - (Utseende Mass(u) Radie(e-11m) Smält Kok(°C) 1st jon(kJ/mol))
+        - (TRA 1.008 2.5 -259.1 -252.9 1312 90 2.20 0.1805)
+        - H()
         - 1 (H~He):
           - 1(H) Väte:
             - Genomskinlig gas
@@ -2717,6 +2648,44 @@
           - Molekylärbiologi (Makromolekyler uppbyggnad och cellfunktion)
           - 1600-talet Robert Hooke (Träkork)
           - Antoine de Leeukehoek (Levande organismer)
+        - Cellens byggstenar:
+          - Nukleinsyror:
+            - Lagrar genetiska information för cellen
+            - DNA/RNA (Celler(DNA+RNA), Virus(DNA/RNA))
+            - Nukleotid -> DNA(Dubbelsträngad)/RNA
+            - Socker, fosfat, kvävebas* (1% kroppsvikt)(Vätebindning)
+            - Pyrimidiner (Cytosin(2ring) Tymin Uracil)
+            - Pyriner (Adenin (1ring) Guanin)
+          - Kolhydrater:
+            - Kroppen (1% kolhydrat -> Energi), Vanligast i mat
+            - Glykogen -> Muskler kort/snabb energikälla, omvandla till fetter
+            - Cellvägg hos växter
+            - Monosackarid (Trioser(3) Tetros(4) Pentos(5 Fruktos) Hexos(6 Glykos Galaktos))
+            - Disackarid ((Glykos + Glykos) Maltos (Glykos + Galaktos))
+            - Polysackarid (Cellulosa Stäkelse(vanlig) Glykogen(djur) Sackaros(sockerrör) Insulin (Jordärtkockor))
+            - Kostfibrer (Polysackarid som inte bryts ner i magtarm (Cellulosa))
+          - Proteiner:
+            - Byggmaterial, enzymer
+            - Aminosyra (23) (H2N - C +(COOH) -(R(Sidokedja)) - H)
+            - Struktur (Byggmaterial, försvar)
+            - Försvar (Känner igen och förstör skadliga ämnen)
+            - Signal (Hormon)
+            - Receptor (Tar emot kemi signal)
+            - Lagring (Lagrar aminosyra)
+            - Transport (genom membran)
+            - Genreglering
+            - Keratin(Hår naglar) Aktin(Muskel) Hemoglobin(Blod)
+          - Enzymer:
+            - Protein -> Katalyserar reaktioner i cellen (10^3~10^6 gånger snabbare)
+            - Enzym + Substrat -> Enzym-substrat-kompex (Bind i aktiv centrum)
+            - Bryter(Lyaser) Sammanfoga(Syntas)
+            - Kofaktor (Hemogrupp i hemoglobin/koenzym vissa vitamin)
+            - Laktas -> Laktos, Pepsin -> (Peptidbindning)
+          - Lipider:
+            - Energilagring, membran, signalmolekyl, pigment
+            - Triglycerin
+            - Fetter, fosfolipid, steroid (testosteron, östradiol), vax, karetenoid
+            - Opolära förutom fosfolipid
         - Membran:
           - Membran:
             - Fosfolipid ((Fosfat + Fettsyror) Dubbellager)
@@ -2736,9 +2705,32 @@
             - Diffusion (c_H -> c_L)
             - Koncentrationsgradient (Diffunderar igenom)
             - Andra ämnen -> Protein
-            - Pågår endast till koncentrationutjämning
+            - Pågår endast till koncentrationutjämning (Jämvikt)
+            - Små hydrofob molekyl (O2, CO2, NO, N2) ->
+            - Små hydrofil molekyl (O2, etanol) ...>
+            - Stora molekyler/joner (Tar ej igenom)
+          - Osmos(Diffusion):
+            - Vatten diffusion genom membran (långsam)
+            - Kanalprotein (Akvaporiner (Ventilerar))
+            - Hyper (Hög), Iso (Lika), Hypo (Låg) [H2O] i cellen
+            - Hyperton (Krymper)
+            - Isoton (Normal hos djurcell)
+            - Hypoton (Sväller, normal hos växtcell)
+          - Vattenpotential/Tryckpotential/Turgortryck:
+            - Stagda/spänst(växt)
+            - Ψ_s (Osmotisk potential)
+            - Ψ_p (Tryckpotential)
+            - Ψ_H2O = 0, Ψ≤0
           - Aktiv transport:
             - Energikrävande (Mot koncentrationgradient)
+            - Transportproteiner (pumpar)
+            - Ca-pump (Ca (2+) ut)
+            - Transporterar 2 ämnen i samma riktning (Aminosyra, Na+)
+            - Na-K-pump (3(Na+) ut och 2(K+) in)
+            - Na-K-pump återställer jonbalans efter impuls
+            - H-K-pump (H+ ur magsäck, K+ ur slemhinna, sänker magsaft pH)
+          - Endo/exocytos:
+            - Makromolekyl -> Membran i membranblåsor
         - Djurcell*:
           - Djurcell:
             - 20~100µm (10x prokaryota)

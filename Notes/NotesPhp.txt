@@ -1,0 +1,104 @@
+https://www.w3schools.com/php/phptryit.asp?filename=tryphp_compiler
+
+Install
+https://www.php.net/manual/en/install.windows.php
+
+https://cloud.tencent.com/developer/article/1858492
+https://www.apachefriends.org/
+https://www.apachefriends.org/download_success.html
+
+https://blog.csdn.net/summer2day/article/details/78536010
+
+
+
+
+https://www.w3school.com.cn/php/php_variables.asp
+https://www.w3school.com.cn/php/php_xml_parser_expat.asp
+
+
+
+
+
+
+
+
+
+
+how to display utf-8 characters from mysql in php
+
+mysqli_set_charset($conn, "utf8");
+		<?php
+			function databaseLoad(){
+			    $servername = "mysql.webcindario.com";
+			    $username = "mosverkstad";
+			    $password = "Winnie1234";
+			    $dbname = "mosverkstad";
+				$conn = mysqli_connect($servername, $username, $password, $dbname);
+				mysqli_set_charset($conn, "utf8");
+				if (!$conn) {
+					die("Connection failed: " . mysqli_connect_error());
+				}
+
+https://stackoverflow.com/questions/2446778/how-to-display-unicode-data-with-php
+1.
+mysql_query ("set character_set_client='utf8'"); 
+mysql_query ("set character_set_results='utf8'"); 
+
+mysql_query ("set collation_connection='utf8_general_ci'");
+
+2.
+For new version of PHP which used mysqli, use this code after connect to mysql:
+
+mysqli_set_charset($link, 'utf8');
+
+https://www.php.net/manual/en/mysqli.set-charset.php
+
+3.
+header('Content-type: text/html; charset=UTF-8');
+echo "வெள்ளிக்கிழமை ஐ";
+
+4.
+echo json_decode('"\u00e1"');
+
+5.
+Use utf8_encode( ) to convert single-byte ISO-8859-1 encoded characters to UTF-8:
+print utf8_encode('Kurt Gödel is swell.');
+
+Use utf8_decode( ) to convert UTF-8 encoded characters to single-byte ISO-8859-1 encoded characters:
+print utf8_decode("Kurt G\xc3\xb6del is swell.");
+
+https://docstore.mik.ua/orelly/webprog/pcook/ch16_12.htm
+
+
+
+https://www.php.net/manual/en/mysqli.set-charset.php
+
+Object-oriented style
+
+<?php
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$mysqli = new mysqli("localhost", "my_user", "my_password", "test");
+
+printf("Initial character set: %s\n", $mysqli->character_set_name());
+
+/* change character set to utf8mb4 */
+$mysqli->set_charset("utf8mb4");
+
+printf("Current character set: %s\n", $mysqli->character_set_name());
+Procedural style
+
+<?php
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$link = mysqli_connect('localhost', 'my_user', 'my_password', 'test');
+
+printf("Initial character set: %s\n", mysqli_character_set_name($link));
+
+/* change character set to utf8mb4 */
+mysqli_set_charset($link, "utf8mb4");
+
+printf("Current character set: %s\n", mysqli_character_set_name($link));
+
+
+https://www.toptal.com/php/a-utf-8-primer-for-php-and-mysql

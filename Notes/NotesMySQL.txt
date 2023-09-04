@@ -1,0 +1,264 @@
+
+
+https://dev.mysql.com/downloads/installer/
+MySQL Installer 8.0.29
+
+TCP/IP, PORT:3306, X PROTOCOL PORT: 33060
+Root Account Password:
+MySQL Root password: mysql
+admin password: admin
+
+Windows Service Name: MySQL80
+
+c:\Program Files\MySQL\MySQL Shell 8.0\bin\mysqlsh.exe
+MySQL Workbench
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysql'
+
+SHOW DATABASES;
+
+USE mysql;
+SHOW TABLES;
+
+CREATE DATABASE mydb;
+USE mydb;
+SHOW TABLES;
+
+USE mydb;
+CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255));
+
+USE mydb;
+INSERT INTO customers (name, address) VALUES ('Alice Company Inc', 'Highway 37');
+INSERT INTO customers (name, address) VALUES ('Bob Company Inc', 'Highway 241');
+INSERT INTO customers (name, address) VALUES ('Charles Company Inc', 'Road 708');
+
+SELECT * FROM customers;
+
+
+
+
+mysql tutorial
+https://www.runoob.com/mysql/mysql-tutorial.html
+
+stored procedure
+https://www.runoob.com/w3cnote/mysql-stored-procedure.html
+
+
+
+
+
+
+node js:
+========
+https://www.w3schools.com/nodejs/nodejs_mysql.asp
+C:\Users\ewanbin>npm install mysql
+
+added 11 packages, and audited 12 packages in 2s
+
+found 0 vulnerabilities
+npm notice
+npm notice New minor version of npm available! 8.5.5 -> 8.10.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v8.10.0
+npm notice Run npm install -g npm@8.10.0 to update!
+npm notice
+
+C:\Users\ewanbin>
+
+
+https://www.w3schools.com/nodejs/nodejs_mysql_delete.asp
+https://blog.devart.com/how-to-connect-to-mysql-server.html
+
+
+var mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "mysql",
+});
+
+connection.connect((err) => {
+    if (err) {
+        console.log("Error occurred", err);
+    } else {
+        console.log("Connected to MySQL Server");
+    }
+});
+
+
+
+
+
+
+
+
+python:
+=======
+https://dev.mysql.com/doc/connector-python/en/connector-python-installation-binary.html
+pip install --upgrade pip
+pin install mysql-connector-python
+
+
+https://www.w3schools.com/python/python_mysql_getstarted.asp
+https://www.a2hosting.com/kb/developer-corner/mysql/connecting-to-mysql-using-python
+
+https://www.w3schools.com/python/python_mysql_select.asp
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="mysql",
+  database="mydb"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * FROM customers")
+
+myresult = mycursor.fetchall()
+
+for x in myresult:
+  print(x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE DATABASE tempdb;
+
+USE tempdb;
+CREATE TABLE nameTable(id int not null auto_increment,
+item text,
+PRIMARY KEY (id)
+);
+
+USE tempdb;
+CREATE TABLE relationship(parentId int, childId int, sortId int);
+
+USE exampledb;
+INSERT INTO exampletable (item) VALUES ("aaa");
+
+
+
+USE exampledb;
+CREATE TABLE root (id int);
+INSERT INTO root (id) VALUES (10);
+
+
+SELECT LAST_INSERT_ID();
+
+
+
+
+
+
+
+22:29:22	DELETE FROM relationship WHERE parentId = 1 and childId = 1	Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column.  To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.	0.000 sec
+
+USE tempdb;
+DELETE FROM relationship WHERE parentId = 1 and childId = 1
+
+Solution 1:
+Go to Edit --> Preferences
+Click "SQL Editor" tab and uncheck "Safe Updates" check box
+Query --> Reconnect to Server // logout and then login
+Now execute your SQL query
+
+Solution 2:
+SET SQL_SAFE_UPDATES = 0;
+
+# your code SQL here
+
+SET SQL_SAFE_UPDATES = 1;
+
+USE tempdb;
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM relationship WHERE parentId = 1 and childId = 1;
+SET SQL_SAFE_UPDATES = 1;
+
+
+MySQL python delete:
+https://www.w3schools.com/python/python_mysql_delete.asp
+
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "DELETE FROM customers WHERE address = 'Mountain 21'"
+
+mycursor.execute(sql)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) deleted")
+
+
+https://stackoverflow.com/questions/62092508/updating-a-table-without-using-sql-safe-updates
+
+
+
+
+
+
+
+SELECT * FROM relationship;
+
+https://www.w3schools.com/sql/sql_alter.asp
+
+ALTER TABLE table_name
+ADD column_name datatype;
+
+ALTER TABLE relationship ADD sortId int;
+
+ALTER TABLE relationship ADD sortId int;
+
+
+https://www.w3schools.com/sql/sql_update.asp
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+
+
+UPDATE relationship SET sortId=1;
+
+UPDATE relationship SET column=value WHERE condition;
+
+
+
+
+
+
+
+
+CREATE DATABASE mosverkstad;
+
+dbimport

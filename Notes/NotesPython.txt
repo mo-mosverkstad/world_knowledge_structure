@@ -1,0 +1,296 @@
+unittest configure:
+https://docs.microsoft.com/en-us/visualstudio/python/unit-testing-python-in-visual-studio?view=vs-2022
+
+unittest:
+https://code.visualstudio.com/docs/python/testing
+https://www.tutorialspoint.com/unittest_framework/unittest_framework_assertion.htm
+https://donjayamanne.github.io/pythonVSCodeDocs/docs/unittests/
+
+https://docs.python.org/3/library/unittest.html#
+https://realpython.com/python-testing/
+
+
+python class:
+https://realpython.com/python-class-constructor/
+
+
+https://python-course.eu/applications-python/finite-state-machine.php
+
+build http server from scratch
+https://www.codementor.io/@joaojonesventura/building-a-basic-http-server-from-scratch-in-python-1cedkg0842
+
+GET /favicon.ico HTTP/1.1
+https://blog.csdn.net/ainivip/article/details/85597213
+
+OOP:
+https://realpython.com/python3-object-oriented-programming/
+https://www.w3schools.com/python/python_classes.asp
+https://www.geeksforgeeks.org/python-oops-concepts/
+
+Design pattern
+https://python-patterns.guide/
+https://refactoring.guru/design-patterns/python
+https://refactoring.guru/design-patterns/chain-of-responsibility/python/example
+https://refactoring.guru/design-patterns/command/python/example
+
+https://refactoringguru.cn/design-patterns/python
+
+
+
+class my_class(object):
+    
+    @staticmethod
+    def get_content():
+        return 'hello'
+
+print(my_class.get_content())
+
+
+
+data structure:
+https://jackkuo666.github.io/Data_Structure_with_Python_book/
+
+
+RPN:
+https://blog.51cto.com/u_15127593/2803809
+
+
+
+
+
+
+
+https://www.theuptide.com/upgrade-pip/
+pip install --upgrade pip
+
+https://dev.mysql.com/doc/connector-python/en/connector-python-installation-binary.html
+pin install mysql-connector-python
+
+https://www.w3schools.com/python/python_mysql_getstarted.asp
+import mysql.connector
+
+
+
+
+
+GUI:
+
+https://likegeeks.com/python-gui-examples-tkinter-tutorial/
+https://www.pythontutorial.net/tkinter/tkinter-treeview/
+
+
+https://stackoverflow.com/questions/46390231/how-can-i-create-a-text-input-box-with-pygame
+
+https://pygame-gui.readthedocs.io/en/latest/
+
+
+
+
+https://www.reddit.com/r/pygame/comments/2w0ub3/whats_the_besteasiest_way_to_make_a_gui_in_pygame/
+
+https://github.com/Mekire/cabbages-and-kings
+https://github.com/Mekire/cabbages-and-kings/blob/master/data/map_components/map_gui_widgets.py
+
+https://github.com/Mekire/pygame-textbox/blob/master/textbox/textbox.py
+
+
+
+
+
+
+dict Hash:
+https://blog.csdn.net/answer3lin/article/details/84523332
+https://zhuanlan.zhihu.com/p/74003719
+https://zhuanlan.zhihu.com/p/74003719
+
+list:
+http://c.biancheng.net/view/5360.html
+https://zhuanlan.zhihu.com/p/143223943
+
+
+
+socket:
+telnet:
+https://pythonprogramminglanguage.com/socket-server/
+https://blog.katastros.com/a?ID=00650-3548cc89-231a-49f2-94b2-936d4b350570
+
+https://www.cnblogs.com/dazhaxie/archive/2012/06/27/2566054.html
+
+
+TCP socket:
+https://www.cs.dartmouth.edu/~campbell/cs50/socketprogramming.html
+https://stackoverflow.com/questions/2444459/python-sock-listen
+
+UDP socket:
+https://www.cs.dartmouth.edu/~campbell/cs60/socketprogramming.html
+
+
+non-blocking, select:
+http://pymotw.com/2/select/
+https://steelkiwi.com/blog/working-tcp-sockets/
+https://stackoverflow.com/questions/5308080/python-socket-accept-nonblocking
+
+https://www.jianshu.com/p/e26594304e11?u_atoken=136a028b-2625-4dd2-81f5-f982f502741a&u_asession=01tB4AuiourmCHl_WsKe6x407F1tm9nXbnLqYPeVZJDnU2Sr2HkZl8peUcm4YPlHdhX0KNBwm7Lovlpxjd_P_q4JsKWYrT3W_NKPr8w6oU7K8Qxcv4FLU48jFx3_yHilrIMKWrbBzYAhXhkL4v5_cjQmBkFo3NEHBv0PZUm6pbxQU&u_asig=05Lj3cZJ7bVh7WTv1MA5Z9m8J1zr8_Q3FIVj28ew_6xYtK5k7ToyxgXgFMWtJSZ31Tr2I4euaQSeScg11IghbExq4c9uhvg5kYHG-1K3oizfd48Cv0OyQVCJt0RStDzxMOWzxj1rl4LfntgUey3fFYVMP752a8v8-pBd8XQtGIHDH9JS7q8ZD7Xtz2Ly-b0kmuyAKRFSVJkkdwVUnyHAIJzaHjZhV0HxukhQG56hSpVS_OJEJaXq6jb4QfOuZL1SXSdf9JIAkyKervFWgmMgV8j-3h9VXwMyh6PgyDIVSG1W-HVZgV9AM-7Q0mP2kJve3eaIWP5L_LncI-7YJZfHhFoXcdBC717h0_iAL8lcYtnu8aN2R_UI-hZJa828iWb15hmWspDxyAEEo4kbsryBKb9Q&u_aref=j7I3eo3IVpozwyhNwyQPbd8m1cY%3D
+
+
+
+
+
+https://stackoverflow.com/questions/2576712/using-python-how-can-i-read-the-bits-in-a-byte
+f = open("myfile", 'rb')
+# read one byte
+byte = f.read(1)
+# convert the byte to an integer representation
+byte = ord(byte)
+# now convert to string of 1s and 0s
+byte = bin(byte)[2:].rjust(8, '0')
+# now byte contains a string with 0s and 1s
+for bit in byte:
+    print bit
+
+
+
+
+def bits(f):
+    bytes = (ord(b) for b in f.read())
+    for b in bytes:
+        for i in xrange(8):
+            yield (b >> i) & 1
+
+for b in bits(open('binary-file.bin', 'r')):
+    print b
+
+
+
+
+
+Python 3.6 (32-bit) interactive window [PTVS 17.0.21293.2-17.0]
+Type $help for a list of commands.
+>>> 1 << 4
+16
+>>> hex(1<<4)
+'0x10'
+>>> hex(1<<4 | 2)
+'0x12'
+>>> hex(int('0x12', 16) >> 4)
+'0x1'
+>>> hex(int('0x72', 16) | int('0x10', 16))
+'0x72'
+>>> hex(int('0x72', 16) & int('0x10', 16))
+'0x10'
+>>> hex(int('0x72', 16) & int('0x10', 16) >> 4)
+'0x0'
+>>> hex((int('0x72', 16) & int('0x10', 16)) >> 4)
+'0x1'
+>>> (int('0x72', 16) & int('0xF0', 16)) >> 4
+7
+>>> 0b00110010 & 0b11110000
+48
+>>> bin(0b00110010 & 0b11110000)
+'0b110000'
+>>> bin((0b00110010 & 0b11110000) >> 4)
+'0b11'
+>>> b'11000001'.decode("utf-8")
+'11000001'
+>>> b'11000001'.decode("utf-8")
+'11000001'
+>>> b'11000001'.decode()
+'11000001'
+>>> 
+
+
+# Receive data
+reply = client_socket.recv(MAX_BUFFER)
+for i in range(len(reply)):
+    print(hex((reply[i] & int('0xF0',16))>>4))
+print(f'[Client] server -> client: {reply.decode("utf-8")}')
+
+
+
+digit logic
+
+https://www.cnblogs.com/kiwi/archive/2012/03/18/2404626.html
+https://circuitverse.org/simulator
+
+https://www.circuit-diagram.org/
+
+https://www.electronics-tutorials.ws/blog/7-segment-display-tutorial.html
+
+https://www.cnblogs.com/zpchcbd/p/15368463.html
+https://sv.m.wikipedia.org/wiki/Fil:Logic-gate-index.png
+
+
+
+
+CMOS:
+https://zhuanlan.zhihu.com/p/111508084
+https://zh.m.wikipedia.org/zh-sg/%E4%BA%92%E8%A3%9C%E5%BC%8F%E9%87%91%E5%B1%AC%E6%B0%A7%E5%8C%96%E7%89%A9%E5%8D%8A%E5%B0%8E%E9%AB%94
+
+Programmable Array Logic, PAL
+通用阵列逻辑（英语：Generic Array Logic, GAL）是Lattice半导体公司（英语：Lattice Semiconductor）于1980年代中期，以可编程阵列逻辑（PAL）为基础所强化修改成的一种可编程逻辑器件（PLD）。
+https://zh.m.wikipedia.org/zh-sg/%E9%80%9A%E7%94%A8%E9%98%B5%E5%88%97%E9%80%BB%E8%BE%91
+ASIC:
+https://baike.baidu.com/item/ASIC/2014676
+FPGA:
+https://baike.baidu.com/item/FPGA/935826
+FPGA（Field Programmable Gate Array）是在PAL （可编程阵列逻辑）、GAL（通用阵列逻辑）等可编程器件的基础上进一步发展的产物。它是作为专用集成电路（ASIC）领域中的一种半定制电路而出现的，既解决了定制电路的不足，又克服了原有可编程器件门电路数有限的缺点。
+
+
+第2.5章 使用门电路搭建加法器
+https://blog.csdn.net/booksyhay/article/details/80709192
+重学计算机组成原理（十二）- 加法器
+https://bbs.huaweicloud.com/blogs/274273
+
+
+数字电路设计的基本方法有哪些
+组合电路设计:提出问题→确定逻辑关系→列真值表→逻辑化简→画逻辑电路图。
+时序电路设计:列原始状态转移图和表→状态优化→状态分配→触发器选型→求解方程式→画逻辑电路图。
+https://blog.csdn.net/weixin_42832780/article/details/95524193
+
+电路中的中英文词汇对照
+https://blog.csdn.net/dyzok88/article/details/42083307
+
+
+Completed document:
+https://www.cnblogs.com/zpchcbd/p/15368463.html
+
+https://www.geeksforgeeks.org/minimization-of-boolean-functions/
+https://www.geeksforgeeks.org/introduction-of-k-map-karnaugh-map/
+https://www.geeksforgeeks.org/bcd-to-7-segment-decoder/?ref=lbp
+https://www.geeksforgeeks.org/programmable-logic-array/
+
+
+
+
+
+CMOS => NOT, NOR, NAND
+https://zhuanlan.zhihu.com/p/111508084
+
+AND, OR => NOT, NOR, NAND
+NAND and NOR are also known as universal gates since they can be used to implement any digital circuit without using any other gate.
+https://www.geeksforgeeks.org/introduction-of-logic-gates/?ref=lbp
+
+Boolean Algebra
+https://www.geeksforgeeks.org/properties-of-boolean-algebra/
+https://www.geeksforgeeks.org/minimization-of-boolean-functions/
+https://www.geeksforgeeks.org/representation-of-boolean-functions/
+https://www.geeksforgeeks.org/functional-completeness-in-digital-logic/
+Introduction of K-Map (Karnaugh Map)
+https://www.geeksforgeeks.org/introduction-of-k-map-karnaugh-map/
+
+Combinational Circuits
+https://www.geeksforgeeks.org/half-adder-in-digital-logic/?ref=lbp
+https://www.geeksforgeeks.org/full-adder-in-digital-logic/
+https://www.geeksforgeeks.org/binary-decoder-in-digital-logic/?ref=lbp
+
+https://www.geeksforgeeks.org/number-system-and-base-conversions/
+
+Programmable Logic Array
+https://www.geeksforgeeks.org/programmable-logic-array/?ref=lbp
+https://www.geeksforgeeks.org/programming-array-logic/
+
+https://www.geeksforgeeks.org/classification-and-programming-of-read-only-memory-rom/
+
+
+Introduction of Sequential Circuits
+https://www.geeksforgeeks.org/introduction-of-sequential-circuits/?ref=lbp

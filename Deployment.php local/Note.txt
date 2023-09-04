@@ -1,0 +1,11 @@
+start xampp
+C:\xampp\htdocs
+
+indexlocal.php
+index2.html
+main.js
+style.css
+
+
+http://localhost/indexlocal.php
+

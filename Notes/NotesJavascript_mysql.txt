@@ -1,0 +1,1654 @@
+https://www.digitalocean.com/community/tutorials/how-to-create-a-web-server-in-node-js-with-the-http-module
+https://www.digitalocean.com/community/tutorials/how-to-create-a-web-server-in-node-js-with-the-http-module
+
+https://www.w3schools.com/nodejs/default.asp
+https://javascript.plainenglish.io/create-a-single-page-website-using-node-js-and-express-js-a0b53e396e4f
+
+https://nodejs.org/en/download/
+Download node js installer
+
+node-v16.15.0-x64.msi
+
+node -v
+npm -v
+
+visual studio Node js editor install
+
+
+Version 1:
+server.js
+'use strict';
+var http = require('http');
+var port = process.env.PORT || 1337;
+const host = 'localhost';
+
+http.createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World\n');
+}).listen(port, host, () => {
+    console.log(`Server is running on http://${host}:${port}`);
+});
+
+
+
+
+
+
+Template:
+
+const http = require("http");
+
+const host = 'localhost';
+const port = 8000;
+
+const requestListener = function (req, res) {};
+
+const server = http.createServer(requestListener);
+server.listen(port, host, () => {
+    console.log(`Server is running on http://${host}:${port}`);
+});
+
+
+
+json.js
+...
+const requestListener = function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+    res.writeHead(200);
+    res.end(`{"message": "This is a JSON response"}`);
+};
+...
+
+
+csv.js
+...
+const requestListener = function (req, res) {
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment;filename=oceanpals.csv");
+    res.writeHead(200);
+    res.end(`id,name,email\n1,Sammy Shark,shark@ocean.com`);
+};
+...
+
+
+html.js
+...
+const requestListener = function (req, res) {
+    res.setHeader("Content-Type", "text/html");
+    res.writeHead(200);
+    res.end(`<html><body><h1>This is HTML</h1></body></html>`);
+};
+...
+
+
+
+
+server.js
+'use strict';
+const http = require("http");
+const fs = require('fs').promises;
+
+const host = '';
+const port = 1337;
+
+const requestListener = function (req, res) {
+    fs.readFile(__dirname + "/index.html")
+        .then(contents => {
+            res.setHeader("Content-Type", "text/html");
+            res.writeHead(200);
+            res.end(contents);
+        })
+        .catch(err => {
+            res.writeHead(500);
+            res.end(err);
+            return;
+        });
+};
+
+const server = http.createServer(requestListener);
+server.listen(port, host, () => {
+    console.log(`Server is running on http://${host}:${port}`);
+});
+
+
+index.html
+<!DOCTYPE html>
+
+<head>
+    <title>My Website</title>
+    <style>
+        *,
+        html {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: rgb(236, 152, 42);
+        }
+
+        .center {
+            width: 100%;
+            height: 50%;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 144px;
+        }
+
+        p {
+            font-size: 64px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <h1>Hello Again!</h1>
+        <p>This is served from a file</p>
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+https://www.w3schools.com/nodejs/nodejs_mysql.asp
+C:\Users\ewanbin>npm install mysql
+
+added 11 packages, and audited 12 packages in 2s
+
+found 0 vulnerabilities
+npm notice
+npm notice New minor version of npm available! 8.5.5 -> 8.10.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v8.10.0
+npm notice Run npm install -g npm@8.10.0 to update!
+npm notice
+
+C:\Users\ewanbin>
+
+
+
+https://dev.mysql.com/downloads/installer/
+MySQL Installer 8.0.29
+
+TCP/IP, PORT:3306, X PROTOCOL PORT: 33060
+Root Account Password:
+MySQL Root password: mysql
+admin password: admin
+
+Windows Service Name: MySQL80
+
+c:\Program Files\MySQL\MySQL Shell 8.0\bin\mysqlsh.exe
+MySQL Workbench
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysql'
+
+SHOW DATABASES;
+
+USE mysql;
+SHOW TABLES;
+
+CREATE DATABASE mydb;
+USE mydb;
+SHOW TABLES;
+
+USE mydb;
+CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255));
+
+USE mydb;
+INSERT INTO customers (name, address) VALUES ('Alice Company Inc', 'Highway 37');
+INSERT INTO customers (name, address) VALUES ('Bob Company Inc', 'Highway 241');
+INSERT INTO customers (name, address) VALUES ('Charles Company Inc', 'Road 708');
+
+SELECT * FROM customers;
+
+https://www.w3schools.com/nodejs/nodejs_mysql_delete.asp
+https://blog.devart.com/how-to-connect-to-mysql-server.html
+
+
+var mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "mysql",
+});
+
+connection.connect((err) => {
+    if (err) {
+        console.log("Error occurred", err);
+    } else {
+        console.log("Connected to MySQL Server");
+    }
+});
+
+
+
+
+
+
+
+https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
+https://stackoverflow.com/questions/28061080/node-itself-can-serve-static-files-without-express-or-any-other-module
+https://www.w3jar.com/how-to-fetch-select-data-from-mysql-database-using-node-js/
+https://www.delftstack.com/howto/node.js/rendering-html-files-in-node-js/
+
+
+https://forum.freecodecamp.org/t/how-to-display-only-data-from-database-on-a-webpage-table-based-in-the-input-nodejs-mysql/421402/5
+https://forum.freecodecamp.org/t/how-to-display-only-data-from-database-on-a-webpage-table-based-in-the-input-nodejs-mysql/421402
+
+
+https://codeforgeek.com/nodejs-mysql-tutorial/
+
+
+
+
+
+
+
+backup:
+=======
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "mysql",
+    database: "mydb"
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+});
+
+var callbackFunc = function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+}
+
+con.query("SELECT * FROM customers", callbackFunc);
+
+const http = require("http");
+const fs = require('fs').promises;
+
+const host = '';
+const port = 1337;
+
+const requestListener = function (req, res) {
+    fs.readFile(__dirname + "/pageHello.html")
+        .then(contents => {
+            res.setHeader("Content-Type", "text/html");
+            res.writeHead(200);
+            res.end(contents);
+        })
+        .catch(err => {
+            res.writeHead(500);
+            res.end(err);
+            return;
+        });
+};
+
+const server = http.createServer(requestListener);
+server.listen(port, host, () => {
+    console.log(`Server is running on http://${host}:${port}`);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://expressjs.com/en/starter/generator.html
+C:\Users\ewanbin>npx -v
+8.5.5
+
+C:\Users\ewanbin>npx express-generator
+Need to install the following packages:
+  express-generator
+Ok to proceed? (y) y
+npm WARN deprecated mkdirp@0.5.1: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+
+  warning: the default view engine will not be jade in future releases
+  warning: use `--view=jade' or `--help' for additional options
+
+destination is not empty, continue? [y/N] y
+
+   create : public\
+   create : public\javascripts\
+   create : public\images\
+   create : public\stylesheets\
+   create : public\stylesheets\style.css
+   create : routes\
+   create : routes\index.js
+   create : routes\users.js
+   create : views\
+   create : views\error.jade
+   create : views\index.jade
+   create : views\layout.jade
+   create : app.js
+   create : package.json
+   create : bin\
+   create : bin\www
+
+   install dependencies:
+     > npm install
+
+   run the app:
+     > SET DEBUG=ewanbin:* & npm start
+
+
+C:\Users\ewanbin>express -h
+'express' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\ewanbin>
+C:\Users\ewanbin>npm install -g express-generator
+npm WARN deprecated mkdirp@0.5.1: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+
+added 10 packages, and audited 11 packages in 1s
+
+3 vulnerabilities (1 moderate, 1 high, 1 critical)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+C:\Users\ewanbin>npm audit fix --force
+npm WARN using --force Recommended protections disabled.
+npm WARN deprecated transformers@2.1.0: Deprecated, use jstransformer
+npm WARN deprecated constantinople@3.0.2: Please update to at least constantinople 3.1.1
+npm WARN deprecated jade@1.11.0: Jade has been renamed to pug, please install the latest version of pug instead of jade
+
+added 52 packages, removed 21 packages, changed 18 packages, and audited 100 packages in 8s
+
+# npm audit report
+
+clean-css  <4.1.11
+Regular Expression Denial of Service in clean-css - https://github.com/advisories/GHSA-wxhq-pm8v-cw75
+fix available via `npm audit fix --force`
+Will install jade@1.9.2, which is a breaking change
+node_modules/clean-css
+  jade  >=0.30.0
+  Depends on vulnerable versions of clean-css
+  Depends on vulnerable versions of constantinople
+  Depends on vulnerable versions of transformers
+  node_modules/jade
+
+constantinople  <3.1.1
+Severity: critical
+Sandbox Bypass Leading to Arbitrary Code Execution in constantinople - https://github.com/advisories/GHSA-4vmm-mhcq-4x9j
+fix available via `npm audit fix --force`
+Will install jade@1.9.2, which is a breaking change
+node_modules/constantinople
+  jade  >=0.30.0
+  Depends on vulnerable versions of clean-css
+  Depends on vulnerable versions of constantinople
+  Depends on vulnerable versions of transformers
+  node_modules/jade
+
+uglify-js  <=2.5.0
+Severity: critical
+Incorrect Handling of Non-Boolean Comparisons During Minification in uglify-js - https://github.com/advisories/GHSA-34r7-q49f-h37c
+Regular Expression Denial of Service in uglify-js - https://github.com/advisories/GHSA-c9f4-xj24-8jqx
+fix available via `npm audit fix --force`
+Will install jade@1.9.2, which is a breaking change
+node_modules/transformers/node_modules/uglify-js
+  transformers  2.0.0 - 3.0.1
+  Depends on vulnerable versions of uglify-js
+  node_modules/transformers
+    jade  >=0.30.0
+    Depends on vulnerable versions of clean-css
+    Depends on vulnerable versions of constantinople
+    Depends on vulnerable versions of transformers
+    node_modules/jade
+
+5 vulnerabilities (1 low, 4 critical)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+C:\Users\ewanbin>npm audit fix --force
+npm WARN using --force Recommended protections disabled.
+npm WARN audit Updating jade to 1.9.2,which is a SemVer major change.
+npm WARN deprecated jade@1.9.2: Jade has been renamed to pug, please install the latest version of pug instead of jade
+
+removed 24 packages, changed 3 packages, and audited 76 packages in 2s
+
+# npm audit report
+
+constantinople  <3.1.1
+Severity: critical
+Sandbox Bypass Leading to Arbitrary Code Execution in constantinople - https://github.com/advisories/GHSA-4vmm-mhcq-4x9j
+fix available via `npm audit fix --force`
+Will install jade@0.31.2, which is a breaking change
+node_modules/constantinople
+  jade  >=0.30.0
+  Depends on vulnerable versions of constantinople
+  Depends on vulnerable versions of transformers
+  node_modules/jade
+
+uglify-js  <=2.5.0
+Severity: critical
+Incorrect Handling of Non-Boolean Comparisons During Minification in uglify-js - https://github.com/advisories/GHSA-34r7-q49f-h37c
+Regular Expression Denial of Service in uglify-js - https://github.com/advisories/GHSA-c9f4-xj24-8jqx
+fix available via `npm audit fix --force`
+Will install jade@0.31.2, which is a breaking change
+node_modules/uglify-js
+  transformers  2.0.0 - 3.0.1
+  Depends on vulnerable versions of uglify-js
+  node_modules/transformers
+    jade  >=0.30.0
+    Depends on vulnerable versions of constantinople
+    Depends on vulnerable versions of transformers
+    node_modules/jade
+
+4 critical severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+C:\Users\ewanbin>npm audit fix --force
+npm WARN using --force Recommended protections disabled.
+npm WARN audit Updating jade to 0.31.2,which is a SemVer major change.
+npm WARN deprecated mkdirp@0.3.5: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+npm WARN deprecated jade@0.31.2: Jade has been renamed to pug, please install the latest version of pug instead of jade
+npm WARN deprecated transformers@2.0.1: Deprecated, use jstransformer
+
+added 11 packages, removed 8 packages, changed 7 packages, and audited 79 packages in 5s
+
+# npm audit report
+
+uglify-js  <=2.5.0
+Severity: critical
+Incorrect Handling of Non-Boolean Comparisons During Minification in uglify-js - https://github.com/advisories/GHSA-34r7-q49f-h37c
+Regular Expression Denial of Service in uglify-js - https://github.com/advisories/GHSA-c9f4-xj24-8jqx
+fix available via `npm audit fix --force`
+Will install jade@0.29.0, which is a breaking change
+node_modules/uglify-js
+  transformers  2.0.0 - 3.0.1
+  Depends on vulnerable versions of uglify-js
+  node_modules/transformers
+    jade  >=0.30.0
+    Depends on vulnerable versions of transformers
+    node_modules/jade
+
+3 critical severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+C:\Users\ewanbin>npm audit fix --force
+npm WARN using --force Recommended protections disabled.
+npm WARN audit Updating jade to 0.29.0,which is a SemVer major change.
+npm WARN deprecated jade@0.29.0: Jade has been renamed to pug, please install the latest version of pug instead of jade
+npm WARN deprecated transformers@1.8.3: Deprecated, use jstransformer
+
+removed 13 packages, changed 3 packages, and audited 66 packages in 2s
+
+found 0 vulnerabilities
+
+C:\Users\ewanbin>
+
+
+
+
+C:\Users\ewanbin>express
+
+  warning: the default view engine will not be jade in future releases
+  warning: use `--view=jade' or `--help' for additional options
+
+destination is not empty, continue? [y/N] y
+
+   create : public\
+   create : public\javascripts\
+   create : public\images\
+   create : public\stylesheets\
+   create : public\stylesheets\style.css
+   create : routes\
+   create : routes\index.js
+   create : routes\users.js
+   create : views\
+   create : views\error.jade
+   create : views\index.jade
+   create : views\layout.jade
+   create : app.js
+   create : package.json
+   create : bin\
+   create : bin\www
+
+   install dependencies:
+     > npm install
+
+   run the app:
+     > SET DEBUG=ewanbin:* & npm start
+
+
+C:\Users\ewanbin>express -h
+
+  Usage: express [options] [dir]
+
+  Options:
+
+        --version        output the version number
+    -e, --ejs            add ejs engine support
+        --pug            add pug engine support
+        --hbs            add handlebars engine support
+    -H, --hogan          add hogan.js engine support
+    -v, --view <engine>  add view <engine> support (dust|ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
+        --no-view        use static html instead of view engine
+    -c, --css <engine>   add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)
+        --git            add .gitignore
+    -f, --force          force on non-empty directory
+    -h, --help           output usage information
+
+C:\Users\ewanbin>
+
+
+
+C:\Users\ewanbin>cd C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs>express --view=pug myapp
+
+   create : myapp\
+   create : myapp\public\
+   create : myapp\public\javascripts\
+   create : myapp\public\images\
+   create : myapp\public\stylesheets\
+   create : myapp\public\stylesheets\style.css
+   create : myapp\routes\
+   create : myapp\routes\index.js
+   create : myapp\routes\users.js
+   create : myapp\views\
+   create : myapp\views\error.pug
+   create : myapp\views\index.pug
+   create : myapp\views\layout.pug
+   create : myapp\app.js
+   create : myapp\package.json
+   create : myapp\bin\
+   create : myapp\bin\www
+
+   change directory:
+     > cd myapp
+
+   install dependencies:
+     > npm install
+
+   run the app:
+     > SET DEBUG=myapp:* & npm start
+
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs>cd myapp
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs\myapp>npm install
+npm WARN deprecated core-js@2.6.12: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+
+added 124 packages, and audited 125 packages in 17s
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+4 vulnerabilities (2 low, 2 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs\myapp>npm fund
+myapp@0.0.0
+`-- https://github.com/sponsors/ljharb
+    `-- resolve@1.22.0, is-core-module@2.9.0, supports-preserve-symlinks-flag@1.0.0, is-regex@1.1.4, call-bind@1.0.2, get-intrinsic@1.1.1, has-symbols@1.0.3, has-tostringtag@1.0.0
+
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs\myapp>npm audit fix
+
+up to date, audited 125 packages in 3s
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+# npm audit report
+
+clean-css  <4.1.11
+Regular Expression Denial of Service in clean-css - https://github.com/advisories/GHSA-wxhq-pm8v-cw75
+fix available via `npm audit fix`
+node_modules/clean-css
+  pug-filters  <=3.0.2
+  Depends on vulnerable versions of clean-css
+  node_modules/pug-filters
+
+pug-code-gen  <2.0.3
+Severity: high
+Remote code execution via the `pretty` option. - https://github.com/advisories/GHSA-p493-635q-r6gr
+fix available via `npm audit fix --force`
+Will install pug@2.0.4, which is outside the stated dependency range
+node_modules/pug-code-gen
+  pug  0.1.0 - 2.0.0-rc.4
+  Depends on vulnerable versions of pug-code-gen
+  node_modules/pug
+
+4 vulnerabilities (2 low, 2 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues, run:
+  npm audit fix --force
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs\myapp>npm audit fix --force
+npm WARN using --force Recommended protections disabled.
+npm WARN audit Updating pug to 2.0.4,which is outside your stated dependency range.
+
+removed 3 packages, changed 8 packages, and audited 122 packages in 4s
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+# npm audit report
+
+pug  <3.0.1
+Severity: high
+Remote code execution via the `pretty` option. - https://github.com/advisories/GHSA-p493-635q-r6gr
+fix available via `npm audit fix --force`
+Will install pug@3.0.2, which is a breaking change
+node_modules/pug
+
+1 high severity vulnerability
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs\myapp>npm audit fix --force
+npm WARN using --force Recommended protections disabled.
+npm WARN audit Updating pug to 3.0.2,which is a SemVer major change.
+
+added 5 packages, removed 30 packages, changed 19 packages, and audited 97 packages in 7s
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs\myapp>$env:DEBUG='myapp:*'; npm start
+The filename, directory name, or volume label syntax is incorrect.
+
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs\myapp>
+
+
+
+
+
+
+
+
+
+
+
+Install express:
+https://expressjs.com/en/starter/installing.html
+C:\Users\ewanbin>npm -v
+8.5.5
+
+C:\Users\ewanbin>npm install express
+
+added 57 packages, and audited 69 packages in 4s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+C:\Users\ewanbin>npm fund
+ewanbin
++-- https://github.com/sponsors/ljharb
+|   `-- qs@6.10.3, side-channel@1.0.4, call-bind@1.0.2, get-intrinsic@1.1.1, has-symbols@1.0.3, object-inspect@1.12.0
+`-- https://github.com/sponsors/feross
+    `-- safe-buffer@5.2.1
+
+
+C:\Users\ewanbin>
+
+
+https://expressjs.com/en/starter/hello-world.html
+const express = require('express')
+const app = express()
+const port = 1337
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
+
+
+
+
+
+
+
+
+
+
+https://www.tutorialspoint.com/nodejs/nodejs_express_framework.htm
+
+
+var express = require('express');
+var app = express();
+
+app.get('/', function (req, res) {
+    res.send('Hello World');
+})
+
+var server = app.listen(1337, function () {
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("Example app listening at http://%s:%s", host, port)
+})
+
+
+
+
+
+var express = require('express');
+var app = express();
+
+// This responds with "Hello World" on the homepage
+app.get('/', function (req, res) {
+    console.log("Got a GET request for the homepage");
+    res.send('Hello GET');
+})
+
+// This responds a POST request for the homepage
+app.post('/', function (req, res) {
+    console.log("Got a POST request for the homepage");
+    res.send('Hello POST');
+})
+
+// This responds a DELETE request for the /del_user page.
+app.delete('/del_user', function (req, res) {
+    console.log("Got a DELETE request for /del_user");
+    res.send('Hello DELETE');
+})
+
+// This responds a GET request for the /list_user page.
+app.get('/list_user', function (req, res) {
+    console.log("Got a GET request for /list_user");
+    res.send('Page Listing');
+})
+
+// This responds a GET request for abcd, abxcd, ab123cd, and so on
+app.get('/ab*cd', function (req, res) {
+    console.log("Got a GET request for /ab*cd");
+    res.send('Page Pattern Match');
+})
+
+var server = app.listen(1337, function () {
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("Example app listening at http://%s:%s", host, port)
+})
+
+
+
+
+server.js
+var express = require('express');
+var app = express();
+
+app.use(express.static('public'));
+
+app.get('/', function (req, res) {
+    res.send('Hello World');
+})
+
+var server = app.listen(1337, function () {
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("Example app listening at http://%s:%s", host, port)
+})
+
+
+public/page1.html
+http://localhost:1337/page1.html
+
+
+
+
+
+
+
+C:\Users\ewanbin>npm install ejs
+npm WARN deprecated transformers@2.1.0: Deprecated, use jstransformer
+npm WARN deprecated constantinople@3.0.2: Please update to at least constantinople 3.1.1
+npm WARN deprecated jade@1.11.0: Jade has been renamed to pug, please install the latest version of pug instead of jade
+
+added 52 packages, removed 2 packages, changed 9 packages, and audited 116 packages in 9s
+
+2 packages are looking for funding
+  run `npm fund` for details
+
+5 vulnerabilities (1 low, 4 critical)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+C:\Users\ewanbin>
+
+https://levelup.gitconnected.com/render-dynamic-content-in-nodejs-using-templates-a58cae681148
+
+const express = require("express");
+const path = require("path");
+const app = express();
+
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => {
+    res.render("index"); // index refers to index.ejs
+});
+
+app.listen(1337, () => {
+    console.log("server started on port 1337");
+});
+
+
+
+
+
+
+https://www.sidmartinbio.org/how-do-you-dynamically-populate-a-table-in-html/#How_do_you_dynamically_populate_a_table_in_HTML
+How fetch data from database in JavaScript and display HTML table?
+How to display Data from MySQL database table in Node.js
+
+Install Express Application.
+Connect Node.js App to MySQL Database.
+Create a Route to Fetch Data.
+Load Route into the root file.
+Create HTML Table to Display data.
+Run Node.js Code to display data in the HTML Table.
+
+https://coursesweb.net/nodejs/select-mysql-output-html-table
+https://stackoverflow.com/questions/58992092/display-mysql-in-a-html-table-with-node-js
+
+
+
+
+
+https://www.zditect.com/code/javascript/how-to-display-data-from-mysql-database-table-in-nodejs.html
+server.js
+const express = require("express");
+const path = require("path");
+const app = express();
+
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => {
+    res.render("index", { userData: "some data" }); // index refers to index.ejs
+});
+
+app.listen(1337, () => {
+    console.log("server started on port 1337");
+});
+
+view/index.ejs
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index page</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <h1>This is index page!</h1>
+    <script src="/js/script.js"></script>
+    <h1>Data: <%=userData%> </h1>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+server.js
+var mysql = require('mysql');
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "mysql",
+    database: "mydb"
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+});
+
+let myData;
+
+var callbackFunc = function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    myData = result;
+}
+
+con.query("SELECT * FROM customers", callbackFunc);
+
+
+
+const express = require("express");
+const path = require("path");
+const app = express();
+
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
+
+
+
+app.get("/", (req, res) => {
+    res.render("index", { userData: myData }); // index refers to index.ejs
+});
+
+app.listen(1337, () => {
+    console.log("server started on port 1337");
+});
+
+
+index.ejs
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index page</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <h1>This is index page!</h1>
+    <script src="/js/script.js"></script>
+    
+    <div class="table-data">
+      <h2>Display Data using Node.js & MySQL</h2>
+      <table border="1">
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>address</th>
+        </tr>
+        
+        <%
+        var i=1;
+        userData.forEach(function(data){
+        %>
+        <tr>
+            <td><%=i; %></td>
+            <td><%=data.name; %></td>
+            <td><%=data.address; %></td>
+        </tr>
+        <%  i++; }) %>
+
+      </table>
+    </div>
+
+
+  </body>
+</html>
+
+https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application
+
+https://ejs.co/#install
+
+
+npm install mysql
+npm install ejx
+npm install express
+
+
+
+server.js:
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "mysql",
+    database: "mydb"
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+});
+
+let myData;
+let myData2 = "";
+
+var callbackFunc = function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    myData = result;
+    result.forEach(function (data) {
+        myData2 += data.name + ": " + data.address + "<br>";
+    });
+    console.log(myData2);
+}
+
+con.query("SELECT * FROM customers", callbackFunc);
+
+
+
+const express = require("express");
+const path = require("path");
+const app = express();
+
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
+
+
+
+app.get("/", (req, res) => {
+    res.render("index", {
+        userData: myData,
+        userData2: myData2
+    }); // index refers to index.ejs
+});
+
+app.listen(1337, () => {
+    console.log("server started on port 1337");
+});
+
+
+
+views/index.ejs:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index page</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <h1>This is index page!</h1>
+    <script src="/js/script.js"></script>
+    
+    <h1> <%-userData2 %> </h1>
+
+    <div class="table-data">
+      <h2>Display Data using Node.js & MySQL</h2>
+      <table border="1">
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>address</th>
+        </tr>
+        
+        <%
+        var i=1;
+        userData.forEach(function(data){
+        %>
+        <tr>
+            <td><%=i; %></td>
+            <td><%=data.name; %></td>
+            <td><%=data.address; %></td>
+        </tr>
+        <%  i++; }) %>
+
+      </table>
+    </div>
+
+
+  </body>
+</html>
+
+
+public/css/styles.css
+body {
+    font-family: "Lato", "Helvetica", Helvetica, sans-serif;
+    background: #aa9a96;
+    color: #f7df1e;
+    padding: 20px;
+    letter-spacing: 1px;
+}
+
+public/js/script.js
+console.log("This is coming from script.js");
+
+
+npm install mysql
+npm install ejs
+npm install express
+
+
+
+
+
+
+https://blog.logrocket.com/build-rest-api-node-express-mysql/
+
+
+IP packet structure
+https://www.google.se/search?q=ip+packet+structure&source=hp&ei=cB6GYsiNJ8WGxc8Pj5W14Ac&iflsig=AJiK0e8AAAAAYoYsgDUlsAvITV8JmUIEGKF2pBcBLFAI&oq=IP+packat+&gs_lcp=Cgdnd3Mtd2l6EAMYAjIECAAQDTIECAAQDTIECAAQDTIECAAQDTIECAAQDTIECAAQDTIECAAQDTIECAAQDTIECAAQDTIECAAQDToECAAQQzoICAAQgAQQsQM6DgguEIAEELEDEMcBEKMCOgUIABCABDoICAAQsQMQgwE6DgguEIAEELEDEMcBENEDOgoIABCxAxCDARBDOgcIABCABBAKOgYIABAeEBY6CAgAEB4QFhAKUABYsCVg7D9oAXAAeACAAUmIAesEkgECMTGYAQCgAQE&sclient=gws-wiz
+https://www.khanacademy.org/computing/computers-and-internet/xcae6f4a7ff015e7d:the-internet/xcae6f4a7ff015e7d:routing-with-redundancy/a/ip-packets
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vs create "Blank node.js Web Application"
+NodejsWebApp2
+C:\Users\ewanbin\OneDrive - Ericsson AB\jobs\vs
+
+The template code:
+'use strict';
+var http = require('http');
+var port = process.env.PORT || 1337;
+
+http.createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World\n');
+}).listen(port);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Write json file:
+https://gist.github.com/karmadude/1445992
+// https://github.com/felixge/node-mysql
+// npm install mysql
+var mysql = require('mysql');
+
+// http://nodejs.org/docs/v0.6.5/api/fs.html#fs.writeFile
+var fs = require('fs');
+
+var client = mysql.createClient({
+   user: 'root',
+   password: 'mysqlpassword' 
+});
+
+client.query('select * from db.table;', function(err, results, fields) {
+    if(err) throw err;
+
+    fs.writeFile('table.json', JSON.stringify(results), function (err) {
+      if (err) throw err;
+      console.log('Saved!');
+    });
+
+    client.end();   
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+console.log("This is coming from script.js");
+
+var i = 1;
+var j = 2;
+console.log(i == j);
+
+var myData = JSON.parse(table);
+console.log(myData[0].name);
+var table;
+
+function createTableFromJSON() {
+
+    // EXTRACT VALUE FOR HTML HEADER. 
+    // ('Book ID', 'Book Name', 'Category' and 'Price')
+    var col = [];
+    for (var i = 0; i < myData.length; i++) {
+        for (var key in myData[i]) {
+            if (col.indexOf(key) === -1) {
+                col.push(key);
+            }
+        }
+    }
+    console.log(col);
+
+    // CREATE DYNAMIC TABLE.
+    table = document.createElement("table");
+
+    // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+    var tr = table.insertRow(-1);                   // TABLE ROW.
+
+    for (var i = 0; i < col.length; i++) {
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = col[i];
+        tr.appendChild(th);
+    }
+
+    // ADD JSON DATA TO THE TABLE AS ROWS.
+    for (var i = 0; i < myData.length; i++) {
+
+        tr = table.insertRow(-1);
+
+        for (var j = 0; j < col.length; j++) {
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = myData[i][col[j]];
+        }
+    }
+
+    // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+    var divContainer = document.getElementById("showData");
+    divContainer.innerHTML = "";
+    divContainer.appendChild(table);
+}
+
+
+function deleteTable() {
+    table.parentNode.removeChild(table);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index page</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <h1>This is index page!</h1>
+    <script type="text/javascript" src="/js/table.json"></script>
+    <script src="/js/script.js"></script>
+    
+    <input type="button" onclick="createTableFromJSON()" value="Create Table From JSON" />
+    <p id="showData"></p>
+
+    <input type="button" onclick="deleteTable()" value="Delete Table" />
+
+    <h3> <%-userData2 %> </h3>
+
+    <div class="table-data">
+      <h2>Display Data using Node.js & MySQL</h2>
+      <table border="1">
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>address</th>
+        </tr>
+        
+        <%
+        var i=1;
+        userData.forEach(function(data){
+        %>
+        <tr>
+            <td><%=i; %></td>
+            <td><%=data.name; %></td>
+            <td><%=data.address; %></td>
+        </tr>
+        <%  i++; }) %>
+
+      </table>
+    </div>
+
+
+  </body>
+</html>
+
+
+
+
+body {
+    font-family: "Lato", "Helvetica", Helvetica, sans-serif;
+    background: #aa9a96;
+    color: #f7df1e;
+    padding: 20px;
+    letter-spacing: 1px;
+}
+table, td {
+    border: 1px solid black;
+}
+
+
+
+
+
+
+
+https://stackoverflow.com/questions/62259233/javascript-get-table-cell-content-on-click
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+login:
+https://morioh.com/p/8d907b1b9ee0
+https://raddy.dev/blog/simple-user-management-system-nodejs-express-mysql-handlebars/
+https://www.simplilearn.com/tutorials/nodejs-tutorial/nodejs-mysql
+https://arctype.com/blog/rest-api-tutorial/
+https://codeshack.io/basic-login-system-nodejs-express-mysql/
+https://www.digitalocean.com/community/tutorials/use-expressjs-to-deliver-html-files
+https://blog.logrocket.com/build-rest-api-node-express-mysql/
+
+router
+https://codeforgeek.com/render-html-file-expressjs/
+
+
+
+
+
+
+https://www.wireshark.org/download.html
+Windows Installer (64-bit)
+
+What is TCP/IP?
+https://www.youtube.com/watch?v=PpsEaqJV_A0
+TCP vs UDP
+https://www.youtube.com/watch?v=cA9ZJdqzOoU
+
+
+old dbConnect.js:
+'use strict';
+
+var mysql = require("mysql");
+var mysqlConfig = {
+    host: "localhost",
+    user: "root",
+    password: "mysql",
+    database: "exampleDB"
+};
+
+var sqlQueryString = "SELECT E1.id AS parentId, E1.item AS parent, E2.id AS childId, E2.item AS child \
+    FROM relationship R \
+    LEFT JOIN exampleTable E1 ON R.parentId = E1.id \
+    LEFT JOIN exampleTable E2 ON R.childId = E2.id \
+    ORDER BY R.parentId, R.childId;";
+
+function getData(callback) {
+    let connection = mysql.createConnection(mysqlConfig);
+    connection.query(sqlQueryString, (err, results, fields) => {
+        if (err) throw err;
+        callback(results);
+    });
+    connection.end();
+}
+
+module.exports = { getData };
+
+
+old server.js
+'use strict';
+
+const dbConnect = require("./database/dbConnect");
+const dataConvert = require("./helper/dataConvert");
+const fs = require("fs");
+
+const express = require("express");
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const path = require("path");
+const app = express();
+
+const port = 1337;
+
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+function callbackGetData(results) {
+    console.log(results);
+    let dataTree = {};
+    const initId = 10;
+    dataConvert.convertTree(results, dataTree, initId, dataConvert.getItem(results, initId));
+    fs.writeFile("./public/js/dataContents.json", "var parsedData = JSON.parse('" + JSON.stringify(dataTree) + "');", function (error) {
+        if (error) throw error;
+        console.log("File writing to ./public/js/dataContents.json is done!")
+    })
+}
+
+app.get("/", (req, res) => {
+    dbConnect.getData(callbackGetData);
+    res.render("index");
+});
+
+app.get("/login", (req, res) => {
+    res.render("login");
+    res.end();
+});
+
+app.post("/auth", function (req, res) {
+	var username = req.body.username;
+    var password = req.body.password;
+    console.log(username, ":", password);
+    req.session.loggedin = true;
+    req.session.username = username;
+    res.redirect('/edit');
+    res.end();
+});
+
+app.get("/edit", (req, res) => {
+    if (req.session.loggedin) {
+        res.render("edit");
+    } else {
+        res.render("login");
+    }
+    res.end();
+});
+
+app.post("/add", function (req, res) {
+    console.log(req.body);
+    req.session.loggedin = true;
+    req.session.something = "something";
+    console.log(req.session);
+    res.redirect('/edit');
+    res.end();
+});
+
+app.post("/logout", function (req, res) {
+    res.redirect('/');
+    res.end();
+});
+
+app.listen(port, () => {
+    console.log(`server running on ${port}`);
+});
+
+
+
+
+
+
+https://blog.logrocket.com/build-rest-api-node-express-mysql/
+
+USE mydb;
+CREATE TABLE `programming_languages`
+(
+  `id`            INT(11) NOT NULL auto_increment ,
+  `name`          VARCHAR(255) NOT NULL ,
+  `released_year` INT NOT NULL ,
+  `githut_rank`   INT NULL ,
+  `pypl_rank`     INT NULL ,
+  `tiobe_rank`    INT NULL ,
+  `created_at`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  `updated_at`    DATETIME on UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`id`),
+  UNIQUE `idx_name_unique` (`name`(255))
+)
+engine = innodb charset=utf8mb4 COLLATE utf8mb4_general_ci;
+
+
+USE mydb;
+INSERT INTO programming_languages(id,name,released_year,githut_rank,pypl_rank,tiobe_rank) 
+VALUES 
+(1,'JavaScript',1995,1,3,7),
+(2,'Python',1991,2,1,3),
+(3,'Java',1995,3,2,2),
+(4,'TypeScript',2012,7,10,42),
+(5,'C#',2000,9,4,5),
+(6,'PHP',1995,8,6,8),
+(7,'C++',1985,5,5,4),
+(8,'C',1972,10,5,1),
+(9,'Ruby',1995,6,15,15),
+(10,'R',1993,33,7,9),
+(11,'Objective-C',1984,18,8,18),
+(12,'Swift',2015,16,9,13),
+(13,'Kotlin',2011,15,12,40),
+(14,'Go',2009,4,13,14),
+(15,'Rust',2010,14,16,26),
+(16,'Scala',2004,11,17,34);
+
+
+SELECT * FROM mydb.programming_languages;
+
+
+
+
+
+https://github.com/bradtraversy/50projects50days
+
+
+

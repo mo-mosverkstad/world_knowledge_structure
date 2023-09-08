@@ -1,7 +1,7 @@
 - Objektiv:
   - Vetenskap:
     - Matematik/Matte:
-      - Foundation:
+      - Tal och siffror:
         - Tal och siffror:
           - S[1 2 3 4 5 6 n]
           - +(52+39=91 xy-9=x″y′)
@@ -19,23 +19,6 @@
           - Förkort (12/24 = 1/2)
           - Jämföra (1/3<2/3, 1/6<1/5)
           - Ändring (x*(1+p%)^n, x/(1+p%)^n)
-        - Kombinatorik:
-          - n!=n*(n-1)!=Πi
-          - nPr=n!/(n-r)!
-          - nCr=nPr/r
-        - Logik:
-          - IMP Implikation(A=>B B=/>A)
-          - EQU Ekvivalens(A=>B B=>A A<=>B)
-        - Set:
-          - S{1 2 3 4 5 6}
-          - ...
-        - Talsystem:
-          - N Naturlig
-          - Z Hel
-          - Q Rationell
-          - R Reel
-          - Komplex
-          - N-N=Z Z/Z=Q
       - Algebra:
         - Algebra symboler:
           - SIM(Förenkling =>)
@@ -58,14 +41,10 @@
         - Komplexa tal (√(-1) a+ib):
           - r(cos(α)+i*sin(α) +CON2)
           - i^(-1 ... i -1 -i 1)
-        - Funktionegenskaper:
-          - DFS(Definitionsmängd(x))
-          - VAS(Värdemängd(y))
-          - Asymptot
-          - Kontinuerlig(Sammanhängande DFS)
-          - Diskret(Speciell värde)
         - Funktioner (av x) (f(x)):
           - Funktion (ΣAn*x+ΣBn*y+C)
+          - Definition(x)/Värdemängd(y)
+          - Asymptot
           - Polynom(Σan*x^n Π(ax+b))
           - Rationell(r(x)=p(x)/q(x) q(x)≠0)
           - P1(∥k1=k2 ⊥k1k2=-1)
@@ -84,7 +63,6 @@
           - SUT(x^4-13x²+36=0(t=x²) t²-13t+36=0)
           - ZRP(x²-5x=0 x(x-5)=0 x=3=-1)
           - RZP(x²-2x-3=0 x=3=-1 (x-3)(x+1))
-          - IDN(ax+by=cx+dy -> a=c b=d)
           - COS(x²+ax[+(½a)²-(½2)²]+b=(x+½a)²+b-(½a)²)
           - FRA((x+1)/(x-1)=9 x+1=9(x-1))
           - AFR((1/x+x/2=9/x 2+x²=18 x=±4)
@@ -92,17 +70,11 @@
           - TES(...)
       - Geometri:
         - Linjer (L1):
-          - LT (Tangent)
-          - LS (Sekant)
           - ⊥ (...)
           - L1∥L2 (1∥2&1∥3=2∥3)
-          - L`~(Motsatta linjer)
         - Vinklar (α):
           - (^A=^BAC Spets/ben)
           - (Spetsig Rät90 Trubbig Rak180)
-          - Σα(Inre(180(n-2)) Yttre(360))
-          - ^`~(Motsatta vinklar)
-        - Plan
         - Linje och vinklar:
           - Sido(α+β=180°)
           - Vertikal(α=β)
@@ -111,42 +83,56 @@
           - Alternat(α=γ)
           - Bisektris(α/2)
         - Plangeometri:
-          - n(Area(A) Omkrets(P))
-          - 3(½bh=√3/4s² AB+AC+BC)
-          - 4(A=bh 360)
-          - +(Konvex/kav)
-          - C(πr² dπ LT⊥d)
-          - E(πab)
+          - n(Area(A) Omkrets(P) Vinkelsumma(Σα))
+          - 3(½bh=√3/4s² AB+AC+BC 180)
+          - 4()
           - 3I Likben(^B=^C AB=AC)
           - 3E Liksid(3I+^60 3^=60 3/=)
           - 3R Rät(a²+b²=c²)
-          - 3S (Spets/Trubbelvinklig)
-          - 4T Trapets(A=½h(a+b))
-          - 4P Gram()
-          - 4D Diamant(AC⊥BD)
-          - 4R Rect(^=90)
-          - 4S Kvadrat(^=90 AC⊥BD)
-          - CR (^m=2^r(2*3I) ab=cd 4(^`=360))
-        - Rymdgeometri:
-          - ()
-          - 3(Bh/3)
-          - 4(Bh)
-          - C(4/3πr²)
-        - Tesserakt geometri:
-          - ...
-        - Geometrisk transformering:
-          - D Translation
-          - S Skala(S=l/l0 (A=S², V=S³))
-          - α Rotation
-          - R Reflektion
-          - D Dilation
-          - 3≅(SSS SAS ASA RHS/HL överensstämmer i)
-          - 3~(AA SAS ASA (i skala))
+        - Plangeometriska figurer:
+          - Triangel:
+            - Spetsvinkliga trianglar
+            - Trubbelvinklig triangel
+          - Kongruenta och likformiga trianglar:
+            - Trianglar överensstämmer varandra i ...
+            - SSS (3 sidor)
+            - SAS/SVS (2 sidor och den mellanliggande vinkeln)
+            - ASA/VSV (2 vinklar och den mellanliggande sidan)
+            - RHS (HL) (Hypotenusan och en av kateterna)
+            - Triangel (AA, SAS, SAS) (Sidor i skala)
+          - Fyrhörning:
+            - Fyrhörning (A=bh, Σα=360)
+            - Paraelltrapets (A=½h(a+b))
+            - Paraellogram (AB∥CD&AC∥BD, ^A=^D&^B=^C)
+            - Diamant (AC⊥BD)
+            - Rektangel (^=90)
+            - Kvadrat (^=90, AC⊥BD)
+          - Polygon:
+            - Inre vinklar (Σα=180(n-2))
+            - Yttre vinklar (Σα=360)
+            - Konkav Polygon
+            - Konvex Polygon
+          - Cirkel:
+            - Diameter, Radius, Coord
+            - Secant, Tangent (Tangent ⊥ Diameter)
+            - A=πr², O=dπ
+            - Randvinkel (^m = 2^r (2 liksidiga trianglar))
+            - Koordasatsen (a*b = c*d (hjälplinjer -> lika randvinklar))
+            - Inskriven fyrhörning (Motsatta vinklar supplementära)
+          - Ellipse/Oval:
+            - A = πab
+          - Geometrisk transformering:
+            - Symmetri
+            - Translation
+            - Skala s. = l/l0 (A.=s², V.=s³)
+            - Rotation
+            - Reflektion
+            - Dilation
         - Rymdgeometri:
           - Egenskaper:
-            - A⊆L1 B⊆L1 A⊆α => L1⊆α
-            - A⊆L1 B⊆L1 cNL1 => A&B&C⊆α
-            - P⊆(α∩β) => α∩β = L1⊆P in L1
+            - A in L1, B in L1, A in α => L1 in α
+            - A in L1, B in L1, c not in L1 => A, B, C in α
+            - P in (α ∩ β) => α ∩ β = L1 and p in L1
             - C not in L1 => L1 in α, c in α
             - L1 ∩ L2 = P => L1, L2 subset α
             - L1//L2 (L1 ∩ L2 = ∅ (null)) => L1, L2 subset α
@@ -172,36 +158,57 @@
             - l⊥α, l⊥β => α∥β
             - α∥β, β∥γ => α∥γ
           - 2 Plan Intersektion:
-            - l⊥α, l sub β => α⊥β...
+            - l⊥α, l sub β => α⊥β
+          - Tetraheder:
+            - V = ⅓Bh
+          - Prisma:
+            - Prisma
+            - Rätblock
+            - Kub
+            - V = Bh
+          - Sfär:
+            - V = 4/3...
+        - Tesserakt geometri:
+          - Linje
+          - Plan
+          - Kub
+          - Hyper-pyramid
+          - Hyper-prisma
       - Analytisk geometri:
         - Plan analytisk geometri:
-          - d=√((xA-xB)²+(yA-yB)²)
-          - xM=(xA+xB)/2 yM=(yA+yB)/2
-          - L(y=kx+b)
-          - C((x-x0)²+(y-y0)²=r²)
-          - E((x-x0)²/a²-(y-y0)²/b²=1)
+          - Koordinatsystem:
+            - Avståndsformeln √((x_A-x_B)² + (y_A-y_B)²)
+            - Mittpunktsformeln x_M = (x_A+x_B)/2, y_M = (y_A+y_B)/2
+          - Cirklar:
+            - (x-x0)²+(y-y0)²=r²
+          - Ellipse:
+            - (x-x1)²/a² - (y-y1)²/b² = 1
         - Rymd analytisk geometri:
-          - C(x²+y²+z²=r²)
+          - Klot/Sfär:
+            - x² + y² + z² = r²
       - Statistik:
-        - Diagram/Visualisering:
-          - S(Stolp Stapel Linje Cirkel Histo)
-          - L(Linje)
-          - C(Cirkel)
-        - Lägesmått:
-          - Ax̄=Σx_i/n Ax̄=n^√(Πx)
-          - Standardavvikelse σ=√(Σ(x-x̄)²/n)
-          - Varians σ²=√(Σ(x-x̄)²/n)
-          - Pop.[][...]=[...]±Z_c*s/√n
-        - Spridningsmått:
-          - Percentil(Pn)
-          - Median(P50) Kvartil(P25/75)
-          - Variationsbredd(x_max-x_min)
-          - Typvärde
-        - Sannolikhet (P(...)):
-          - Förväntning E(...)
-        - Normalfördelning:
-          - ...
-      - Statistik:
+        - Grundläggande statistik:
+          - Diagram:
+            - Stolpdiagram
+            - Histogram
+            - Stapeldiagram
+            - Linjediagram
+            - Cirkeldiagram
+          - Lägesmått:
+            - x (value) n(number of sampled data)
+            - Medelvärde x̄ = Σx_i/n, x' = n^√(Πx)
+            - Standardavvikelse σ = √(Σ(x-x̄)²/n)
+            - Varians σ² = √(Σ(x-x̄)²/n)
+            - Pop. [] [...]= [...]±Z_c*s/√n
+          - Spridningsmått:
+            - Median (1, 3, 5, 11, 15) => 5
+            - Kvartil, percentil
+            - Variationsbredd x_max - x_min
+            - Typvärde (1, 1, 1, 2, 3) => 1
+          - P(...):
+            - Probability
+          - E(...):
+            - Expectation
         - Distribution:
           - Normalfördelning/Gauss kurva:
             - 2.3% (-∞ ~ µ-2σ)
@@ -294,11 +301,34 @@
           - Enkla trigonometri:
             - tan 35° = l/17 => 17*tan 35° = l => l = 11.9
             - tan 22° = l/200 => 200*tan 22° = l => 72.79 = l
+      - Foundations:
+        - Logik:
+          - Implikation:
+            - A => B, B =/> A
+          - Ekvivalens:
+            - A => B, B => A -> A <=> B
+        - Talsystem:
+          - Naturliga tal (N):
+            - N + N = N
+            - N - N = Z
+          - Heltal (Z):
+            - Z + Z = Z
+            - Z - Z = Z
+            - Z * Z = Z
+            - Z / Z = Q
+          - Rationella tal (Q):
+            - Rationella tal (Q)
+          - Reela tal (R):
+            - Reela tal (R)
+          - Komplexa tal (C):
+            - Komplexa tal (C)
+        - Kombinatorik:
+          - Fakultet:
+            - n! = n*(n-1)! = Π(i) (1! = 1)
+          - Permutation och kombination:
+            - nPr=n!/(n-r)!
+            - nCr=nPr/r!
       - Infinitesimalkalkyl/Kalkyl:
-        - Gränsvärden:
-          - lim(x->∞)n/x=0
-          - lim
-          - lim(x->...)...->...
         - limited:
           - lim x->n ...
           - lim x->a f(x) + g(x) = lim x->a f(x) + lim x->a g(x)
@@ -877,8 +907,8 @@
             - 2. Δ[A]&[B]<0 Δ[C]&[D]>0
             - 3. Dynamisk jämvikt (Fortfarande reaktion)
             - 4. Hastigheter(v_AB=v_CD)
-            - K(Q) = ([C]^c[D]^d)/([A]^a*[B]^b)
-            - Q~K(= <=>)(< ->)(> <-)
+            - Q = ([C]^c[D]^d)/([A]^a*[B]^b)
+            - K (Jämviktskonstant)
             - G° = -RT*ln(K)
             - ΔG = ΔG°+RT*ln(Q) = RT*ln(Q/K)
             - ln(K) ~ -1/T (ΔT>0, ΔK>0)(ΔH>0)
@@ -2679,16 +2709,14 @@
             - Små hydrofob molekyl (O2, CO2, NO, N2) ->
             - Små hydrofil molekyl (O2, etanol) ...>
             - Stora molekyler/joner (Tar ej igenom)
-            - Faciliterad diffusion (Underlättad med trans/kanalprotein(Porer))
           - Osmos(Diffusion):
             - Vatten diffusion genom membran (långsam)
-            - Kanalprotein (Akvaporiner (Ventilerar)(Selektiv H2O))
+            - Kanalprotein (Akvaporiner (Ventilerar))
             - Hyper (Hög), Iso (Lika), Hypo (Låg) [H2O] i cellen
             - Hyperton (Krymper)
             - Isoton (Normal hos djurcell)
             - Hypoton (Sväller, normal hos växtcell)
           - Vattenpotential/Tryckpotential/Turgortryck:
-            - Vattens förmåga att diffundera
             - Stagda/spänst(växt)
             - Ψ_s (Osmotisk potential)
             - Ψ_p (Tryckpotential)
@@ -6723,9 +6751,6 @@
         - Underhåll
     - Hierarki, trädstruktur
   - Livets verksamheter:
-    - Tankeflöde:
-      - 1. Inbox(Unstructured List)
-      - 2. Structured list
     - Way of working:
       - Tidsstruktur:
         - Abstrakt:

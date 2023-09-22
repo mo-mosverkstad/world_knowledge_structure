@@ -3,38 +3,52 @@
     - Matematik/Matte:
       - Foundation:
         - Tal och siffror:
-          - S[1 2 3 4 5 6 n]
-          - +(52+39=91 xy-9=x″y′)
-          - -(723-589=134)
-          - (++=+ +-=- --=+)
-          - \*(32*21=672 600*7=4200)
-          - /(4200/70=60)
+          - S[1 2 3 4 5 6 7 8 9 10 n]
+          - t[1:00 2:00 ...]
+          - P[$.01 $.5 $.1 $.25 $1 ...]
+          - Δ(x=x1+Δx x1=x2-Δx Δx=x2-x1)
+        - Addition (+):
+          - AG(52+39=91)
+          - A1(xy-9=x″y′)
+        - Subtraction (-):
+          - SG(723-589=134)
+          - SA(++=+ +-=- --=+)
+        - Multiplication (*):
+          - MG(32*21=672)
+          - M0(600[2]*70[1]=42000[3])
+          - M1(1x*1y=(1x+y)+xy)
+          - M5(x5²=(xx′)25)
+        - Division (/):
+          - DG(...)
+          - D0(4200[2]/70[1]=420/7=60[1])
+        - Advancerad räknesätt:
           - ^(...)
           - √(...)
-          - log()
+          - log(x) ...
           - (|x|)(√(x²))
+          - (x<y x>y)
         - Andel:
-          - Andel [10% 20% 25% 33% 50% n%]
-          - Förläng (5/3 = (5*2)/(3*2))
-          - Förkort (12/24 = 1/2)
-          - Jämföra (1/3<2/3, 1/6<1/5)
-          - Ändring (x*(1+p%)^n, x/(1+p%)^n)
+          - ANDEL [10 20 25 33 50 67 n%]
+          - FÖRLÄNG (5/3 = (5*2)/(3*2))
+          - FÖRKORT (12/24 = 1/2)
+          - JÄMFÖRA (1/3<2/3, 1/6<1/5)
+          - ÄNDRING (x*(1+p%)^n, x/(1+p%)^n)
         - Kombinatorik:
           - n!=n*(n-1)!=Πi
           - nPr=n!/(n-r)!
           - nCr=nPr/r
         - Logik:
-          - IMP Implikation(A=>B B=/>A)
-          - EQU Ekvivalens(A=>B B=>A A<=>B)
+          - IMPLIKATION(A=>B B=/>A)
+          - EKVIVALENS(A=>B B=>A A<=>B)
         - Set:
-          - S{1 2 3 4 5 6}
+          - SET{1 2 3 4 5 6}
           - ...
         - Talsystem:
           - N Naturlig
           - Z Hel
           - Q Rationell
           - R Reel
-          - Komplex
+          - C Komplex
           - N-N=Z Z/Z=Q
       - Algebra:
         - Algebra symboler:
@@ -49,23 +63,19 @@
           - CON(a.~b.=(a~b)(a~~b).)
           - OLS(± -> */ -> ^√)
         - Algebra regler:
-          - +(IDE0 ASO COM)
-          - \*(IDE1 ASO COM ±DIS)
-          - /(IDE1 ±DIS COM')
-          - ^√(IDE1 *DIS ±PAS -CON-1)
-          - ^(ANU0.1 OLS+ a^(-b)=1/(a^b))
+          - x+y(IDE0 ASO COM)
+          - x*y(IDE1 ASO COM  ±DIS)
+          - x/y(IDE1 ±DIS COM')
+          - x^n(IDE1 *DIS ±PAS -CON-1)
+          - n^x(ANU0.1 OLS+ a^(-b)=1/(a^b))
           - log(OLS- ly(x)=lx/ly)
         - Komplexa tal (√(-1) a+ib):
           - r(cos(α)+i*sin(α) +CON2)
           - i^(-1 ... i -1 -i 1)
-        - Funktionegenskaper:
-          - DFS(Definitionsmängd(x))
-          - VAS(Värdemängd(y))
-          - Asymptot
-          - Kontinuerlig(Sammanhängande DFS)
-          - Diskret(Speciell värde)
         - Funktioner (av x) (f(x)):
           - Funktion (ΣAn*x+ΣBn*y+C)
+          - Definition(x)/Värdemängd(y)
+          - Asymptot
           - Polynom(Σan*x^n Π(ax+b))
           - Rationell(r(x)=p(x)/q(x) q(x)≠0)
           - P1(∥k1=k2 ⊥k1k2=-1)
@@ -77,9 +87,9 @@
           - EQA(2x+3=5x 3=5x-2x x=1)
           - NEQ(-3(x+1)<-9 x+1>3 x>-4)
           - EQS(y+x=13&y-x=3 x=8&y=5)
-          - SUB(y=x+3 (x+3)+x)
-          - (y+x=13)+(y-x=3)=(2y=16)
-          - (y+x=13)-(y-x=3)=(2x=10)
+          - SUT(y=x+3 (x+3)+x)
+          - ADD((y+x=13)+(y-x=3)=(2y=16))
+          - SUB((y+x=13)-(y-x=3)=(2x=10))
         - Algebra modeller:
           - SUT(x^4-13x²+36=0(t=x²) t²-13t+36=0)
           - ZRP(x²-5x=0 x(x-5)=0 x=3=-1)
@@ -92,17 +102,20 @@
           - TES(...)
       - Geometri:
         - Linjer (L1):
-          - LT (Tangent)
-          - LS (Sekant)
-          - ⊥ (...)
+          - PA(Punkt)
+          - L1(A->L B->L)
+          - LT(Tangent)
+          - LS(Sekant)
+          - ⊥(...)
           - L1∥L2 (1∥2&1∥3=2∥3)
           - L`~(Motsatta linjer)
+        - Planer (B1):
+          - B1(L+P)
         - Vinklar (α):
           - (^A=^BAC Spets/ben)
           - (Spetsig Rät90 Trubbig Rak180)
           - Σα(Inre(180(n-2)) Yttre(360))
           - ^`~(Motsatta vinklar)
-        - Plan
         - Linje och vinklar:
           - Sido(α+β=180°)
           - Vertikal(α=β)
@@ -144,14 +157,12 @@
           - 3~(AA SAS ASA (i skala))
         - Rymdgeometri:
           - Egenskaper:
-            - A⊆L1 B⊆L1 A⊆α => L1⊆α
-            - A⊆L1 B⊆L1 cNL1 => A&B&C⊆α
+            - L1 P⊆α => L1⊆α
             - P⊆(α∩β) => α∩β = L1⊆P in L1
             - C not in L1 => L1 in α, c in α
             - L1 ∩ L2 = P => L1, L2 subset α
             - L1//L2 (L1 ∩ L2 = ∅ (null)) => L1, L2 subset α
           - 2 Linjer Paraella:
-            - l1∥l2, l2∥l3 => l1∥l3
             - l1∥β, l1 sub α, α∩β = l2 => l1∥l2
             - α∥β, α∩γ = l1, α∩β = l2 => l1∥l2
             - l1⊥α, l2⊥α => l1∥l2
@@ -174,17 +185,19 @@
           - 2 Plan Intersektion:
             - l⊥α, l sub β => α⊥β...
       - Analytisk geometri:
-        - Plan analytisk geometri:
+        - Koordinatsystem:
+          - ...
+        - Plangeometri:
           - d=√((xA-xB)²+(yA-yB)²)
           - xM=(xA+xB)/2 yM=(yA+yB)/2
           - L(y=kx+b)
           - C((x-x0)²+(y-y0)²=r²)
           - E((x-x0)²/a²-(y-y0)²/b²=1)
-        - Rymd analytisk geometri:
+        - Rymdgeometri:
           - C(x²+y²+z²=r²)
       - Statistik:
         - Diagram/Visualisering:
-          - S(Stolp Stapel Linje Cirkel Histo)
+          - S(Stolp Stapel Histo)
           - L(Linje)
           - C(Cirkel)
         - Lägesmått:
@@ -199,123 +212,77 @@
           - Typvärde
         - Sannolikhet (P(...)):
           - Förväntning E(...)
-        - Normalfördelning:
-          - ...
-      - Statistik:
-        - Distribution:
-          - Normalfördelning/Gauss kurva:
-            - 2.3% (-∞ ~ µ-2σ)
-            - 13.6% (µ-2σ ~ µ-σ)
-            - 34.1% (µ-σ ~ µ)
-            - 34.1% (µ ~ µ+σ)
-            - 13.6% (µ+σ ~ µ+2σ)
-            - 2.3% (µ+2σ ~ ∞)
-            - P(z) = 1/√(2π)exp[-½(z)²] (z=(x-µ)/σ)
-          - Binomal equations:
-            - P(x) = np^x(1-p)^(n-x)/x!
-            - x̄ = np
-            - σ² = np(1-p)
-          - Poisson distribution:
-            - P(x) = npe^(-np)/x!
-            - x̄ = np
-            - σ² = np
-          - Continous distributiion:
-            - P(x) = 1/(σ√(2π))exp[½((x-µ)/σ)²]
+        - Fördelning:
+          - (P(x) x̄ σ²)z=(x-µ)/σ
+          - (2.3 13.6 34.1 34.1 13.6 2.3)%
+          - Normal 1/√(2π)exp[-½(z)²]
+          - Binomal np^x(1-p)^(n-x)/x!
+          - Poisson(npe^(-np)/x! np np(n-1))
+          - Continous(1/(σ√(2π))exp[½((x-µ)/σ)²] np np)
       - Trigonometri:
         - Trigonometriska funktioner:
-          - Sinus (sin(α)):
-            - sin α = a/c
-            - sin(0) = 0
-            - sin(30) = 1/2
-            - sin(45) = √2/2
-            - sin(60) = √3/2
-            - sin(90) = 1
-          - Cosinus (cos(α)):
-            - cos α = b/c
-            - cos(0) = 1
-            - cos(30) = √3/2
-            - cos(45) = √2/2
-            - cos(60) = 1/2
-            - cos(90) = 0
-          - Tangens (tan(α)/tg(α)):
-            - tan α = a/b
-            - tan(0) = 0
-            - tan(30) = √3/3
-            - tan(45) = 1
-            - tan(60) = √3
-          - Cosekant (csc(α)/cossec(α)):
-            - csc α = c/a
-          - Sekant (sec(α)):
-            - sec α = c/b
-          - Cotangens (cot(α)):
-            - cot α = b/a
-            - cot(30) = √3
-            - cot(45) = 1
-            - cot(60) = √3/3
-            - cot(90) = 0
-        - Trigonometriska regler:
-          - Reduktionsformel:
-            - (-α) = -sin, cos, -tan, -cot
-            - (90±α) = cos, ±'sin, ±'cot, ±'tan
-            - (180±α) = ±'sin, -cos, ±tan, ±cot
-            - (270±α) = -cos, ±sin, ±'cot, ±'tan
-            - (360±α) = ±sin, cos, ±tan, ±cot
-          - Förenkling:
-            - sin(α±β) = sin(α)*cos(β) ± cos(α)*sin(β)
-            - cos(α±β) = cos(α)*cos(β) ±' sin(α)*sin(β)
-            - tan(α±β) = (tan(α)±tan(β))/(1±'tan(α)*tan(β))
-            - cot(α±β) = (1±'cot(α)*cot(β))/(cot(α)±cot(β))
-          - Faktorisering:
-            - sin(α)±sin(β) = 2sin((α±β)/2) * cos((α±'β)/2)
-            - sin(α)*sin(β) = ½(cos(α-β) - cos(α+β))
-            - cos(α)+cos(β) = 2cos((α+β)/2) * cos((α-β)/2)
-            - cos(α)-cos(β) = -2sin((α+β)/2) * sin((α-β)/2)
-            - cos(α)*cos(β) = ½(cos(α-β) + cos(α+β))
-            - tan(α)±tan(β) = sin(α±β)/(cos(α)*cos(β))
-            - cot(α)±cot(β) = sin(β±α)/(sin(α)*sin(β))
-            - sin(α)*cos(β) = ½(sin(α+β) + sin(α-β))
-            - cos(α)*sin(β) = ½(sin(α+β) - sin(α-β))
-          - Konstanter:
-            - sin(2α) = 2*sin(α)*cos(α)
-            - sin(½α) = ±√((1-cos(α))/2)
-            - cos(2α) = cos²(α)-sin²(α) = 2*cos²(α)-1 = 1-2*sin²(α)
-            - cos(½α) = ±√((1+cos(α))/2)
-            - tan(2α) = 2*tan(α)/(1-tan²(α))
-            - tan(½α) = ±√((1-cos(α))/(1+cos(α)))
-            - cot(2α) = (cot²(α)-1)/(2*cot(α))
-            - cot(½α) = (1+cos(α))/sin(α)
-          - Sin-cos-lagar:
-            - a/sin(A) = b/sin(B) = c/sin(C)
-            - sin²(α) + cos²(α) = 1
-            - c²=a²+b²-2abcos(C)1
-            - 1 + tan²(α) = sec²(α)
-            - 1 + cot²(α) = csc²(α)
-        - Trigonometri modeller:
-          - Enkla trigonometri:
-            - tan 35° = l/17 => 17*tan 35° = l => l = 11.9
-            - tan 22° = l/200 => 200*tan 22° = l => 72.79 = l
-      - Infinitesimalkalkyl/Kalkyl:
-        - Gränsvärden:
-          - lim(x->∞)n/x=0
-          - lim
-          - lim(x->...)...->...
-        - limited:
-          - lim x->n ...
-          - lim x->a f(x) + g(x) = lim x->a f(x) + lim x->a g(x)
-          - lim x->a f(x) * g(x) = lim x->a f(x) * lim x->a g(x)
-        - Derivata (Δ/Δx):
+          - Sα(0 30 45 60 90)
+          - sin(s)[0 1/2 √2/2 √3/2 1 a/c]
+          - cos(c)[1 √3/3 √2/2 1/2 0 b/c]
+          - tan(t)[0 √3/3 1 √3 . a/b]
+          - cot(z)[. √3 1 √3/3 0 b/a]
+          - csc(v)[. 2 √2 2√3/3 1 c/a]
+          - sec(l)[1 2√3/3 √2 2 0 c/b]
+        - Reduktion:
+          - Δα(sin cos tan cot)
+          - (-α)(-sin cos -tan -cot)
+          - (90±α)(cos ±'sin ±'cot ±'tan)
+          - (180±α)(±'sin -cos ±tan ±cot)
+          - (270±α)(-cos ±sin ±'cot ±'tan)
+          - (360±α)(±sin cos ±tan ±cot)
+          - (2α)(2sc c²-s² 2t/(1-t²))
+          - (½α)(√((1~c)/2)(- - +/-))
+        - Förenkling/Faktorisering:
+          - TS+(~(α±β)=~α~β±~α~β)
+          - TR^(~(α±β)=(~α±~β)/(1±'~α*~β))
+          - TH+(~a±~b=.2~(½(α+β))*~(½(α-β)))
+          - TZ+(~a±~b=~(α±β)/(~α*~β))
+          - TP1(~a*~b=½(~(α-β).~(α+β)))
+          - sin(TS+(sccs) TH+(sc) TP1(c-c))
+          - cos(TS-(ccss) TH±(cc|ss) TP1(c+c))
+          - tan(TR TZ+(scc))
+          - cot(TR^-1 TZ+(sss))
+          - s|c(TP1(s+s))
+          - c|s(TP1(s-s))
+        - Lagar:
+          - PYT(~²+~²=~²)
+          - LSP(a/sin(A)=b/sin(B)=c/sin(C))
+          - LCS(c²=a²+b²-2abcos(C))
+          - PSS(PYT(abc sc1 1tl 1zv))
+      - Infinitesimalkalkyl:
+        - Limited (lim x->n) [LIM]:
+          - ...
+        - Derivata (f'(x)=df/dx) [DER]:
+          - APPROXIMATION h=0.001
+          - POSITIV lim h->0(f(x+h)-f(x))/h
+          - NEGATIV lim h->0(f(x)-f(x-h))/h
+          - CENTRAL lim h->0((f(x+h)-f(x-h))/(2h)
+          - kx^n -> knx^(n-1)
+          - e^kx -> ke^kx
+        - Integral (∫f(x)*dx) [INT]:
+          - ...
+        - Infinitesimalkalkyl regler:
+          - LIM[±DIS *DIS]
+          - DER[±DIS]
+          - INT[±DIS]
+        - Derivata (d/dx):
           - Derivata:
-            - Δ/Δx f(x) = lim Δx->0 Δy/Δx = lim Δx->0 (f(x+Δx)-f(Δx))/Δx
+            - Ger en k-tangent
           - Funktionderivata:
-            - Δ/Δx(ax^b) = abx^(b-1)
-            - Δ/Δx x^a = a*x^(a-1)
+            - d/dx(ax^b) = abx^(b-1)
+            - d/dx x^a = a*x^(a-1)
           - Derivatalagar:
-            - Δ/Δx (f±g) = Δf/Δx + Δg/Δx
-            - Δ/Δx (fg) = fΔg/Δx + gΔf/Δx
-            - Δ/Δx (f/g) = gΔf/Δx - f*Δg/Δx/g²
-            - Δ/Δx (f(g)) = Δf/Δg*Δg/Δx
-            - Δ/Δx (f^a/g^b) = f²/g²*Δ/Δx(a*ln(f)-b*ln(g))
-            - Δ²/Δ²x (f(u)) = Δf/Δu*Δ²u/Δx² + Δu/Δx*Δ²f/Δu²
+            - d/dx (f±g) = df/dx + dg/dx
+            - d/dx (fg) = fΔg/Δx + gΔf/Δx
+            - d/dx (f/g) = gΔf/Δx - f*Δg/Δx/g²
+            - d/dx (f(g)) = Δf/Δg*Δg/Δx
+            - d/dx (f^a/g^b) = f²/g²*Δ/Δx(a*ln(f)-b*ln(g))
+            - d²/d²x (f(u)) = Δf/Δu*Δ²u/Δx² + Δu/Δx*Δ²f/Δu²
           - Funktionegenskaper:
             - Rising Δy/Δx > 0
             - Falling Δy/Δx < 0
@@ -548,8 +515,9 @@
             - E = ½mv² = mgh
           - Krockning:
             - FΔt = mΔv
-            - I = FΔt (Impact)
+            - I = FΔt (Impuls)
             - p = mΔv (Rörelsemoment)
+            - p1=p2 -> m11v11 + m12v12 ... = m21v21 + ...
           - Komposit object:
             - Kraftvektorer sammansätts
         - Stel mekanik modeller:
@@ -620,10 +588,13 @@
       - Elektricitet/Ellära:
         - Statisk elektricitet:
           - Statisk elektricitet:
+            - Underskott(+)/överskott(-) av elektroner
             - Friktionsladdning, Kattskinn och ebonitstav
             - Åska (naturlig urladdning)
+            - Metaller är ledare, glas är insulator
             - Polythene rod (-), perspex rod (+)
-            - Influens
+            - Influens ((+)<->(- +))
+            - Electron(q = 1.602e-19 C)
             - Kontakt (q = (q1+q2)/2)
           - Laddningar:
             - Attraktion (+ -><- -, + -><- 0, - -><- 0)
@@ -877,10 +848,11 @@
             - 2. Δ[A]&[B]<0 Δ[C]&[D]>0
             - 3. Dynamisk jämvikt (Fortfarande reaktion)
             - 4. Hastigheter(v_AB=v_CD)
-            - K(Q) = ([C]^c[D]^d)/([A]^a*[B]^b)
-            - Q~K(= <=>)(< ->)(> <-)
+            - Q = ([C]^c[D]^d)/([A]^a*[B]^b)
+            - K (Jämviktskonstant)
             - G° = -RT*ln(K)
             - ΔG = ΔG°+RT*ln(Q) = RT*ln(Q/K)
+            - +c(...) +P(mot färre partiklar) +T(Endoterm)
             - ln(K) ~ -1/T (ΔT>0, ΔK>0)(ΔH>0)
             - ln(K) ~ -T (ΔT<0, Δ>0)(ΔH<0)
           - Syrabasreaktioner:
@@ -2656,8 +2628,9 @@
             - Triglycerin
             - Fetter, fosfolipid, steroid (testosteron, östradiol), vax, karetenoid
             - Opolära förutom fosfolipid
-        - Membran:
+        - Cellmembran:
           - Membran:
+            - Avgränsning och skydd, Tonicitet
             - Fosfolipid ((Fosfat + Fettsyror) Dubbellager)
             - Proteiner (½ massa)
             - Kolhydrat (Igenkänning av celler)
@@ -2679,16 +2652,14 @@
             - Små hydrofob molekyl (O2, CO2, NO, N2) ->
             - Små hydrofil molekyl (O2, etanol) ...>
             - Stora molekyler/joner (Tar ej igenom)
-            - Faciliterad diffusion (Underlättad med trans/kanalprotein(Porer))
           - Osmos(Diffusion):
             - Vatten diffusion genom membran (långsam)
-            - Kanalprotein (Akvaporiner (Ventilerar)(Selektiv H2O))
+            - Kanalprotein (Akvaporiner (Ventilerar))
             - Hyper (Hög), Iso (Lika), Hypo (Låg) [H2O] i cellen
             - Hyperton (Krymper)
             - Isoton (Normal hos djurcell)
             - Hypoton (Sväller, normal hos växtcell)
           - Vattenpotential/Tryckpotential/Turgortryck:
-            - Vattens förmåga att diffundera
             - Stagda/spänst(växt)
             - Ψ_s (Osmotisk potential)
             - Ψ_p (Tryckpotential)
@@ -2703,20 +2674,7 @@
             - H-K-pump (H+ ur magsäck, K+ ur slemhinna, sänker magsaft pH)
           - Endo/exocytos:
             - Makromolekyl -> Membran i membranblåsor
-        - Djurcell*:
-          - Djurcell:
-            - 20~100µm (10x prokaryota)
-          - Cellkommunikation:
-            - Signaling cell
-            - Target cell
-            - 1. Reception
-            - 2. Transduction
-            - 3. Cellular response
-          - Cellkärna:
-            - Lagrar arvsmassa
-            - Styrcellen (Cellfunktion)
-            - DNA och kärnmembran
-            - (Flera cellkärnor i muskelceller)
+        - Cellstruktur:
           - Ribosom:
             - Proteintillverkning (mRNA -> Protein)
             - Fri i cytoplasma/Rough ER
@@ -2724,22 +2682,21 @@
           - Cytoplasma:
             - Trögflytande vattenlösning av cellämnen
             - Sker kemiska reaktioner
-          - Cellmembran:
-            - Avgränsning och skydd, Tonicitet
-            - Dubbla lager fosfolipider (Fosforgrupp + Fettsyra) + proteiner
-            - Passiv transport (Hög -> Låg densitet)
-            - Aktiv transport (Låg + ATP -> Hög densitet)
-            - Hypertonic soltion (Water out cell)
-            - Isotonic solution (No movement)
-            - Hypotonic solution (Water into cell)
+            - Ribosomer
           - Cellskelett:
             - Trådformad proteinfibrer (3D nätverk)
             - Ger cellen form
+        - Organeller:
           - Organeller:
             - Samma storlek som Bakterier
             - Eget ringformad DNA och ribosomer
             - Dubbla mambran
             - Lever encelliga utan mitokondrier
+          - Cellkärna:
+            - Lagrar arvsmassa
+            - Styrcellen (Cellfunktion)
+            - DNA och kärnmembran
+            - (Flera cellkärnor i muskelceller)
           - Endoplasmatisk nätverk/Endoplasmic reticulum (ER):
             - Konstruerar och packar proteiner och lipider
             - Membransystem med kanaler i cellplasman
@@ -2757,11 +2714,65 @@
             - Lagrar och modifierar proteiner och fosfolipider
             - Skickar vidare ämnen
             - Logistikcentral, proteiner och fosfolipider från ER
-        - Bakteriecell:
+        - Prokaryota cell:
+          - Prokaryota celler:
+            - Haploid, ringslutna kromosomer
+            - Plasmider (användbara gener)
+          - Struktur:
+            - Cellmembran(cellandning foto/fettsyntes/cellväggkomponent)
+            - Inklusion (Lagring av ämnen/näring)
+            - Cytoplasma (Ribosomer&DNA(Bildar protein samtidigt som transkription))
+            - Cellvägg (Grampositiv(tjock)/negativ(tunn lager/flesta))
+            - Kapsel(Tjock (flera gånger cell) skyddande slemlager (Polysackarid+protein) skydd, energireserv)
+            - Flagell(Tunn Proteintråd -> Rlrekser, rotation)
+            - Fimbrier, pili(korta proteintrådar, fäste, överföring DNA)
+          - Levnadssätt:
+            - Oika ämnesomsättning(fotosyntes, cellandning, alkoholjäsning, mjölksyra)
+            - Lever på S, Fe
+            - Aerob(Förbränner socker)
+            - Anaerob(Socker -> Etanol)
+            - Extremofil(Organismer som trivs i extrema miljöer)
+            - Termo(Temperatur)/Acido-alkalifil(pH)
+          - Biofilm:
+            - Aggregat av mikroorganism av slem
+            - Skyddande miljö från antibiotika, UV-ljus, immunförsvar
+            - Kan bli ett ekosystem (Mikroorganismer samarbetar)
+            - Nedsänkt i vatten/fuktig miljö
+            - Bindning till yta -> Slem sitter hårdare på ytan (Syrefri)
+          - Förökning:
+            - Transduktion (Virusinfektion)(Virus infekterar cell -> producerar virus med delvis cellgener)
+            - Konjugation(Överföring av plasmider mellan 2 celler mellan rör)
+            - Transformation(Tar upp DNA segment av andra celler)
+          - Bakterier:
+            - Cellvägg (Peptidoglykan)
+            - Kocker(Diplo (2), Strepto(Kedja) Strepto (Klaser))
+            - Stav-cylinderformade (baciller)
+            - Vibrion (Böjda stavar)
+            - Spiriller (Spiral)
+            - Flesta nyttiga för människor/ekosystemstjänst e.g. nedbrytning
+            - En del (patogena) e.g. Mjältbramsbakterier
+            - Endosporer vid ogynnsam miljö
+          - Arkeer/Arkebakterier:
+            - 1970 Carl Woese (Konstiga bakterier)
+            - Metanogener, inga kända patogener
+            - Eukaryota från Arkeer
+            - Cellvägg (Proteiner)
+            - Cellmembran(Speciella fosfolipider (Isoprenoid))
+            - Monolager -> Extremofiler
+        - Eukaryota celler:
+          - ...
+        - Djurcell*:
+          - Djurcell:
+            - 20~100µm (10x prokaryota)
+          - Cellkommunikation:
+            - Signaling cell
+            - Target cell
+            - 1. Reception
+            - 2. Transduction
+            - 3. Cellular response
+        - Bakteriecell (Prokaryota):
           - Bakteriecell:
             - 0.5~5µm
-            - Encelliga
-            - Ringformad kromosom
           - Kapsel:
             - Extra skydd av Kolhydrater
           - Cellvägg:
@@ -23664,39 +23675,22 @@
         - '#ref:Klassrum:2099'
         - Kompetens
       - Kunskap:
-        - Skolämnen:
-          - '#ref:Svenska:556'
-          - '#ref:Engelska:557'
-          - '#ref:Franska:558'
-          - '#ref:Ekonomi:397'
-          - '#ref:Politik:399'
-          - '#ref:Geografi:6'
-          - '#ref:Historia:7'
-          - '#ref:Religion:8'
-          - '#ref:Matte:2'
-          - '#ref:Fysik:3'
-          - '#ref:Kemi:4'
-          - '#ref:Biologi:5'
-          - '#ref:Träslöjd:555'
-          - Idrott och hälsa:
-            - '#ref:Fysisk kondition:2870'
-            - '#ref:Fysisk rörlighet:2871'
-            - Sport:
-              - Struktur
-              - Typer:
-                - Olympiska spelen
-                - Fotboll
-                - Basketboll
-                - Tennis
-              - Lag
-              - Strategi
-              - Träning
-          - '#ref:Musik:519'
-          - '#ref:Litteratur:518'
         - Uppgifter:
           - Övningshäfte
         - Förhör och prov
         - Inga genvägar i skolan
+        - Sport:
+          - Struktur
+          - Typer:
+            - Olympiska spelen
+            - Fotboll
+            - Basketboll
+            - Tennis
+          - Lag
+          - Strategi
+          - Träning
+          - '#ref:Musik:519'
+          - '#ref:Litteratur:518'
       - Med andra:
         - Aktiviteter:
           - Utflykt

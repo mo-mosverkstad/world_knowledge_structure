@@ -257,58 +257,35 @@
       - Infinitesimalkalkyl:
         - Limited (lim x->n) [LIM]:
           - ...
+        - Summa (Σf(x)):
+          - Σx = ½x²+½x
+          - Σa^x = (b^n-1)/(b-1)[TES]
         - Derivata (f'(x)=df/dx) [DER]:
+          - DER(lim h->0(f(x+h)-f(x))/h)
           - APPROXIMATION h=0.001
-          - POSITIV lim h->0(f(x+h)-f(x))/h
-          - NEGATIV lim h->0(f(x)-f(x-h))/h
-          - CENTRAL lim h->0((f(x+h)-f(x-h))/(2h)
-          - kx^n -> knx^(n-1)
-          - e^kx -> ke^kx
-        - Integral (∫f(x)*dx) [INT]:
+          - POSITIV [f(x+h)-f(x)]
+          - NEGATIV [f(x)-f(x-h)]
+          - CENTRAL [f(x+h)-f(x-h)]
+          - f(x)[(x1, y1) y=f(x)]
+          - t(x)[(x1, y1) y=f'(x1)x+m]
+          - d(+(d>0) -(d<0))
+          - d²(MAX/-(<0) MIN/+(>0) INF(0))
+          - d/dx kx^n = knx^(n-1)
+          - d/dx e^kx = ke^kx
+        - Integral (∫f(x)*dx) [INT]: 
           - ...
-        - Infinitesimalkalkyl regler:
-          - LIM[±DIS *DIS]
-          - DER[±DIS]
-          - INT[±DIS]
-        - Derivata (d/dx):
-          - Derivata:
-            - Ger en k-tangent
-          - Funktionderivata:
-            - d/dx(ax^b) = abx^(b-1)
-            - d/dx x^a = a*x^(a-1)
-          - Derivatalagar:
-            - d/dx (f±g) = df/dx + dg/dx
-            - d/dx (fg) = fΔg/Δx + gΔf/Δx
-            - d/dx (f/g) = gΔf/Δx - f*Δg/Δx/g²
-            - d/dx (f(g)) = Δf/Δg*Δg/Δx
-            - d/dx (f^a/g^b) = f²/g²*Δ/Δx(a*ln(f)-b*ln(g))
-            - d²/d²x (f(u)) = Δf/Δu*Δ²u/Δx² + Δu/Δx*Δ²f/Δu²
-          - Funktionegenskaper:
-            - Rising Δy/Δx > 0
-            - Falling Δy/Δx < 0
-            - Concave up Δ²y/Δx² > 0
-            - Concave down Δ²y/Δx² < 0
-            - Maximum Δy/Δx = 0, Δ²y/Δx² < 0
-            - Minimum Δy/Δx = 0, Δ²y/Δx² > 0
-            - Inflection Δy/Δx = 0, Δ²y/Δx² = 0
-            - Inflection Δy/Δx > 0, Δ²y/Δx² = 0
-        - Integral (∫):
-          - Integral:
-            - ...
-        - Sammansatta funktioner (f(g(x))):
-          - ...
-        - ∇
-        - grad F(x)
-        - div F(x)
-        - curl F(x)
-        - Σ:
-          - x(½x² + ½x)
-          - a^x((b^n-1)/(b-1)[TES])
-        - Series:
-          - 1-x+x²-x³+... = (1+x)^(-1) (-1<x<1)
-          - 1-1/2x+(1*3)x²/(2*4)-(1*3*5)x³/(2*4*6)+... = (1+x)^(-1/2) (-1<x<1)
+        - Serier:
           - e^x = 1+x+x²/2!+x³/3!+...
           - sin(x) = x-x³/3!+x^5/5!-x^7/7!+...
+        - Nabla (∇):
+          - grad F(x)
+          - div F(x)
+          - curl F(x)
+        - Infinitesimalkalkyl regler:
+          - ICO(~(fg)=~fg±~gf[/g²])
+          - LIM[±DIS *DIS]
+          - DER[±DIS *ICO]
+          - INT[±DIS]
       - Linjär algebra:
         - Vector/Vektor:
           - Vektor:
@@ -590,15 +567,19 @@
           - Statisk elektricitet:
             - Underskott(+)/överskott(-) av elektroner
             - Friktionsladdning, Kattskinn och ebonitstav
+            - Polythene rod (-), perspex rod (+)
             - Åska (naturlig urladdning)
             - Metaller är ledare, glas är insulator
-            - Polythene rod (-), perspex rod (+)
+            - Elektroner lossnar lätt, elektronöverföring vid gnidande
+            - Insulator (valenselektroner hålls fast)
+            - Ledare (valenselektroner är lösa)
             - Influens ((+)<->(- +))
             - Electron(q = 1.602e-19 C)
-            - Kontakt (q = (q1+q2)/2)
+            - Kontakt/Jordning (q = (q1+q2)/2)
           - Laddningar:
             - Attraktion (+ -><- -, + -><- 0, - -><- 0)
             - Repulsion (+ <-> +, - <-> -)
+            - Colombs lag (F=KQq/r² (K=8.99e9))
           - Elektrisk fält:
             - 1punkt (KQqx/(2√(x²+y²)), KQqy/(2√(x²+y²)))
             - 2punkt1 (x²+y²+4, 2xy)
@@ -2687,33 +2668,77 @@
             - Trådformad proteinfibrer (3D nätverk)
             - Ger cellen form
         - Organeller:
+          - Endomembransystem:
+            - Organeller (Upptag, transport, utsöndring)
+            - Organeller + Små membranblåsor
+          - Signalhypotesen(Transport av proteiner):
+            - Transporter genom kärnmembran porer, in i organeller, ER -> Särskilda transportblåsor till celldelar
+            - Signalsekvens (15~20 aminosyrasekvens) (Vart ska transporteras i början av mRNA)
+            - 1. mRNA kommer först ut i cytoplasma
+            - 2. mRNA dockas till ribosomer
+            - 3. Signalsekvens
+            - 4. Binda till receptorer på RER
+            - 5. Translation fortsätter
+            - 6. Inne i RER klipps signalprotein av
           - Organeller:
             - Samma storlek som Bakterier
             - Eget ringformad DNA och ribosomer
-            - Dubbla mambran
+            - Dubbla mambran (Membranomslutna)
+            - Olika funktioner i cellen/Isolera biokemiska processer för varandra
+            - Transportera slutprodukter till speciella platser
             - Lever encelliga utan mitokondrier
           - Cellkärna:
-            - Lagrar arvsmassa
-            - Styrcellen (Cellfunktion)
-            - DNA och kärnmembran
+            - Majoritet DNA (Arvsmassa, cellfunktion)
+            - Kärnmembran (Dubbla membran av 2 lager fosfolipider)
+            - Innehåller porer för transport mellan cellkärna & Cytoplasma
+            - Ny syntetiserad protein reglerar transkription
+            - m-RNA transporteras ur cellkärnan
             - (Flera cellkärnor i muskelceller)
           - Endoplasmatisk nätverk/Endoplasmic reticulum (ER):
+            - Yttre av kärnmembranens 2 skikt förgrening i cytoplasman
+            - Labyrint av membran (>50% totala membran)
+            - Sammanhängade system av rör & säckar/kanaler (cisterner = vätskefyllda)
             - Konstruerar och packar proteiner och lipider
-            - Membransystem med kanaler i cellplasman
             - Tillverkning ny cellmembran
             - Transporterar kemiska substanser
+            - Kornig/Rough ER (RER) (Kemisk modifiering av proteiner, packas i membranblåsa + adress)
+            - Slätt/Smooth ER (SER) (Syntetiserar lipider & lagrar/reglerar Ca2+, tar bort gift&fett)
           - Mitokondrie:
             - Energikälla
             - Yttre och inre veckat membran
             - Enzymer för cellandning -> ATP
             - Kontrollar celldelning och celldöd
-          - Lysosom:
-            - Membranblåsor med enzymer
-            - Bryter ner skadliga ämnen och skräpceller
           - Golgiapparat:
+            - Tillplattade membranomslutna säckar (uppradade) i mindre blåsor
+            - Logistikcentral (proteiner och fosfolipider från ER)
+            - Alltid nytt material från ER, smälter ihop med golgisäck
             - Lagrar och modifierar proteiner och fosfolipider
-            - Skickar vidare ämnen
-            - Logistikcentral, proteiner och fosfolipider från ER
+            - Sorterar och för vidare ämnen från en säck till nästa
+            - Avknoppning av nya membranblåsor, främst cellmembran och sekretion
+            - I bortre änden packas färdiga proteiner i membranblåsor -> Andra celldelar
+            - Tömmer innehåll utanför cellen (exocytos)
+          - Peroxisomer:
+            - Nedbrytning av olika slags onödiga/skadliga molekyler
+            - Finns i alla eukaryota celler
+            - Bildas genom avknoppning av ER, förökar sig genom delning
+            - Innehåller enzymer som flyttar över H+ till O -> H2O2
+          - Lysosom:
+            - Bryter ner skadliga ämnen och skräpceller
+            - Enbart Djurceller
+            - Bildas genom avknoppning av golgiapparaten
+            - Bryter ner partiklar av endocytos -> Makromolekyler
+            - Membranblåsor med enzymer (bryter ned)
+            - Särskilt aktiva i immunförsvarets celler
+          - Vakuol:
+            - Vätskefylld, större än blåsor
+            - Bildas genom avknoppning av membran från ER och Golgi
+            - Blir större och dominerar i äldre/mogna växtceller
+            - Lagring och avhållsbehållare (mer än bara vatten)
+            - Reglerar pH, vattenbalans och jonkoncentration i cellen
+            - Ger form och stabilitet hos växter
+            - Motsvarar djurcellens lysosom (innehåller enzymer)
+            - Kan innehålla giftiga ämnen som förhindrar predation
+            - (Unga celler -> Mindre vakuoler, mogna -> Större delar (Centralvakuol))
         - Prokaryota cell:
           - Prokaryota celler:
             - Haploid, ringslutna kromosomer
@@ -2724,7 +2749,7 @@
             - Cytoplasma (Ribosomer&DNA(Bildar protein samtidigt som transkription))
             - Cellvägg (Grampositiv(tjock)/negativ(tunn lager/flesta))
             - Kapsel(Tjock (flera gånger cell) skyddande slemlager (Polysackarid+protein) skydd, energireserv)
-            - Flagell(Tunn Proteintråd -> Rlrekser, rotation)
+            - Flagell(Tunn Proteintråd -> Rörelser, rotation)
             - Fimbrier, pili(korta proteintrådar, fäste, överföring DNA)
           - Levnadssätt:
             - Oika ämnesomsättning(fotosyntes, cellandning, alkoholjäsning, mjölksyra)
@@ -2744,6 +2769,7 @@
             - Konjugation(Överföring av plasmider mellan 2 celler mellan rör)
             - Transformation(Tar upp DNA segment av andra celler)
           - Bakterier:
+            - Storlek (0.5~5µm)
             - Cellvägg (Peptidoglykan)
             - Kocker(Diplo (2), Strepto(Kedja) Strepto (Klaser))
             - Stav-cylinderformade (baciller)
@@ -2771,16 +2797,10 @@
             - 2. Transduction
             - 3. Cellular response
         - Bakteriecell (Prokaryota):
-          - Bakteriecell:
-            - 0.5~5µm
           - Kapsel:
             - Extra skydd av Kolhydrater
           - Cellvägg:
-            - Cellulosa (växt), peptidoglykan (bakterie) och kitin (svamp)
-          - Flagell:
-            - Svans på bakterier för rörelser
-          - Pili:
-            - Utskott som bakterien kan fästa mot
+            - Cellulosa (växt) och kitin (svamp)
           - Plasmider:
             - Ringformade DNA-molekyler
             - Onytta, kopierng och skicka till andra

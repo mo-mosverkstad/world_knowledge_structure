@@ -20,8 +20,8 @@ class Config(object):
     @staticmethod
     def database():
         # return 'mosverkstad'
-        return 'mosverkstad'
-        # return 'temp'
+        # return 'mosverkstad'
+        return 'temp'
 
     @staticmethod
     def name_table():

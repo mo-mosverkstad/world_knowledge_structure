@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <input type="text" id="textInput" placeholder="Press Enter...">
+  <p id = "result"></p>
+  <script src = "vocabulary.js"></script>
+  <script>
+    const textInput = document.getElementById('textInput');
+    const result = document.getElementById("result");
+    textInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        // console.log('Enter key pressed!');
+        // console.log(document.getElementById("textInput").value);
+        var key = document.getElementById("textInput").value;
+        var value = vocabulary[key];
+        if (value == undefined) {
+            document.getElementById("result").innerHTML = "ERROR! [" + key + "] is wrong"
+        } else {
+            document.getElementById("result").innerHTML = "CORRECT: [" + key + "] " + value;
+        }
+        document.getElementById("textInput").innerHTML = "";
+      }
+    });
+  </script>
+</body>
+</html>

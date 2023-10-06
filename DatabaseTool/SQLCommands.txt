@@ -1,6 +1,9 @@
-DELETE FROM temp.nametable;
+
+DELETE FROM temp.nametable WHERE id <> 1;
 DELETE FROM temp.relationship;
 
+DELETE FROM temp.nametable;
+DELETE FROM temp.relationship;
 INSERT INTO temp.nametable VALUES (1, "Root");
 
 SELECT * FROM temp.nametable;

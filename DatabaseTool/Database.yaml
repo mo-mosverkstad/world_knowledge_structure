@@ -24,7 +24,7 @@
         - Advancerad räknesätt:
           - ^(...)
           - √(...)
-          - log(x) ...
+          - log(x) ln(x)(Naturliga logaritmer)
           - (|x|)(√(x²))
           - (x<y x>y)
         - Andel:
@@ -76,6 +76,7 @@
           - Funktion (ΣAn*x+ΣBn*y+C)
           - Definition(x)/Värdemängd(y)
           - Asymptot
+          - Rot (Dubbelrot(Vertex))
           - Polynom(Σan*x^n Π(ax+b))
           - Rationell(r(x)=p(x)/q(x) q(x)≠0)
           - P1(∥k1=k2 ⊥k1k2=-1)
@@ -101,22 +102,18 @@
           - PFR(3/x+x/2=9x/2 (6+x²=9x²)/(2x))
           - TES(...)
       - Geometri:
-        - Linjer (L1):
-          - PA(Punkt)
-          - L1(A->L B->L)
+        - Geometri symboler:
+          - PA[Punkt]
+          - L1(Linje)
           - LT(Tangent)
           - LS(Sekant)
+          - B1[B1(Plan L+P)L+P]
+          - ^1[^A(=^BAC) ^(Spets/ben) ~^(Motsatt)]
+          - 1α[Spetsig Rät90 Trubbig Rak180]
+          - Σα[Inre(180(n-2)) Yttre(360)]
+        - Plangeometri linjer och vinklar:
           - ⊥(...)
           - L1∥L2 (1∥2&1∥3=2∥3)
-          - L`~(Motsatta linjer)
-        - Planer (B1):
-          - B1(L+P)
-        - Vinklar (α):
-          - (^A=^BAC Spets/ben)
-          - (Spetsig Rät90 Trubbig Rak180)
-          - Σα(Inre(180(n-2)) Yttre(360))
-          - ^`~(Motsatta vinklar)
-        - Linje och vinklar:
           - Sido(α+β=180°)
           - Vertikal(α=β)
           - Transversal(α=β=γ)
@@ -141,7 +138,10 @@
           - 4S Kvadrat(^=90 AC⊥BD)
           - CR (^m=2^r(2*3I) ab=cd 4(^`=360))
         - Rymdgeometri:
-          - ()
+          - B∥L[α(L1)∥L L(α)∥β]
+          - B⊥L[(α∥β)⊥L α(m/n)⊥L (l1⊥α)⊥α]
+          - B∥B[α(L1/L2)∥β]
+          - B⊥B[β(L)⊥α]
           - 3(Bh/3)
           - 4(Bh)
           - C(4/3πr²)
@@ -170,26 +170,14 @@
             - l1⊥l2, l2⊥l3 => l1⊥l3
             - l1⊥l2, l3⊥l4 => l2⊥l3
             - l⊥α => l⊥ (alla linjer på α)
-          - Linje + Plan Paraell:
-            - l1∥l2, l1 nsub α, l2 sub α => l1∥α
-            - α∥β, l1 sub α => l1∥β
           - Linje + Plan Intersektion:
-            - α∥β, l1⊥α => l⊥β
-            - l⊥m, l⊥n, m∩n=P => l⊥α
-            - l1∥l2, l1⊥α => l2⊥α
             - α⊥β, α sub β = m, l⊥m => l⊥α
-          - 2 Plan Paraell:
-            - l1, l2 sub α, l1∩l2 = P, l1∥β, l2∥β => α∥β
-            - l⊥α, l⊥β => α∥β
-            - α∥β, β∥γ => α∥γ
-          - 2 Plan Intersektion:
-            - l⊥α, l sub β => α⊥β...
       - Analytisk geometri:
         - Koordinatsystem:
           - ...
         - Plangeometri:
-          - d=√((xA-xB)²+(yA-yB)²)
-          - xM=(xA+xB)/2 yM=(yA+yB)/2
+          - d(√((xA-xB)²+(yA-yB)²))
+          - M(xM=(xA+xB)/2 yM=(yA+yB)/2)
           - L(y=kx+b)
           - C((x-x0)²+(y-y0)²=r²)
           - E((x-x0)²/a²-(y-y0)²/b²=1)
@@ -202,8 +190,8 @@
           - C(Cirkel)
         - Lägesmått:
           - Ax̄=Σx_i/n Ax̄=n^√(Πx)
-          - Standardavvikelse σ=√(Σ(x-x̄)²/n)
-          - Varians σ²=√(Σ(x-x̄)²/n)
+          - σ=√(Σ(x-x̄)²/n)(Standardavvikels)
+          - σ²=√(Σ(x-x̄)²/n)(Varians)
           - Pop.[][...]=[...]±Z_c*s/√n
         - Spridningsmått:
           - Percentil(Pn)
@@ -255,6 +243,8 @@
           - LCS(c²=a²+b²-2abcos(C))
           - PSS(PYT(abc sc1 1tl 1zv))
       - Infinitesimalkalkyl:
+        - Infinitesimalkalkyl symboler:
+          - APR(Approximation)
         - Limited (lim x->n) [LIM]:
           - ...
         - Summa (Σf(x)):
@@ -262,17 +252,18 @@
           - Σa^x = (b^n-1)/(b-1)[TES]
         - Derivata (f'(x)=df/dx) [DER]:
           - DER(lim h->0(f(x+h)-f(x))/h)
-          - APPROXIMATION h=0.001
-          - POSITIV [f(x+h)-f(x)]
-          - NEGATIV [f(x)-f(x-h)]
-          - CENTRAL [f(x+h)-f(x-h)]
+          - APR(h=0.001)
+          - POS[f(x+h)-f(x)]
+          - NEG[f(x)-f(x-h)]
+          - CEN[f(x+h)-f(x-h)]
           - f(x)[(x1, y1) y=f(x)]
           - t(x)[(x1, y1) y=f'(x1)x+m]
           - d(+(d>0) -(d<0))
           - d²(MAX/-(<0) MIN/+(>0) INF(0))
           - d/dx kx^n = knx^(n-1)
           - d/dx e^kx = ke^kx
-        - Integral (∫f(x)*dx) [INT]: 
+          - d/dx a^x = a^x*ln(a)
+        - Integral (∫f(x)*dx) [INT]:
           - ...
         - Serier:
           - e^x = 1+x+x²/2!+x³/3!+...
@@ -286,30 +277,24 @@
           - LIM[±DIS *DIS]
           - DER[±DIS *ICO]
           - INT[±DIS]
+        - Limited (lim x->n) [LIM]:
+          - ...
+        - Summa (Σf(x)):
+          - Σx = ½x²+½x
+          - Σa^x = (b^n-1)/(b-1)[TES]
       - Linjär algebra:
-        - Vector/Vektor:
-          - Vektor:
-            - Vektor(storlek + riktning) (pilar)
-            - \|x\| = m = sqrt(x² + y²), α = arctan(y/x)
-            - x = l*cos(α), y = l*sin(α)
-          - Addition (+):
-            - v1 + v2
-          - Subtraktion (-):
-            - v1 - v2 = v1 + (-v2)
-        - Matrix:
-          - Matrix:
-            - [[2, 3], [5, 6]]
-          - Determinant (det A):
-            - det [[0, 0], [0, 0]] = 0
-            - ...
+        - Matriser:
+          - T[[1 2 3][4 5 6]]
+          - +[[[a b][c d]]]
+          - det [...]
+        - Vektorer:
+          - V[[x][y]] (l α)
+          - Komposant(x=l*cos(α) y=l*sin(α))
       - Spelteori:
         - Nash equilibrium:
-          - Fångarnas dilemma:
-            - ...
-          - Chicken race:
-            - ...
-          - Boxed Pig Game:
-            - ...
+          - Fångarnas dilemma
+          - Chicken race
+          - Boxed Pig Game
     - Fysik:
       - Astronomi:
         - Celest mekanik:
@@ -588,8 +573,8 @@
             - Faradays bur (Ingen fält insida)
           - Krafter och energi:
             - F = KQq/r²
-            - Fc -> W_ab -> E_Pa - E_Pb
-            - E -> U_ab -> V_a - V_b
+            - Fc -> Wab -> EPa - EPb
+            - É -> Uab -> Va - Vb
         - Statisk elektricitet modeller:
           - 1punktmodell:
             - E_Pa = KQq/a
@@ -597,13 +582,13 @@
             - (x_i)/(y_i) = (F_T1*sin(α_i)=F_c1)/(F_T1*cos(α_i)=F_G1)
             - tan(α1)/tan(α2) = m2/m1
           - Homologmodell:
-            - Fc = Eq
-            - E = Fc/q = U/d = 4πkQ/(εs)
-            - E_Pa = Eq(d-a)
-            - F_c + F_T + F_G = 0
+            - Fc = Éq
+            - É = Fc/q = U/d = 4πkQ/(εs)
+            - EPa = Éq(d-a)
+            - Fc + FT + FG = 0
             - d = ½a_x*t² -> t = √((2d²m)/(uq))
             - t -> v_x, v_y
-            - E_K1 + E_P1 + E_EP1 = E_K2 + E_P2 + E_EP2
+            - EK1 + EP1 + EEP1 = EK2 + EP2 + EEP2
         - Elektriska kretsar:
           - Elektriska kretsar:
             - I=Δq/Δt=neAv
@@ -615,7 +600,7 @@
           - Kretsar:
             - Kabel -> Homolog fält
             - A -(U=IR)-> B -> C -> D
-            - Serie U=ΣU_i, I=I_i, R=ΣR_i
+            - Serie U=ΣUi, I=Ii, R=ΣRi
             - Paraell U=U_i = I=I_i, R=Σ(1/R_i)
           - Batterikoppling:
             - Serie (U = ΣU)
@@ -2656,6 +2641,24 @@
           - Endo/exocytos:
             - Makromolekyl -> Membran i membranblåsor
         - Cellstruktur:
+          - Extracellulära strukturer:
+            - Skyddar, stödjer och binder celler med varandra
+            - Produceras, utsöndras av celler till utsidan
+            - Fiberrika makromolekyl i geleliknande vätska/substanser
+            - Protein, kolhydrater, proteoglykaner (protein + kolhydrat)
+          - Cellvägg:
+            - ...
+          - Extraceullär matris:
+            - Djurceller utsöndrar fiberrika proteinmolekyler och kolhydrater -> komplex väv
+            - Håller samman celler i vävnad (lim)~(ben, brosk, hud, senor)
+            - Sammankopplat med cellens cellskelett via membranproteiner
+            - Cytoplasma ihopkopplad genom kanalförbindeler(porer Gap junction)
+            - Proteinrör genom cellmembran från en cell till inliggande e.g. hjärtmuskelatur och livmodern
+          - Intercellulära förbindelser:
+            - Celler kan kommunicera via direkt kontakten
+            - Skillnader mellan växt och djurcell
+            - Plasmodesm är korsning mellan växtcell (e.g. Joner, näringsämnen, socker)
+            - Gap junction mellan djurcell ER(strömmar av joner i muskelceller, endast små molekyler)
           - Ribosom:
             - Proteintillverkning (mRNA -> Protein)
             - Fri i cytoplasma/Rough ER
@@ -2664,9 +2667,31 @@
             - Trögflytande vattenlösning av cellämnen
             - Sker kemiska reaktioner
             - Ribosomer
-          - Cellskelett:
-            - Trådformad proteinfibrer (3D nätverk)
-            - Ger cellen form
+          - Cellskelett/Cytoskelett:
+            - 3D nätverk av trådformad proteinfibrer
+            - Formändring/givning, stadga, håller organeller på plats
+            - Ämnestransport (membranblåsor, organeller)
+            - Välutvecklad i eukaryota även prokaryota
+          - Mikrotubili:
+            - Ihåliga rör av protein tubili
+            - Stöd åt cellen
+            - Transportväg av motorproteiner (kinesin, dynelin) (Ändrar form med ATP)
+            - Tar tag i membranblåsa/vesikel och binder på mikrotubili
+            - Formbar, färläng/förkortning
+            - Flyttar kromosomer (Fördelning)
+            - Cilier, flageller, epitelcell, spermier -> Stabilitet
+          - Mikrofilament/Aktinfilament:
+            - Uppbyggda av aktin
+            - Läggs til/bryts loss -> Varierande längd -> Drar ihop sig
+            - Ger viss form åt cellen, rörelse
+            - Agerar tillsammans med motorprotein myosin och möjliggör muskelkontraktion
+            - Snör av membran vid celldelning
+            - Djur muskelceller motorprotein myosin och drar ihop sig
+          - Intermediärfilament:
+            - Mellanstorlek
+            - Består av protein (Keratin)
+            - Håller organeller på plats, ger celler mer hållfast
+            - Mer stabila än mikrotubili och mikrofilament (klarar av stora påfrestningar)
         - Organeller:
           - Endomembransystem:
             - Organeller (Upptag, transport, utsöndring)
@@ -2701,11 +2726,14 @@
             - Konstruerar och packar proteiner och lipider
             - Tillverkning ny cellmembran
             - Transporterar kemiska substanser
-            - Kornig/Rough ER (RER) (Kemisk modifiering av proteiner, packas i membranblåsa + adress)
-            - Slätt/Smooth ER (SER) (Syntetiserar lipider & lagrar/reglerar Ca2+, tar bort gift&fett)
+            - Kornig/Rough ER (RER) (Kemisk modifiering av proteiner, packas i membranblåsa + adress, ribosomer i utsidan(grovkornig), tillverkar membran)
+            - Slätt/Smooth ER (SER) (Syntetiserar lipider & lagrar/reglerar Ca2+, tar bort gift&fett, utan bundna ribosomer, syntetiserar steroid)
           - Mitokondrie:
-            - Energikälla
-            - Yttre och inre veckat membran
+            - Storlek (0.5~10µm lång)
+            - Organell för cellens ämnesomsättning, Energikälla
+            - Dubbel membran - Inre membran veckat -> Större yta -> Fler proteiner för energiutvninning
+            - Inre membran (Cristae)
+            - Matrix med DNA och Ribosomer
             - Enzymer för cellandning -> ATP
             - Kontrollar celldelning och celldöd
           - Golgiapparat:
@@ -2735,10 +2763,16 @@
             - Blir större och dominerar i äldre/mogna växtceller
             - Lagring och avhållsbehållare (mer än bara vatten)
             - Reglerar pH, vattenbalans och jonkoncentration i cellen
-            - Ger form och stabilitet hos växter
+            - Full vakuol trycks mot cellväggen -> spänd
+            - Ger form, stabilitet och stadighet hos växter
             - Motsvarar djurcellens lysosom (innehåller enzymer)
             - Kan innehålla giftiga ämnen som förhindrar predation
             - (Unga celler -> Mindre vakuoler, mogna -> Större delar (Centralvakuol))
+          - Plastider (Endast i växtcell):
+            - Ytter/Innermembran, Stroma(Grana(Tylakoider))
+            - Kloroplast (Grön organell från fotosyntes)
+            - Leucoplast(Lagring, Näringsämne som stäkelse i potatisknölar)
+            - Kromoplast (röda, gula, oranga pigment åt frukter)
         - Prokaryota cell:
           - Prokaryota celler:
             - Haploid, ringslutna kromosomer
@@ -2747,8 +2781,8 @@
             - Cellmembran(cellandning foto/fettsyntes/cellväggkomponent)
             - Inklusion (Lagring av ämnen/näring)
             - Cytoplasma (Ribosomer&DNA(Bildar protein samtidigt som transkription))
-            - Cellvägg (Grampositiv(tjock)/negativ(tunn lager/flesta))
-            - Kapsel(Tjock (flera gånger cell) skyddande slemlager (Polysackarid+protein) skydd, energireserv)
+            - Cellvägg (Grampositiv(tjock)/negativ(tunn lager peptidoglykan/flesta))
+            - Kapsel(Tjock (flera gånger cell) skyddande slemlager (Polysackarid+protein) skydd, energireserv/näring)
             - Flagell(Tunn Proteintråd -> Rörelser, rotation)
             - Fimbrier, pili(korta proteintrådar, fäste, överföring DNA)
           - Levnadssätt:
@@ -2770,7 +2804,8 @@
             - Transformation(Tar upp DNA segment av andra celler)
           - Bakterier:
             - Storlek (0.5~5µm)
-            - Cellvägg (Peptidoglykan)
+            - Kapsel (Extra skydd av Kolhydrater)
+            - Cellvägg (Peptidoglykan(Aminosyra + Kolhydrat))
             - Kocker(Diplo (2), Strepto(Kedja) Strepto (Klaser))
             - Stav-cylinderformade (baciller)
             - Vibrion (Böjda stavar)
@@ -2785,22 +2820,22 @@
             - Cellvägg (Proteiner)
             - Cellmembran(Speciella fosfolipider (Isoprenoid))
             - Monolager -> Extremofiler
+          - Virus:
+            - Både levande och icke-levande (Ingen självförökning)
+            - Infekterar alla celler
+            - Kapsel (DNA / RNA, Proteinhölje och cellmembran)
         - Eukaryota celler:
-          - ...
-        - Djurcell*:
+          - Eukaryota celler:
+            - ...
           - Djurcell:
-            - 20~100µm (10x prokaryota)
-          - Cellkommunikation:
-            - Signaling cell
-            - Target cell
-            - 1. Reception
-            - 2. Transduction
-            - 3. Cellular response
+            - Storlek (20~100µm (10x prokaryota))
+          - Växtcell:
+            - Storlek (20~100µm)
+            - Cellvägg (Cellulosa + Kolhydrat + Proteiner, ger fast form, klistrar ihop celler, skydd mot infektion)
+            - Sammanlänk med plasmodesmer (ER hänger ihop)
+          - Svampcell:
+            - Cellvägg (Kitin, Fast form, skydd mot uttorkning, färgpigment, giftig, skydd mot UV och infektion/predation)
         - Bakteriecell (Prokaryota):
-          - Kapsel:
-            - Extra skydd av Kolhydrater
-          - Cellvägg:
-            - Cellulosa (växt) och kitin (svamp)
           - Plasmider:
             - Ringformade DNA-molekyler
             - Onytta, kopierng och skicka till andra
@@ -2808,20 +2843,47 @@
           - Kloroplast:
             - Yttre + inre membran (blågrön bakterie)
             - Fotosyntes -> sockermolekyl
-        - Växtcell:
-          - Växtcell:
-            - 20~100µm
-          - Vakuol:
-            - En vätskefylld del inom växter för att hålla stadigt
-            - Vattenförråd, avfallsföring
-            - Full vakuol trycks mot cellväggen -> spänd
-        - Virus:
-          - Virus:
-            - Både levande och icke-levande (Ingen självförökning)
-            - Infekterar alla celler
-          - Kapsel:
-            - DNA / RNA
-            - Proteinhölje och cellmembran
+        - Cellandning:
+          - Cellandning:
+            - Utvinner energi från energirika kemiska föreningar
+            - Celler behöver energi till biosyntes, rörelser, och transport
+            - Organiska biomolekyler -> oxidering -> Energi frigörs
+            - Utvinna energi från oxidation av organiska föreingar
+            - Fördröjer process -> Mindre varmt -> Skapar ATP -> Arbete
+          - Celler förbränningar:
+            - Prokaryota och eukaryota (C6H12O6 + O2 -> CO2 + H2O + energi)
+            - Aerob (Syre som vätebärare), anaerob (Annat som vätebärare)
+            - Metanogener(H2 -> CH4) e.g. Metanococcus
+            - Svavelbakterier (S, SH ...)
+            - Nitrifikationsbakterier (NH3 -> NO2-)
+            - Järnbakterier (Fe (2+) -> Fe (3+))
+            - Väte (H2 -> H2O + Energi)
+          - Vätebärare:
+            - Vätebärare tar upp och binder till e- och H+
+            - Hindrar dem från omedelbar bidning till syre
+            - NAD+, NADP+, FAD
+            - 1. Vätebärare flyttar H inklusive elektroner
+            - NADH, NADPH, FAD2+
+            - 2. Ämnet som lämnar H oxideras
+            - 3. Ämnet som tar emot H reduceras
+          - ATP och ADP:
+            - ATP -> ADP + PO4 (3-) + Energi
+            - ATP (Adrenotrifosfat), ADP (Adrenodifosfat)
+            - Sista bindning (Energirik)
+            - Kan endast lagras i små mängder
+            - Uppstod vid 3~3.5e6 år sedan
+          - Glykolys:
+            - ...
+          - Citroncykel:
+            - ...
+          - Elektrontransportkedja:
+            - ...
+        - Cellkommunikation:
+          - Signaling cell
+          - Target cell
+          - 1. Reception
+          - 2. Transduction
+          - 3. Cellular response
       - Mänskliga kroppen/Humanfysiologi:
         - Celler:
           - Stamceller:

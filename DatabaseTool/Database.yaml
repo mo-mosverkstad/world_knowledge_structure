@@ -24,7 +24,7 @@
         - Advancerad räknesätt:
           - ^(...)
           - √(...)
-          - log(x) ln(x)(Naturliga logaritmer)
+          - log(x) ...
           - (|x|)(√(x²))
           - (x<y x>y)
         - Andel:
@@ -108,7 +108,8 @@
           - LT(Tangent)
           - LS(Sekant)
           - B1[B1(Plan L+P)L+P]
-          - ^1[^A(=^BAC) ^(Spets/ben) ~^(Motsatt)]
+          - ^A(=^BAC) Vinkel(Spets/ben)
+          - ~^(Motsatt)
           - 1α[Spetsig Rät90 Trubbig Rak180]
           - Σα[Inre(180(n-2)) Yttre(360)]
         - Plangeometri linjer och vinklar:
@@ -138,6 +139,8 @@
           - 4S Kvadrat(^=90 AC⊥BD)
           - CR (^m=2^r(2*3I) ab=cd 4(^`=360))
         - Rymdgeometri:
+          - P[P(L1(α)) L+P>α α(L1~L2)]
+          - L∥L[L∥α(Ln) (L1⊥)∥(L2⊥) L1((α)∥β)∥L2(α/β)]
           - B∥L[α(L1)∥L L(α)∥β]
           - B⊥L[(α∥β)⊥L α(m/n)⊥L (l1⊥α)⊥α]
           - B∥B[α(L1/L2)∥β]
@@ -155,26 +158,11 @@
           - D Dilation
           - 3≅(SSS SAS ASA RHS/HL överensstämmer i)
           - 3~(AA SAS ASA (i skala))
-        - Rymdgeometri:
-          - Egenskaper:
-            - L1 P⊆α => L1⊆α
-            - P⊆(α∩β) => α∩β = L1⊆P in L1
-            - C not in L1 => L1 in α, c in α
-            - L1 ∩ L2 = P => L1, L2 subset α
-            - L1//L2 (L1 ∩ L2 = ∅ (null)) => L1, L2 subset α
-          - 2 Linjer Paraella:
-            - l1∥β, l1 sub α, α∩β = l2 => l1∥l2
-            - α∥β, α∩γ = l1, α∩β = l2 => l1∥l2
-            - l1⊥α, l2⊥α => l1∥l2
-          - 2 Linjer Intersektion:
-            - l1⊥l2, l2⊥l3 => l1⊥l3
-            - l1⊥l2, l3⊥l4 => l2⊥l3
-            - l⊥α => l⊥ (alla linjer på α)
-          - Linje + Plan Intersektion:
-            - α⊥β, α sub β = m, l⊥m => l⊥α
       - Analytisk geometri:
-        - Koordinatsystem:
-          - ...
+        - Analytisk geometri [AGI(f g h)]:
+          - f(x)[(x1, y1)]
+          - g(x)[(x1, y1)]
+          - h(x)[(x1, y1)]
         - Plangeometri:
           - d(√((xA-xB)²+(yA-yB)²))
           - M(xM=(xA+xB)/2 yM=(yA+yB)/2)
@@ -202,7 +190,7 @@
           - Förväntning E(...)
         - Fördelning:
           - (P(x) x̄ σ²)z=(x-µ)/σ
-          - (2.3 13.6 34.1 34.1 13.6 2.3)%
+          - \[2.3 13.6 34.1 34.1 13.6 2.3]%
           - Normal 1/√(2π)exp[-½(z)²]
           - Binomal np^x(1-p)^(n-x)/x!
           - Poisson(npe^(-np)/x! np np(n-1))
@@ -253,16 +241,15 @@
         - Derivata (f'(x)=df/dx) [DER]:
           - DER(lim h->0(f(x+h)-f(x))/h)
           - APR(h=0.001)
-          - POS[f(x+h)-f(x)]
-          - NEG[f(x)-f(x-h)]
-          - CEN[f(x+h)-f(x-h)]
-          - f(x)[(x1, y1) y=f(x)]
-          - t(x)[(x1, y1) y=f'(x1)x+m]
-          - d(+(d>0) -(d<0))
-          - d²(MAX/-(<0) MIN/+(>0) INF(0))
+          - POS(+h) NEG(-h) CEN(±h/2)
           - d/dx kx^n = knx^(n-1)
           - d/dx e^kx = ke^kx
           - d/dx a^x = a^x*ln(a)
+          - x [.  x  .  y  .  z  .]
+          - f [/ MAX \ MIN / TER /]
+          - f'[+  0  -  0  +  0  +]
+          - f"[  <0    >0     0   ]
+          - AGI(f(x) f'(x1)x+m)
         - Integral (∫f(x)*dx) [INT]:
           - ...
         - Serier:
@@ -305,6 +292,7 @@
             - Solförmörkelse
             - Månförmörkelse (Blodmåne (Rödfärgad måne))
         - Solsystemet:
+          - ...
           - Solen:
             - 99.8% av massan
             - Fusion (H2 -> He)
@@ -436,26 +424,30 @@
           - Big chill (heat death):
             - Stjärnor och svarta hål dör ut och lämnar sig efter ingenting, universum går sönder
       - Stel mekanik:
+        - Free body diagram:
+          - FG1+FN21+Ff21+F31 = F
+          - F1l1 = F2l2
+          - FG = mg (Tyngd)
+          - FN ⊥ B (Normal)
+          - Ff = µFN (Friktion)
+          - FT = kx (Spänning)
+        - Stel mekanik:
+          - id[...]
+          - tn[t0 Δt t1]
+          - F [0  -- ma]
+          - m [m  -- m ]
+          - sθ[s0 Δs s1](½at²+v0t+s0)
+          - vω[v0 Δv v1](at+v0)
+          - aα[a0 Δa a1]
         - Stel objekt:
-          - Krafter:
-            - Kraft (Vector (Addition, komposanter))
-            - Concurrent F_G1 + F_N21 + F_f21 + F_31 = 0
-            - Non concurrent F1d1 = F2d2 (Vridmoment)
-            - Tyngdkraft F_G = mg
-            - Normalkraft F_N12 (F ⊥ 1)
-            - Friktion F_f = F_f = µ*F_N
-            - Spänningskraft F_T = kx
-          - Likformig rörelse:
-            - Medel, Momentan
+          - Likformig rörelse: 
             - s = vt, v= [v1+v2 (Motsatt)][v1-v2 (Samma)]
-            - s = ½at² + v_0t, v = at + v_0
             - Projektil rörelse (...)
             - Uppkast rörelse
             - Nedkast rörelse
           - Cirkelrörelse:
             - τ=Fr*sin(α)=I[Σmr²]α
             - a = v²/r, v = 2πr/T
-            - θ = ½αt+ωt, ω = αt + ω
             - θ = ½t(ωi + ωf), ω² = ω²+2αθ
             - Pendel T = 2π√(L/g)
           - Kraftrörelse:
@@ -573,8 +565,8 @@
             - Faradays bur (Ingen fält insida)
           - Krafter och energi:
             - F = KQq/r²
-            - Fc -> Wab -> EPa - EPb
-            - É -> Uab -> Va - Vb
+            - Fc -> W_ab -> E_Pa - E_Pb
+            - E -> U_ab -> V_a - V_b
         - Statisk elektricitet modeller:
           - 1punktmodell:
             - E_Pa = KQq/a
@@ -582,13 +574,13 @@
             - (x_i)/(y_i) = (F_T1*sin(α_i)=F_c1)/(F_T1*cos(α_i)=F_G1)
             - tan(α1)/tan(α2) = m2/m1
           - Homologmodell:
-            - Fc = Éq
-            - É = Fc/q = U/d = 4πkQ/(εs)
-            - EPa = Éq(d-a)
-            - Fc + FT + FG = 0
+            - Fc = Eq
+            - E = Fc/q = U/d = 4πkQ/(εs)
+            - E_Pa = Eq(d-a)
+            - F_c + F_T + F_G = 0
             - d = ½a_x*t² -> t = √((2d²m)/(uq))
             - t -> v_x, v_y
-            - EK1 + EP1 + EEP1 = EK2 + EP2 + EEP2
+            - E_K1 + E_P1 + E_EP1 = E_K2 + E_P2 + E_EP2
         - Elektriska kretsar:
           - Elektriska kretsar:
             - I=Δq/Δt=neAv
@@ -600,7 +592,7 @@
           - Kretsar:
             - Kabel -> Homolog fält
             - A -(U=IR)-> B -> C -> D
-            - Serie U=ΣUi, I=Ii, R=ΣRi
+            - Serie U=ΣU_i, I=I_i, R=ΣR_i
             - Paraell U=U_i = I=I_i, R=Σ(1/R_i)
           - Batterikoppling:
             - Serie (U = ΣU)
@@ -2873,11 +2865,51 @@
             - Kan endast lagras i små mängder
             - Uppstod vid 3~3.5e6 år sedan
           - Glykolys:
-            - ...
-          - Citroncykel:
-            - ...
+            - Kräver inte O2, lite ATP och NADH
+            - Total -> 38 ATP (~30/34 ATP varje glykos)
+            - Cytoplasma (Glykos -> 2 Pyrovat)
+            - Matrix (Acetyl CoA + CO2 (+ATP NADH))
+          - Citronsyracykeln:
+            - Sker inne i mitokondrie matrix
+            - 2 varv varje glykosmolekyl
+            - ATP + NADH+ -> Elektrontransportkedja
+            - Acetyl CoA + Oxalacetat -> Citronsyra -> Oxalacetat (+ 2 CO2)
+            - Ger ATP, NADH och FAD2H
           - Elektrontransportkedja:
-            - ...
+            - NADH och FADH2 levererar elektroner till Elektrontransportkedja.
+            - I slutet av proteinkedjan tas elektroner upp av O2 som är den slutliga elektronmottagaren
+            - När elektroner transporteras i proteinkedjan frigörs energi -> Protein pumpar H+ in i inre membran
+            - ATP bildas vid H+ koncentrationgradient
+          - Andra energikällor:
+            - Fett, protein, kolhydrater bryts ner -> Monomer
+            - Växt lagrar energi i stäkelse
+            - Djur lagrar energi i fett/glykogen
+            - Fett 2x energitätare än glykos
+            - Vid svält bryts kroppens egna vävnader ner
+            - Fett -> Fettsyror/glycerol -> β-oxidation -> Acetyl CoA
+            - Kolhydrat -> Glykos -> Glykolys -> Pyroviatjon -> Acetyl CoA
+            - Protein -> Aminosyror -> Transaminering -> Karboxylsyror -> Acetyl CoA
+          - Biosyntes:
+            - Celler behöver andra byggstenar än i födan
+            - Ämnen som bildas i glykolys/citronsyracykeln -> Nya biomolekyler (Anabol)
+            - Energikrävande process (Kräver ATP)
+            - Lipider <-> Glycerol <-> Polysackarid 
+            - -> Fettsyror <-> Glykos
+            - Nukleinsyror <-> Aminosyror <-> Protein
+          - Metabolismreglering:
+            - Cellens energiomsättning beror på tillgångar och efterfrågan av energi
+            - Cellen kan reglera hastigheter av biokemiska processer
+            - Enzymer
+            - Mer ATP -> Inhibera enzymer -> Bromass in (och tvärtom)
+            - Mer citronsyra -> Bromsar glykolys -> Stimulerar fettsyrasyntes (Acetyl CoA)
+          - Fermentation:
+            - Alternativ sätt att producera ATP (Ofullständig förbränning)
+            - Bildar endast mindre ATP
+            - Muskler fortsätter arbeta -> Mjölksyra
+            - Mjölksyrabakterier (Lactobacillius) -> Socker -> Mjölksyra (yoghurt/fil)
+            - Bagerijäst (Saccharomyces cerevisitae) -> Socker -> Etanol -> CO2
+            - Ingen oorganisk ämne som energimottagare
+            - Produkt (Etanol, mjölksyra, ättiksyra, smörsyra)
         - Cellkommunikation:
           - Signaling cell
           - Target cell

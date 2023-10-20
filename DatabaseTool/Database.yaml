@@ -160,8 +160,8 @@
           - 3~(AA SAS ASA (i skala))
       - Analytisk geometri:
         - Analytisk geometri [AGI(f g h)]:
-          - f(x)[(x1, y1)]
-          - g(x)[(x1, y1)]
+          - f(x)[(x1, y1) (x, 0)]
+          - g(x)[(x1, y1) (x, 0)]
           - h(x)[(x1, y1)]
         - Plangeometri:
           - d(√((xA-xB)²+(yA-yB)²))
@@ -190,7 +190,7 @@
           - Förväntning E(...)
         - Fördelning:
           - (P(x) x̄ σ²)z=(x-µ)/σ
-          - \[2.3 13.6 34.1 34.1 13.6 2.3]%
+          - G[2.3 13.6 34.1 34.1 13.6 2.3]%
           - Normal 1/√(2π)exp[-½(z)²]
           - Binomal np^x(1-p)^(n-x)/x!
           - Poisson(npe^(-np)/x! np np(n-1))
@@ -206,8 +206,8 @@
           - sec(l)[1 2√3/3 √2 2 0 c/b]
         - Reduktion:
           - Δα(sin cos tan cot)
-          - (-α)(-sin cos -tan -cot)
-          - (90±α)(cos ±'sin ±'cot ±'tan)
+          - (   -α)(-sin cos -tan -cot)
+          - ( 90±α)(cos ±'sin ±'cot ±'tan)
           - (180±α)(±'sin -cos ±tan ±cot)
           - (270±α)(-cos ±sin ±'cot ±'tan)
           - (360±α)(±sin cos ±tan ±cot)
@@ -434,46 +434,40 @@
         - Stel mekanik:
           - id[...]
           - tn[t0 Δt t1]
-          - F [0  -- ma]
+          - F [(0 ma F1=-F2)]
           - m [m  -- m ]
-          - sθ[s0 Δs s1](½at²+v0t+s0)
-          - vω[v0 Δv v1](at+v0)
-          - aα[a0 Δa a1]
+          - s [s0 Δs s1](½at²+v0t+s0)
+          - v [v0 Δv v1](at+v0 √(v0²+2as))
+          - a [a0 Δa a1]
+          - EK[0  W=Fs ½mv²]
+          - EP[0  W=Fs mgh]
+          - pn[m11v11 I=Ft m12v21]
+          - P(W/t) η=W/W1
+        - Centralrörelse:
+          - τ [(Fr*sin(α) 0 Iα)]
+          - T [(2π√(L/g))]
+          - v [(2πr/T)]
+          - a [(v²/r)]
+          - θ [θ0 Δθ θ1](½at²+v0t+s0)
+          - ω [ω0 Δω ω1](at+v0)
+          - α [α0 Δα α1]
+        - Tryckmekanik:
+          - ρ [ρ  -- ρ ](m/V)
+          - p [P0-ρgy](F/A p1=p2=p3)
+          - F [ρl*Vl*g]
+          - F [F1/A1=F2=A2]
+          - Kommunicerande kärl
+        - Collections:
+          - Fri fall
+          - Uppkast
+          - Nedkast
+          - Projektil
+          - Pendelrörelse
+          - Lutande plan (x_∥B y_⊥B)
+          - Kedja (EK+EP)
         - Stel objekt:
           - Likformig rörelse: 
-            - s = vt, v= [v1+v2 (Motsatt)][v1-v2 (Samma)]
-            - Projektil rörelse (...)
-            - Uppkast rörelse
-            - Nedkast rörelse
-          - Cirkelrörelse:
-            - τ=Fr*sin(α)=I[Σmr²]α
-            - a = v²/r, v = 2πr/T
-            - θ = ½t(ωi + ωf), ω² = ω²+2αθ
-            - Pendel T = 2π√(L/g)
-          - Kraftrörelse:
-            - Newton 1st lag/Tröghetslagen
-            - Newton 2nd lag (F=ma)
-            - Newton 3rd lag (Kraft och motkraft)
-          - Tryck:
-            - Densitet ρ=m/V ρ=ρf/ρ(H2O) γ = ρg
-            - P = F/A [N/m² = Pa]
-            - P = P1 = P2 = ... (Pascals princip)
-            - P = ρgh (P = mg/A => ...)
-            - Kommunicerande kärl
-            - Hydralisk press F1/A1 = F2/A2
-            - Flytkraft (ΔP) F_float = ρ_l*V_l*g
-          - Energi:
-            - W = E1-E0 = F*s = F*l*cos(α) [J = N/m]
-            - P = E/t
-            - η = [E\|P]_(Out)/[E\|P]_(In) [%]
-            - E = ½mv² = mgh
-          - Krockning:
-            - FΔt = mΔv
-            - I = FΔt (Impuls)
-            - p = mΔv (Rörelsemoment)
-            - p1=p2 -> m11v11 + m12v12 ... = m21v21 + ...
-          - Komposit object:
-            - Kraftvektorer sammansätts
+            - v= [v1+v2 (Motsatt)][v1-v2 (Samma)]
         - Stel mekanik modeller:
           - 2 objekt sträcka:
             - ...
@@ -505,12 +499,13 @@
             - Fjäder W_PT = ∫F*s Δx = ∫kxs Δx = ½kx²
             - Kedja (E_P0 = mg(½l) => E_P1 = 0)
         - Experiment:
-          - Enkla experiment:
-            - Klothalvor (2 klothalvor med vakuum)
-            - Vatten med film (Vattenkopp med film)
-            - Cartesianska dykaren
-            - Vätsketryck tryckskillnader (2 rör med vätskor)
+          - Klothalvor (2 klothalvor med vakuum)
+          - Vatten med film (Vattenkopp med film)
+          - Cartesianska dykaren
+          - Vätsketryck tryckskillnader (2 rör med vätskor)
       - Vätskemekanik:
+        - Vätskemekanik:
+          - ...
         - Vätskeobjekt:
           - Kraft:
             - Kraft Vätskemekanik
@@ -787,51 +782,6 @@
             - 1 ΔΣE = 0
             - 2 ΔΣS > 0, T_H -> T_L
             - 3 T=0K -> S=0
-        - Reaktionstyper:
-          - Reaktion:
-            - Kollisionsteori (Snabb, stark, Gynnsam geometisk)
-            - Övergångsteori (Aktiverat komplex/Tillstånd)
-            - Strävan efter energiminimum
-          - Reaktionshastighet:
-            - v = Δn/Δt = Δc/Δt
-            - 1. Bindningstyp (Fria joner, molekyl(flera steg))
-            - 2. Kontaktytan (Fast + Vätska/gas finfördelning)
-            - 3. Partiklar rörlighet (Vattenlöst, fast)
-            - 4. Temperatur (T_H (Fler kollisioner), T_L)
-            - 5. Koncentration (Tätt -> Fler kollisioner)
-            - 6. Katalysator (Deltar i reaktion utan förbruk)
-          - Jämviktsreaktioner:
-            - A + B <-> C + D
-            - 1. Reaktionstart (A+B) Hög Hastighet
-            - 2. Δ[A]&[B]<0 Δ[C]&[D]>0
-            - 3. Dynamisk jämvikt (Fortfarande reaktion)
-            - 4. Hastigheter(v_AB=v_CD)
-            - Q = ([C]^c[D]^d)/([A]^a*[B]^b)
-            - K (Jämviktskonstant)
-            - G° = -RT*ln(K)
-            - ΔG = ΔG°+RT*ln(Q) = RT*ln(Q/K)
-            - +c(...) +P(mot färre partiklar) +T(Endoterm)
-            - ln(K) ~ -1/T (ΔT>0, ΔK>0)(ΔH>0)
-            - ln(K) ~ -T (ΔT<0, Δ>0)(ΔH<0)
-          - Syrabasreaktioner:
-            - Syrakonstant (K_a) = K[H2O] = [H3O+][A-]/[HA]
-            - Baskonstant (K_b) = K[H2O] = [HB+][OH-]/[B]
-            - Vattnet autoprotolys (K_w) = [H3O+][OH-] = 1e14M
-            - pK_w = pK_a + pK_b = pH + pOH = 14
-          - Exotermisk reaktion (ΔH<0)(ΔS>0):
-            - 2H2 + O2 -> 2H2O(g)
-            - ΔG<0 -> Spontan
-            - Q1 -> Q2(H)(Aktivering) -> Q3(L)
-          - Endotermisk reaktion (ΔH>0)(ΔS<0):
-            - 2HI(g) -> H2(g) + I2(g)
-            - ΔG<0 -> Icke-spontan
-            - Q1(L) -> Q2(H)(Aktivering) -> Q3
-          - Jämvikt reaktion 1 (ΔH>0)(ΔS>0):
-            - H2CO3(aq) <-> H2O(l) + CO2 (g)
-            - ΔG -> (T_H Spontan, T_L Icke-spontan)
-          - Jämvikt reaktion 2 (ΔH<0)(ΔS<0):
-            - N2(g) + 3H2(g) -> 2NH3(g)
-            - ΔG -> (T_H Icke-spontan, T_L Spontan)
         - Modeller:
           - Kolvmodell:
             - ΔQ=0, W<0 (ΔU>0, ΔT>0, ΔV<0)
@@ -909,44 +859,95 @@
           - Bohr (Atomspektra)
           - Kvantmekanik (Oregelbunden elektron vandring) => Orbital
     - Kemi:
-      - Analytisk kemi:
-        - Egenskaper:
-          - Kemin (alkemin guld av järn)
-          - Idag medicin, kroppen, framställning
+      - Kemisk analys:
+        - Kemi grunder:
+          - Alkemi (Fe -> Au)
+          - Idag (Kroppen medicin framställ)
           - Mendelejev (periodiska systemet)
-        - Laboratorium utrustning:
-          - Stativ (Gripare, Klämma, Muff, Trefot, Klämmar)
-          - Värmare (Spritkök)
-          - Pipett, Degeltång, Provrörshållare, Spade
-          - Mätpipetter, Byretter, Vollpipett, Våg
-          - Kristallisionskål, Urglas
-          - Provrör, Glastub, U-rör, Tratt, Pelusboll
-          - Burk, Flaska, Behållare (gasflaska)
-          - Bägare, E/Rund/Sätt/Mätkolv
-        - Stökiometri:
-          - Masstalet (naturliga isotoper medelvärde)
-          - Atommassa (M_CH4 = 12+4*1 = 16)
-          - Formelmassa (M_NaCl = 23+35.5 = 58.5)
-          - 1 mol = N_A = 6.022e23 (Avogadros konstant)
-          - m = Mn, n=cV
-          - M1*V1 = M2*V2, n1C1 = n2c2
-          - Reaktionformel (Balans) (2H2 + O2 -> 2H2O)
-          - Utbyte (P = m_r/m_t)
-          - Begränsade reaktanter (Används vid 2+ känd mass)
-          - Lägre ångtryck, Högre kokpunkt
-          - Lägre smältpunkt, Högre osmotisk potential
+        - Laboratorium:
+          - Stativ(Gripare Klämma Muff Trefot Klämmar)
+          - Värmare(Spritkök)
+          - Pipett Degeltång Provrörshållare Spade
+          - Mät/Vollpipetter Byretter Våg
+          - Kristallisionskål Urglas
+          - Prov/U-rör Glastub Tratt Pelusboll
+          - Burk, (Gas)Flaska, Behållare
+          - Bägare E/Rund/Sätt/Mätkolv
         - Blandningar:
-          - Synliga blandingar (Uppslamning, Emulsion)
-          - Osynliga blandningar (Gasblandning, Legering, Lösning)
+          - Homogen(Uppslamning Emulsion)
+          - Heterogen(Gas Legering Lösning)
         - Separation:
           - Filtrering
-          - Dekantering (hälla av en vätska)
+          - Dekantering (Tömma (l))
           - Centrifugering (Snurrande)
           - Destillation
           - Papperskromatografi
+      - Kemiska beräkningar:
+        - Stökiometri:
+          - 1mol(NA)=6.022e23 (Avogadro)
+          - Atom/Formelmassa(M(AB)=MA+MB)
+          - Balansera reaktionsformel
+          -   aA + bB -> cC + dD (V ΔH)
+          - m[mA + mB  = mC + mD](m=Mn P=t/m)
+          - M[MA   MB    MC   MD]
+          - n[nA ; nB  ; nC ; nD](n=cV)
+          - c[cA ; cB  ; cC ; cD]
+          - Begränsade (nA A <-> nB B)
+        - Jämviktsreaktioner:
+          -    aA + bB -> cC + dD (V K ΔH)
+          - n0[nA0+ nB0 = nC0+ nD0]
+          - Δn[+ax; +bx ; -cx; -dx]
+          - n1[nA1+ nB1 = nC1+ nD1]
+          - c1[cA1; cB1 ; cC1; cD1]
+          - K = ([C]^c*[D]^d)/([A]^a*[B]^b)
+          - Ka = K[H2O] = [H3O+][A-]/[HA]
+          - Kb = K[H2O] = [HB+][OH-]/[B]
+          - Kw = [H3O+][OH-] = 1e14M
+          - pK_w = pK_a + pK_b = pH + pOH = 14
+        - Termodynamik/termokemi:
+          - +c(cH -> cL)
+          - +P(nΣH -> nΣL)
+          - +T(Endoterm)
+          - G° = -RT*ln(K)
+          - ΔG = ΔG°+RT*ln(Q) = RT*ln(Q/K)
+          - ln(K) ~ -1/T (ΔT>0, ΔK>0)(ΔH>0)
+          - ln(K) ~ -T (ΔT<0, ΔK>0)(ΔH<0)
+        - Reaktionshastigheter:
+          - v = dn/dt = dc/dt
+          - 1. Bind (Fria joner, molekyl(flera steg))
+          - 2. Kontaktytan (Fast + Vätska/gas finfördelning)
+          - 3. Partiklar rörlighet (Vattenlöst, fast)
+          - 4. Temperatur (T_H (Fler kollisioner), T_L)
+          - 5. Koncentration (Tätt -> Fler kollisioner)
+          - 6. Katalysator (Deltar i reaktion utan förbruk)
+        - Reaktionstyper:
+          - Reaktion:
+            - Kollisionsteori (Snabb, stark, Gynnsam geometisk)
+            - Övergångsteori (Aktiverat komplex/Tillstånd)
+            - Strävan efter energiminimum
+          - Jämviktsreaktioner:
+            - 1. Reaktionstart (A+B) Hög Hastighet
+            - 2. Δ[A]&[B]<0 Δ[C]&[D]>0
+            - 3. Dynamisk jämvikt (Fortfarande reaktion)
+            - 4. Hastigheter(v_AB=v_CD)
+          - Exotermisk reaktion (ΔH<0)(ΔS>0):
+            - 2H2 + O2 -> 2H2O(g)
+            - ΔG<0 -> Spontan
+            - Q1 -> Q2(H)(Aktivering) -> Q3(L)
+          - Endotermisk reaktion (ΔH>0)(ΔS<0):
+            - 2HI(g) -> H2(g) + I2(g)
+            - ΔG<0 -> Icke-spontan
+            - Q1(L) -> Q2(H)(Aktivering) -> Q3
+          - Jämvikt reaktion 1 (ΔH>0)(ΔS>0):
+            - H2CO3(aq) <-> H2O(l) + CO2 (g)
+            - ΔG -> (T_H Spontan, T_L Icke-spontan)
+          - Jämvikt reaktion 2 (ΔH<0)(ΔS<0):
+            - N2(g) + 3H2(g) -> 2NH3(g)
+            - ΔG -> (T_H Icke-spontan, T_L Spontan)
       - Atomer/Grundämnen:
         - Utseende[TRA]
-        - (Utseende Mass(u) Radie(e-11m) Smält Kok(°C) 1st jon(kJ/mol))
+        - (Utseende m(u) r(*e-11m) Smält Kok(°C) 1st-jon(kJ/mol))
+        - (Utseende, m, r, smält, kok, 1st-jon, ρ, electroneg, ...)
         - (TRA 1.008 2.5 -259.1 -252.9 1312 90 2.20 0.1805)
         - H()
         - 1 (H~He):
@@ -2910,12 +2911,72 @@
             - Bagerijäst (Saccharomyces cerevisitae) -> Socker -> Etanol -> CO2
             - Ingen oorganisk ämne som energimottagare
             - Produkt (Etanol, mjölksyra, ättiksyra, smörsyra)
+        - Fotosyntes:
+          - Fotosyntes:
+            - Glykos från koldioxid
+            - (Ljus -> Kemisk energi)
+            - Fototrofer med kloroplast
+          - Grundläggande:
+            - Ljusenergi slår bort elektroner frå migmentmolekyl
+            - NAD+, NADP+ -> NADH, NADPH
+            - Nya elektroner från elektrondonator
+            - Eukaryota 6CO2 + 6O2 + energi -> C6H12O6 + 6O2
+            - Svavelbakterier 6CO2 + 12H2S + energi -> C6H12O6 + 12S + 6H2O
+            - Klorofyller absorberar inte grönt ljus
+            - Karetonider absorberar inte gul och rött ljus
+            - Klorofyll bryts ner för att spara på N och Mg men inte Karetonider
+            - Klorofyll a och b
+          - Ljusreaktion:
+            - Elektrontransportkedja från från membran
+            - H2O -> ½O2 + H+
+            - Protongradient -> NADP+ + H+ -> NADPH
+            - ADP + Pi -> ATP
+            - Stroma, lumen (protongradient)
+          - Calvin-cykeln:
+            - Enzym rubisco
+            - 6CO2
+            - Sönderfallning -> 12 3PGA + 12 NADP+ + 18 ADP + Pi
+            - -> 12 G3P
+            - -> 10 G3P
+            - -> 12 NADPH + 18 ATP -> 6 RuDP
         - Cellkommunikation:
-          - Signaling cell
-          - Target cell
-          - 1. Reception
-          - 2. Transduction
-          - 3. Cellular response
+          - Cellkommunikation:
+            - Förutsättning till ett flercelligt liv
+            - Cellen svarar på abiotiska faktorer e.g. pH, [O2], [CO2], ljus
+            - Kommunicerar med signalmolekyler -> Påverkar 1+ celler
+            - Signalerande cell -> Mplcell
+            - Binder till receptor-protein på målcellen
+            - Kan vara vid yta/inne i cellen
+            - Nervtransmittor -> Korta avstånd
+            - Hormoner -> Längre avstånd
+            - Kan sitta på cellyta -> Kräver cell-kontakt
+          - Funktioner:
+            - Stora/polära signalmolekyler binder till receptorer på mottagarens yta
+            - Receptor -> Cellmembran & signalmolekyl binder till receptorn (ändrar form)
+            - -> Receptor ändrar form
+            - -> Aktiverar sekundära budbärare
+            - -> Litet antal signalmolekyler påverkar stort antal målmolekyler
+            - 1. Reception
+            - 2. Transduction
+            - 3. Cellular response
+            - Signalmolekyl -> Receptor -> G-protein -> Adenylyl Cyclase -> ATP -> CAMP
+          - Fettlösliga:
+            - Kan passera cellmembran
+            - Binder till receptor i cellen (Intracellulära receptor)
+            - Receptorprotein tar sig in i cellkärnan
+            - Påverkar genreglering
+          - Organiska små molekyler:
+            - e.g. CO & NO
+            - Passerar cellmembran
+            - Binder till receptor i cellen
+            - Kaskad av sekundära budbärare
+            - Effekt inne i cellen
+          - Signalmolekyl:
+            - Olika celler producerar olika signalmolekyler
+            - Innunceller, nervceller, hormonkörtlar
+            - 1 signalämne -> 1/2+ effekter
+            - 1+ signalämne -> 1 effekt
+            - 1 signaleffekt -> olika effekt i olika celler
       - Mänskliga kroppen/Humanfysiologi:
         - Celler:
           - Stamceller:

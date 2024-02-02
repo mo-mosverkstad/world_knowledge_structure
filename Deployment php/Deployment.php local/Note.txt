@@ -9,3 +9,7 @@ style.css
 
 http://localhost/indexlocal.php
 
+
+SL rest api example
+https://services.c.web.sl.se/api/v2/departures?desiredResults=3&mode=departures&origPlaceId=QT0xQE89QnJvbW1hcGxhbiAoU3RvY2tob2xtKUBYPTE3OTM3ODY3QFk9NTkzMzgyOThAVT03NEBMPTMwMDEwOTEwOUBCPTFA&origSiteId=9109&origName=Brommaplan+%28Stockholm%29
+

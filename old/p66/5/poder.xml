@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="podercss.css"?>
+
+<todos xml:lang = "pt">
+    <navBar>
+        <logo>Top model</logo>
+        <nav>Casa</nav>
+        <nav>Lugar 1</nav>
+        <nav>Lugar 2</nav>
+        <nav>Lugar 3</nav>
+        <nav>Minha conta</nav>
+    </navBar>
+    <páginaMain>
+        <h1>Página 1</h1>
+        <p1>Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra</p1>
+    </páginaMain>
+    <páginaPrincipal>
+        <h>Página 2</h>
+        <p>Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra</p>
+    </páginaPrincipal>
+    <página1>
+        <h>Página 3</h>
+        <p>Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra</p>
+    </página1>
+    <páginaForte>
+        <h>Página 4</h>
+        <p>Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra</p>
+    </páginaForte>
+    <página2>
+        <h>Página 5</h>
+        <p>Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra Texto de amostra</p>
+    </página2>
+    <página></página>
+</todos>

@@ -1,0 +1,288 @@
+*{
+    display: block;
+}
+
+todos{
+    width: 900px;
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: Helvetica;
+    color: #6d7486;
+}
+
+página{
+    display: list-item;
+    padding-top: 17px;
+    list-style-type: none;
+}
+
+página[type = "Search"]{
+    display: flex;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid silver;
+}
+
+página[type = "NavBar"]{
+    display: flex;
+    padding: 0;
+    border-bottom: 1px solid silver;
+}
+
+página[type = "Alta temperatura"]{
+    font-size: 21px;
+    font-weight: bolder;
+    color: #cf3958;
+}
+
+página[type = "Acceso"]{
+    display: none;
+}
+
+página[type = "Alta temperatura"]{
+    display: none;
+}
+
+página[type = "Pantalla de inicio"]{
+    border: 1px solid silver;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+página[type = "footer"]{
+    border-top: 1px solid silver;
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background: #fafbfc;
+}
+
+input-field{
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    font-size: 23px;
+    color: #342053;
+    width: 10cm;
+    height: 200px;
+    border: 1px solid silver;
+    background: url("https://st2.depositphotos.com/7438112/46848/v/600/depositphotos_468489834-stock-illustration-eye-scan-icon-white-background.jpg");
+    background-repeat: no-repeat;
+    background-size: 250px;
+    background-position: center bottom;
+}
+
+
+search-bar{
+    display: flex;
+    width: 45%;
+    height: 45px;
+    border: 1px solid #3489f7;
+    justify-content: flex-end;
+    background: white;
+    box-shadow: -3px -3px 10px #ffffff, 3px 3px 10px #e8e6e3;
+}
+
+search-bar:hover{
+    border-color: blue;
+    border-image: linear-gradient(90deg, #7030a0 0%, #95b3d7 50%, #0070c0 100%);
+    border-image-slice: 1;
+    box-shadow: inset -3px -3px 5px #ffffff, inset 3px 3px 5px #e8e6e3;
+}
+
+button, login{
+    margin: auto;
+    margin-left: 15px;
+    padding: 11px;
+    background: #f8f8f8;
+    color: #645487;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bolder;
+    border: 1px solid silver;
+    border-radius: 10px;
+    box-shadow: -3px -3px 10px #ffffff, 3px 3px 10px #e8e6e3;
+}
+
+login{
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+login:hover, button:hover{
+    color: #875480;
+    box-shadow: inset -1px -1px 5px #ffffff, inset 1px 1px 5px #e8e6e3;
+    
+}
+
+keyboard-button{
+    background: url("https://t1.daumcdn.net/daumtop_deco/images/top/2017/img_keyboard_171229.png");
+    background-position: 0 0;
+    width: 29px;
+    height: 42px;
+    float: right;
+}
+
+search-button{
+    background: url("https://t1.daumcdn.net/daumtop_deco/images/top/2017/ico_pctop_190618_v2.png");
+    width: 49px;
+    height: 42px;
+    background-position: -40px -231px;
+    float: right;
+}
+
+geoLogo{
+    background: url("https://t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png");
+    background-position: -153px -453px;
+    width: 32px;
+    height: 29px;
+}
+
+ccbyncnd{
+    background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/CC-BY-NC-ND.svg/768px-CC-BY-NC-ND.svg.png");
+    background-repeat: no-repeat;
+    background-size: 128px 45px;
+    width: 128px;
+    height: 45px;
+    float: right;
+}
+
+bluntLipid3Img{
+    background: url("https://uploads-ssl.webflow.com/6123b7f3a062a25a8b4d4119/6123d3efccd7bda492deb444_5.png");
+}
+
+personalInfo{
+    background: url("https://icons.iconarchive.com/icons/custom-icon-design/pretty-office-2/64/personal-information-icon.png");
+}
+
+problemImg{
+    background: url("https://icons.iconarchive.com/icons/iconshock/real-vista-medical/64/emergency-icon.png");
+}
+
+tourismImg{
+    background: url("https://icons.iconarchive.com/icons/aha-soft/travel/128/compass-icon.png");
+}
+
+entertainementImg{
+    background: url("https://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/64/Actions-games-config-theme-icon.png");
+}
+
+conversationImg{
+    background: url("https://icons.iconarchive.com/icons/seanau/support-bubble/64/Support-Bubble-1-icon.png");
+}
+
+personImg{
+    background: url("https://uploads-ssl.webflow.com/6123b7f3a062a25a8b4d4119/6123d3eee5320c508414cc91_6.png");
+}
+
+personalityImg{
+    background: url("https://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/64/Actions-user-properties-icon.png");
+}
+
+societyImg{
+    background: url("https://icons.iconarchive.com/icons/hopstarter/sleek-xp-basic/64/User-Group-icon.png");
+}
+
+bluntLipid3Img, personalInfo, problemImg, tourismImg, entertainementImg, conversationImg, personImg, personalityImg, societyImg{
+    background-size: 64px;
+    width: 64px;
+    height: 64px;
+}
+
+h1{
+    font-size: 23px;
+    font-weight: bolder;
+    text-align: center;
+    color: #c18de5;
+    margin: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+header{
+    font-weight: bolder;
+    font-size: 17px;
+    color: #4c3e79;
+    background: #f8f8f6;
+    padding: 2px;
+    padding-left: 5px;
+    border: 1px solid silver;
+    border-radius: 5px;
+    box-shadow: -3px -3px 10px #ffffff, 3px 3px 10px #e8e6e3;
+}
+
+nav, time, weather, geoPos{
+    background: #f8f8f8;
+    font-size: 12.5px;
+    padding: 6px;
+    margin: 4px;
+    font-weight: 700;
+    border: 1px solid silver;
+    border-radius: 20px;
+    box-shadow: -3px -3px 10px #ffffff, 3px 3px 10px #e8e6e3;
+}
+
+nav{
+    text-transform: uppercase;
+}
+
+geoPos{
+    color: #645487;
+}
+
+smalltxt, patent{
+    display: inline;
+    font-size: 11px;
+    color: #888;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+nav:hover, smalltxt:hover{
+    text-decoration: underline;
+    box-shadow: inset -1px -1px 5px #ffffff, inset 1px 1px 5px #e8e6e3;
+}
+
+time{
+    margin-left: auto;
+}
+
+seq, seqCenter{
+    padding-left: 5px;
+    display: list-item;
+    list-style-type: none;
+    font-size: 14.1px;
+}
+
+text{
+    font-size: 12px;
+}
+
+seqCenter{
+    text-align: center;
+}
+
+n3{
+    color: #f6a4b8;
+}
+
+n5{
+    color: #921f47;
+}
+
+n6{
+    color: #d091ba;
+}
+
+n7{
+    color: #dda6a6;
+}
+
+n8{
+    color: #f6abab;
+}
+
+n9{
+    color: #ffb4e5;
+}

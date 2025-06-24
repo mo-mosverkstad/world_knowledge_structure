@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="estilo.css"?>
+
+<todos>
+    <bandeira>investimentos</bandeira>
+    <cabeça>
+        <logoNav>Pesquisa Fresa</logoNav>
+        <nav>Sítio 1</nav>
+        <nav>Sítio 2</nav>
+        <nav>Sítio 3</nav>
+        <nav>Os investimentos</nav>
+        <nav>Sítio 5</nav>
+        <nav>Sítio 6</nav>
+    </cabeça>
+    <seção gradient = "azul">
+        <título>Bem-vindo à pesquisa da Fresa</título>
+        <p>Lorem ipsum dolor sit amet, eu hinc populo nonumes quo, ius dolor ceteros ex. Pro ea minim noster offendit, offendit voluptua ex est. Modus probatus ne has, his sumo posse corpora ei. Utinam semper cum in, ut nec civibus blandit disputando.</p>
+    </seção>
+    <seção gradient = "vermelho">
+        <título>Seção</título>
+        <p>Eos dicta veniam te. Ferri congue sit ei, putant aliquando ea qui. Vel modo tacimates cu, ea ius mundi ponderum. Pri dicant deleniti at, in est homero nemore abhorreant. Ei per atqui putent maiorum, choro euripidis deseruisse mea eu, eum essent aliquando quaerendum et.</p>
+    </seção>
+    <seção gradient = "tolet">
+        <título>Seção</título>
+        <p>Hinc nonumes luptatum sea ut, sed in brute sadipscing. At nobis fabulas scaevola vel, mundi mnesarchum eu ius. At eam alterum saperet nonumes, nec te aliquam facilis. Nusquam pericula qualisque est no, primis nemore argumentum ex nec, ut pro novum platonem suscipiantur.</p>
+    </seção>
+    <seção>
+        <título>Seção</título>
+        <p>Legere neglegentur sed ut. In mei simul aliquid menandri. Quo cu vidisse accusamus. Te similique gloriatur signiferumque sea. Duo erroribus sententiae in, cu nam melius euismod praesent.</p>
+    </seção>
+    <seção>
+        <título>Seção</título>
+        <p>Id ius idque efficiantur, partem impetus conceptam an eam. Tibique ponderum vel no. At denique conclusionemque vis, quem tempor cu mel. Stet aeque gubergren in nam. Usu ad graecis omittam intellegam. Movet civibus omnesque quo ne, nec ex odio aeterno oblique, nibh oportere mei no.</p>
+    </seção>
+    <seção>
+        <título>Seção</título>
+        <list>
+            <obj>Point 1</obj>
+            <obj>Point 2</obj>
+            <obj>Point 3</obj>
+            <obj>Point 4</obj>
+            <obj>Point 5</obj>
+            <obj>Point 6</obj>
+        </list>
+    </seção>
+</todos>

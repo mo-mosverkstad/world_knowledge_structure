@@ -1,0 +1,123 @@
+sec[gradient = "blue"] {
+    background: linear-gradient(45deg, #3e3b95, #2c8de1);
+    display: block;
+    color: white;
+}
+
+sec[gradient = "red"] {
+    background: linear-gradient(-25deg, #e66465, #9198e5);
+    display: block;
+    color: white;
+}
+
+sec[gradient = "violet"] {
+    background: linear-gradient(55deg, rgb(61, 57, 146), rgb(62, 58, 148));
+    display: block;
+    color: white;
+}
+
+sec[gradient = "white1"] {
+    background: linear-gradient(60deg, rgb(247, 246, 247), rgb(239, 238, 239));
+    display: block;
+    color: black;
+}
+
+sec[gradient = "white2"] {
+    background: linear-gradient(66deg, rgb(241, 243, 243), rgb(235, 237, 237));
+    display: block;
+    color: black;
+}
+
+
+titleHeader{
+      display:block;
+      font-weight:bolder;
+      text-align:left;
+      font-size:60px;
+      /* color: white; */
+      padding-top: 60px;
+      padding-left: 20%;
+      padding-bottom: 1px;
+      width: 50%;
+      /* background: ; */
+  
+      }
+
+pHeader{
+      display:block;
+      text-align:left;
+      font-size:19px;
+      padding-top: 30px;
+      padding-left: 20%;
+      padding-bottom: 50px;
+      width: 50%;
+  
+      }
+
+title{
+      display:block;
+      font-weight:bolder;
+      text-align:left;
+      font-size:30px;
+      /* color: white; */
+      padding-top: 60px;
+      padding-left: 7%;
+      padding-bottom: 1px;
+      width: 80%;
+      /* background: ; */
+  
+      }
+
+p{
+      display:block;
+      text-align:left;
+      font-size:17px;
+      padding-top: 30px;
+      padding-left: 7%;
+      padding-bottom: 50px;
+      width: 80%;
+  
+      }
+      
+titleBrief{
+      display:block;
+      font-weight:bolder;
+      text-align:left;
+      font-size:36px;
+      /* color: white; */
+      padding-top: 70px;
+      padding-left: 7%;
+      padding-bottom: 1px;
+      width: 50%;
+      /* background: ; */
+  
+      }
+
+pBrief{
+      display:block;
+      text-align:left;
+      font-size:19px;
+      padding-top: 10px;
+      padding-left: 7%;
+      padding-bottom: 60px;
+      width: 50%;
+  
+      }
+      
+sequence{
+    display: block;
+    font-weight:bolder;
+    text-align: left;
+    color: blue;
+    font-size: 25px;
+    padding-left: 7%;
+}
+
+sequenceColored{
+    display: block;
+    font-weight:bolder;
+    text-align: left;
+    color: white;
+    font-size: 25px;
+    padding-left: 7%;
+}

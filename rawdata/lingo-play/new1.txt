@@ -1,0 +1,93 @@
+Färger
+Skönhet
+Familj
+Farmen
+Tid
+Geografi
+Naturen
+Husdjur
+Yrken
+Business
+Siffror
+Rymden
+Hasardspel
+Trädgårdsredskap
+Kroppsdelar
+Hemmet
+Staden
+Möbler
+Kläder
+Hälsa
+Barn
+Transport
+Flygplan
+Bilar och motorcyklar
+Djur
+Växter
+Svampar
+Fåglar
+Fiskar
+Insekter
+Kräldjur
+Frukt och grönsaker
+Köket
+Mat och drycker
+Datorer
+Blommor
+Foto och video
+Utbildning
+Matematik och geometri
+Vetenskap
+Byggnadsmaterial
+Verktyg
+Hantverk
+Sjöfart
+Musikinstrument
+Sport
+Extremsport
+Fritid
+Turism
+Hushållsapparater
+Länder
+Nationaliteter
+Jag är student
+Jag är affärsman
+Jag är turist
+Jag är idrottsman
+Jag är jordbrukare
+Jag är byggnadsarbetare
+Jag är ingenjör
+Jag är läkare
+Jag är artist
+Jag är kock
+Jag är militär
+Jag är programmerare
+Jag är mekaniker
+Baskunskaper
+Frågor
+Hälsningsfraser
+Användbara uttryck
+Baskunskaper 2
+Komma dit
+Baskunskaper 3
+Konversation
+Baskunskaper 4
+Aktiviteter
+Väder
+Baskunskaper 5
+Nödsituationer
+Baskunskaper 6
+Fråga efter vägen
+Fråga efter en åsikt
+Baskunskaper 7
+Få vänner
+Shopping
+Baskunskaper 8
+Äta ute
+Gå ut
+Transportmedel
+Bostäder
+Pengar
+Flörta
+Tjänster
+Sevärdheter

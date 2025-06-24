@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="estilo.css"?>
+<root>
+    <sec gradient = "blue">
+        <titleHeader>Section 1</titleHeader>
+        <pHeader>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore&#10; et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip&#10; ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat&#10; cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</pHeader>
+    </sec>
+    <sec gradient = "white1">
+        <titleBrief>Section 2</titleBrief>
+        <sequence>[1 2 3 4 5 6 ...]</sequence>
+        <pBrief>In pellentesque massa placerat duis ultricies. Vitae elementum curabitur vitae nunc sed velit. Nunc sed id semper risus in. Mauris commodo quis imperdiet massa tincidunt nunc. Consequat interdum varius sit amet mattis vulputate. Tellus orci ac auctor augue mauris. Sed felis eget velit aliquet sagittis id consectetur purus. Mattis molestie a iaculis at erat pellentesque adipiscing. Purus ut faucibus pulvinar elementum integer enim. Pulvinar sapien et ligula ullamcorper malesuada proin libero. Eget nunc lobortis mattis aliquam. Ridiculus mus mauris vitae ultricies leo integer malesuada nunc vel.</pBrief>
+    </sec>
+    <sec gradient = "violet">
+        <title>Section 3</title>
+        <sequenceColored>[1 2 3 4 5 6 ...]</sequenceColored>
+        <p>Donec enim diam vulputate ut pharetra sit amet aliquam id. Turpis tincidunt id aliquet risus. Lorem ipsum dolor sit amet consectetur adipiscing elit ut aliquam. Aliquam sem et tortor consequat id. Mattis molestie a iaculis at erat pellentesque adipiscing commodo elit. Odio ut enim blandit volutpat maecenas volutpat. Elementum sagittis vitae et leo duis ut diam quam. Tincidunt nunc pulvinar sapien et ligula. Ultrices neque ornare aenean euismod elementum nisi. Sed euismod nisi porta lorem mollis aliquam ut porttitor leo. Massa placerat duis ultricies lacus sed turpis tincidunt.</p>
+    </sec>
+    <sec gradient = "white2">
+        <title>Section 4</title>
+        <p>Enim diam vulputate ut pharetra sit amet aliquam id diam. Sagittis orci a scelerisque purus semper eget duis at tellus. Sit amet justo donec enim diam vulputate ut. Ornare aenean euismod elementum nisi. Non pulvinar neque laoreet suspendisse interdum consectetur libero id. Eget gravida cum sociis natoque penatibus et magnis dis. Mattis rhoncus urna neque viverra justo nec ultrices. Purus gravida quis blandit turpis cursus in. Sem fringilla ut morbi tincidunt augue interdum velit euismod. Gravida in fermentum et sollicitudin ac orci phasellus egestas.</p>
+    </sec>
+    <sec gradient = "red">
+        <title>Section 5</title>
+        <p>Integer enim neque volutpat ac tincidunt vitae semper. Enim ut sem viverra aliquet eget sit amet tellus cras. Odio facilisis mauris sit amet massa vitae tortor condimentum. Penatibus et magnis dis parturient montes nascetur. Tincidunt id aliquet risus feugiat in ante. Nisi quis eleifend quam adipiscing vitae. Facilisis volutpat est velit egestas dui id ornare arcu odio. Mi bibendum neque egestas congue quisque egestas diam in arcu. Ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Purus gravida quis blandit turpis. Orci a scelerisque purus semper eget duis at tellus. Justo donec enim diam vulputate ut pharetra sit.</p>
+    </sec>
+</root>

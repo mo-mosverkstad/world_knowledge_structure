@@ -1,0 +1,60 @@
+* {
+    display: block;
+}
+
+title1, title3, title5, p, ancient {
+    padding-left: 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+sec1{
+    background: linear-gradient(135deg, #3b419a, #0a98e7);
+    color: white;
+}
+
+
+sec2{
+    background: #3E3A94;
+    color: white;
+}
+
+
+sec3{
+    background: #ECECF5;
+    color: #3E3A94;
+}
+
+
+sec4{
+    background: linear-gradient(135deg, #f4f4f4, #ffffff);
+    color: #3E3A94;
+}
+
+title1{
+    font-size: 66px;
+    font-weight: bolder;
+}
+
+title3{
+    font-size: 47px;
+    font-weight: bolder;
+}
+
+title5{
+    font-size: 37px;
+    font-weight: bolder;
+}
+
+listObj{
+    display:list-item;
+    padding-left: 10px;
+}
+
+p{
+    font-size: 17px;
+}
+
+ancient {
+    border: 2px solid blue;
+}

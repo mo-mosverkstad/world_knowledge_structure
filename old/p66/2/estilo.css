@@ -1,0 +1,62 @@
+título, p, cabeça, bandeira, list, seção{
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7%;
+    padding-right: 5%;
+}
+
+cabeça{
+    background: linear-gradient(27deg, rgb(56, 55, 144), rgb(30, 102, 185));
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+logoNav, nav{
+    display: inline;
+    text-align: left;
+    padding-left: 3%;
+    padding-right: 3%;
+    color: white;
+    cursor: pointer;
+}
+
+nav:hover{
+    color: rgb(86, 190, 137);
+}
+
+seção{
+    background: linear-gradient(66deg, rgb(241, 243, 243), rgb(235, 237, 237));
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+seção[gradient = "azul"]{
+    background: linear-gradient(45deg, #3e3b95, #2c8de1);
+    color: white;
+}
+
+seção[gradient = "vermelho"]{
+    background: linear-gradient(-25deg, #e66465, #9198e5);
+    color: white;
+}
+
+seção[gradient = "tolet"]{
+    background: linear-gradient(55deg, rgb(61, 57, 146), rgb(62, 58, 148));
+    color: white;
+}
+
+obj{
+    display: list-item;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+título{
+    font-weight: bolder;
+    font-size: 21px;
+}
+
+p{
+    font-size: 17px;
+}

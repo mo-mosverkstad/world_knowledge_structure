@@ -1,0 +1,89 @@
+*{
+    display: block;
+}
+
+navBar{
+    display: flex;
+    background: linear-gradient(125deg, #393790, #2064b7);
+}
+
+logo, nav{
+    color: white;
+    font-size: 21px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: 2%;
+    margin-right: 2%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+logo{
+    margin-left: 5%;
+}
+
+nav{
+    float: right;
+    transition: color 0.125s, border-width 0.5s, border-style 0.125s;
+}
+
+nav:hover{
+    color: #56be88;
+    border-width: 3px;
+    border-style: solid none none none;
+}
+
+páginaPrincipal, páginaForte, página1, página2, páginaMain{
+    border: 1px solid silver;
+    padding: 30px 5% 30px 5%;
+    color: white;
+}
+
+páginaMain{
+    background: linear-gradient(45deg, #3b419a, #0d92e2);
+    padding: 50px 7.5% 50px 7.5%;
+    text-align: center;
+}
+
+páginaPrincipal{
+    background: #3e3a94;
+}
+
+páginaForte{
+    background: linear-gradient(50deg, #4a45b5, #3e3abd);
+}
+
+página1, página2{
+    color: #3e3a94;
+}
+
+página1{
+    background: linear-gradient(55deg, white, #f6f6f6);
+}
+
+página2{
+    background: #ececf5;
+}
+
+h, h1, p{
+    margin: 10px 0 10px 0;
+}
+
+h, h1{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+p, p1{
+    font-size: 17px;
+}
+
+h1{
+    font-size: 50px;
+}
+
+p1{
+    font-size: 21px;
+    margin: 30px 0 30px 0;
+}

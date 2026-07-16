@@ -696,11 +696,18 @@ Todo:
 0. IMPORTANT TODO: Clean the draft in codebase analysis and fill sentences
 1. Properly define the math grammar (Common cases first, less useful using mnemonics, then using full keywords). The grammar must also support step by step notations, make derivatives more semantically using (\deriv (derivative), \pderiv (partial derivative) and \jac (jacobian) instead of d/(dx)) and so on. Define a rigorous grammar here in phase before continuing
 2. Remove any side effects of mathematical syntax (cannot identify Greek, Hebrew letters, etc). The parser must be able to tell the difference between standard mathematical compound symbols (\sin, \cos, \tan, \ln), Greek letters (alpha: \a, beta: \b, gamma: \g) and Hebrew letters (aleph: \ha, beth: \hb, gimel: \hg). Also other following properties. Define what the mathematical syntax should produce + update test cases
-3. Add mathematical syntax rendering. Behaviors are validated using test cases by now. However, behaviors should also be able to manifest on Webapp as well. This can be done by creating a separate try-it-on page aside of the application dedicated for trying different features parts, including mathematical syntaxes, both as a interactive documentation specification, a feature tester and a manual troubleshooting interface. (No test cases may be needed???)
-4. Apply the architecture written in phase 0 of codebase-analysis (architecture definition) as program skeleton
-5. Add more todos of renderable syntaxes, such as geometry, physics, chemistry syntaxes and so on + test cases
-6. Add non-renderable syntaxes dedicated for other purposes, such as JSON/CSV syntax + test cases
+3. Apply the architecture written in phase 0 of codebase-analysis (architecture definition) as program skeleton
+4. Add more todos of renderable syntaxes, such as geometry, physics, chemistry syntaxes and so on + test cases
+5. Add non-renderable syntaxes dedicated for other purposes, such as JSON/CSV syntax + test cases
 
 Finish
 
-# Phase 2: ...
+# Phase 2: Domain
+
+# Phase 3: State managers
+
+# Phase 4: Presenters + views (Tsx-oriented)
+
+1. Add mathematical syntax rendering. Behaviors are validated using test cases by now. However, behaviors should also be able to manifest on Webapp as well. This can be done by creating a separate playground page aside of the application dedicated for trying different features parts, including mathematical syntaxes, both as a interactive documentation specification, a feature tester and a manual troubleshooting interface. (Tests are still needed)
+
+# Phase 5: Persistance manager

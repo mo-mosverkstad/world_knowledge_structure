@@ -669,3 +669,21 @@ IDs are best reserved for:
 - Accessibility relationships
 - Anchors
 - Rare DOM integrations
+
+
+---
+
+# Porting to codebase versions in other platforms
+
+Porting to C++ (future)
+For many workloads:
+
+Integer addition: ~1 cycle
+Floating-point multiply: a few cycles
+An inlined function call: effectively free
+L1 cache miss: tens of cycles
+L2 cache miss: more
+L3 cache miss: hundreds of cycles
+DRAM access: hundreds of cycles (often 200–400+ depending on the platform)
+
+So the CPU is often waiting on memory rather than doing arithmetic.

@@ -106,7 +106,7 @@ const syntax: Syntax = {
                     { type: "rule", name: "MultiplicativeOp" },
                     { type: "rule", name: "Fraction" },
                 ] },
-                { type: "rule", name: "ImplicitFraction" },
+                { type: "noskip", expr: { type: "rule", name: "ImplicitFraction" } },
             ] } },
         ] },
         build([first, rest]: [MathNode, ([string, MathNode] | MathNode)[]]): MathNode {
@@ -195,7 +195,7 @@ Fraction: {
 
     ImplicitPower: {
         peg: { type: "sequence", parts: [
-            { type: "rule", name: "Postfix" },
+            { type: "rule", name: "ImplicitPostfix" },
             { type: "repeat", expr: { type: "sequence", parts: [
                 { type: "literal", value: "^" }, { type: "rule", name: "Unary" },
             ] } },
@@ -229,7 +229,7 @@ Fraction: {
         peg: { type: "choice", options: [
             { type: "sequence", parts: [
                 { type: "choice", options: [
-                    { type: "regex", regex: /^[-+](?!\{)/, name: "unary sign" },
+                    { type: "regex", regex: /^-(?!\{)/, name: "unary sign" },
                     { type: "regex", regex: /^\\not\b/, name: "\\not" },
                 ] },
                 { type: "rule", name: "Unary" },
@@ -265,6 +265,43 @@ Fraction: {
             return node;
         },
     },
+
+    ImplicitPostfix: {
+        peg: { type: "sequence", parts: [
+            { type: "rule", name: "ImplicitPrimary" },
+            { type: "repeat", expr: { type: "choice", options: [
+                { type: "rule", name: "CallSuffix" }, { type: "rule", name: "ControlSuffix" },
+                { type: "rule", name: "SubscriptSuffix" }, { type: "rule", name: "FactorialSuffix" },
+                { type: "rule", name: "DerivativeSuffix" }, { type: "rule", name: "IndexSuffix" },
+            ] } },
+        ] },
+        build([base, suffixes]: [MathNode, any[]]): MathNode {
+            let node = base;
+            for (const s of suffixes) {
+                if (s.type === "call") node = { type: "CallExpression", callee: node, args: s.args };
+                else if (s.type === "control") { if (node.type !== "Identifier") throw new Error("Control block requires identifier"); node = { type: "ControlExpression", name: node.name, args: s.args }; }
+                else if (s.type === "subscript") node = { type: "SubscriptExpression", base: node, subscript: s.subscript };
+                else if (s.type === "factorial") node = { type: "FactorialExpression", base: node };
+                else if (s.type === "derivative") node = { type: "Derivative", base: node, order: s.order };
+                else if (s.type === "index") node = { type: "IndexExpression", base: node, index: s.index };
+            }
+            return node;
+        },
+    },
+
+    ImplicitPrimary: { peg: { type: "choice", options: [
+        { type: "rule", name: "CasesExpression" }, { type: "rule", name: "RolloutExpression" },
+        { type: "rule", name: "Ellipsis" }, { type: "rule", name: "AbsoluteValue" },
+        { type: "rule", name: "BracketExpression" }, { type: "rule", name: "TextLiteral" },
+        { type: "rule", name: "Number" },
+        { type: "rule", name: "BlackboardBoldIdentifier" }, { type: "rule", name: "RightSkewGreekIdentifier" },
+        { type: "rule", name: "GreekIdentifier" }, { type: "rule", name: "RightSkewIdentifier" },
+        { type: "rule", name: "LeftSkewIdentifier" },
+        { type: "rule", name: "ParenExpression" },
+        { type: "rule", name: "SetExpression" },
+        { type: "rule", name: "PlainIdentifier" },
+        
+    ] } },
 
     CallSuffix: { peg: { type: "sequence", parts: [{ type: "literal", value: "(" }, { type: "rule", name: "ArgumentList" }, { type: "literal", value: ")" }] }, build([, args]: any) { return { type: "call", args }; } },
     ControlSuffix: { peg: { type: "sequence", parts: [{ type: "literal", value: "{" }, { type: "rule", name: "ArgumentList" }, { type: "literal", value: "}" }] }, build([, args]: any) { return { type: "control", args }; } },

@@ -6,7 +6,8 @@ export type PEGExpression =
     | SequenceExpression
     | ChoiceExpression
     | RepeatExpression
-    | RuleReferenceExpression;
+    | RuleReferenceExpression
+    | NoSkipExpression;
 
 export interface LiteralExpression {
     type: "literal";
@@ -32,6 +33,10 @@ export interface RepeatExpression {
 export interface RuleReferenceExpression {
     type: "rule";
     name: string;
+}
+export interface NoSkipExpression {
+    type: "noskip";
+    expr: PEGExpression;
 }
 
 export interface MatchSuccess<T = unknown> {

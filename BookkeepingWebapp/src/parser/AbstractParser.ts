@@ -9,6 +9,7 @@ import type {
     SequenceExpression,
     ChoiceExpression,
     RepeatExpression,
+    NoSkipExpression,
 } from "./types";
 
 export class AbstractParser {
@@ -127,6 +128,8 @@ export class AbstractParser {
                 return this.matchRepeat(expr, position);
             case "rule":
                 return this.matchRule(expr.name, position);
+            case "noskip":
+                return this.matchNoSkip(expr as NoSkipExpression, position);
             default:
                 throw new Error(
                     this.formatErrorAtPosition(
@@ -206,6 +209,18 @@ export class AbstractParser {
             current = result.position;
         }
         return { success: true, position: current, node: values };
+    }
+
+    private matchNoSkip(
+        expr: NoSkipExpression,
+        position: number,
+    ): MatchResult {
+        // Save and temporarily disable the skip pattern
+        const savedSkip = this.skipPattern;
+        this.skipPattern = undefined;
+        const result = this.match(expr.expr, position);
+        this.skipPattern = savedSkip;
+        return result;
     }
 
     private skip(position: number): number {

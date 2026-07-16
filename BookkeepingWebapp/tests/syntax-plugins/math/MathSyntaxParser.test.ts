@@ -55,13 +55,13 @@ describe("Identifiers", () => {
     parse_check("plain Latin", "x", id("x"));
     parse_check("left-skew Latin", "`a", id("a", "left-skew"));
     parse_check("right-skew Latin", "`1T", id("T", "right-skew"));
-    parse_check("Greek upright", "\\a", id("a", "greek"));
-    parse_check("Greek right-skew", "\\1b", id("b", "greek-right"));
+    parse_check("backslash upright", "\\a", id("a", "backslash"));
+    parse_check("backslash right-skew", "\\1b", id("b", "backslash-right"));
     parse_prop("right-skew before left-skew", "`1T", "prefix", "right-skew");
-    parse_prop("right-skew Greek before plain Greek", "\\1a", "prefix", "greek-right");
+    parse_prop("right-skew backslash before plain backslash", "\\1a", "prefix", "backslash-right");
     parse_check("blackboard bold", "\\\\R", id("R", "blackboard"));
-    parse_check("multi-letter backslash", "\\sin", id("sin", "greek"));
-    parse_check("multi-letter with digits", "\\ha", id("ha", "greek"));
+    parse_check("multi-letter backslash", "\\sin", id("sin", "backslash"));
+    parse_check("multi-letter with digits", "\\ha", id("ha", "backslash"));
 });
 
 describe("Additive", () => {
@@ -206,12 +206,12 @@ describe("Complex expressions", () => {
 
     parse_check("trig 2\\sin^2(5x+3)", "2\\sin^2(5x+3)", bin("*",
         num(2),
-        bin("^", id("sin", "greek"), call(num(2), [bin("+", bin("*", num(5), id("x")), num(3))])),
+        bin("^", id("sin", "backslash"), call(num(2), [bin("+", bin("*", num(5), id("x")), num(3))])),
     ));
 
     parse_check("trig 2\\sin^2(5x+3)+\\cos(4x)", "2\\sin^2(5x+3)+\\cos(4x)", bin("+",
-        bin("*", num(2), bin("^", id("sin", "greek"), call(num(2), [bin("+", bin("*", num(5), id("x")), num(3))]))),
-        call(id("cos", "greek"), [bin("*", num(4), id("x"))]),
+        bin("*", num(2), bin("^", id("sin", "backslash"), call(num(2), [bin("+", bin("*", num(5), id("x")), num(3))]))),
+        call(id("cos", "backslash"), [bin("*", num(4), id("x"))]),
     ));
 });
 
@@ -297,7 +297,7 @@ describe("Combined postfix operations", () => {
 describe("Implicit multiplication boundaries", () => {
     parse_check("number * plain identifier (adjacent)", "2x", bin("*", num(2), id("x")));
     parse_check("adjacent identifiers", "xy", bin("*", id("x"), id("y")));
-    parse_check("number * greek identifier (adjacent)", "2\\pi", bin("*", num(2), id("pi", "greek")));
+    parse_check("number * backslash identifier (adjacent)", "2\\pi", bin("*", num(2), id("pi", "backslash")));
     parse_check("number * parenthesized group", "2(x+1)", call(num(2), [bin("+", id("x"), num(1))]));
     parse_check("postfix call then adjacent call", "f(x)g(y)", bin("*", call(id("f"), [id("x")]), call(id("g"), [id("y")])));
     parse_check("three adjacent factors abc", "abc", bin("*", bin("*", id("a"), id("b")), id("c")));

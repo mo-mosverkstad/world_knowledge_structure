@@ -12,8 +12,8 @@ export interface IdentifierNode {
         | "plain"
         | "left-skew"
         | "right-skew"
-        | "greek"
-        | "greek-right"
+        | "backslash"
+        | "backslash-right"
         | "blackboard";
 }
 

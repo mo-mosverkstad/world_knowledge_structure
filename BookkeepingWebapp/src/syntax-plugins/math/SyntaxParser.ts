@@ -449,8 +449,8 @@ Fraction: {
     ] } },
 
     BlackboardBoldIdentifier: { peg: { type: "regex", regex: /^\\\\[A-Za-z]/, name: "blackboard bold" }, build(v: string): IdentifierNode { return { type: "Identifier", name: v.slice(2), prefix: "blackboard" }; } },
-    RightSkewGreekIdentifier: { peg: { type: "regex", regex: /^\\[0-9]+[a-zA-Z][a-zA-Z0-9]*/, name: "right-skew backslash" }, build(v: string): IdentifierNode { return { type: "Identifier", name: v.replace(/^\\[0-9]+/, ""), prefix: "greek-right" }; } },
-    GreekIdentifier: { peg: { type: "regex", regex: /^\\[a-zA-Z][a-zA-Z0-9]*/, name: "backslash identifier" }, build(v: string): IdentifierNode { return { type: "Identifier", name: v.slice(1), prefix: "greek" }; } },
+    RightSkewGreekIdentifier: { peg: { type: "regex", regex: /^\\[0-9]+[a-zA-Z][a-zA-Z0-9]*/, name: "right-skew backslash" }, build(v: string): IdentifierNode { return { type: "Identifier", name: v.replace(/^\\[0-9]+/, ""), prefix: "backslash-right" }; } },
+    GreekIdentifier: { peg: { type: "regex", regex: /^\\[a-zA-Z][a-zA-Z0-9]*/, name: "backslash identifier" }, build(v: string): IdentifierNode { return { type: "Identifier", name: v.slice(1), prefix: "backslash" }; } },
     RightSkewIdentifier: { peg: { type: "regex", regex: /^`[0-9]+[a-zA-Z]/, name: "right-skew" }, build(v: string): IdentifierNode { return { type: "Identifier", name: v.replace(/^`[0-9]+/, ""), prefix: "right-skew" }; } },
     LeftSkewIdentifier: { peg: { type: "regex", regex: /^`[a-zA-Z]/, name: "left-skew" }, build(v: string): IdentifierNode { return { type: "Identifier", name: v.slice(1), prefix: "left-skew" }; } },
     PlainIdentifier: { peg: { type: "regex", regex: /^[a-zA-Z]/, name: "identifier" }, build(v: string): IdentifierNode { return { type: "Identifier", name: v, prefix: "plain" }; } },

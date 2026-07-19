@@ -8,6 +8,20 @@ IMPORTANT TODO: Clean the draft in codebase analysis and fill sentences
 
 The application models a cheat sheet collection rather than a collection of independent documents. A cheat sheet is therefore considered a projection of an underlying semantic model instead of the owner of the knowledge it displays.
 
+```
+KnowledgeBase
+├── Inbox
+├── Collections
+│   ├── Chemistry
+│   ├── Mathematics
+│   └── Programming
+├── CheatSheets
+│   ├── Exam A
+│   ├── Exam B
+│   └── Pocket Reference
+└── Search Index
+```
+
 Knowledge is organized into collations. A collation is the definition of table width and judges how the related knowledge will be grouped. Examples include chemical classifications, collections of physical constants, mathematical theorems, problem-solving patterns, programming concepts, and similar domains.
 
 The primary design principle is that all knowledge sharing the same collation belongs to a single canonical hierarchical structure. Instead of creating multiple independent tables that recursively contain one another, all information with the same collation is accumulated into one hierarchy. As new knowledge is introduced, it is inserted into the existing hierarchy by refining or extending it rather than by creating another table with the same semantic purpose.
@@ -26,21 +40,56 @@ Chemical substances
 as separate nested tables, the entire chemical classification is represented as one hierarchical table (or another suitable hierarchical structure). Likewise, mathematical theorems, formulas, proof techniques, and problem-solving patterns that belong to the same collation are accumulated into a single hierarchical representation rather than fragmented across many independent tables.
 
 ```
-Chemical substance (hierarchial table)
-├── Organic chemistry
-├── Alkanes
-├── ...
-├── Biochemical compounds
+Chemical substances
+├── Organic compounds
+│   ├── Hydrocarbons
+│   │   ├── Alkanes
+│   │   ├── Alkenes
+│   │   └── Alkynes
+│   ├── Alcohols
+│   ├── Aldehydes
+│   └── ...
+├── Inorganic compounds
+├── Organometallic compounds
+└── Biochemical compounds
+    ├── Amino acids
+    ├── Carbohydrates
+    ├── Lipids
+    └── Proteins
 
 Chemical reactions
+├── Reaction types
+│   ├── Synthesis
+│   ├── Decomposition
+│   ├── Substitution
+│   └── Redox
+├── Organic reaction pathways
+│   ├── Addition
+│   ├── Elimination
+│   ├── SN1
+│   └── SN2
 ├── Inorganic reactions
-├── Organic compounds reaction pathway
-├── Biochemical compounds reaction pathway
+└── Biochemical pathways
+    ├── Glycolysis
+    ├── Citric acid cycle
+    └── Oxidative phosphorylation
 
-Mathematics/Physics/...
-├── Mathematics...
-├── Physics...
-├── Chemistry (Stochiometry)
+Mathematics / Physics / Chemistry
+├── Mathematics
+│   ├── Algebra
+│   ├── Calculus
+│   ├── Linear algebra
+│   └── Probability
+├── Physics
+│   ├── Mechanics
+│   ├── Electromagnetism
+│   ├── Thermodynamics
+│   └── Quantum mechanics
+└── Chemistry
+    ├── Stoichiometry
+    ├── Thermochemistry
+    ├── Chemical equilibrium
+    └── Kinetics
 ```
 
 The hierarchy is organized according to semantic collation rather than document structure or field layout. Parent-child relationships express progressively finer semantic refinement of the same knowledge collection instead of arbitrary document containment.
@@ -50,6 +99,65 @@ Although hierarchical tables are expected to be the primary representation, some
 To support efficient lookup, knowledge items are additionally indexed through a hash-based search index. The index is independent of the hierarchical organization and exists solely to provide fast access to knowledge regardless of its position within the hierarchy.
 
 This approach favors semantic aggregation over document fragmentation, ensuring that each collation has a single authoritative hierarchical representation that continuously evolves as the knowledge base grows.
+
+## Inbox storage as scratchpad
+
+A scratchpad is a reasonable solution, and it fits naturally into your model if you treat it as an **inbox** rather than part of the permanent knowledge hierarchy.
+
+One possible workflow is:
+
+```text
+Scratchpad
+    ↓
+Organize
+    ↓
+Layout hierarchy
+    ↓
+Published cheat sheet
+```
+
+The scratchpad is intentionally unstructured. Whether someting belongs in a particular layout or hierarchy is not immediately decided.
+
+For example:
+
+```text
+Scratchpad
+├── "Remember the Gaussian elimination shortcut."
+├── "Interesting periodic table mnemonic."
+├── Sketch of a graph.
+├── Formula from today's lecture.
+└── Random observation.
+```
+
+Later, during organization, each item is either:
+
+* assigned to an existing layout hierarchy,
+* merged into an existing table,
+* turned into a new hierarchy, or
+* discarded.
+
+From a domain perspective, `Scratchpad` as a subtype of `TableNode` is avoided. Instead, make it a separate aggregate because its semantics are different:
+
+```text
+Workspace
+├── Scratchpad
+├── Layout Hierarchies
+└── Search Index
+```
+
+or
+
+```text
+KnowledgeBase
+├── Inbox
+├── Collections
+└── Index
+```
+
+This is similar to how many personal knowledge management systems distinguish **capture** from **organization**. The inbox is optimized for quickly recording ideas, while the organized hierarchies are optimized for retrieval and long-term maintenance.
+
+The key distinction is that a scratchpad item has **no assigned layout, no permanent location, and no semantic commitment** until you decide where it belongs. That keeps your main model clean while still supporting spontaneous note capture.
+
 
 ## Architecture
 

@@ -4,6 +4,55 @@ IMPORTANT TODO: Clean the draft in codebase analysis and fill sentences
 
 # Phase 0 - Environment setup and architecture definition
 
+## Domain model
+
+The application models a cheat sheet collection rather than a collection of independent documents. A cheat sheet is therefore considered a projection of an underlying semantic model instead of the owner of the knowledge it displays.
+
+Knowledge is organized into collations. A collation is the definition of table width and judges how the related knowledge will be grouped. Examples include chemical classifications, collections of physical constants, mathematical theorems, problem-solving patterns, programming concepts, and similar domains.
+
+The primary design principle is that all knowledge sharing the same collation belongs to a single canonical hierarchical structure. Instead of creating multiple independent tables that recursively contain one another, all information with the same collation is accumulated into one hierarchy. As new knowledge is introduced, it is inserted into the existing hierarchy by refining or extending it rather than by creating another table with the same semantic purpose.
+
+For example, instead of modeling
+
+```
+Chemical substances
+├── Organic chemistry
+│   └── Alkanes
+├── Biochemistry
+│   └── ...
+│   └── Biochemical pathways
+```
+
+as separate nested tables, the entire chemical classification is represented as one hierarchical table (or another suitable hierarchical structure). Likewise, mathematical theorems, formulas, proof techniques, and problem-solving patterns that belong to the same collation are accumulated into a single hierarchical representation rather than fragmented across many independent tables.
+
+```
+Chemical substance (hierarchial table)
+├── Organic chemistry
+├── Alkanes
+├── ...
+├── Biochemical compounds
+
+Chemical reactions
+├── Inorganic reactions
+├── Organic compounds reaction pathway
+├── Biochemical compounds reaction pathway
+
+Mathematics/Physics/...
+├── Mathematics...
+├── Physics...
+├── Chemistry (Stochiometry)
+```
+
+The hierarchy is organized according to semantic collation rather than document structure or field layout. Parent-child relationships express progressively finer semantic refinement of the same knowledge collection instead of arbitrary document containment.
+
+Although hierarchical tables are expected to be the primary representation, some collations may be more naturally represented as diagrams or other hierarchical structures. The chosen representation does not change the semantic model; it is merely an alternative visualization of the same canonical hierarchy.
+
+To support efficient lookup, knowledge items are additionally indexed through a hash-based search index. The index is independent of the hierarchical organization and exists solely to provide fast access to knowledge regardless of its position within the hierarchy.
+
+This approach favors semantic aggregation over document fragmentation, ensuring that each collation has a single authoritative hierarchical representation that continuously evolves as the knowledge base grows.
+
+## Architecture
+
 Bookkeeping/
 |
 +-- src/

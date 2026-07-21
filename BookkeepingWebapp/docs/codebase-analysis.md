@@ -10,16 +10,16 @@ The application models a cheat sheet collection rather than a collection of inde
 
 ```
 KnowledgeBase
-├── Inbox
-├── Collections
-│   ├── Chemistry
-│   ├── Mathematics
-│   └── Programming
-├── CheatSheets
-│   ├── Exam A
-│   ├── Exam B
-│   └── Pocket Reference
-└── Search Index
++-- Inbox
++-- Collections
+|   +-- Chemistry
+|   +-- Mathematics
+|   └-- Programming
++-- CheatSheets
+|   +-- Exam A
+|   +-- Exam B
+|   └-- Pocket Reference
+└-- Search Index
 ```
 
 Knowledge is organized into collations. A collation is the definition of table width and judges how the related knowledge will be grouped. Examples include chemical classifications, collections of physical constants, mathematical theorems, problem-solving patterns, programming concepts, and similar domains.
@@ -30,66 +30,66 @@ For example, instead of modeling
 
 ```
 Chemical substances
-├── Organic chemistry
-│   └── Alkanes
-├── Biochemistry
-│   └── ...
-│   └── Biochemical pathways
++-- Organic chemistry
+|   └-- Alkanes
++-- Biochemistry
+|   └-- ...
+|   └-- Biochemical pathways
 ```
 
 as separate nested tables, the entire chemical classification is represented as one hierarchical table (or another suitable hierarchical structure). Likewise, mathematical theorems, formulas, proof techniques, and problem-solving patterns that belong to the same collation are accumulated into a single hierarchical representation rather than fragmented across many independent tables.
 
 ```
 Chemical substances
-├── Organic compounds
-│   ├── Hydrocarbons
-│   │   ├── Alkanes
-│   │   ├── Alkenes
-│   │   └── Alkynes
-│   ├── Alcohols
-│   ├── Aldehydes
-│   └── ...
-├── Inorganic compounds
-├── Organometallic compounds
-└── Biochemical compounds
-    ├── Amino acids
-    ├── Carbohydrates
-    ├── Lipids
-    └── Proteins
++-- Organic compounds
+|   +-- Hydrocarbons
+|   |   +-- Alkanes
+|   |   +-- Alkenes
+|   |   └-- Alkynes
+|   +-- Alcohols
+|   +-- Aldehydes
+|   └-- ...
++-- Inorganic compounds
++-- Organometallic compounds
+└-- Biochemical compounds
+    +-- Amino acids
+    +-- Carbohydrates
+    +-- Lipids
+    └-- Proteins
 
 Chemical reactions
-├── Reaction types
-│   ├── Synthesis
-│   ├── Decomposition
-│   ├── Substitution
-│   └── Redox
-├── Organic reaction pathways
-│   ├── Addition
-│   ├── Elimination
-│   ├── SN1
-│   └── SN2
-├── Inorganic reactions
-└── Biochemical pathways
-    ├── Glycolysis
-    ├── Citric acid cycle
-    └── Oxidative phosphorylation
++-- Reaction types
+|   +-- Synthesis
+|   +-- Decomposition
+|   +-- Substitution
+|   └-- Redox
++-- Organic reaction pathways
+|   +-- Addition
+|   +-- Elimination
+|   +-- SN1
+|   └-- SN2
++-- Inorganic reactions
+└-- Biochemical pathways
+    +-- Glycolysis
+    +-- Citric acid cycle
+    └-- Oxidative phosphorylation
 
 Mathematics / Physics / Chemistry
-├── Mathematics
-│   ├── Algebra
-│   ├── Calculus
-│   ├── Linear algebra
-│   └── Probability
-├── Physics
-│   ├── Mechanics
-│   ├── Electromagnetism
-│   ├── Thermodynamics
-│   └── Quantum mechanics
-└── Chemistry
-    ├── Stoichiometry
-    ├── Thermochemistry
-    ├── Chemical equilibrium
-    └── Kinetics
++-- Mathematics
+|   +-- Algebra
+|   +-- Calculus
+|   +-- Linear algebra
+|   └-- Probability
++-- Physics
+|   +-- Mechanics
+|   +-- Electromagnetism
+|   +-- Thermodynamics
+|   └-- Quantum mechanics
+└-- Chemistry
+    +-- Stoichiometry
+    +-- Thermochemistry
+    +-- Chemical equilibrium
+    └-- Kinetics
 ```
 
 The hierarchy is organized according to semantic collation rather than document structure or field layout. Parent-child relationships express progressively finer semantic refinement of the same knowledge collection instead of arbitrary document containment.
@@ -122,11 +122,11 @@ For example:
 
 ```text
 Scratchpad
-├── "Remember the Gaussian elimination shortcut."
-├── "Interesting periodic table mnemonic."
-├── Sketch of a graph.
-├── Formula from today's lecture.
-└── Random observation.
++-- "Remember the Gaussian elimination shortcut."
++-- "Interesting periodic table mnemonic."
++-- Sketch of a graph.
++-- Formula from today's lecture.
+└-- Random observation.
 ```
 
 Later, during organization, each item is either:
@@ -140,18 +140,18 @@ From a domain perspective, `Scratchpad` as a subtype of `TableNode` is avoided. 
 
 ```text
 Workspace
-├── Scratchpad
-├── Layout Hierarchies
-└── Search Index
++-- Scratchpad
++-- Layout Hierarchies
+└-- Search Index
 ```
 
 or
 
 ```text
 KnowledgeBase
-├── Inbox
-├── Collections
-└── Index
++-- Inbox
++-- Collections
+└-- Index
 ```
 
 This is similar to how many personal knowledge management systems distinguish **capture** from **organization**. The inbox is optimized for quickly recording ideas, while the organized hierarchies are optimized for retrieval and long-term maintenance.
@@ -282,12 +282,12 @@ Editor layers:
 ```text
 src/
 
-├── domain/
-├── syntax/
-├── statemanager/
-├── presenters/
-├── views/
-├── persistence/
++-- domain/
++-- syntax/
++-- statemanager/
++-- presenters/
++-- views/
++-- persistence/
 ```
 
 The responsibilities become:
@@ -300,10 +300,10 @@ Persistent document data.
 
 ```text
 Document
-├── TreeTables
-├── Diagrams
-├── Expressions
-├── Bookkeeping
++-- TreeTables
++-- Diagrams
++-- Expressions
++-- Bookkeeping
 ```
 
 Everything here should be savable.
@@ -439,12 +439,12 @@ Considering adding:
 ```text
 statemanager/
 
-├── Command.ts
-├── UndoManager.ts
-├── SelectionState.ts
-├── ClipboardState.ts
-├── LayoutState.ts
-├── EventBus.ts
++-- Command.ts
++-- UndoManager.ts
++-- SelectionState.ts
++-- ClipboardState.ts
++-- LayoutState.ts
++-- EventBus.ts
 ```
 
 or
@@ -575,17 +575,17 @@ So I might eventually evolve toward:
 
 ```text
 domain/
-├── document/
-├── treetable/
-├── diagrams/
-├── bookkeeping/
++-- document/
++-- treetable/
++-- diagrams/
++-- bookkeeping/
 
 syntax/
-├── expressions/
-├── definitions/
-├── ast/
-├── parser/
-├── rendering/
++-- expressions/
++-- definitions/
++-- ast/
++-- parser/
++-- rendering/
 ```
 
 This would make it clearer that:
@@ -858,6 +858,255 @@ Todo:
 5. Add non-renderable syntaxes dedicated for other purposes, such as JSON/CSV syntax + test cases
 
 Finish
+
+## Syntax design architecture
+
+The syntax subsystem is designed as an independent compiler pipeline rather than being embedded into the application domain. Syntax definitions are treated as data instead of application code.
+
+```
+Syntax Source
+        |
+        V
+Syntax Compiler
+        |
+        V
+Compiled Syntax Package
+        |
+        V
+Editor Runtime
+        |
+        V
+Lexer
+        |
+        V
+PEG Parser
+        |
+        V
+AST
+        |
+        V
+Renderer
+```
+
+
+The long-term objective is for syntaxes to be distributed independently of the editor executable. Instead of compiling grammars into the application, the editor loads compiled syntax packages produced bya dedicated syntax compiler.
+
+This architecture provides several advantages:
+
+- Syntaxes can be updated without rebuilding the editor;
+- Expensive grammar analysis is performed only once during compilation;
+- Compiled grammars may contain optimized parser tables or parser bytecode;
+- Syntax packages can be versioned independently from the editor;
+- Third parties can develop additional syntaxes without modifying the core application.
+
+Compiled syntax packages should serialize logical grammar structures rather than raw memory. Runtime pointers must never be written directly to disk. Instead, references should be represented using indices or identifiers so the runtime can reconstruct internal structures when loading.
+
+Eventually the syntax compiler may introduce an intermediate representation (IR):
+```
+Syntax Source
+        |
+        V
+Syntax AST
+        |
+        V
+Grammar IR
+        |
+        +-- Validation
+        +-- Optimization
+        +-- Serialization
+        |
+        V
+Compiled Syntax Package
+```
+
+This allows the compiler and runtime to evolve independently while keeping the serialization format stable.
+
+## Syntax design principles
+
+The standard syntax intentionally prioritizes semantic clarity and deterministic parsing over reproducing traditional handwritten notation.
+
+Traditional mathematical notation evolved for human readers and contains numerous ambiguities that complicate parsing. The syntax therefore adopts several guiding principles.
+
+### Explicit syntax over implicit syntax
+
+Implicit multiplication introduces substantial ambiguity.
+
+Examples include:
+
+```
+3x
+xy
+2(x+1)
+sin x
+e^x
+```
+
+Each expression requires contextual interpretation before its meaning can be determined.
+
+Instead, multiplication is always written explicitly:
+
+```
+3*x
+x*y
+2*(x+1)
+sin(x)
+exp(x)
+```
+
+The parser should never infer multiplication from adjacency.
+
+The renderer may later omit multiplication symbols for display purposes, but the source language remains explicit.
+
+### Context-free parsing
+
+The parser should determine the syntax tree without relying on semantic knowledge.
+
+For example,
+
+```
+sin(x)
+```
+
+is parsed as an ordinary function call.
+
+Whether sin is a predefined mathematical function or a user-defined identifier is determined during semantic analysis rather than parsing.
+
+Likewise,
+
+```
+foo(x)
+```
+
+is syntactically identical.
+
+This separation keeps the grammar deterministic and extensible.
+
+### Multi-character identifiers
+
+Identifiers are not decomposed into implicit products.
+
+For example, velocity is always a single identifier.
+
+Similarly,
+```
+sin
+cos
+tan
+deriv
+int
+jacobian
+```
+are ordinary identifiers that happen to have predefined meanings within the mathematics package.
+
+The parser does not distinguish between built-in and user-defined identifiers.
+
+### Surface syntax versus semantic representation
+
+The source syntax exists solely for user interaction.
+
+Immediately after parsing, expressions are transformed into semantic AST nodes.
+
+For example,
+```
+\deriv(x, x^3)
+```
+
+becomes
+```
+Derivative
++-- Variable = x
+└-- Body = x^3
+```
+
+Similarly,
+```
+int(x, 1, 2, exp(-x))
+```
+
+becomes
+```
+Integral
++-- Variable = x
++-- Lower = 1
++-- Upper = 2
+└-- Body = exp(-x)
+```
+
+Subsequent simplification, differentiation, symbolic manipulation and rendering operate exclusively on semantic nodes rather than textual notation.
+
+Mathematical operators are not encoded as arithmetic
+
+Traditional notation frequently represents operators using symbols that resemble arithmetic expressions despite having different semantics.
+
+For example,
+```
+d/(dx)
+```
+
+resembles a fraction but is actually a differentiation operator.
+
+Likewise,
+```
+∂/∂x
+```
+
+is not division.
+
+The syntax therefore introduces dedicated language constructs instead of relying on typographical conventions.
+
+Examples include:
+```
+deriv(variable, expression)
+pderiv(variable, expression)
+jacobian(function, variables...)
+```
+
+These forms eliminate ambiguities while directly expressing the intended semantics.
+
+Unicode-independent source representation
+
+The source language should remain entirely ASCII.
+
+Unicode mathematical symbols are introduced through explicit escape sequences.
+
+Examples include:
+```
+\a      α (Alpha)
+\b      β (Beta)
+\g      γ (Gamma)
+
+\ha     ℵ (Aleph)
+\hb     ℶ (Beth)
+\hg     ℷ (Gimel)
+```
+
+### Mathematical syntax design goals
+
+The mathematical language is designed primarily as a semantic language rather than a typesetting language.
+
+Consequently:
+- Explicit syntax is preferred over handwritten shorthand;
+- Every construct should have a unique parse tree;
+- Every parse tree should correspond to a unique semantic representation;
+- Rendering may later recover traditional mathematical notation without affecting the underlying semantics.
+
+This philosophy deliberately separates how mathematics is written from how mathematics is represented internally, allowing symbolic manipulation, simplification, rendering, and future language extensions to operate on a clean and unambiguous semantic model.
+
+General DSL design principles
+
+The same design philosophy extends beyond mathematical notation to every domain-specific language supported by the editor. Each DSL should resemble the conventional textual notation of its domain as closely as possible, provided that doing so does not introduce ambiguity or compromise the underlying semantic model. When traditional notation relies on implicit conventions or contextual interpretation, the DSL instead adopts explicit constructs that preserve the intended meaning while remaining deterministic to parse.
+
+The objective is not to reproduce handwritten notation exactly, but to preserve the conceptual structure familiar to domain experts. Users should be able to recognize expressions immediately without requiring unnecessary syntactic ceremony, while the compiler is able to construct a unique semantic representation from every valid source.
+
+Different domains naturally favor different textual representations. For example, mathematical expressions are commonly written using algebraic notation, chemical reactions are often expressed using reaction equations, and digital logic is frequently specified using Boolean algebra. These established textual forms generally provide a more suitable foundation for DSLs than their graphical counterparts because they are concise, linear, and well suited for parsing.
+
+Graphical representations remain important, but they are treated as visualizations of the underlying semantic model rather than the canonical source language. A Boolean expression may be rendered as a logic gate diagram, a mathematical expression may be rendered using conventional typesetting, and a chemical structure may be rendered as a structural diagram. The source language and the graphical representation therefore become two complementary projections of the same semantic information rather than competing representations.
+
+I like this because it generalizes the philosophy you're already using for mathematics into a principle that can guide every future DSL (physics, chemistry, electronics, geometry, bookkeeping, etc.). It also reinforces one of the central themes of your architecture: the semantic model is canonical; text and diagrams are interchangeable views of that model.
+
+## Mathematical syntax design
+
+## Syntax for geometry
 
 # Phase 2: Domain
 

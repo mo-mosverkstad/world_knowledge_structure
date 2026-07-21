@@ -158,8 +158,28 @@ KnowledgeBase
 ```
 Bookkeeping/
 |
-+-- src/
++-- lib/
+|   |
+|   +-- peg-parser/
+|   |   |
+|   |   +-- AbstractParser.ts
+|   |   +-- types.d.ts
+|   |
+|   +-- history/
+|   |   |
+|   |   +-- History.ts
+|   |
+|   +-- btree/
+|   |   |
+|   |   +-- BPlusTree.ts
+|   |
+|   +-- event-bus/
+|       |
+|       +-- EventBus.ts
 |
+|
++-- src/
+|   |
 |   +-- domain/
 |   |   |
 |   |   +-- document/
@@ -264,7 +284,6 @@ Bookkeeping/
 |   |   +-- SelectionState.ts
 |   |   +-- ClipboardState.ts
 |   |   +-- LayoutState.ts
-|   |   +-- EventBus.ts (or Observable.ts / Notifier.ts)
 |   |
 |   |
 |   +-- main.tsx
@@ -272,7 +291,56 @@ Bookkeeping/
 +-- package.json
 ```
 
+### Intraproject Dependencies (`lib/`)
+
+Certain components are generic infrastructure — they have no knowledge of the application domain and could be reused in any project. These are placed in `lib/` at the project root rather than being scattered inside `src/` alongside application-specific code.
+
+The reason for separating them is to prevent accidental coupling. If a generic PEG parser engine lives inside `src/syntax/`, it sits next to domain-specific grammar definitions, and over time the boundary erodes: someone adds a convenience import, a shared type that references domain concepts, or a helper that assumes the math AST shape. The generic component silently becomes application-specific, and extracting it later requires untangling dependencies that would not have formed had the boundary been enforced from the start.
+
+By placing these components under `lib/`, the separation is enforced at the filesystem level:
+
+- `lib/` modules have **zero imports from `src/`**.
+- `lib/` modules are **domain-ignorant** — they do not know about TreeTables, math syntax, bookkeeping, or any application concept.
+- Each `lib/` subfolder is a **self-contained, independently extractable unit**.
+- `src/` imports from `lib/`, never the reverse.
+
+If a future project needs the same PEG parser or undo history, the extraction is trivial: move the folder out. The dependency boundary is already clean.
+
+Components that belong in `lib/`:
+
+| Module | Purpose |
+|---|---|
+| `peg-parser/` | Generic PEG parsing engine. Accepts any grammar definition, produces parse results. Does not know what is being parsed. |
+| `history/` | Generic undo/redo command stack. Records and replays actions. Does not know what the actions do. |
+| `btree/` | Generic B+ tree data structure. Provides ordered storage and range queries. Does not know what is being stored. |
+| `event-bus/` | Generic publish/subscribe notification mechanism. Dispatches events. Does not know what the events mean. |
+
+Components that remain in `src/`:
+
+- Math syntax grammar rules (they define *what* to parse using the PEG engine — domain-specific)
+- `UndoManager` in `statemanager/` (wires the generic history to application-specific commands)
+- All domain models, presenters, views, and persistence adapters
+
+A TypeScript path alias keeps imports readable:
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "paths": {
+      "@lib/*": ["./lib/*"]
+    }
+  }
+}
+```
+
+This makes the architectural boundary visible at every call site: `import { AbstractParser } from "@lib/peg-parser/AbstractParser"` immediately communicates that the dependency is on generic infrastructure rather than a sibling application module.
+
+### Architectural Decisions
+
 **Decision:** Expressions belong under `syntax/` rather than `domain/`, because expressions involve parsing, AST construction, grammar definitions, and rendering — forming a subsystem rather than pure data. Domain concepts (TreeTables, Diagrams, Bookkeeping) remain under `domain/`.
+
+**Decision:** Generic, domain-ignorant infrastructure (PEG parser, undo history, data structures, event bus) belongs in `lib/` rather than being woven into the application layer folders where it would risk coupling to domain-specific code.
 
 ### Layer Summary
 
@@ -364,7 +432,9 @@ Renderer
 
 #### Presenters
 
-Split into two categories:
+The Presenters and Views layers are the **only** layers permitted to contain HTML rendering and GUI-specific code. Every layer below them (domain, syntax, state manager, persistence, and everything in `lib/`) must remain free of presentation concerns so it stays portable and testable without a DOM.
+
+Presenters split into two categories:
 
 **App Presenters** — application-specific, aware of the document, persistence, navigation, and search:
 
@@ -384,9 +454,30 @@ PropertyGridPresenter
 SearchPresenter
 ```
 
+Presenters take the generic View components and assemble them together into the application's screens. Most presenters need no CSS of their own; styling lives with the View components. CSS at the presenter level is only expected in the occasional case where a container or layout wrapper needs its own styling.
+
 #### Views
 
-React components (`.tsx`) that render based on presenter state. Contain no business logic.
+Views and Presenters are the only place where HTML rendering and GUI-specific code is allowed.
+
+Since this is a webapp, the Views layer contains the reusable building blocks of the application. These components are not universal web-application primitives (like a generic button library) — they are the specific building blocks this application is composed of (tree tables, diagram canvases, syntax widgets, property grids, and so on).
+
+Each View component is kept as small as possible and is expressed as a pair:
+
+- A `.tsx` file for the component definition — this behaves a little like a mini HTML fragment, describing structure and markup.
+- A stylesheet imported into the `.tsx` — a scoped, mini CSS file containing only the styling for that one component.
+
+Keeping the markup and styling scoped per component prevents Views from growing into large, monolithic files. Additional CSS beyond the per-component stylesheet is generally not needed; the exception is container or layout components that may require their own styling.
+
+Views render based on presenter state and contain no business logic.
+
+##### HTML and DOM policy
+
+Everything is built in `.tsx` rather than using static HTML with ID hooks. Static HTML with `getElementById` access is avoided (see the "TSX Components Instead of Static HTML" design principle).
+
+Consequently, `index.html` stays minimal. The `<body>` contains almost nothing — ideally just the single root mount point — while the `<head>` carries the document loads (stylesheets, fonts, meta tags, the module script entry point). The application tree is constructed entirely in TSX starting from `main.tsx`.
+
+> **Open question:** How much, if anything, should remain as static HTML in the `<body>`? The current intent is "almost nothing in the body, loads in the head." This needs a firm decision once the shell layout is built — whether the body is a bare `<div id="root">` or whether a few structural anchors are justified.
 
 #### Persistence
 

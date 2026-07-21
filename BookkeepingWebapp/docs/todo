@@ -1,0 +1,7 @@
+Phase 1:
+1. Properly define the math grammar (Common cases first, less useful using mnemonics, then using full keywords). The grammar must also support step by step notations, make derivatives more semantically using (\deriv (derivative), \pderiv (partial derivative) and \jac (jacobian) instead of d/(dx)) and so on. Define a rigorous grammar here in phase before continuing2. Remove any side effects of mathematical syntax (cannot identify Greek, Hebrew letters, etc) Greek letters (alpha: \a, beta: \b, gamma: \g) and Hebrew letters (aleph: \ha, beth: \hb, gimel: \hg). Also other following properties. Define what the mathematical syntax should produce + update test cases
+2. Apply the architecture written in phase 0 of codebase-analysis (architecture definition) as program skeleton
+3. Add more todos of renderable syntaxes, such as geometry, physics, chemistry syntaxes and so on + test cases
+4. Add non-renderable syntaxes dedicated for other purposes, such as JSON/CSV syntax + test cases
+
+Phase 2:

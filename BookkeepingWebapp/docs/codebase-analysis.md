@@ -1146,7 +1146,77 @@ TODO: Define the geometry DSL specification here.
 
 # Phase 2 — Domain
 
-TODO: Define the domain model implementation — TreeTable, Diagram, and Bookkeeping data structures, their relationships, and serialization format.
+The domain layer holds the persistent, serializable document data. It is defined in two parts, following the compositional model below: **Part A — Content and Composition** (how knowledge is encoded and composed, independent of where it is placed) and **Part B — Layout** (how composed cells are arranged into tables and diagrams). This split keeps the shared content model separate from the structure-specific layout rules.
+
+## Compositional Model
+
+Knowledge is organized as a three-level compositional hierarchy. Each level is an arrangement of the level below it — the same principle by which simple pieces are organized into larger structures (analogous to how logic gates form circuits, or algorithms form software). The names below are deliberately domain-specific and are **not** related to software architecture or CPU microarchitecture.
+
+```text
+Box    → a single semantically-encoded object (one DSL expression)
+Group  → an ordered list of boxes within one cell / diagram entry
+Layout → an arrangement of cells into a table, or of entries into a diagram
+```
+
+| Level | Definition |
+|---|---|
+| **Box** | The atomic unit. One box holds one `(syntax type, source)` pair — a single DSL expression such as a formula, a chemical reaction, or a boolean expression. Each box is parsed and rendered by exactly one syntax. |
+| **Group** | An ordered list of typed boxes occupying a single table cell or diagram entry. The container of boxes. |
+| **Layout** | The arrangement of cells/entries. In a table, cells are placed in rows and columns; in a diagram, entries are placed arbitrarily and connected by edges. |
+
+### Part A — Content and Composition (Box and Group)
+
+A Box is a single typed unit: `(syntax type, source)`. The syntax type selects which DSL grammar parses and renders the box's source. A box never mixes syntaxes.
+
+A Group is an **ordered list of boxes**, not a rich-text block. This is a deliberate decision.
+
+**Decision: typed list of boxes, not inline mode-switching rich text.**
+
+The rejected alternative is a single rich-text stream that escapes into and out of modes inline:
+
+```text
+Some text $math{5x^2} more text $chem{H2O} ...
+```
+
+This is avoided because:
+
+- Inline mode markers (`$math{`, `$chem{`) are visual noise scattered through the content, hurting readability.
+- Requiring the user to type `$math{...}` every time to enter a mode is unnecessary ceremony.
+- It forces a single parser to understand all syntaxes at once, or to constantly hand off between them, reintroducing the contextual ambiguity that the Phase 1 "context-free parsing" principle is designed to eliminate.
+
+Instead, a Group is modeled as a list where each box declares its type **once, structurally**:
+
+```text
+Group
++-- Box(type = text,  source = "Some text")
++-- Box(type = math,  source = "5x^2")
++-- Box(type = text,  source = "more text")
+└-- Box(type = chem,  source = "H2O")
+```
+
+Advantages:
+
+- Zero marker noise inside the content — the type is metadata on the box, not an inline escape.
+- Each box is parsed by exactly one syntax; the math parser never has to know chemistry exists. Every DSL grammar stays closed and context-free, honoring the Phase 1 design principles.
+- The box type is chosen at the UI level (the user picks what to write next), not typed as syntax ceremony.
+- Boxes are independently compilable and renderable — a math box produces a math AST, a chem box produces a chem AST, with no shared super-grammar.
+
+> **Open question:** Is a Group a purely linear list (reading order only), or does it need light internal arrangement (wrapping, alignment, stacking)? The MVP is a plain ordered list; richer within-group arrangement is a possible future extension.
+
+### Part B — Layout (arrangement of cells)
+
+A Layout arranges cells (each containing a Group) into a larger structure. There are two concrete forms:
+
+- **Table (TreeTable):** cells arranged in a hierarchical row/column structure.
+- **Diagram:** entries placed arbitrarily in space and connected by **edges**. Edge connectivity is a first-class Layout concern, not just placement.
+
+Bookkeeping structures (accounts, transactions, journals) are also domain data defined at this level.
+
+> **Open question:** Table cells and diagram entries share the Group concept (Part A), but their Layout-level arrangement rules differ (grid vs. free placement + edges). Confirm whether Layout is best modeled as one abstract concept with two concrete forms, or as two separate structures that both consume Groups.
+
+## Implementation Scope
+
+TODO: Define the concrete data structures for TreeTable, Diagram, and Bookkeeping, their relationships, and the serialization format — building on the Box → Group → Layout model above.
 
 ---
 

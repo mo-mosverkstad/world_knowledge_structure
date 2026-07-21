@@ -1,12 +1,14 @@
 # Codebase Analysis
 
-IMPORTANT TODO: Clean the draft in codebase analysis and fill sentences
+This document defines the architecture, domain model, design principles, and phased implementation plan for the Bookkeeping knowledge editor.
 
-# Phase 0 - Environment setup and architecture definition
+---
 
-## Domain model
+# Phase 0 — Environment Setup and Architecture Definition
 
-The application models a cheat sheet collection rather than a collection of independent documents. A cheat sheet is therefore considered a projection of an underlying semantic model instead of the owner of the knowledge it displays.
+## Domain Model
+
+The application models a knowledge base rather than a collection of independent documents. A cheat sheet is a projection of an underlying semantic model — it does not own the knowledge it displays.
 
 ```
 KnowledgeBase
@@ -22,7 +24,9 @@ KnowledgeBase
 └-- Search Index
 ```
 
-Knowledge is organized into collations. A collation is the definition of table width and judges how the related knowledge will be grouped. Examples include chemical classifications, collections of physical constants, mathematical theorems, problem-solving patterns, programming concepts, and similar domains.
+### Collations
+
+Knowledge is organized into collations. A collation defines the grouping schema for a body of related knowledge — it determines how entries are categorized and what table structure they occupy. Examples include chemical classifications, collections of physical constants, mathematical theorems, problem-solving patterns, and programming concepts.
 
 The primary design principle is that all knowledge sharing the same collation belongs to a single canonical hierarchical structure. Instead of creating multiple independent tables that recursively contain one another, all information with the same collation is accumulated into one hierarchy. As new knowledge is introduced, it is inserted into the existing hierarchy by refining or extending it rather than by creating another table with the same semantic purpose.
 
@@ -100,11 +104,11 @@ To support efficient lookup, knowledge items are additionally indexed through a 
 
 This approach favors semantic aggregation over document fragmentation, ensuring that each collation has a single authoritative hierarchical representation that continuously evolves as the knowledge base grows.
 
-## Inbox storage as scratchpad
+### Inbox (Scratchpad)
 
-A scratchpad is a reasonable solution, and it fits naturally into your model if you treat it as an **inbox** rather than part of the permanent knowledge hierarchy.
+The inbox serves as an unstructured capture area separate from the permanent knowledge hierarchy. It distinguishes **capture** from **organization**: the inbox is optimized for quickly recording ideas, while the organized hierarchies are optimized for retrieval and long-term maintenance.
 
-One possible workflow is:
+The workflow is:
 
 ```text
 Scratchpad
@@ -116,7 +120,7 @@ Layout hierarchy
 Published cheat sheet
 ```
 
-The scratchpad is intentionally unstructured. Whether someting belongs in a particular layout or hierarchy is not immediately decided.
+The scratchpad is intentionally unstructured. Whether something belongs in a particular layout or hierarchy is not immediately decided.
 
 For example:
 
@@ -136,16 +140,7 @@ Later, during organization, each item is either:
 * turned into a new hierarchy, or
 * discarded.
 
-From a domain perspective, `Scratchpad` as a subtype of `TableNode` is avoided. Instead, make it a separate aggregate because its semantics are different:
-
-```text
-Workspace
-+-- Scratchpad
-+-- Layout Hierarchies
-└-- Search Index
-```
-
-or
+The scratchpad is not modeled as a subtype of `TableNode`. Instead it is a separate aggregate because its semantics are different — a scratchpad item has **no assigned layout, no permanent location, and no semantic commitment** until it is placed.
 
 ```text
 KnowledgeBase
@@ -154,13 +149,13 @@ KnowledgeBase
 └-- Index
 ```
 
-This is similar to how many personal knowledge management systems distinguish **capture** from **organization**. The inbox is optimized for quickly recording ideas, while the organized hierarchies are optimized for retrieval and long-term maintenance.
-
-The key distinction is that a scratchpad item has **no assigned layout, no permanent location, and no semantic commitment** until you decide where it belongs. That keeps your main model clean while still supporting spontaneous note capture.
-
+---
 
 ## Architecture
 
+### Directory Structure
+
+```
 Bookkeeping/
 |
 +-- src/
@@ -187,18 +182,18 @@ Bookkeeping/
 |   |   |   +-- Coordinate.ts
 |   |   |
 |   |   +-- bookkeeping/
-|   |   |   |
-|   |   |   +-- Account.ts
-|   |   |   +-- Transaction.ts
-|   |   |   +-- Journal.ts
-|   |   |
-|   |   +-- expressions/ ??? May be removed out to syntax
 |   |       |
-|   |       +-- Expression.ts
-|   |       +-- Formula.ts
+|   |       +-- Account.ts
+|   |       +-- Transaction.ts
+|   |       +-- Journal.ts
 |   |
 |   |
 |   +-- syntax/
+|   |   |
+|   |   +-- expressions/
+|   |   |   |
+|   |   |   +-- Expression.ts
+|   |   |   +-- Formula.ts
 |   |   |
 |   |   +-- definitions/
 |   |   |   |
@@ -269,15 +264,17 @@ Bookkeeping/
 |   |   +-- SelectionState.ts
 |   |   +-- ClipboardState.ts
 |   |   +-- LayoutState.ts
+|   |   +-- EventBus.ts (or Observable.ts / Notifier.ts)
 |   |
 |   |
 |   +-- main.tsx
 |
 +-- package.json
+```
 
+**Decision:** Expressions belong under `syntax/` rather than `domain/`, because expressions involve parsing, AST construction, grammar definitions, and rendering — forming a subsystem rather than pure data. Domain concepts (TreeTables, Diagrams, Bookkeeping) remain under `domain/`.
 
----
-Editor layers:
+### Layer Summary
 
 ```text
 src/
@@ -290,41 +287,32 @@ src/
 +-- persistence/
 ```
 
-The responsibilities become:
+### Layer Responsibilities
 
-***
+#### Domain
 
-## Domain
-
-Persistent document data.
+Persistent document data. Everything in this layer is serializable.
 
 ```text
 Document
 +-- TreeTables
 +-- Diagrams
-+-- Expressions
 +-- Bookkeeping
 ```
 
-Everything here should be savable.
-
-Example:
+Examples of data that belongs here:
 
 ```text
 Tree row hierarchy
 Cell contents
-Formula source
-Diagram nodes
+Formula source text
+Diagram nodes and edges
 Account transactions
 ```
 
-belong here.
+#### State Manager
 
-***
-
-## State Manager
-
-Editor runtime state.
+Editor runtime state that is not part of the document itself.
 
 ```text
 Selection
@@ -332,8 +320,6 @@ Clipboard
 Undo Stack
 Layout
 ```
-
-These are not part of the document itself.
 
 For example:
 
@@ -345,13 +331,20 @@ State:
     Row 42 is selected
 ```
 
-Selection should not end up serialized into the document unless explicitly desired.
+Selection is not serialized into the document unless explicitly desired.
 
-***
+An event notification mechanism (EventBus, Observable, or Notifier) is needed to propagate changes across subsystems:
 
-## Syntax
+```text
+TreeTable changed
+Diagram changed
+Selection changed
+Undo stack changed
+```
 
-A completely separate subsystem.
+#### Syntax
+
+A completely separate subsystem — essentially a mini compiler pipeline.
 
 ```text
 Syntax Source
@@ -369,36 +362,11 @@ AST
 Renderer
 ```
 
-This is essentially a mini compiler.
+#### Presenters
 
-***
+Split into two categories:
 
-## Presenters
-
-Here I think your split is excellent:
-
-```text
-presenters/
-|
-+-- app/
-|
-+-- components/
-```
-
-I would think about them as:
-
-### App Presenter
-
-Knows:
-
-```text
-Document
-Persistence
-Navigation
-Search
-```
-
-Examples:
+**App Presenters** — application-specific, aware of the document, persistence, navigation, and search:
 
 ```text
 DocumentPresenter
@@ -406,80 +374,25 @@ NavigationPresenter
 MainWindowPresenter
 ```
 
-These are bookkeeping-editor specific.
-
-***
-
-### Component Presenter
-
-Knows:
-
-```text
-Table behavior
-Diagram behavior
-Syntax widget behavior
-```
-
-Examples:
+**Component Presenters** — application-independent, aware only of the behavior of their respective widget (could theoretically be reused in another application):
 
 ```text
 TreeTablePresenter
 DiagramPresenter
 SyntaxPresenter
+PropertyGridPresenter
+SearchPresenter
 ```
 
-These could theoretically be reused in another application.
+#### Views
 
----
+React components (`.tsx`) that render based on presenter state. Contain no business logic.
 
-# One thing considering adding
+#### Persistence
 
-Considering adding:
+Responsible for serialization, storage backends, and import/export.
 
-```text
-statemanager/
-
-+-- Command.ts
-+-- UndoManager.ts
-+-- SelectionState.ts
-+-- ClipboardState.ts
-+-- LayoutState.ts
-+-- EventBus.ts
-```
-
-or
-
-```text
-Observable.ts
-```
-
-or
-
-```text
-Notifier.ts
-```
-
-depending on how you're implementing model notifications.
-
-Because eventually you'll have:
-
-```text
-TreeTable changed
-
-Diagram changed
-
-Selection changed
-
-Undo stack changed
-```
-
-and you'll need some way to propagate updates.
-
-***
-
-# Runtime Architecture
-
-Drawing the runtime architecture as this:
+### Runtime Architecture
 
 ```text
                          USER
@@ -547,96 +460,7 @@ Drawing the runtime architecture as this:
 +-----------------------------------------------+
 ```
 
-***
-
-# One Final Suggestion
-
-I would consider moving:
-
 ```text
-expressions/
-```
-
-out of `domain/`.
-
-Because from your descriptions, expressions are not merely data:
-
-```text
-Expression
-Formula
-AST
-Grammar
-Rendering
-```
-
-That's almost an entire subsystem.
-
-So I might eventually evolve toward:
-
-```text
-domain/
-+-- document/
-+-- treetable/
-+-- diagrams/
-+-- bookkeeping/
-
-syntax/
-+-- expressions/
-+-- definitions/
-+-- ast/
-+-- parser/
-+-- rendering/
-```
-
-This would make it clearer that:
-
-```text
-Bookkeeping
-Diagrams
-TreeTables
-```
-
-are domain concepts,
-
-while
-
-```text
-Formulas
-Parsing
-AST
-Rendering
-```
-
-belong to the syntax engine.
-
-Other than that, I think this structure is quite solid for a large editor and noticeably more scalable than a typical React project where everything ends up under `components/` and `hooks/`.
-
-
----
-
-
-+------------------------+
-|   App Presenter        |
-+------------------------+
-            |
-            v
-+------------------------+
-| Component Presenter    |
-+------------------------+
-            |
-            v
-+------------------------+
-|       View             |
-+------------------------+
-
-            ^
-            |
-+------------------------+
-|      Domain            |
-+------------------------+
-
-
-Runtime architecture:
                                APPLICATION
 
 +--------------------------------------------------------------+
@@ -687,8 +511,9 @@ Runtime architecture:
                     ^
                     |
                User Input
+```
 
-Architecture:
+```text
 +------------------------------------------------------+
 | Application Model                                    |
 |                                                      |
@@ -733,33 +558,58 @@ Architecture:
 |  SyntaxView.tsx                                      |
 |                                                      |
 +------------------------------------------------------+
+```
 
+```text
++------------------------+
+|   App Presenter        |
++------------------------+
+            |
+            v
++------------------------+
+| Component Presenter    |
++------------------------+
+            |
+            v
++------------------------+
+|       View             |
++------------------------+
 
-
-## Design principles
-
-### tsx and ts mixed
-Use .tsx when JSX is present
-A file should be .tsx if it contains:
-TypeScript
-function Button() {
-    return <button>Click me</button>;
-}
-The TypeScript compiler needs the .tsx extension to parse JSX syntax.
+            ^
+            |
++------------------------+
+|      Domain            |
++------------------------+
+```
 
 ---
 
-Use .ts for pure logic
-A file should be .ts if it contains only:
+## Design Principles
 
-Business rules
-Domain models
-Data structures
-Utility functions
-API clients
-Validation logic
+### File Extension Convention
 
+Use `.tsx` when JSX is present. Use `.ts` for pure logic.
 
+A file should be `.tsx` if it contains JSX syntax:
+
+```tsx
+function Button() {
+    return <button>Click me</button>;
+}
+```
+
+The TypeScript compiler requires the `.tsx` extension to parse JSX.
+
+A file should be `.ts` if it contains only:
+
+- Business rules
+- Domain models
+- Data structures
+- Utility functions
+- API clients
+- Validation logic
+
+```ts
 export class Account {
     constructor(
         public readonly id: string,
@@ -774,16 +624,21 @@ export function calculateBalance(
     return credits.reduce((a, b) => a + b, 0)
          - debits.reduce((a, b) => a + b, 0);
 }
+```
 
-.ts → business logic + domain logic + infrastructure
-.tsx → UI/presentation logic
+Summary:
 
-A .tsx file can import a .ts file, And a .ts file can import types from a .tsx file if needed, though it's usually cleaner to keep UI dependencies flowing one way:
-TSX ---> TS rather than TS <--- TSX
+- `.ts` → business logic, domain logic, infrastructure
+- `.tsx` → UI/presentation logic
 
-## tsx components instead of static HTML
+Dependencies should flow one way: `.tsx` imports `.ts`, not the reverse. A `.ts` file may import types from `.tsx` if necessary, but the preferred direction is `TSX → TS`.
 
-Instead of
+### TSX Components Instead of Static HTML
+
+Layout is expressed through React components rather than static HTML with ID-based DOM access.
+
+Instead of:
+
 ```html
 <div id="sidebar"></div>
 <div id="toolbar"></div>
@@ -793,7 +648,8 @@ Instead of
 document.getElementById("sidebar")
 ```
 
-Use
+Use:
+
 ```tsx
 export function Layout() {
     return (
@@ -806,62 +662,73 @@ export function Layout() {
 }
 ```
 
-Type safety
-Component reuse
-Easier state management
-Easier testing
-Better maintainability
-No manual DOM manipulation
+Benefits:
 
-Keep HTML Minimal
-In a Vite React project, index.html is usually tiny:
+- Type safety
+- Component reuse
+- Easier state management
+- Easier testing
+- Better maintainability
+- No manual DOM manipulation
+
+In a Vite React project, `index.html` remains minimal:
+
 ```html
 <body>
     <div id="root"></div>
-    /src/main.tsx
+    <script type="module" src="/src/main.tsx"></script>
 </body>
 ```
 
-Avoid IDs for Layout
+IDs are reserved for:
 
-IDs are best reserved for:
-- Accessibility relationships
-- Anchors
-- Rare DOM integrations
-
+- Accessibility relationships (`aria-labelledby`, etc.)
+- Anchor links
+- Rare third-party DOM integrations
 
 ---
 
-# Porting to codebase versions in other platforms
+## Future: Porting to C++
 
-Porting to C++ (future)
-For many workloads:
+The architecture is designed to be portable. A future C++ implementation is anticipated.
 
-Integer addition: ~1 cycle
-Floating-point multiply: a few cycles
-An inlined function call: effectively free
-L1 cache miss: tens of cycles
-L2 cache miss: more
-L3 cache miss: hundreds of cycles
-DRAM access: hundreds of cycles (often 200–400+ depending on the platform)
+Performance context for native targets:
 
-So the CPU is often waiting on memory rather than doing arithmetic.
+- Integer addition: ~1 cycle
+- Floating-point multiply: a few cycles
+- An inlined function call: effectively free
+- L1 cache miss: tens of cycles
+- L2 cache miss: more
+- L3 cache miss: hundreds of cycles
+- DRAM access: hundreds of cycles (often 200–400+ depending on the platform)
 
-# Phase 1: Syntax parsers - Full math syntax test scope
+The CPU is often waiting on memory rather than doing arithmetic. Data layout and cache locality will be primary concerns in the native port.
 
-Todo:
-0. IMPORTANT TODO: Clean the draft in codebase analysis and fill sentences
-1. Properly define the math grammar (Common cases first, less useful using mnemonics, then using full keywords). The grammar must also support step by step notations, make derivatives more semantically using (\deriv (derivative), \pderiv (partial derivative) and \jac (jacobian) instead of d/(dx)) and so on. Define a rigorous grammar here in phase before continuing
-2. Remove any side effects of mathematical syntax (cannot identify Greek, Hebrew letters, etc). The parser must be able to tell the difference between standard mathematical compound symbols (\sin, \cos, \tan, \ln), Greek letters (alpha: \a, beta: \b, gamma: \g) and Hebrew letters (aleph: \ha, beth: \hb, gimel: \hg). Also other following properties. Define what the mathematical syntax should produce + update test cases
-3. Apply the architecture written in phase 0 of codebase-analysis (architecture definition) as program skeleton
-4. Add more todos of renderable syntaxes, such as geometry, physics, chemistry syntaxes and so on + test cases
-5. Add non-renderable syntaxes dedicated for other purposes, such as JSON/CSV syntax + test cases
+---
 
-Finish
+# Phase 1 — Syntax Parsers
 
-## Syntax design architecture
+## Goals
 
-The syntax subsystem is designed as an independent compiler pipeline rather than being embedded into the application domain. Syntax definitions are treated as data instead of application code.
+1. Define a rigorous math grammar. Common cases use mnemonics; less common constructs use full keywords. The grammar must support step-by-step notations and semantic operators (`\deriv` for derivative, `\pderiv` for partial derivative, `\jac` for Jacobian) instead of typographical conventions like `d/(dx)`.
+
+2. Eliminate ambiguities in identifier recognition. The parser must distinguish between:
+   - Standard mathematical compound symbols (`\sin`, `\cos`, `\tan`, `\ln`)
+   - Greek letters (`\a` = α, `\b` = β, `\g` = γ)
+   - Hebrew letters (`\ha` = ℵ, `\hb` = ℶ, `\hg` = ℷ)
+   - Plain identifiers, left-skew and right-skew variants, blackboard bold
+
+   Define what the mathematical syntax should produce for each category and update test cases accordingly.
+
+3. Apply the architecture defined in Phase 0 as the program skeleton — restructure `src/` to match the planned directory layout.
+
+4. Define additional renderable syntaxes (geometry, physics, chemistry) with corresponding test cases.
+
+5. Define non-renderable syntaxes for data purposes (JSON/CSV syntax) with corresponding test cases.
+
+## Syntax Design Architecture
+
+The syntax subsystem is designed as an independent compiler pipeline. Syntax definitions are treated as data rather than application code.
 
 ```
 Syntax Source
@@ -888,8 +755,7 @@ AST
 Renderer
 ```
 
-
-The long-term objective is for syntaxes to be distributed independently of the editor executable. Instead of compiling grammars into the application, the editor loads compiled syntax packages produced bya dedicated syntax compiler.
+The long-term objective is for syntaxes to be distributed independently of the editor executable. Instead of compiling grammars into the application, the editor loads compiled syntax packages produced by a dedicated syntax compiler.
 
 This architecture provides several advantages:
 
@@ -902,6 +768,7 @@ This architecture provides several advantages:
 Compiled syntax packages should serialize logical grammar structures rather than raw memory. Runtime pointers must never be written directly to disk. Instead, references should be represented using indices or identifiers so the runtime can reconstruct internal structures when loading.
 
 Eventually the syntax compiler may introduce an intermediate representation (IR):
+
 ```
 Syntax Source
         |
@@ -921,13 +788,13 @@ Compiled Syntax Package
 
 This allows the compiler and runtime to evolve independently while keeping the serialization format stable.
 
-## Syntax design principles
+## Syntax Design Principles
 
 The standard syntax intentionally prioritizes semantic clarity and deterministic parsing over reproducing traditional handwritten notation.
 
 Traditional mathematical notation evolved for human readers and contains numerous ambiguities that complicate parsing. The syntax therefore adopts several guiding principles.
 
-### Explicit syntax over implicit syntax
+### Explicit Syntax Over Implicit Syntax
 
 Implicit multiplication introduces substantial ambiguity.
 
@@ -957,9 +824,9 @@ The parser should never infer multiplication from adjacency.
 
 The renderer may later omit multiplication symbols for display purposes, but the source language remains explicit.
 
-### Context-free parsing
+### Context-Free Parsing
 
-The parser should determine the syntax tree without relying on semantic knowledge.
+The parser determines the syntax tree without relying on semantic knowledge.
 
 For example,
 
@@ -969,7 +836,7 @@ sin(x)
 
 is parsed as an ordinary function call.
 
-Whether sin is a predefined mathematical function or a user-defined identifier is determined during semantic analysis rather than parsing.
+Whether `sin` is a predefined mathematical function or a user-defined identifier is determined during semantic analysis rather than parsing.
 
 Likewise,
 
@@ -981,13 +848,14 @@ is syntactically identical.
 
 This separation keeps the grammar deterministic and extensible.
 
-### Multi-character identifiers
+### Multi-Character Identifiers
 
 Identifiers are not decomposed into implicit products.
 
-For example, velocity is always a single identifier.
+For example, `velocity` is always a single identifier.
 
 Similarly,
+
 ```
 sin
 cos
@@ -996,22 +864,25 @@ deriv
 int
 jacobian
 ```
+
 are ordinary identifiers that happen to have predefined meanings within the mathematics package.
 
 The parser does not distinguish between built-in and user-defined identifiers.
 
-### Surface syntax versus semantic representation
+### Surface Syntax Versus Semantic Representation
 
 The source syntax exists solely for user interaction.
 
 Immediately after parsing, expressions are transformed into semantic AST nodes.
 
 For example,
+
 ```
 \deriv(x, x^3)
 ```
 
 becomes
+
 ```
 Derivative
 +-- Variable = x
@@ -1019,11 +890,13 @@ Derivative
 ```
 
 Similarly,
+
 ```
 int(x, 1, 2, exp(-x))
 ```
 
 becomes
+
 ```
 Integral
 +-- Variable = x
@@ -1032,13 +905,14 @@ Integral
 └-- Body = exp(-x)
 ```
 
-Subsequent simplification, differentiation, symbolic manipulation and rendering operate exclusively on semantic nodes rather than textual notation.
+Subsequent simplification, differentiation, symbolic manipulation, and rendering operate exclusively on semantic nodes rather than textual notation.
 
-Mathematical operators are not encoded as arithmetic
+### Mathematical Operators Are Not Encoded as Arithmetic
 
 Traditional notation frequently represents operators using symbols that resemble arithmetic expressions despite having different semantics.
 
 For example,
+
 ```
 d/(dx)
 ```
@@ -1046,6 +920,7 @@ d/(dx)
 resembles a fraction but is actually a differentiation operator.
 
 Likewise,
+
 ```
 ∂/∂x
 ```
@@ -1055,6 +930,7 @@ is not division.
 The syntax therefore introduces dedicated language constructs instead of relying on typographical conventions.
 
 Examples include:
+
 ```
 deriv(variable, expression)
 pderiv(variable, expression)
@@ -1063,13 +939,14 @@ jacobian(function, variables...)
 
 These forms eliminate ambiguities while directly expressing the intended semantics.
 
-Unicode-independent source representation
+### Unicode-Independent Source Representation
 
-The source language should remain entirely ASCII.
+The source language remains entirely ASCII.
 
 Unicode mathematical symbols are introduced through explicit escape sequences.
 
 Examples include:
+
 ```
 \a      α (Alpha)
 \b      β (Beta)
@@ -1080,11 +957,12 @@ Examples include:
 \hg     ℷ (Gimel)
 ```
 
-### Mathematical syntax design goals
+### Mathematical Syntax Design Goals
 
 The mathematical language is designed primarily as a semantic language rather than a typesetting language.
 
 Consequently:
+
 - Explicit syntax is preferred over handwritten shorthand;
 - Every construct should have a unique parse tree;
 - Every parse tree should correspond to a unique semantic representation;
@@ -1092,7 +970,7 @@ Consequently:
 
 This philosophy deliberately separates how mathematics is written from how mathematics is represented internally, allowing symbolic manipulation, simplification, rendering, and future language extensions to operate on a clean and unambiguous semantic model.
 
-General DSL design principles
+### General DSL Design Principles
 
 The same design philosophy extends beyond mathematical notation to every domain-specific language supported by the editor. Each DSL should resemble the conventional textual notation of its domain as closely as possible, provided that doing so does not introduce ambiguity or compromise the underlying semantic model. When traditional notation relies on implicit conventions or contextual interpretation, the DSL instead adopts explicit constructs that preserve the intended meaning while remaining deterministic to parse.
 
@@ -1102,18 +980,36 @@ Different domains naturally favor different textual representations. For example
 
 Graphical representations remain important, but they are treated as visualizations of the underlying semantic model rather than the canonical source language. A Boolean expression may be rendered as a logic gate diagram, a mathematical expression may be rendered using conventional typesetting, and a chemical structure may be rendered as a structural diagram. The source language and the graphical representation therefore become two complementary projections of the same semantic information rather than competing representations.
 
-I like this because it generalizes the philosophy you're already using for mathematics into a principle that can guide every future DSL (physics, chemistry, electronics, geometry, bookkeeping, etc.). It also reinforces one of the central themes of your architecture: the semantic model is canonical; text and diagrams are interchangeable views of that model.
+This principle reinforces a central theme of the architecture: the semantic model is canonical; text and diagrams are interchangeable views of that model.
 
-## Mathematical syntax design
+## Mathematical Syntax Design
 
-## Syntax for geometry
+TODO: Define the complete mathematical grammar specification here.
 
-# Phase 2: Domain
+## Syntax for Geometry
 
-# Phase 3: State managers
+TODO: Define the geometry DSL specification here.
 
-# Phase 4: Presenters + views (Tsx-oriented)
+---
 
-1. Add mathematical syntax rendering. Behaviors are validated using test cases by now. However, behaviors should also be able to manifest on Webapp as well. This can be done by creating a separate playground page aside of the application dedicated for trying different features parts, including mathematical syntaxes, both as a interactive documentation specification, a feature tester and a manual troubleshooting interface. (Tests are still needed)
+# Phase 2 — Domain
 
-# Phase 5: Persistance manager
+TODO: Define the domain model implementation — TreeTable, Diagram, and Bookkeeping data structures, their relationships, and serialization format.
+
+---
+
+# Phase 3 — State Managers
+
+TODO: Define the editor runtime state layer — selection, clipboard, undo/redo, layout state, and the event notification mechanism that propagates changes across subsystems.
+
+---
+
+# Phase 4 — Presenters and Views
+
+1. Add mathematical syntax rendering. By this phase, behaviors are validated using test cases. However, behaviors should also manifest in the webapp. This is accomplished by creating a separate playground page dedicated to trying individual features, including mathematical syntaxes. The playground serves simultaneously as interactive documentation, a feature tester, and a manual troubleshooting interface. (Automated tests remain the primary validation mechanism.)
+
+---
+
+# Phase 5 — Persistence
+
+TODO: Define the persistence layer — document serialization format, storage backend abstraction, Firebase adapter, and import/export functionality.

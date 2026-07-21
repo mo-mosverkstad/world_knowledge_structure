@@ -231,6 +231,12 @@ Bookkeeping/
 |   |   |   +-- Lexer.ts
 |   |   |   +-- Parser.ts
 |   |   |
+|   |   +-- compiler/
+|   |   |   |
+|   |   |   +-- SyntaxCompiler.ts
+|   |   |   +-- GrammarIR.ts
+|   |   |   +-- PackageSerializer.ts
+|   |   |
 |   |   +-- rendering/
 |   |       |
 |   |       +-- ExpressionRenderer.ts
@@ -250,6 +256,7 @@ Bookkeeping/
 |   |       +-- TreeTablePresenter.ts
 |   |       +-- DiagramPresenter.ts
 |   |       +-- SyntaxPresenter.ts
+|   |       +-- DslEditorPresenter.ts
 |   |       +-- PropertyGridPresenter.ts
 |   |       +-- SearchPresenter.ts
 |   |
@@ -264,15 +271,24 @@ Bookkeeping/
 |   |   +-- components/
 |   |       |
 |   |       +-- TreeTableView.tsx
+|   |       +-- TreeTableView.css
 |   |       +-- DiagramView.tsx
+|   |       +-- DiagramView.css
 |   |       +-- SyntaxView.tsx
+|   |       +-- SyntaxView.css
+|   |       +-- DslEditorView.tsx
+|   |       +-- DslEditorView.css
 |   |       +-- PropertyGridView.tsx
+|   |       +-- PropertyGridView.css
 |   |       +-- SearchView.tsx
+|   |       +-- SearchView.css
 |   |
 |   |
 |   +-- persistence/
 |   |   |
 |   |   +-- DocumentStorage.ts
+|   |   +-- SyntaxPackageStorage.ts
+|   |   +-- IndexedDBAdapter.ts
 |   |   +-- FirebaseAdapter.ts
 |   |   +-- ImportExport.ts
 |   |
@@ -318,6 +334,7 @@ Components that belong in `lib/`:
 Components that remain in `src/`:
 
 - Math syntax grammar rules (they define *what* to parse using the PEG engine — domain-specific)
+- The syntax compiler in `syntax/compiler/` (bound to the app's meta-syntax, package format, and runtime interpreter — it *uses* the generic PEG engine but is application-specific orchestration, not a reusable library)
 - `UndoManager` in `statemanager/` (wires the generic history to application-specific commands)
 - All domain models, presenters, views, and persistence adapters
 
@@ -879,6 +896,50 @@ Compiled Syntax Package
 
 This allows the compiler and runtime to evolve independently while keeping the serialization format stable.
 
+### The Syntax Compiler
+
+The syntax compiler is part of the syntax subsystem (`src/syntax/compiler/`), not a generic `lib/` dependency. Although it does not know about any specific domain (math, chemistry, etc.), it is tightly coupled to application-specific concerns: the meta-syntax used to define grammars, the compiled-package serialization format, and the runtime interpreter that consumes those packages. It is therefore bespoke application infrastructure rather than reusable library code.
+
+The genuinely reusable, domain-ignorant core is the **PEG engine** (`lib/peg-parser/AbstractParser`). The compiler is the application-specific orchestration built *around* that generic core — it uses the PEG engine but belongs to the syntax subsystem.
+
+This resolves a design tension around custom DSL compilation. If compilation is embedded directly into the webapp as a first-class user platform, it risks turning the whole application into a DSL platform; but if it is removed entirely, a *separate* application would be required to compile DSLs, which reintroduces a "mounting" problem — getting the produced package back into the app.
+
+Keeping the compiler as an internal subsystem module (rather than either a user-facing platform or an external tool) avoids both extremes. It is invoked through one controlled surface — the in-app DSL editor — and its output is written straight to persistence. If an offline or batch CLI is ever wanted, it can import the same `src/syntax/compiler/` module; that remains an optional future consideration rather than a requirement.
+
+Note on terminology: "compiled binary" here does not mean native machine code. A browser cannot and should not produce native executables. A "compiled syntax package" is a compact **serialized grammar artifact** (for example JSON, MessagePack, or a typed-array blob) that the TypeScript runtime interprets. It is data, not an executable.
+
+### In-App DSL Editor
+
+Custom DSLs are authored inside the application through a dedicated DSL editor surface (`DslEditorView` / `DslEditorPresenter`). This makes compiling and saving a single act — there is no external file handoff and therefore no mounting step. The output package never leaves the application boundary; it is written straight to the persistence layer.
+
+```text
+User writes DSL source (in-app DSL editor)
+        |
+        v
+Compiler (src/syntax/compiler) produces a package
+        |
+        v
+Saved directly to persistence
+        ├── IndexedDB (local, offline-capable)
+        └── Firebase (cloud sync, when a session exists)
+        |
+        v
+Immediately available to the editor runtime — no mounting, no file handoff
+```
+
+### Bundled vs. Loaded Syntaxes (Hybrid)
+
+The editor uses a hybrid loading strategy:
+
+- **Bundled standard syntaxes** (math, and eventually chemistry, physics, etc.) ship with the application as static assets and load instantly at startup via `fetch()`. These work offline and require no network round-trip. They are effectively "etched in."
+- **Custom / additional syntaxes** are loaded dynamically at runtime — authored in the in-app DSL editor, or imported by the user, or synced from cloud storage.
+
+This keeps startup fast in the common case while preserving extensibility.
+
+### Security Constraint
+
+Because users author and load syntax packages, the runtime must always treat a package as **declarative data**. It must never `eval` or execute code embedded in a package. Interpreting a grammar table or parser bytecode is safe; executing arbitrary shipped code would be a security hole. Keeping packages purely declarative — and controlling the compiler output format end to end via the in-app editor — makes this guarantee enforceable.
+
 ## Syntax Design Principles
 
 The standard syntax intentionally prioritizes semantic clarity and deterministic parsing over reproducing traditional handwritten notation.
@@ -1104,3 +1165,23 @@ TODO: Define the editor runtime state layer — selection, clipboard, undo/redo,
 # Phase 5 — Persistence
 
 TODO: Define the persistence layer — document serialization format, storage backend abstraction, Firebase adapter, and import/export functionality.
+
+## Storage Targets
+
+The persistence layer abstracts over two storage backends, and data is written to both where applicable:
+
+- **IndexedDB** — local, in-browser storage. Provides offline capability and fast startup.
+- **Firebase** — cloud storage. Provides cross-device sync when a session exists.
+
+A web application cannot treat the native filesystem as a source of truth (even with `showSaveFilePicker` / `showOpenFilePicker`, access is limited and permission-gated). The native filesystem is therefore used only for **import/export**, never as primary storage. IndexedDB is the local source of truth; Firebase is the cloud mirror.
+
+## Syntax Package Storage
+
+Compiled syntax packages authored in the in-app DSL editor (see Phase 1) are a persistence concern, handled by `SyntaxPackageStorage`. Every custom package is:
+
+- saved to **IndexedDB** for local, offline use, and
+- mirrored to **Firebase** when a cloud session is available.
+
+Bundled standard syntaxes are not stored here — they ship as static assets and load via `fetch()` at startup. Only custom/imported packages flow through `SyntaxPackageStorage`.
+
+This means the in-app DSL editor never has to worry about "mounting" a compiled package: saving to the persistence layer *is* the loading path. A package saved to IndexedDB/Firebase is immediately available to the editor runtime.

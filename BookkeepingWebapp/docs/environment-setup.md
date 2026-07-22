@@ -2,6 +2,8 @@
 
 This document is a comprehensive guide that spans from setting up base environment to launching the Bookkeeping application. 
 
+> **Current project-path and dependency note:** the web application directory in this repository is `BookkeepingWebapp` (not `Bookkeeping/Webapp`). Run dependency commands from `C:\Users\mowan\source\repos\world_knowledge_structure\BookkeepingWebapp`. For a fresh checkout, use `npm ci` to install the versions in `package-lock.json`; this installs Vite and the `vite/client` definitions required by `tsconfig.json`.
+
 ## 1. Setting up application base environment
 
 ### Project Stack
@@ -33,6 +35,8 @@ VS Code bridges into WSL transparently via the **WSL extension** - the UI runs o
 ---
 
 ### Platform Setup: WSL Ubuntu (Recommended)
+
+> **Current WSL paths:** work directly from `/mnt/c/Users/mowan/source/repos/world_knowledge_structure/BookkeepingWebapp`, or copy `world_knowledge_structure` to `~/projects/world_knowledge_structure` and use `~/projects/world_knowledge_structure/BookkeepingWebapp`. In either location, run `npm ci` followed by `npm run dev`.
 
 #### 1. Enable WSL and install Ubuntu
 
@@ -99,6 +103,8 @@ Vite will print a local URL (e.g. `http://localhost:5173`). Open it in your Wind
 
 ### Platform Setup: Windows Host (Alternative)
 
+> **Current Windows path:** this checkout is at `C:\Users\mowan\source\repos\world_knowledge_structure\BookkeepingWebapp`. Run `npm ci` and then `npm run dev` in that directory.
+
 If WSL is not available, install directly on Windows. Be aware of the risks above (OneDrive conflicts, slower installs).
 
 #### 1. Install Node.js
@@ -127,6 +133,8 @@ npm run dev
 ```
 
 ### Npm dependencies setup and executing the application
+
+> **Current dependency note:** React, React DOM, the React Vite plugin, TypeScript, Vite, and Vitest are already declared in `package.json`. Do not run the individual installation commands below for a normal setup. From `BookkeepingWebapp`, run `npm ci`. Use `npm install` only when intentionally changing dependencies, and commit the related lockfile changes.
 
 For executing the application, several dependencies must be installed. 
 
@@ -178,6 +186,8 @@ Defined in `package.json`:
 | `npm test` | Run all unit tests once (Vitest) |
 | `npm run test:watch` | Run tests in watch mode, re-runs on file save |
 
+> **Script note:** `npm run test:watch` is not currently defined in `package.json`; use `npm test`.
+
 ---
 
 ### Notes
@@ -185,3 +195,7 @@ Defined in `package.json`:
 - TypeScript is configured in `tsconfig.json` targeting `ES2023` with strict linting (`noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`)
 - `noEmit: true` means `tsc` only type-checks - Vite handles the actual transpilation
 - Source files are under `src/`, entry point is `src/main.ts`
+
+> **Current entry-point note:** the application entry point is `src/main.tsx`.
+
+> **Current TypeScript note:** `strict` is not enabled in `tsconfig.json`; the listed unused-code and switch-fallthrough checks are enabled.

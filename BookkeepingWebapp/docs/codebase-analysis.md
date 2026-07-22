@@ -245,7 +245,7 @@ Bookkeeping/
 |   |
 |   +-- presenters/
 |   |   |
-|   |   +-- app/
+|   |   +-- app/ <- Bootstrap
 |   |   |   |
 |   |   |   +-- DocumentPresenter.ts
 |   |   |   +-- NavigationPresenter.ts
@@ -255,10 +255,11 @@ Bookkeeping/
 |   |       |
 |   |       +-- TreeTablePresenter.ts
 |   |       +-- DiagramPresenter.ts
-|   |       +-- SyntaxPresenter.ts
-|   |       +-- DslEditorPresenter.ts
-|   |       +-- PropertyGridPresenter.ts
+|   |       +-- GroupPresenter.ts
+|   |       +-- BoxPresenter.ts
+|   |       +-- ToolbarPresenter.ts
 |   |       +-- SearchPresenter.ts
+|   |       +-- DslEditorPresenter.ts (Not decided yet)
 |   |
 |   |
 |   +-- views/
@@ -268,20 +269,95 @@ Bookkeeping/
 |   |   |   +-- MainWindow.tsx
 |   |   |   +-- NavigationBar.tsx
 |   |   |
-|   |   +-- components/
+|   |   +-- top-bar/
+|   |   |   |
+|   |   |   +-- TopBar.tsx
+|   |   |   +-- TopBar.css
+|   |   |   +-- TopBarElement.tsx
+|   |   |   +-- TopBarElement.css
+|   |   |   +-- ... More if needed
+|   |   |
+|   |   +-- tool-bar/
+|   |   |   |
+|   |   |   +-- ToolBar.tsx
+|   |   |   +-- ToolBar.css
+|   |   |   +-- ToolBarElement.tsx
+|   |   |   +-- ToolBarElement.css
+|   |   |   +-- ... More if needed
+|   |   |
+|   |   +-- tab-bar/
+|   |   |   |
+|   |   |   +-- TabBar.tsx
+|   |   |   +-- TabBar.css
+|   |   |   +-- TabBarElement.tsx
+|   |   |   +-- TabBarElement.css
+|   |   |   +-- ... More if needed
+|   |   |
+|   |   +-- property-grid/
+|   |   |   |
+|   |   |   +-- PropertyGrid.tsx
+|   |   |   +-- PropertyGrid.css
+|   |   |   +-- ... More if needed
+|   |   |
+|   |   +-- search-bar/
+|   |   |   |
+|   |   |   +-- SearchBar.tsx
+|   |   |   +-- SearchBar.css
+|   |   |   +-- ... More if needed
+|   |   |
+|   |   +-- table-view/
+|   |   |   |
+|   |   |   +-- TableView.tsx
+|   |   |   +-- TableView.css
+|   |   |   +-- TableViewRowPrefix.tsx <- For tree table identation
+|   |   |   +-- TableViewRowPrefix.css
+|   |   |   +-- TableViewRow.tsx
+|   |   |   +-- TableViewRow.css
+|   |   |   +-- TableViewHeaderCell.tsx
+|   |   |   +-- TableViewHeaderCell.css
+|   |   |   +-- TableViewCell.tsx
+|   |   |   +-- TableViewCell.css
+|   |   |   +-- ... More if needed
+|   |   |
+|   |   +-- diagram-view/
+|   |   |   |
+|   |   |   +-- DiagramView.tsx
+|   |   |   +-- DiagramView.css
+|   |   |   +-- DiagramViewCell.tsx
+|   |   |   +-- DiagramViewCell.css
+|   |   |   +-- ... (Not decided yet)
+|   |   |
+|   |   +-- dsl-editor-view/
+|   |   |   |
+|   |   |   +-- ... (Not decided yet)
+|   |   |
+|   |   +-- card/ <- Atomic component inside cell
+|   |   |   |
+|   |   |   +-- Card.tsx
+|   |   |   +-- Card.css
+|   |   |
+|   |   +-- native-math/
+|   |   |   |
+|   |   |   +-- NativeMath.tsx
+|   |   |   +-- NativeMath.css
+|   |   |   +-- ... (Not decided yet)
+|   |   |
+|   |   +-- native-arc/ <- Support geometry diagrams and etc.
+|   |   |   |
+|   |   |   +-- NativeArc.tsx
+|   |   |   +-- NativeArc.css
+|   |   |   +-- ... (Not decided yet)
+|   |   |
+|   |   +-- native-chemistry/
+|   |   |   |
+|   |   |   +-- NativeChemistry.tsx
+|   |   |   +-- NativeChemistry.css
+|   |   |   +-- ... (Not decided yet)
+|   |   |
+|   |   +-- other/ <- if needed, placeholder
 |   |       |
-|   |       +-- TreeTableView.tsx
-|   |       +-- TreeTableView.css
-|   |       +-- DiagramView.tsx
-|   |       +-- DiagramView.css
-|   |       +-- SyntaxView.tsx
-|   |       +-- SyntaxView.css
-|   |       +-- DslEditorView.tsx
-|   |       +-- DslEditorView.css
-|   |       +-- PropertyGridView.tsx
-|   |       +-- PropertyGridView.css
-|   |       +-- SearchView.tsx
-|   |       +-- SearchView.css
+|   |       +-- other.tsx
+|   |       +-- other.css
 |   |
 |   |
 |   +-- persistence/

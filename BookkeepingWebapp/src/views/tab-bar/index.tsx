@@ -6,44 +6,39 @@ import {
     useState,
 } from "react";
 import "./style.css";
+import { Tabs } from "./Tabs";
+import { Tab } from "./Tab";
 
 /**
- * TabBar — a *data-driven* tab bar component.
+ * TabBar — a *data-driven* tab bar and behavior COORDINATOR.
  *
- * Design rationale
- * ----------------
- * The component owns ONLY what is intrinsic to "being a tab bar":
- *   - the presentation of a row of tabs,
- *   - remembering / switching the active tab,
- *   - offering (optional) close and reorder affordances.
+ * Architecture
+ * ------------
+ * `TabBar` deliberately renders NO raw HTML. It composes two internal, private
+ * helper components:
  *
- * It knows NOTHING about the shape of your business data. Instead of coupling
- * the component to a fixed data structure, the caller passes:
+ *   - `Tabs`  — owns the container markup.
+ *   - `Tab`   — owns a single tab's markup and wraps raw DOM events into
+ *               high-level semantic events (onSelect / onClose / onReorder*).
  *
- *   1. `data`          — the DATA PORT: an arbitrary business data structure.
- *   2. `forEachTab`    — an INTERNAL ITERATOR: the caller traverses its own
- *                        structure exactly once and yields each tab into the
- *                        visitor the component supplies.
- *   3. mutate callbacks— how to *manipulate* that data when the user closes or
- *                        reorders a tab (`onTabClose`, `onTabReorder`).
- *   4. behavior hooks  — what should *happen* on interactions (`onTabClick`,
- *                        `onActiveTabChange`). These are defined by the caller,
- *                        never by the component.
+ * Neither `Tabs` nor `Tab` is exported; changing their composition or DOM does
+ * not touch this file. `TabBar`'s sole job is to *coordinate behavior*: iterate
+ * the data port, decide which tab is active, and react to the semantic events
+ * the UI layer emits. It never asks "what element should this be" — only "what
+ * should happen".
  *
- * Why an internal iterator instead of `getTabAt(data, i)` / `getTabs(data)`?
- * -------------------------------------------------------------------------
- *   - `getTabs(data) => TabDescriptor[]` allocates an O(n) intermediate array
- *     every render.
- *   - `getTabAt(data, i)` called in a loop is O(1) *only* for arrays. For a
- *     linked list the n-th lookup is O(n) → O(n^2) overall; for a balanced
- *     tree each lookup re-descends O(log n) → O(n log n) overall.
- *
- * `forEachTab` sidesteps both: the caller walks its structure once (O(n) for a
- * list, O(n) for an in-order tree walk — a single log n descent amortized away)
- * and pushes elements out. The component allocates nothing beyond the React
- * children it must produce anyway, and the "first tab" needed for active-tab
- * fallback is captured during that same single pass (index 0), so no separate
- * random-access accessor is required.
+ * Data-driven contract
+ * --------------------
+ * The component knows NOTHING about the shape of your business data. The caller
+ * passes:
+ *   1. `data`        — the DATA PORT: an arbitrary business data structure.
+ *   2. `forEachTab`  — an INTERNAL ITERATOR: the caller traverses its own
+ *                      structure exactly once and yields each tab into the
+ *                      visitor the component supplies. This avoids both an O(n)
+ *                      projection array and O(n)-per-lookup random access
+ *                      (which would be O(n^2) for lists / O(n log n) for trees).
+ *   3. mutate cbs    — `onTabClose`, `onTabReorder`.
+ *   4. behavior hooks— `onTabClick`, `onActiveTabChange` (caller-defined).
  */
 
 /**
@@ -84,10 +79,9 @@ export interface TabBarProps<TData> {
     /**
      * Traverse `data` exactly once, calling `visit(tab, index)` for every tab
      * in display order. The caller is free to walk an array, a linked list, a
-     * B+ tree, etc. — whatever its native traversal is. The component performs
-     * no random access and builds no intermediate array; everything it needs
-     * (rendered elements, first-tab id, active-tab existence) is gathered
-     * during this single pass.
+     * B+ tree, etc. The component performs no random access and builds no
+     * intermediate array; everything it needs (rendered elements, first-tab id,
+     * active-tab existence) is gathered during this single pass.
      */
     forEachTab: (data: TData, visit: TabVisitor) => void;
 
@@ -157,62 +151,46 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
 
     const isControlled = activeTabId !== undefined;
 
-    // ---- Encapsulated tab-bar concern: remember the active tab ---------
-    // In uncontrolled mode we track the active tab ourselves. We cannot (and
-    // must not) random-access the data to seed this, so we start from the
-    // explicit default or null; if null/stale, the render pass below discovers
-    // the first tab and the effect adopts it.
+    // ---- Encapsulated concern: remember the active tab ----------------
     const [internalActiveId, setInternalActiveId] = useState<string | null>(
         defaultActiveTabId ?? null,
     );
-
     const resolvedActiveId = isControlled ? activeTabId : internalActiveId;
 
-    // ---- Drag & drop reordering state (opt-in via `reorderable`) -------
+    // ---- Encapsulated concern: track an in-flight drag ----------------
     const [dragIndex, setDragIndex] = useState<number | null>(null);
     const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
-    const activate = useCallback(
-        (id: string) => {
-            if (!isControlled) setInternalActiveId(id);
-        },
-        [isControlled],
-    );
-
-    const handleTabClick = useCallback(
+    // ---- Semantic-event handlers (behavior coordination only) ---------
+    const handleSelect = useCallback(
         (tab: TabDescriptor) => {
-            if (tab.disabled) return;
-            activate(tab.id);
+            if (!isControlled) setInternalActiveId(tab.id);
             onTabClick?.(tab.id, data);
         },
-        [activate, onTabClick, data],
+        [isControlled, onTabClick, data],
     );
 
     const handleClose = useCallback(
-        (e: React.MouseEvent, tabId: string) => {
-            // Don't let the close click also select the tab.
-            e.stopPropagation();
+        (tabId: string) => {
             onTabClose?.(tabId, data);
         },
         [onTabClose, data],
     );
 
-    const handleDragStart = useCallback((index: number) => {
+    const handleReorderStart = useCallback((index: number) => {
         setDragIndex(index);
     }, []);
 
-    const handleDragOver = useCallback(
-        (e: React.DragEvent, index: number) => {
+    const handleReorderOver = useCallback(
+        (index: number) => {
             if (dragIndex === null) return;
-            e.preventDefault(); // allow drop
             setDragOverIndex(index);
         },
         [dragIndex],
     );
 
-    const handleDrop = useCallback(
-        (e: React.DragEvent, toIndex: number) => {
-            e.preventDefault();
+    const handleReorderDrop = useCallback(
+        (toIndex: number) => {
             if (dragIndex !== null && dragIndex !== toIndex) {
                 onTabReorder?.(dragIndex, toIndex, data);
             }
@@ -222,16 +200,15 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
         [dragIndex, onTabReorder, data],
     );
 
-    const handleDragEnd = useCallback(() => {
+    const handleReorderEnd = useCallback(() => {
         setDragIndex(null);
         setDragOverIndex(null);
     }, []);
 
-    // ---- Single traversal via the caller's iterator -------------------
-    // One pass over the caller's structure produces (a) the rendered elements,
-    // (b) the first tab id (captured at index 0 — our mitigation for "0th
-    // element access" so no getTabAt is needed), and (c) whether the active
-    // tab still exists. No intermediate array, no random access, no rescan.
+    // ---- Single traversal via the caller's iterator ------------------
+    // Composition, not construction: the coordinator maps each descriptor onto
+    // a <Tab> and lets that component decide its own markup/events. The pass
+    // also captures the first tab id and active-tab existence for free.
     const tabElements: ReactNode[] = [];
     let firstTabId: string | null = null;
     let activeExists = false;
@@ -240,67 +217,32 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
         if (index === 0) firstTabId = tab.id;
         if (tab.id === resolvedActiveId) activeExists = true;
 
-        const isActive = tab.id === resolvedActiveId;
-        const tabClosable =
-            (tab.closable ?? closable) && onTabClose !== undefined;
-        const classes = ["tab"];
-        if (isActive) classes.push("tab--active");
-        if (tab.disabled) classes.push("tab--disabled");
-        if (dragOverIndex === index && dragIndex !== index)
-            classes.push("tab--drop-target");
-
-        // Snapshot the index for the handlers to close over.
-        const i = index;
-
         tabElements.push(
-            <div
+            <Tab
                 key={tab.id}
-                className={classes.join(" ")}
-                role="tab"
-                aria-selected={isActive}
-                aria-disabled={tab.disabled || undefined}
-                tabIndex={tab.disabled ? -1 : 0}
-                draggable={reorderable && !tab.disabled}
-                onClick={() => handleTabClick(tab)}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        handleTabClick(tab);
-                    }
-                }}
-                onDragStart={
-                    reorderable ? () => handleDragStart(i) : undefined
-                }
-                onDragOver={
-                    reorderable ? (e) => handleDragOver(e, i) : undefined
-                }
-                onDrop={reorderable ? (e) => handleDrop(e, i) : undefined}
-                onDragEnd={reorderable ? handleDragEnd : undefined}
-            >
-                <span className="tab__title">{tab.title}</span>
-                {tabClosable && (
-                    <button
-                        type="button"
-                        className="tab__close"
-                        aria-label="Close tab"
-                        onClick={(e) => handleClose(e, tab.id)}
-                    >
-                        ×
-                    </button>
-                )}
-            </div>,
+                title={tab.title}
+                active={tab.id === resolvedActiveId}
+                disabled={tab.disabled}
+                closable={(tab.closable ?? closable) && onTabClose !== undefined}
+                draggable={reorderable}
+                dropTarget={dragOverIndex === index && dragIndex !== index}
+                onSelect={() => handleSelect(tab)}
+                onClose={() => handleClose(tab.id)}
+                onReorderStart={() => handleReorderStart(index)}
+                onReorderOver={() => handleReorderOver(index)}
+                onReorderDrop={() => handleReorderDrop(index)}
+                onReorderEnd={handleReorderEnd}
+            />,
         );
     });
 
-    // ---- Active-tab validity (uses flags from the pass; no rescan) -----
-    // If there is no valid active tab (unset on first mount, or the active tab
-    // was closed), adopt the first tab discovered during the traversal.
+    // ---- Active-tab validity (uses flags from the pass; no rescan) ----
     useEffect(() => {
         if (isControlled) return;
         if (!activeExists) setInternalActiveId(firstTabId);
     }, [isControlled, activeExists, firstTabId]);
 
-    // ---- Notify the caller when the active tab actually changes --------
+    // ---- Notify the caller when the active tab actually changes -------
     const prevActiveRef = useRef<string | null>(resolvedActiveId ?? null);
     useEffect(() => {
         if (prevActiveRef.current !== resolvedActiveId) {
@@ -311,12 +253,7 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
     }, [resolvedActiveId]);
 
     return (
-        <div
-            className={className ? `tabs ${className}` : "tabs"}
-            role="tablist"
-        >
-            {tabElements}
-        </div>
+        <Tabs className={className}>{tabElements}</Tabs>
     );
 }
 

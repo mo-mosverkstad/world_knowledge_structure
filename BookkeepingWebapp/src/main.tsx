@@ -72,15 +72,26 @@ function DataDrivenTabBarDemo() {
     const pushLog = (msg: string) =>
         setLog((prev) => [msg, ...prev].slice(0, 8));
 
-    // FETCH callback: project the business data into TabDescriptors. This is the
-    // only place that knows how a WorkspaceDoc maps onto a tab.
-    const getTabs = (data: WorkspaceState): TabDescriptor[] =>
-        data.documents.map((doc) => ({
-            id: doc.key,
-            title: doc.dirty ? `${doc.label} •` : doc.label,
-            // "Home" is locked -> pinned open, a per-tab override of `closable`.
-            closable: !doc.locked,
-        }));
+    // ITERATOR callback: traverse the business data exactly once, yielding each
+    // tab into the visitor the component supplies. Here the structure is an
+    // array, but the same contract works for a linked list or tree walk without
+    // ever paying for random (indexed) access.
+    const forEachTab = (
+        data: WorkspaceState,
+        visit: (tab: TabDescriptor, index: number) => void,
+    ) => {
+        data.documents.forEach((doc, index) =>
+            visit(
+                {
+                    id: doc.key,
+                    title: doc.dirty ? `${doc.label} •` : doc.label,
+                    // "Home" is locked -> pinned open, per-tab override.
+                    closable: !doc.locked,
+                },
+                index,
+            ),
+        );
+    };
 
     // MUTATE callback: remove a document from the business data structure.
     const handleClose = (tabId: string, data: WorkspaceState) => {
@@ -126,7 +137,7 @@ function DataDrivenTabBarDemo() {
             <h3>Data-driven TabBar demo</h3>
             <TabBar<WorkspaceState>
                 data={workspace}
-                getTabs={getTabs}
+                forEachTab={forEachTab}
                 onTabClick={handleClick}
                 onTabClose={handleClose}
                 onTabReorder={handleReorder}

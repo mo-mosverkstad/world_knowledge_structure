@@ -1,5 +1,4 @@
 import { type ReactNode } from "react";
-import "./style.css";
 import { Tabs } from "./Tabs";
 import { Tab } from "./Tab";
 import { useActiveTab } from "./useActiveTab";

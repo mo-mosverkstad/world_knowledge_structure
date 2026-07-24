@@ -30,6 +30,13 @@ export function TabBar({ children }: { children: ReactNode }) {
   );
 }
 
-export function Tab({ children }: { children: ReactNode }){
-  return (<div className = "tab">Tab: {children}</div>);
+export function Tab({children, onClick = () => {},}: {children: ReactNode;  onClick?: () => void;}) {
+    return (
+        <div
+          className="tab"
+          onClick={() => onClick()}
+        >
+          Tab: {children}
+        </div>
+    );
 }

@@ -25,7 +25,7 @@ function test_app() {
 
   return (
     <TabBar>
-      <Tab>
+      <Tab onClick={() => console.log("clicked")}>
         Home
       </Tab>
 

@@ -1,22 +1,26 @@
 import { type ReactNode } from "react";
+import { type DragReorderProps } from "./useDragReorder";
 
 /**
  * INTERNAL helper — not part of the tab-bar public API.
  *
  * `Tab` owns the markup of a *single* tab and nothing else. Its whole reason to
  * exist is to hide the raw HTML from {@link TabBar} and to translate low-level
- * DOM events (mouse clicks, keydowns, native drag events) into the high-level,
- * semantic events a behavior coordinator actually cares about:
+ * DOM events into the high-level, semantic events a behavior coordinator cares
+ * about:
  *
  *   raw onClick / Enter / Space   ->  onSelect
  *   raw × button click            ->  onClose   (and swallows the bubbling click
  *                                                so it never doubles as a select)
- *   raw dragstart/over/drop/end   ->  onReorderStart / onReorderOver /
- *                                     onReorderDrop / onReorderEnd
+ *
+ * Drag-to-reorder wiring is NOT hand-written here. The reorder hook
+ * (`./useDragReorder`) produces a bundle of DOM drag props which the coordinator
+ * passes down as `dragProps`; `Tab` simply spreads them onto its root element.
+ * The `dropTarget` flag (also derived by the hook) drives styling only.
  *
  * The props mirror exactly the presentation properties the coordinator decided
- * on (active, disabled, closable, draggable, drop-target). Changing how a tab
- * looks or which DOM element it uses stays entirely inside this file.
+ * on. Changing how a tab looks or which DOM element it uses stays inside this
+ * file.
  */
 export interface TabProps {
     title: ReactNode;
@@ -24,24 +28,19 @@ export interface TabProps {
     disabled?: boolean;
     /** Whether to render the close (×) affordance. */
     closable?: boolean;
-    /** Whether this tab may be dragged (reordering enabled). */
-    draggable?: boolean;
     /** Whether this tab is currently the drop target during a drag. */
     dropTarget?: boolean;
+    /**
+     * DOM drag props produced by the reorder hook, spread onto the root. When
+     * omitted, the tab is not draggable.
+     */
+    dragProps?: DragReorderProps;
 
     // ---- High-level semantic events (raw DOM events are wrapped away) --
     /** The user chose this tab (click or keyboard activation). */
     onSelect: () => void;
     /** The user requested to close this tab (via the × affordance). */
     onClose?: () => void;
-    /** A drag of this tab began. */
-    onReorderStart?: () => void;
-    /** A dragged tab is hovering over this tab. */
-    onReorderOver?: () => void;
-    /** A dragged tab was dropped onto this tab. */
-    onReorderDrop?: () => void;
-    /** A drag involving this tab ended (committed or cancelled). */
-    onReorderEnd?: () => void;
 }
 
 export function Tab(props: TabProps) {
@@ -50,20 +49,20 @@ export function Tab(props: TabProps) {
         active,
         disabled = false,
         closable = false,
-        draggable = false,
         dropTarget = false,
+        dragProps,
         onSelect,
         onClose,
-        onReorderStart,
-        onReorderOver,
-        onReorderDrop,
-        onReorderEnd,
     } = props;
 
     const classes = ["tab"];
     if (active) classes.push("tab--active");
     if (disabled) classes.push("tab--disabled");
     if (dropTarget) classes.push("tab--drop-target");
+
+    // A disabled tab must never be draggable, regardless of incoming props.
+    const resolvedDragProps =
+        dragProps && !disabled ? dragProps : undefined;
 
     return (
         <div
@@ -72,7 +71,7 @@ export function Tab(props: TabProps) {
             aria-selected={active}
             aria-disabled={disabled || undefined}
             tabIndex={disabled ? -1 : 0}
-            draggable={draggable && !disabled}
+            {...resolvedDragProps}
             // ---- raw -> semantic translations --------------------------
             onClick={() => {
                 if (!disabled) onSelect();
@@ -84,24 +83,6 @@ export function Tab(props: TabProps) {
                     onSelect();
                 }
             }}
-            onDragStart={draggable ? () => onReorderStart?.() : undefined}
-            onDragOver={
-                draggable
-                    ? (e) => {
-                          e.preventDefault(); // permit drop
-                          onReorderOver?.();
-                      }
-                    : undefined
-            }
-            onDrop={
-                draggable
-                    ? (e) => {
-                          e.preventDefault();
-                          onReorderDrop?.();
-                      }
-                    : undefined
-            }
-            onDragEnd={draggable ? () => onReorderEnd?.() : undefined}
         >
             <span className="tab__title">{title}</span>
             {closable && (

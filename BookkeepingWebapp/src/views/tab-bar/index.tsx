@@ -8,6 +8,7 @@ import {
 import "./style.css";
 import { Tabs } from "./Tabs";
 import { Tab } from "./Tab";
+import { useDragReorder } from "./useDragReorder";
 
 /**
  * TabBar — a *data-driven* tab bar and behavior COORDINATOR.
@@ -25,7 +26,9 @@ import { Tab } from "./Tab";
  * not touch this file. `TabBar`'s sole job is to *coordinate behavior*: iterate
  * the data port, decide which tab is active, and react to the semantic events
  * the UI layer emits. It never asks "what element should this be" — only "what
- * should happen".
+ * should happen". The generic drag-to-reorder mechanics are themselves factored
+ * out into the `useDragReorder` hook, so the coordinator only supplies the
+ * high-level reorder intent and never touches transient drag state.
  *
  * Data-driven contract
  * --------------------
@@ -157,9 +160,15 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
     );
     const resolvedActiveId = isControlled ? activeTabId : internalActiveId;
 
-    // ---- Encapsulated concern: track an in-flight drag ----------------
-    const [dragIndex, setDragIndex] = useState<number | null>(null);
-    const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+    // ---- Drag-to-reorder mechanics (extracted to a local hook) --------
+    // The coordinator only supplies the high-level intent; all transient drag
+    // bookkeeping and native-event wiring live in ./useDragReorder.
+    const reorder = useDragReorder({
+        onReorder: onTabReorder
+            ? (from, to) => onTabReorder(from, to, data)
+            : undefined,
+        enabled: reorderable,
+    });
 
     // ---- Semantic-event handlers (behavior coordination only) ---------
     const handleSelect = useCallback(
@@ -176,34 +185,6 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
         },
         [onTabClose, data],
     );
-
-    const handleReorderStart = useCallback((index: number) => {
-        setDragIndex(index);
-    }, []);
-
-    const handleReorderOver = useCallback(
-        (index: number) => {
-            if (dragIndex === null) return;
-            setDragOverIndex(index);
-        },
-        [dragIndex],
-    );
-
-    const handleReorderDrop = useCallback(
-        (toIndex: number) => {
-            if (dragIndex !== null && dragIndex !== toIndex) {
-                onTabReorder?.(dragIndex, toIndex, data);
-            }
-            setDragIndex(null);
-            setDragOverIndex(null);
-        },
-        [dragIndex, onTabReorder, data],
-    );
-
-    const handleReorderEnd = useCallback(() => {
-        setDragIndex(null);
-        setDragOverIndex(null);
-    }, []);
 
     // ---- Single traversal via the caller's iterator ------------------
     // Composition, not construction: the coordinator maps each descriptor onto
@@ -224,14 +205,10 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
                 active={tab.id === resolvedActiveId}
                 disabled={tab.disabled}
                 closable={(tab.closable ?? closable) && onTabClose !== undefined}
-                draggable={reorderable}
-                dropTarget={dragOverIndex === index && dragIndex !== index}
+                dropTarget={reorder.isDropTarget(index)}
+                dragProps={reorderable ? reorder.getDragProps(index) : undefined}
                 onSelect={() => handleSelect(tab)}
                 onClose={() => handleClose(tab.id)}
-                onReorderStart={() => handleReorderStart(index)}
-                onReorderOver={() => handleReorderOver(index)}
-                onReorderDrop={() => handleReorderDrop(index)}
-                onReorderEnd={handleReorderEnd}
             />,
         );
     });

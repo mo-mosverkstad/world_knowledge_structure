@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { type DragReorderProps } from "./useDragReorder";
+import "./Tab.css";
 
 /**
  * INTERNAL helper — not part of the tab-bar public API.

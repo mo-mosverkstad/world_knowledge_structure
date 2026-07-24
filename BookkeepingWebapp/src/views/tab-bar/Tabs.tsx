@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import "./Tabs.css";
 
 /**
  * INTERNAL helper — not part of the tab-bar public API.

@@ -4,4 +4,9 @@
  * private to this directory so their composition can change freely.
  */
 export { TabBar, default } from "./TabBar";
-export type { TabBarProps, TabDescriptor, TabVisitor } from "./types";
+export type {
+    TabBarProps,
+    TabDescriptor,
+    TabVisitor,
+    ActiveTabSelectReason,
+} from "./types";

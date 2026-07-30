@@ -34,6 +34,21 @@ export interface TabDescriptor {
  */
 export type TabVisitor = (tab: TabDescriptor, index: number) => void;
 
+/**
+ * Why the component is asking for a new active tab.
+ *
+ *   - `"user-select"` — the user activated a tab (click or Enter/Space).
+ *   - `"fallback"`    — the previously active tab is no longer yielded by
+ *                       `forEachTab` (it was closed or removed), so the
+ *                       component proposes a replacement: the first tab, or
+ *                       `null` when no tabs remain.
+ *
+ * The distinction matters because only the first is a deliberate user action.
+ * A host that records, mirrors or animates selection changes usually wants to
+ * treat the two differently.
+ */
+export type ActiveTabSelectReason = "user-select" | "fallback";
+
 export interface TabBarProps<TData> {
     // ---- DATA PORT -----------------------------------------------------
     /**
@@ -74,9 +89,20 @@ export interface TabBarProps<TData> {
     onTabClick?: (tabId: string, data: TData) => void;
     /**
      * Fired whenever the active tab changes (by click, by close of the active
-     * tab, or programmatically). Useful for controlled setups or side effects.
+     * tab, or programmatically). Purely a NOTIFICATION, after the fact —
+     * to influence or own the active tab, use the active-tab port below.
+     *
+     * `index` is the 0-based position of the active tab in the traversal order
+     * produced by `forEachTab`, or `null` when nothing is active. It is derived
+     * for free during the single render pass. Treat it as read-only: an index is
+     * not a stable address, since it shifts under close and reorder. Address
+     * tabs by `id`.
      */
-    onActiveTabChange?: (tabId: string | null, data: TData) => void;
+    onActiveTabChange?: (
+        tabId: string | null,
+        index: number | null,
+        data: TData,
+    ) => void;
 
     // ---- CUSTOMIZATION -------------------------------------------------
     /** Show a delete (×) affordance and allow tabs to be closed. Default: false. */
@@ -84,18 +110,60 @@ export interface TabBarProps<TData> {
     /** Allow tabs to be reordered via drag & drop. Default: false. */
     reorderable?: boolean;
 
-    // ---- ACTIVE-TAB CONTROL --------------------------------------------
+    // ---- ACTIVE-TAB PORT ------------------------------------------------
+    // `activeTabId` and `onActiveTabSelect` are the READ and WRITE halves of
+    // one port, exactly as `value` / `onChange` are on an `<input>`. Supply
+    // both to own the active tab externally; supply neither to let the
+    // component keep it internally.
+    //
+    // The point of the write half is that the active tab is *caller policy*,
+    // not something intrinsic to being a tab bar. Once the host owns it, the
+    // host can also change it — from a keyboard shortcut outside the strip,
+    // from a URL, from a restored session, from a command stack — and the tab
+    // bar simply renders whatever it is told.
     /**
-     * Controlled active tab id. When provided, the component defers to the
-     * caller for the active tab and will not track it internally.
+     * Controlled active tab id. When this prop is *present* the component
+     * stores nothing and defers entirely to the caller:
+     *
+     *   - `"someId"` — that tab is active.
+     *   - `null`     — nothing is active. (An explicit, legal state.)
+     *   - omitted    — uncontrolled; the component tracks the active tab
+     *                  itself, seeded by `defaultActiveTabId`.
+     *
+     * Note that `undefined` is not "nothing active" — it means "you own it".
+     * Pass `null` for the empty selection.
      */
-    activeTabId?: string;
+    activeTabId?: string | null;
+    /**
+     * REQUEST for the active tab to become `tabId`. The write half of the
+     * active-tab port.
+     *
+     * Called before the change is applied, and — unlike `onActiveTabChange` —
+     * in *both* controlled and uncontrolled mode, so a host can observe
+     * selection intent without taking ownership.
+     *
+     * In controlled mode this is the only way the component can ask for a
+     * change; if the host ignores it, nothing happens. That is intentional:
+     * the host may redirect the request, defer it, or refuse it (an unsaved
+     * -changes guard, for instance).
+     *
+     * See {@link ActiveTabSelectReason} for why the request is being made. The
+     * `"fallback"` case is the important one for controlled hosts: it is how
+     * the component reports "the tab you have marked active no longer exists,
+     * here is a replacement".
+     */
+    onActiveTabSelect?: (
+        tabId: string | null,
+        data: TData,
+        reason: ActiveTabSelectReason,
+    ) => void;
     /**
      * Initial active tab id for the uncontrolled case. When omitted, the first
      * tab yielded by `forEachTab` becomes active (resolved during the first
-     * traversal — no separate accessor needed).
+     * traversal — no separate accessor needed). Ignored when `activeTabId` is
+     * present.
      */
-    defaultActiveTabId?: string;
+    defaultActiveTabId?: string | null;
 
     /** Optional extra class name for the outer container. */
     className?: string;

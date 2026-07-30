@@ -3,7 +3,11 @@ import ReactDOM from "react-dom/client";
 import { useState } from "react";
 import { AbstractParser } from "./parser/AbstractParser.ts";
 import { mathSyntaxPlugin } from "./syntax-plugins/math";
-import { TabBar, type TabDescriptor } from "./views/tab-bar/";
+import {
+    TabBar,
+    type TabDescriptor,
+    type ActiveTabSelectReason,
+} from "./views/tab-bar/";
 
 function manual_test_1() {
     ReactDOM.createRoot(document.getElementById("app")!).render(
@@ -122,10 +126,39 @@ function DataDrivenTabBarDemo() {
         pushLog(`click ${tabId}`);
     };
 
-    // BEHAVIOR hook: mirror the active tab back into the business data.
-    const handleActiveChange = (tabId: string | null) => {
-        pushLog(`active -> ${tabId}`);
+    // ACTIVE-TAB PORT, write half: the component REQUESTS a new active tab and
+    // this host applies it into its own state. Because `activeKey` now lives in
+    // the host's data structure (rather than being mirrored out of the
+    // component), anything else in the app can change it too — see the buttons
+    // below. `reason` distinguishes a deliberate user click from the component
+    // reporting that the active tab no longer exists.
+    const handleActiveSelect = (
+        tabId: string | null,
+        _data: WorkspaceState,
+        reason: ActiveTabSelectReason,
+    ) => {
+        pushLog(`select ${tabId} (${reason})`);
         setWorkspace((prev) => ({ ...prev, activeKey: tabId }));
+    };
+
+    // NOTIFICATION only: the active tab has settled on this id/index.
+    const handleActiveChange = (tabId: string | null, index: number | null) => {
+        pushLog(`active -> ${tabId} @${index}`);
+    };
+
+    // EXTERNAL MODIFICATION: nothing here goes through the component. The host
+    // owns `activeKey`, so it just writes it and the tab bar follows.
+    const stepActive = (delta: number) => {
+        setWorkspace((prev) => {
+            if (prev.documents.length === 0) return prev;
+            const current = prev.documents.findIndex(
+                (d) => d.key === prev.activeKey,
+            );
+            const next =
+                (current + delta + prev.documents.length) %
+                prev.documents.length;
+            return { ...prev, activeKey: prev.documents[next].key };
+        });
     };
 
     const active = workspace.documents.find(
@@ -141,6 +174,9 @@ function DataDrivenTabBarDemo() {
                 onTabClick={handleClick}
                 onTabClose={handleClose}
                 onTabReorder={handleReorder}
+                // ---- ACTIVE-TAB PORT: read half + write half ----
+                activeTabId={workspace.activeKey}
+                onActiveTabSelect={handleActiveSelect}
                 onActiveTabChange={handleActiveChange}
                 closable
                 reorderable
@@ -149,6 +185,23 @@ function DataDrivenTabBarDemo() {
             <div style={{ padding: "12px 4px" }}>
                 <strong>Active document:</strong>{" "}
                 {active ? `${active.label} (${active.kind})` : "none"}
+            </div>
+
+            <div style={{ display: "flex", gap: 8, padding: "0 4px 12px" }}>
+                <button type="button" onClick={() => stepActive(-1)}>
+                    ◀ previous
+                </button>
+                <button type="button" onClick={() => stepActive(1)}>
+                    next ▶
+                </button>
+                <button
+                    type="button"
+                    onClick={() =>
+                        setWorkspace((prev) => ({ ...prev, activeKey: null }))
+                    }
+                >
+                    clear selection
+                </button>
             </div>
 
             <pre

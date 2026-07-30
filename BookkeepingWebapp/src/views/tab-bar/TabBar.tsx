@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { Tabs } from "./Tabs";
 import { Tab } from "./Tab";
 import { useActiveTab } from "./useActiveTab";
@@ -32,6 +32,9 @@ import { type TabBarProps, type TabDescriptor } from "./types";
  *                      no projection array, no random access).
  *   3. mutate cbs    - `onTabClose`, `onTabReorder`.
  *   4. behavior hooks- `onTabClick`, `onActiveTabChange` (caller-defined).
+ *   5. active port   - `activeTabId` (read) + `onActiveTabSelect` (write): the
+ *                      active tab is caller policy, so the caller may own and
+ *                      change it from outside the component.
  */
 export function TabBar<TData>(props: TabBarProps<TData>) {
     const {
@@ -41,6 +44,7 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
         onTabReorder,
         onTabClick,
         onActiveTabChange,
+        onActiveTabSelect,
         closable = false,
         reorderable = false,
         activeTabId,
@@ -48,11 +52,23 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
         className,
     } = props;
 
+    // `data` is read inside callbacks that must not be re-created per render.
+    const dataRef = useRef(data);
+    dataRef.current = data;
+
+    // The active index is derived during the render pass below, and reported
+    // alongside the id. Held in a ref so the notify callback — which fires from
+    // an effect inside the hook — sees the value from the pass just completed.
+    const activeIndexRef = useRef<number | null>(null);
+
     // ---- Encapsulated concern: active-tab management ------------------
     const active = useActiveTab({
         controlledId: activeTabId,
         defaultId: defaultActiveTabId,
-        onChange: (id) => onActiveTabChange?.(id, data),
+        onSelect: (id, reason) =>
+            onActiveTabSelect?.(id, dataRef.current, reason),
+        onChange: (id) =>
+            onActiveTabChange?.(id, activeIndexRef.current, dataRef.current),
     });
 
     // ---- Encapsulated concern: drag-to-reorder mechanics --------------
@@ -75,21 +91,27 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
 
     // ---- Single traversal via the caller's iterator ------------------
     // Composition, not construction: map each descriptor onto a <Tab>. The pass
-    // also captures the first tab id and active-tab existence for free, which
-    // are handed to useActiveTab for fallback reconciliation.
+    // also captures the first tab id, the active-tab existence and the active
+    // index for free; the first two are handed to useActiveTab for fallback
+    // reconciliation, the third is reported through onActiveTabChange.
     const tabElements: ReactNode[] = [];
     let firstTabId: string | null = null;
     let activeExists = false;
+    let activeIndex: number | null = null;
 
     forEachTab(data, (tab, index) => {
         if (index === 0) firstTabId = tab.id;
-        if (tab.id === active.activeId) activeExists = true;
+        const isActive = tab.id === active.activeId;
+        if (isActive) {
+            activeExists = true;
+            activeIndex = index;
+        }
 
         tabElements.push(
             <Tab
                 key={tab.id}
                 title={tab.title}
-                active={tab.id === active.activeId}
+                active={isActive}
                 disabled={tab.disabled}
                 closable={(tab.closable ?? closable) && onTabClose !== undefined}
                 dropTarget={reorder.isDropTarget(index)}
@@ -100,7 +122,11 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
         );
     });
 
+    activeIndexRef.current = activeIndex;
+
     // If the active tab vanished (e.g. it was closed), fall back to the first.
+    // In controlled mode this surfaces as an `onActiveTabSelect(..., "fallback")`
+    // request rather than being silently swallowed.
     active.reconcile(activeExists, firstTabId);
 
     return <Tabs className={className}>{tabElements}</Tabs>;

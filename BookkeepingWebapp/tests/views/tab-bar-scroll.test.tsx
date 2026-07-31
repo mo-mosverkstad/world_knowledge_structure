@@ -353,6 +353,117 @@ describe("useRevealActiveTab — when it fires", () => {
         expect(calls[0]).toBe(550); // 900 - 350 + 0
     });
 
+    it("does NOT reveal on a reorder — but scrollLeft is preserved, so a\n       comfortably-placed active tab stays visible anyway", () => {
+        function Host() {
+            const [docs, setDocs] = useState(manyDocs.docs);
+            return (
+                <>
+                    <button
+                        onClick={() =>
+                            setDocs((prev) => {
+                                // Move tab 0 to position 5: every tab between
+                                // shifts LEFT one slot, including the active one.
+                                const next = [...prev];
+                                const [moved] = next.splice(0, 1);
+                                next.splice(5, 0, moved);
+                                return next;
+                            })
+                        }
+                    >
+                        reorder
+                    </button>
+                    <TabBar<State>
+                        data={{ docs }}
+                        forEachTab={forEachTab}
+                        activeTabId="d3"
+                        onActiveTabSelect={() => {}}
+                        onTabReorder={() => {}}
+                        reorderable
+                    />
+                </>
+            );
+        }
+        render(<Host />);
+        const calls = trackScrolls();
+        const strip = document.querySelector<HTMLElement>('[role="tablist"]')!;
+
+        act(() => screen.getByText("reorder").click());
+
+        // The hook did nothing: `activeId` never changed.
+        expect(calls).toEqual([]);
+        // And it did not need to. `scrollLeft` belongs to the CONTAINER, so a
+        // reorder leaves the viewport where it was; the active tab (d3, keys are
+        // 1-based so it starts at index 2) merely moved one slot left to index 1,
+        // and was already well inside view.
+        expect(strip.scrollLeft).toBe(0);
+        const tabs = [...strip.querySelectorAll('[role="tab"]')];
+        const idx = tabs.findIndex(
+            (t) => t.getAttribute("aria-selected") === "true",
+        );
+        expect(idx).toBe(1);
+        expect(idx * TAB_W).toBeGreaterThanOrEqual(0);
+        expect((idx + 1) * TAB_W).toBeLessThanOrEqual(VIEW_W);
+    });
+
+    it("documents the edge case: a reorder CAN clip an active tab that sits\n       right at the viewport edge", () => {
+        function Host() {
+            const [docs, setDocs] = useState(manyDocs.docs);
+            return (
+                <>
+                    <button
+                        onClick={() =>
+                            setDocs((prev) => {
+                                // Move the LAST tab to the FRONT: everything
+                                // shifts RIGHT one slot, pushing the active tab
+                                // further out of view.
+                                const next = [...prev];
+                                const [moved] = next.splice(9, 1);
+                                next.splice(0, 0, moved);
+                                return next;
+                            })
+                        }
+                    >
+                        push-right
+                    </button>
+                    <TabBar<State>
+                        data={{ docs }}
+                        forEachTab={forEachTab}
+                        activeTabId="d4"
+                        onActiveTabSelect={() => {}}
+                        onTabReorder={() => {}}
+                        reorderable
+                    />
+                </>
+            );
+        }
+        render(<Host />);
+        const calls = trackScrolls();
+        const strip = document.querySelector<HTMLElement>('[role="tablist"]')!;
+
+        // Place the active tab (d4, index 3 → content 300..400) flush against
+        // the right edge: scrollLeft 58 puts it at screen 242..342 of 350.
+        strip.scrollLeft = 58;
+
+        act(() => screen.getByText("push-right").click());
+
+        // Active tab is now at index 4 → content 400..500, screen 342..442.
+        const tabs = [...strip.querySelectorAll('[role="tab"]')];
+        const idx = tabs.findIndex(
+            (t) => t.getAttribute("aria-selected") === "true",
+        );
+        expect(idx).toBe(4);
+
+        const start = idx * TAB_W - strip.scrollLeft;
+        const end = start + TAB_W;
+        // It is genuinely clipped...
+        expect(end).toBeGreaterThan(VIEW_W);
+        // ...and no reveal fired, because `activeId` did not change. This is the
+        // documented trade of the single-trigger design, not a bug: adding
+        // `activeIndex` as a dependency would fix it at the cost of re-asserting
+        // scroll on mutations the user did not initiate.
+        expect(calls).toEqual([]);
+    });
+
     it("does nothing when nothing is active", () => {
         const { rerender } = render(
             <TabBar<State>

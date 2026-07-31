@@ -478,9 +478,76 @@ unrelated reasons to change. It would also re-assert scroll position on mutation
 the user did not initiate, which is what makes such implementations feel like
 they are fighting the pointer.
 
-The trade: reorder or close a tab *before* the active one and the active tab
-shifts position without being re-revealed. It stays selected and highlighted,
-just possibly scrolled out of view.
+### Why reordering still looks right
+
+The table above says a reorder does not re-reveal, yet dragging tabs around
+behaves correctly in practice. That is not luck, but it is also not a guarantee —
+worth understanding before relying on it.
+
+**`scrollLeft` belongs to the container, not to any tab.** A reorder rearranges
+children; it does not touch the scroll offset. So the window onto content space
+stays exactly where it was and the tabs re-lay-out underneath it:
+
+```
+  before, scrollLeft = 0                        * = active
+  ╞═══ visible 0..350 ═══╡
+  │ t0 │ t1 │ t2*│ t3 │ t4 │ t5 │ …
+
+  move t0 to position 5 — everything between shifts LEFT one slot
+  ╞═══ visible 0..350 ═══╡
+  │ t1 │ t2*│ t3 │ t4 │ t5 │ t0 │ …
+
+  the active tab moved one tab width left, from index 2 to 1, and it had
+  plenty of clearance — so it is still fully visible and nothing needs to
+  happen. Measured: zero scrollTo calls, scrollLeft unchanged.
+```
+
+Two reasons this holds in the common case:
+
+- **A reorder displaces the active tab by at most one slot** in a typical drag.
+  With any real clearance from the edges, one tab width does not push it out.
+- **The tab being dragged is usually the active one**, because grabbing it selects
+  it first — so `activeId` changed and the reveal already fired on that click.
+  By the time the drop happens it has been revealed.
+
+**Where it does break.** The active tab sitting right at the viewport edge, then a
+reorder that pushes it further outward:
+
+```
+  scrollLeft = 58. Active tab d3 spans screen 242..342 — just inside 350,
+  with only the 8px margin to spare.
+  ╞═══════════ visible 0..350 ═══════════╡
+       │ d2 │ d3*│                        ← 8px of clearance, no more
+
+  drag the LAST tab to the FRONT — everything shifts RIGHT one slot
+  ╞═══════════ visible 0..350 ═══════════╡
+            │ d2 │ d3*  ┊  ← now spans 342..442
+                        ▲
+                     92px clipped, and NO reveal fires
+```
+
+So the accurate statement is: reordering works because `scrollLeft` is preserved
+and the displacement is small — not because anything checks. Near the edges the
+active tab can end up partly clipped. It stays selected and highlighted, and the
+next click on anything re-reveals it.
+
+**Making it airtight, if you ever want to.** `activeIndex` changes on reorder and
+is already computed for free during TabBar's single traversal, so:
+
+```ts
+}, [activeId, activeIndex]);
+```
+
+closes exactly this gap. The cost is the one the section above describes: it
+re-asserts scroll whenever the active tab's *position* changes for reasons the
+user did not initiate — including closing an earlier tab while the user has
+deliberately scrolled elsewhere. It would also fire on every hover-swap during a
+drag, so it would need an `isDragging` guard from `useDragReorder`, reintroducing
+the coupling this hook was designed without.
+
+Current judgement: leave it out. The failure needs the active tab within ~8px of
+an edge *and* a reorder pushing it outward, nothing is broken when it happens, and
+it self-corrects on the next selection.
 
 ### Finding the active tab
 
@@ -694,7 +761,7 @@ third independent concern that needed no change to either.
 
 ## Verification
 
-- **213 tests pass** — 176 pre-existing, 17 for the active-tab port, 20 new for
+- **215 tests pass** — 176 pre-existing, 17 for the active-tab port, 22 new for
   overflow and revealing.
 - `tsc --noEmit` clean apart from one pre-existing, unrelated error in
   `src/syntax-plugins/math`; `vite build` succeeds.
@@ -715,6 +782,10 @@ Coverage:
                    newly active tab already visible → no scroll
                    unrelated re-render while the user has scrolled
                      away → no scroll  ← the fighting-the-user case
+                   reorder → no reveal, but scrollLeft is preserved so a
+                     comfortably-placed active tab stays visible
+                   reorder with the active tab AT the edge → genuinely
+                     clipped (342..442 in a 350 viewport), documented
                    revealActiveTab={false} → nothing
                    nothing active → nothing
 
@@ -731,10 +802,13 @@ the hook's decisions are genuinely exercised; actual browser layout is not.
 
 ## Known limits
 
-**Content-width changes do not retrigger.** If a tab *before* the active one gets
-wider — a `dirty` marker appearing, a late-loading font — the active tab shifts
-without being re-revealed. Fixable with a `ResizeObserver` on the content; not
-built, on the same "one trigger" reasoning.
+**Position changes do not retrigger the reveal.** Anything that moves the active
+tab without changing *which* tab is active leaves the scroll offset alone:
+a reorder, a close of an earlier tab, or a tab before it growing wider (a `dirty`
+marker appearing, a late-loading font). In practice this is almost always fine —
+see [Why reordering still looks right](#why-reordering-still-looks-right) for the
+mechanism, the measured edge case where it clips, and the one-line change that
+would close it.
 
 **Edge auto-scroll during drag is a separate feature.** Dragging a tab toward the
 container edge ought to scroll the strip. That belongs to `useDragReorder`, which

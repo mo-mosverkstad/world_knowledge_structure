@@ -1,0 +1,55 @@
+> Everything is in place and type-checks clean. I left temp.txt (the design conversation) untouched — remove it whenever you like.
+
+## What I built
+
+I reviewed the design conversation in temp.txt and distilled its conclusions, then built spreadsheet-view with the exact same
+architecture as tab-bar.
+
+Directory (mirrors tab-bar):
+spreadsheet-view/
+  index.tsx            # front door — re-exports only
+  SpreadsheetView.tsx  # behavior coordinator (facade)
+  types.ts             # public contract: SpreadsheetViewProps, CellDescriptor, CellAddress
+  Grid.tsx  + Grid.css   # internal UI: container + column headers
+  Row.tsx   + Row.css    # internal UI: one row + row-number gutter
+  Cell.tsx  + Cell.css   # internal UI: single cell, raw→semantic events, inline editor
+  useSelection.ts      # internal hook: active-cell (analog of useActiveTab)
+  useEditing.ts        # internal hook: ephemeral edit state (analog of useDragReorder)
+  style.css            # focusable outer container
+  README.md
+
+
+## How the conversation's conclusions map to code
+
+- **Data port + callbacks (dependency inversion):** data is opaque; getRowCount/getColumnCount/getCell/onCellEdit are the only
+touchpoints. The grid never sees your domain objects — exactly the access/insert/remove model the conversation converged on.
+- **Coordinator over private components:** SpreadsheetView renders no raw HTML; Grid/Row/Cell are the private "sugar-coated DOM," and
+Cell translates raw events into semantic ones (onSelect/onBeginEdit/onCommitEdit/onCancelEdit).
+- **Behavior in hooks:** useSelection and useEditing, matching the "extract useSelection/useEditing" advice.
+- **Logical vs. ephemeral state:** selection is externalizable via controlled activeCell + onSelectionChange (undo/redo-friendly);
+editing draft stays internal.
+- **Per-component CSS:** Grid.css, Row.css, Cell.css — as you insisted in the discussion.
+
+## One deliberate divergence from tab-bar, and why
+
+Tab-bar uses a single-pass iterator (forEachTab) because it renders every tab. A grid renders a rectangular region, so I used random
+access (getCell(data, row, col)) instead. That's the correct primitive here and, per the conversation, it's precisely what pairs with
+future virtualization — a viewport can request only visible [firstRow..lastRow] × [firstCol..lastCol].
+
+## Scope I intentionally did NOT build
+
+Following the conversation's strong "don't optimize for the end state too early" advice, I did not add virtualization, a layout engine
+(variable sizes via prefix sums / Fenwick trees), frozen panes, merged cells, range selection, clipboard, or the tree/hierarchical
+row model. The public API is shaped so those can be slotted in later behind the same facade without breaking consumers. This is
+documented in the README's scope notes.
+
+## Demo
+
+main.tsx now renders both demos together (Demos → tab-bar + spreadsheet). The spreadsheet demo is a small editable ledger showing
+click-select, arrow-key navigation, and Enter/F2/double-click editing with an interaction log.
+
+Full project type-checks clean (only the pre-existing unrelated syntax-plugins/math/index.ts error remains).
+
+One thing worth flagging for later: the current getCell demo builds a 3-element array per call and indexes it — fine for the demo,
+but for a real large ledger you'd want a direct switch (as I noted the pattern elsewhere) to keep it truly O(1) with no per-cell
+allocation.

@@ -1,0 +1,3957 @@
+Yes—that's a good observation, and it reflects how React has evolved.
+
+
+
+Early React examples often emphasized composition through nested JSX:
+
+
+
+
+<Spreadsheet>
+
+  <Row>
+
+    <Cell>A1</Cell>
+
+    <Cell>B1</Cell>
+
+  </Row>
+
+  <Row>
+
+    <Cell>A2</Cell>
+
+    <Cell>B2</Cell>
+
+  </Row>
+
+</Spreadsheet>
+
+
+
+
+This makes the UI structure very explicit, almost like writing HTML.
+
+
+
+Today, especially for data-heavy components, you'll much more often see something like:
+
+
+
+
+<Spreadsheet
+
+  data={rows}
+
+  columns={columns}
+
+  onCellEdit={handleEdit}
+
+/>
+
+
+
+
+The component receives an entire data model and is responsible for rendering thousands of cells efficiently.
+
+
+
+Why the shift?
+
+
+
+There are several reasons.
+
+
+
+1. Performance
+
+
+
+Imagine a spreadsheet with 10,000 cells.
+
+
+
+The nested JSX approach means React has to create 10,000+ JSX elements:
+
+
+
+
+<Row>
+
+  <Cell />
+
+  <Cell />
+
+  ...
+
+</Row>
+
+
+
+
+Instead, passing data lets the component control rendering:
+
+
+
+
+<Spreadsheet data={rows} />
+
+
+
+
+Internally it can:
+
+
+
+virtualize rows
+
+only render visible cells
+
+optimize updates
+
+memoize computations
+
+
+
+without exposing those implementation details.
+
+
+
+
+
+2. Separation of data and presentation
+
+
+
+Modern React encourages keeping your data as JavaScript objects.
+
+
+
+Instead of encoding your data in JSX:
+
+
+
+
+<Table>
+
+  <Row>
+
+    <Cell>John</Cell>
+
+    <Cell>25</Cell>
+
+  </Row>
+
+</Table>
+
+
+
+
+you keep it as:
+
+
+
+
+const rows = [
+
+  { name: "John", age: 25 },
+
+  { name: "Alice", age: 31 }
+
+];
+
+
+
+
+and render it:
+
+
+
+
+<Table rows={rows} />
+
+
+
+
+The JSX becomes a description of what component to render, while the data stays as plain JavaScript.
+
+
+
+
+
+3. Components become APIs
+
+
+
+A component like
+
+
+
+
+<Spreadsheet />
+
+
+
+
+isn't just a visual element anymore.
+
+
+
+It's almost an application with its own API:
+
+
+
+
+<Spreadsheet
+
+  data={rows}
+
+  columns={columns}
+
+  sortModel={sort}
+
+  filterModel={filter}
+
+  selection={selection}
+
+  onSelectionChange={...}
+
+/>
+
+
+
+
+This resembles calling a function with arguments rather than constructing a DOM tree.
+
+
+
+
+
+4. Libraries have become much more sophisticated
+
+
+
+Libraries like:
+
+
+
+Material UI Data Grid
+
+AG Grid
+
+TanStack Table
+
+
+
+don't just render HTML.
+
+
+
+They implement:
+
+
+
+virtualization
+
+sorting
+
+filtering
+
+grouping
+
+editing
+
+keyboard navigation
+
+accessibility
+
+
+
+Passing them structured data is much simpler than constructing thousands of child components yourself.
+
+
+
+
+
+Composition is still very important
+
+
+
+React hasn't abandoned composition—it has become more selective about where it's used.
+
+
+
+For layouts:
+
+
+
+
+<Card>
+
+  <CardHeader />
+
+  <CardBody />
+
+  <CardFooter />
+
+</Card>
+
+
+
+
+still feels natural.
+
+
+
+For navigation:
+
+
+
+
+<Menu>
+
+  <MenuItem />
+
+  <MenuItem />
+
+</Menu>
+
+
+
+
+also works well.
+
+
+
+But for data-driven components:
+
+
+
+
+<Table rows={rows} />
+
+
+
+
+is usually cleaner than
+
+
+
+
+<Table>
+
+  {rows.map(row => (
+
+    <Row key={row.id}>
+
+      ...
+
+    </Row>
+
+  ))}
+
+</Table>
+
+
+
+
+because the table can optimize rendering internally.
+
+
+
+A useful way to think about it
+
+
+
+Modern React components generally fall into two categories:
+
+
+
+Structural components describe the UI hierarchy using children:
+
+
+<Dialog>
+
+  <DialogHeader />
+
+  <DialogContent />
+
+</Dialog>
+
+
+
+
+Behavioral or data-driven components accept a model via props:
+
+
+<DataGrid
+
+  rows={rows}
+
+  columns={columns}
+
+/>
+
+
+
+
+So your spreadsheet example captures a real trend: many complex components have evolved from being primarily composed from JSX children to being configured with data and options. This gives component authors much more control over performance and behavior while keeping the API concise.
+
+
+
+
+
+Ah, that makes more sense. You're describing passing callbacks into the component rather than passing a transformed data structure.
+
+
+
+For example:
+
+
+
+
+<Table
+
+  rowCount={employees.length}
+
+  access={(row, column) => {
+
+    const employee = employees[row];
+
+
+
+    switch (column) {
+
+      case 0: return employee.fullName;
+
+      case 1: return employee.department.name;
+
+      case 2: return employee.salary;
+
+    }
+
+  }}
+
+  insert={(index, employee) => {
+
+    employeeRepository.insert(index, employee);
+
+  }}
+
+  remove={(index) => {
+
+    employeeRepository.remove(index);
+
+  }}
+
+/>
+
+
+
+
+Here, the table has no knowledge of your business objects. It only knows that:
+
+
+
+it can ask for a value,
+
+it can insert,
+
+it can remove.
+
+
+
+This is a classic form of dependency inversion. Instead of the table depending on Employee[], it depends on a set of operations.
+
+
+
+Advantages
+
+
+
+No data transformation. You don't create an intermediate TableRow[].
+
+No coupling to business types. The table doesn't know what an Employee is.
+
+Works with many backends. The callbacks could read from an array, a tree, a database, or even a remote source.
+
+Lazy access. The table only requests the cells it needs, which pairs well with virtualization.
+
+
+
+Potential downsides
+
+
+
+The main thing to watch is the number of callbacks. If the API grows into something like:
+
+
+
+
+<Table
+
+  access={...}
+
+  insert={...}
+
+  remove={...}
+
+  update={...}
+
+ move={...}
+
+  sort={...}
+
+  filter={...}
+
+  canEdit={...}
+
+  canDelete={...}
+
+  ...
+
+/>
+
+
+
+
+it can become harder to understand than passing a single model object.
+
+
+
+Many frameworks address this by grouping the operations:
+
+
+
+
+interface TableModel<T> {
+
+  rowCount(): number;
+
+  access(row: number, column: number): unknown;
+
+  insert(index: number, value: T): void;
+
+  remove(index: number): void;
+
+}
+
+
+
+
+Then the component receives:
+
+
+
+
+<Table model={employeeModel} />
+
+
+
+
+This keeps the component's prop list small while still avoiding coupling to a specific data structure.
+
+
+
+It's not an uncommon idea
+
+
+
+This callback/model approach is actually quite similar to how many desktop GUI toolkits have worked for years. The view doesn't own the data; it asks the model for what it needs.
+
+
+
+React libraries tend to lean toward rows={rows} because JavaScript arrays are convenient and React favors immutable state updates. But for large, editable, or specialized datasets, a callback- or model-based API is a perfectly reasonable design and can be more flexible than forcing every application to adapt its data into a UI-specific format.
+
+
+
+
+
+
+
+I think it's useful to separate the component into three layers.
+
+
+
+
+<Spreadsheet model={model} />
+
+
+
+        │
+
+        ▼
+
++-----------------------+
+
+| Spreadsheet           |  <- orchestration
+
++-----------------------+
+
+        │
+
+        ├───────────────┐
+
+        ▼               ▼
+
+Viewport/Layout     Interaction
+
+(rendering)         (selection, editing)
+
+        │
+
+        ▼
+
+      Model
+
+
+
+
+The Spreadsheet component itself shouldn't know much about your business objects. Its job is to orchestrate.
+
+
+
+1. Rendering
+
+
+
+The component asks the model:
+
+
+
+
+const value = model.access(row, column);
+
+
+
+
+and renders cells.
+
+
+
+It shouldn't know where the value came from.
+
+
+
+It could be
+
+
+
+an array
+
+a tree
+
+a sparse matrix
+
+a remote cache
+
+
+
+That shouldn't matter.
+
+
+
+
+
+2. Viewport management
+
+
+
+This is where a spreadsheet becomes interesting.
+
+
+
+The component decides:
+
+
+
+which rows are visible
+
+which columns are visible
+
+which cells need rendering
+
+
+
+For example
+
+
+
+
+Model: 1,000,000 rows
+
+
+
+Visible:
+
+rows 420-455
+
+columns 8-20
+
+
+
+
+The model doesn't care.
+
+
+
+The component only asks for those cells.
+
+
+
+
+
+3. Interaction
+
+
+
+The component owns UI state like
+
+
+
+
+selectedCell
+
+editingCell
+
+hoveredCell
+
+dragSelection
+
+scrollOffset
+
+columnWidths
+
+rowHeights
+
+
+
+
+These are presentation concerns.
+
+
+
+They don't belong in the business model.
+
+
+
+
+
+4. Delegate mutations
+
+
+
+When editing finishes,
+
+
+
+instead of
+
+
+
+
+cell.value = "42";
+
+
+
+
+the spreadsheet simply calls
+
+
+
+
+model.set(row, column, "42");
+
+
+
+
+or
+
+
+
+
+model.insertRows(...)
+
+model.deleteColumns(...)
+
+
+
+
+The spreadsheet doesn't implement business logic.
+
+
+
+It only forwards requests.
+
+
+
+
+
+The Spreadsheet should almost feel like a database client
+
+
+
+Notice the pattern.
+
+
+
+The spreadsheet asks questions.
+
+
+
+
+model.rowCount()
+
+
+
+model.columnCount()
+
+
+
+model.access(row, column)
+
+
+
+model.canEdit(row, column)
+
+
+
+model.style(row, column)
+
+
+
+model.tooltip(row, column)
+
+
+
+
+When the user acts,
+
+
+
+it notifies the model.
+
+
+
+
+model.set(...)
+
+
+
+model.insert(...)
+
+
+
+model.remove(...)
+
+
+
+
+The spreadsheet is never digging through your objects.
+
+
+
+
+
+Even formatting can be delegated
+
+
+
+Instead of
+
+
+
+
+<Table rows={employees} />
+
+
+
+
+the spreadsheet might ask
+
+
+
+
+model.render(row, column)
+
+
+
+
+or
+
+
+
+
+model.cell(row, column)
+
+
+
+
+which returns
+
+
+
+
+{
+
+    value: employee.salary,
+
+    align: "right",
+
+    editable: true,
+
+    background: "#ffeeaa"
+
+}
+
+
+
+
+Now the spreadsheet doesn't know anything about salaries, dates, currencies, or domain types.
+
+
+
+
+
+My only suggestion
+
+
+
+If you're designing this from scratch, I'd consider making the callbacks part of a model object rather than independent props:
+
+
+
+
+<Spreadsheet model={employeeModel} />
+
+
+
+
+where
+
+
+
+
+interface SpreadsheetModel {
+
+    rowCount(): number;
+
+    columnCount(): number;
+
+
+
+    getCell(row: number, col: number): CellData;
+
+
+
+    setCell(row: number, col: number, value: unknown): void;
+
+
+
+    insertRows(index: number, count: number): void;
+
+    deleteRows(index: number, count: number): void;
+
+
+
+    insertColumns(index: number, count: number): void;
+
+    deleteColumns(index: number, count: number): void;
+
+}
+
+
+
+
+This has two advantages:
+
+
+
+The component has a single, cohesive dependency (model) rather than a long list of callbacks.
+
+You can provide different implementations (array-backed, sparse, remote, immutable, etc.) without changing the component's API.
+
+
+
+In this design, the spreadsheet itself is responsible only for rendering, viewport management, focus, keyboard/mouse interactions, selection, scrolling, and editing UI. The model is responsible for what the data is and how it is stored or modified. That separation keeps the component generic while allowing it to work with virtually any underlying data source.
+
+
+
+
+
+
+
+
+
+I think you're converging on an architecture that many complex UI libraries eventually arrive at. The key realization is that "private components" are not part of the public API; they're implementation modules. They exist to structure the implementation, not to be composed by consumers.
+
+
+
+For example, your public API might be just:
+
+
+
+
+<Spreadsheet model={model} />
+
+
+
+
+Internally, however, you might have something like:
+
+
+
+
+Spreadsheet
+
+├── Viewport
+
+│   ├── Table
+
+│   │   ├── Row
+
+│   │   │   ├── Cell
+
+│   │   │   ├── Cell
+
+│   │   │   └── ...
+
+│   │   └── ...
+
+│   ├── ColumnHeaders
+
+│   └── RowHeaders
+
+├── SelectionOverlay
+
+├── Editor
+
+└── Scrollbars
+
+
+
+
+None of these are exported. They're just the implementation of Spreadsheet.
+
+
+
+I would think of Spreadsheet as an orchestrator
+
+
+
+It shouldn't be rendering HTML directly. Instead, it answers questions like:
+
+
+
+What rows are visible?
+
+What columns are visible?
+
+Which cell is selected?
+
+Is a cell currently being edited?
+
+Should the editor be shown?
+
+How large is the viewport?
+
+Has scrolling changed?
+
+
+
+Then it passes that information down.
+
+
+
+For example:
+
+
+
+
+function Spreadsheet({ model }) {
+
+    const viewport = calculateViewport();
+
+    const selection = useSelection();
+
+
+
+    return (
+
+        <>
+
+            <Table
+
+                model={model}
+
+                viewport={viewport}
+
+                selection={selection}
+
+            />
+
+            <SelectionOverlay selection={selection} />
+
+            <CellEditor />
+
+        </>
+
+    );
+
+}
+
+
+
+
+Notice that Spreadsheet isn't concerned with <td> elements or text nodes. It coordinates higher-level pieces.
+
+
+
+Your Table, Row, and Cell become rendering primitives
+
+
+
+Those components can be almost "dumb."
+
+
+
+
+<Table viewport={viewport}>
+
+    {visibleRows.map(row =>
+
+        <Row key={row}>
+
+            {visibleColumns.map(col =>
+
+                <Cell
+
+                    value={model.getCell(row, col)}
+
+                />
+
+            )}
+
+        </Row>
+
+    )}
+
+</Table>
+
+
+
+
+Their responsibility is mostly:
+
+
+
+translate props into DOM
+
+apply CSS classes
+
+position elements
+
+attach event handlers
+
+
+
+They shouldn't know anything about spreadsheets.
+
+
+
+Virtualization belongs above them
+
+
+
+This part of your message is the one I'd emphasize:
+
+
+
+It can check the viewport size and only lay the pieces that are inside some values plus some buffer margins.
+
+
+
+Exactly.
+
+
+
+The Spreadsheet should decide:
+
+
+
+
+Viewport:
+
+  visible rows:    420–450
+
+  overscan:        ±10
+
+
+
+Render:
+
+  rows 410–460
+
+
+
+
+Then Table simply renders those rows.
+
+
+
+The Row component doesn't know it's part of a million-row spreadsheet. It just renders one row.
+
+
+
+Private components are still components
+
+
+
+A common misconception is that if components aren't public, they don't need boundaries.
+
+
+
+In reality, they often need them even more, because the implementation grows over time.
+
+
+
+Imagine if after a year your Spreadsheet.tsx contained:
+
+
+
+scrolling
+
+keyboard navigation
+
+mouse selection
+
+IME composition
+
+drag fill
+
+clipboard
+
+context menus
+
+editing
+
+virtualization
+
+rendering
+
+column resizing
+
+
+
+That's a 3,000-line file.
+
+
+
+Instead, extracting pieces into private components or hooks lets each part own a specific concern.
+
+
+
+One thing I'd separate
+
+
+
+I'd distinguish between logical components and DOM wrappers.
+
+
+
+For example:
+
+
+
+
+Spreadsheet
+
+    │
+
+    ├── useViewport()
+
+    ├── useSelection()
+
+    ├── useEditing()
+
+    ├── useScrolling()
+
+    │
+
+    ▼
+
+VirtualTable
+
+    ▼
+
+Row
+
+    ▼
+
+Cell
+
+
+
+
+Some of these are React components (Row, Cell), while others are custom hooks that encapsulate behavior (useViewport, useSelection). React encourages extracting behavior into hooks rather than components when there's no visual output.
+
+
+
+One caution
+
+
+
+You described Table, Row, and Cell as "sugar-coated DOM." That's a good starting point, but don't feel obligated to mirror the DOM exactly. For example, a highly optimized spreadsheet might not render semantic <table>, <tr>, and <td> elements at all. It could render absolutely positioned <div>s because they're easier to virtualize and resize.
+
+
+
+In other words, the private hierarchy should reflect the implementation's needs, not necessarily the HTML structure.
+
+
+
+Overall, your idea of treating Spreadsheet as a facade/orchestrator over a collection of private rendering components is a sound way to keep the implementation manageable. The public API stays small (<Spreadsheet model={...} />), while the internal architecture can evolve without affecting users of the component.
+
+
+
+
+
+
+
+Your architecture is actually quite close to what I'd expect as a first implementation. I wouldn't throw it away. I'd evolve it.
+
+
+
+Here's how I see the progression.
+
+
+
+Stage 1: Structural decomposition (where you are)
+
+
+
+
+Spreadsheet
+
+    ↓
+
+Table
+
+    ↓
+
+Row
+
+    ↓
+
+Cell
+
+
+
+
+This is excellent because every piece has a clear responsibility.
+
+
+
+You can reason about the program almost like HTML.
+
+
+
+
+
+Stage 2: Separate behavior from rendering
+
+
+
+Eventually, Spreadsheet starts doing too much.
+
+
+
+Instead of
+
+
+
+
+function Spreadsheet() {
+
+    // scrolling
+
+    // viewport
+
+    // selection
+
+    // editing
+
+    // clipboard
+
+    // keyboard
+
+    // rendering
+
+}
+
+
+
+
+you begin extracting behavior:
+
+
+
+
+Spreadsheet
+
+├── useViewport()
+
+├── useSelection()
+
+├── useEditing()
+
+├── useClipboard()
+
+└── Table
+
+
+
+
+Notice that none of these hooks render anything.
+
+
+
+They only answer questions like
+
+
+
+Which rows are visible?
+
+Which cell is selected?
+
+Are we editing?
+
+Where should the editor appear?
+
+
+
+This separation makes each concern easier to test and evolve.
+
+
+
+
+
+Stage 3: Rendering becomes layered
+
+
+
+This is the biggest conceptual shift.
+
+
+
+A spreadsheet isn't just a table.
+
+
+
+It has
+
+
+
+cells
+
+headers
+
+grid lines
+
+selection rectangle
+
+resize handles
+
+drag handle
+
+editor
+
+tooltips
+
+context menus
+
+
+
+These don't fit neatly inside Row and Cell.
+
+
+
+Instead you start thinking in layers.
+
+
+
+
+Spreadsheet
+
+│
+
+├── HeaderLayer
+
+├── CellLayer
+
+├── GridLineLayer
+
+├── SelectionLayer
+
+├── EditingLayer
+
+└── OverlayLayer
+
+
+
+
+Everything occupies the same viewport.
+
+
+
+Each layer paints one aspect.
+
+
+
+This is very similar to a graphics engine.
+
+
+
+
+
+Why professionals make this shift
+
+
+
+Because certain features become awkward in a tree of nested components.
+
+
+
+Imagine a selection rectangle.
+
+
+
+Naively:
+
+
+
+
+Table
+
+ └── Row
+
+      └── Cell
+
+            └── Selection
+
+
+
+
+But a spreadsheet selection usually spans many cells.
+
+
+
+It isn't inside one cell.
+
+
+
+It's drawn over all of them.
+
+
+
+So instead:
+
+
+
+
+Viewport
+
+├── Cells
+
+├── Selection
+
+└── Editor
+
+
+
+
+Now each layer can be independently updated.
+
+
+
+
+
+Virtualization changes everything
+
+
+
+Suppose row 2000 becomes visible.
+
+
+
+A naïve hierarchy thinks
+
+
+
+Add Row 2000.
+
+
+
+A viewport hierarchy thinks
+
+
+
+Paint these pixels.
+
+
+
+The viewport doesn't care which logical rows exist.
+
+
+
+It only cares which ones intersect the visible rectangle.
+
+
+
+That's why professional grids often become viewport-centric instead of table-centric.
+
+
+
+
+
+Interaction also becomes centralized
+
+
+
+Beginners often let each cell manage itself.
+
+
+
+
+Cell
+
+ ├── onMouseDown
+
+ ├── onDrag
+
+ ├── onKeyDown
+
+
+
+
+Professional implementations often centralize this.
+
+
+
+
+Spreadsheet
+
+    │
+
+    ▼
+
+InteractionManager
+
+
+
+
+Why?
+
+
+
+Because selecting across 400 cells isn't 400 independent interactions.
+
+
+
+It's one interaction.
+
+
+
+The cells simply receive
+
+
+
+
+selected: true
+
+
+
+
+They don't compute it themselves.
+
+
+
+
+
+Rendering becomes almost stateless
+
+
+
+A professional Cell often looks surprisingly boring.
+
+
+
+
+function Cell({ value, selected, style }) {
+
+    return (
+
+        <div className={selected ? "selected" : ""}>
+
+            {value}
+
+        </div>
+
+    );
+
+}
+
+
+
+
+It doesn't know
+
+
+
+scrolling
+
+editing
+
+keyboard
+
+clipboard
+
+drag selection
+
+
+
+It just paints.
+
+
+
+That simplicity is intentional.
+
+
+
+
+
+So what changes?
+
+
+
+Not the public API.
+
+
+
+Still
+
+
+
+
+<Spreadsheet model={model} />
+
+
+
+
+The internal mental model changes.
+
+
+
+Instead of
+
+
+
+
+Spreadsheet
+
+    Table
+
+        Row
+
+            Cell
+
+
+
+
+you gradually arrive at
+
+
+
+
+Spreadsheet
+
+│
+
+├── Model Adapter
+
+├── Viewport Manager
+
+├── Interaction Manager
+
+├── Layout Engine
+
+│
+
+└── Renderer
+
+     ├── HeaderLayer
+
+     ├── CellLayer
+
+     ├── SelectionLayer
+
+     ├── EditorLayer
+
+     └── OverlayLayer
+
+
+
+
+Notice that this isn't "more React"—it's more like a rendering engine.
+
+
+
+Why that shift?
+
+
+
+The shift happens because a spreadsheet is no longer just displaying a hierarchy of elements. It's managing a two-dimensional interactive surface with scrolling, virtualization, overlays, hit-testing, editing, and keyboard navigation. At that point, the dominant concern isn't the parent-child relationship of elements; it's coordinating multiple subsystems over the same viewport.
+
+
+
+One final piece of advice: don't optimize for the end state too early. Many mature libraries started with something close to your Table → Row → Cell design. As requirements like frozen panes, merged cells, or drag selection appeared, they refactored toward a layered architecture. If your internal components are private, you have the freedom to make that evolution without breaking your public API. That's one of the strongest arguments for keeping the public surface small and the implementation modular.
+
+
+
+
+
+
+
+That additional requirement changes my advice quite a bit.
+
+
+
+A tree spreadsheet is significantly more complex than a regular data grid because you're combining two orthogonal models:
+
+
+
+A 2D grid (rows × columns)
+
+A tree (parent/child relationships between rows)
+
+
+
+Those two models should remain separate in your architecture.
+
+
+
+I would not make the tree visible to the renderer
+
+
+
+Instead of:
+
+
+
+
+Tree
+
+ ├── Row
+
+ │    ├── Cell
+
+ │    └── ...
+
+ └── Row
+
+
+
+
+I would introduce a layout stage.
+
+
+
+
+Model
+
+    │
+
+    ▼
+
+Tree
+
+    │
+
+    ▼
+
+Layout Engine
+
+    │
+
+    ▼
+
+Visible Rows
+
+    │
+
+    ▼
+
+Renderer
+
+
+
+
+Why?
+
+
+
+Because the renderer doesn't actually care about the tree.
+
+
+
+It cares about something much simpler:
+
+
+
+
+[
+
+    {
+
+        visibleIndex: 0,
+
+        level: 0,
+
+        nodeId: "A"
+
+    },
+
+    {
+
+        visibleIndex: 1,
+
+        level: 1,
+
+        nodeId: "B"
+
+    },
+
+    {
+
+        visibleIndex: 2,
+
+        level: 2,
+
+        nodeId: "C"
+
+    }
+
+]
+
+
+
+
+The renderer simply paints row 0, row 1, row 2...
+
+
+
+The fact that row 2 is a grandchild is only reflected by level.
+
+
+
+
+
+Think of Excel
+
+
+
+Excel doesn't really have a tree.
+
+
+
+Explorer does.
+
+
+
+JSpreadsheet doesn't.
+
+
+
+Outlook does.
+
+
+
+Visual Studio's Solution Explorer does.
+
+
+
+These applications all render a flattened view of a hierarchical model.
+
+
+
+That flattening step is incredibly valuable.
+
+
+
+
+
+I'd introduce another subsystem
+
+
+
+Instead of
+
+
+
+
+Spreadsheet
+
+
+
+
+I'd almost think in terms of
+
+
+
+
+Spreadsheet
+
+├── Data Model
+
+├── Tree Model
+
+├── Layout Engine
+
+├── Viewport
+
+├── Interaction
+
+└── Renderer
+
+
+
+
+Notice that layout becomes a first-class citizen.
+
+
+
+
+
+Layout is surprisingly important
+
+
+
+Suppose
+
+
+
+
+A
+
+├── B
+
+│   ├── C
+
+│   └── D
+
+└── E
+
+
+
+
+User collapses B.
+
+
+
+Layout becomes
+
+
+
+
+A
+
+B
+
+E
+
+
+
+
+Nothing changed in the model.
+
+
+
+Only the layout changed.
+
+
+
+This is why I'd avoid having the renderer walk the tree directly.
+
+
+
+
+
+Virtualization becomes much easier
+
+
+
+Imagine a million nodes.
+
+
+
+If the renderer traverses the tree every frame:
+
+
+
+
+Tree
+
+ ↓
+
+Renderer
+
+
+
+
+that's expensive.
+
+
+
+Instead
+
+
+
+
+Tree
+
+ ↓
+
+Visible Row Cache
+
+ ↓
+
+Viewport
+
+ ↓
+
+Renderer
+
+
+
+
+Now the renderer says
+
+
+
+I need rows 300–350.
+
+
+
+The cache answers immediately.
+
+
+
+
+
+I would actually move away from Table → Row → Cell
+
+
+
+Not completely.
+
+
+
+But I wouldn't make them the core abstraction.
+
+
+
+I'd rather have something like
+
+
+
+
+Spreadsheet
+
+│
+
+├── Viewport
+
+│
+
+├── GridRenderer
+
+│    ├── RowRenderer
+
+│    └── CellRenderer
+
+│
+
+├── TreeRenderer
+
+│
+
+├── SelectionOverlay
+
+│
+
+├── EditorOverlay
+
+│
+
+└── Scrollbars
+
+
+
+
+Notice something interesting.
+
+
+
+The tree isn't rendered by rows.
+
+
+
+It's rendered by the first column.
+
+
+
+Only column 0 needs indentation, disclosure arrows, connector lines, etc.
+
+
+
+Every other column behaves like a normal spreadsheet cell.
+
+
+
+So your renderer naturally becomes layered.
+
+
+
+
+
+This is where commercial components differ
+
+
+
+Commercial spreadsheet controls stop thinking
+
+
+
+"I'm rendering rows."
+
+
+
+and start thinking
+
+
+
+"I'm rendering a viewport."
+
+
+
+Everything is drawn relative to
+
+
+
+
+Viewport
+
+├── Cells
+
+├── Headers
+
+├── Selection
+
+├── Tree Glyphs
+
+├── Editor
+
+└── Resize Handles
+
+
+
+
+The viewport is the central abstraction.
+
+
+
+
+
+I think your strongest architectural addition would be...
+
+
+
+...a layout engine.
+
+
+
+Right now you seem to have
+
+
+
+
+Model
+
+ ↓
+
+Spreadsheet
+
+ ↓
+
+Rows
+
+ ↓
+
+Cells
+
+
+
+
+I'd evolve it into
+
+
+
+
+Model
+
+      │
+
+      ▼
+
+ Tree Expansion State
+
+      │
+
+      ▼
+
+  Layout Engine
+
+      │
+
+      ▼
+
+ Visible Row Cache
+
+      │
+
+      ▼
+
+Viewport Manager
+
+      │
+
+      ▼
+
+Renderer
+
+
+
+
+That one extra layer pays dividends:
+
+
+
+collapsing/expanding becomes cheap,
+
+virtualization becomes straightforward,
+
+keyboard navigation operates on visible rows rather than traversing a tree,
+
+selection ranges become easier to compute,
+
+and the renderer doesn't need to know anything about hierarchical data structures.
+
+
+
+Given your goal—something approaching Excel in capability but with hierarchical rows—I would focus much more effort on the model, layout, and viewport subsystems than on the React component hierarchy itself. The React components will mostly be the presentation layer over those engines. In a mature spreadsheet, the hard problems are usually not "how do I organize my JSX?" but "how do I map a hierarchical model into a flat, virtualized, interactive viewport efficiently?" That's where most of the architectural complexity lives.
+
+
+
+
+
+
+
+Yes, it can improve perceived performance significantly, especially when switching tabs.
+
+
+
+The important thing is to distinguish between memory usage and rendered DOM.
+
+
+
+If your spreadsheet is virtualized, each mounted Spreadsheet is not rendering all 10,000 rows. Instead, it might only render something like:
+
+
+
+40 visible rows
+
+20 visible columns
+
+
+
+That's only around 800 cells, plus a small overscan buffer.
+
+
+
+The remaining 9,960 rows exist only in your model or controller, not as DOM nodes.
+
+
+
+So if you have five sheets open, you don't have:
+
+
+
+
+5 × 10,000 rows in the DOM
+
+
+
+
+You have something more like:
+
+
+
+
+5 × 40 visible rows
+
+
+
+
+which is a huge difference.
+
+
+
+What stays in memory?
+
+
+
+Each mounted sheet keeps things like:
+
+
+
+React component state
+
+scroll position
+
+selection
+
+viewport calculations
+
+refs
+
+cached layout
+
+a few hundred rendered DOM elements
+
+
+
+It does not necessarily keep thousands of row components alive if virtualization is implemented correctly.
+
+
+
+Will switching be faster?
+
+
+
+Usually, yes.
+
+
+
+Instead of:
+
+
+
+
+Unmount Sheet A
+
+Destroy DOM
+
+Destroy React state
+
+
+
+Mount Sheet B
+
+Create DOM
+
+Run effects
+
+Compute layout
+
+
+
+
+you get:
+
+
+
+
+Hide Sheet A
+
+Show Sheet B
+
+
+
+
+which is much less work.
+
+
+
+Is there any downside besides memory?
+
+
+
+One thing to watch for is that hidden sheets shouldn't continue doing unnecessary work. For example:
+
+
+
+animations,
+
+blinking carets,
+
+expensive timers,
+
+resize observers,
+
+global keyboard listeners.
+
+
+
+That's why passing an active prop is useful:
+
+
+
+
+<Spreadsheet
+
+    controller={sheet.controller}
+
+    active={sheet.id === activeSheetId}
+
+/>
+
+
+
+
+Inactive sheets can suspend those activities while remaining mounted.
+
+
+
+I would measure before optimizing further
+
+
+
+I'd start with this design because it's straightforward and often performs well. If, later, you discover users commonly have 50 or 100 sheets open and memory becomes an issue, you can introduce a policy like "keep the active sheet and the last 2–3 visited sheets mounted, unmount the rest."
+
+
+
+That gives you most of the responsiveness benefits without keeping every sheet alive indefinitely.
+
+
+
+
+
+Problem is how should I check viewport. Some cells are big and some cells are small, that would be problematic
+
+
+
+That's one of the hardest parts of building a spreadsheet. Once rows or columns have variable sizes, you can no longer compute visibility with simple arithmetic like:
+
+
+
+
+const firstRow = Math.floor(scrollTop / rowHeight);
+
+
+
+
+That only works when every row has the same height.
+
+
+
+Instead, most spreadsheet and virtualization engines introduce a layout index that stores cumulative positions.
+
+
+
+For example, suppose your row heights are:
+
+
+
+
+Row  Height
+
+0    20
+
+1    20
+
+2    50
+
+3    18
+
+4    30
+
+
+
+
+You build a prefix sum of their top positions:
+
+
+
+
+Row  Top   Bottom
+
+0      0      20
+
+1     20      40
+
+2     40      90
+
+3     90     108
+
+4    108     138
+
+
+
+
+Now if the viewport starts at scrollTop = 45, you don't scan every row. Instead, you find the first row whose range contains that position:
+
+
+
+
+45 ∈ [40, 90)
+
+
+
+
+So rendering begins at row 2.
+
+
+
+Binary search
+
+
+
+Since the Top values are sorted, you can binary search them.
+
+
+
+
+const row = findRowAt(scrollTop);
+
+
+
+
+This is O(log n) instead of O(n).
+
+
+
+You do the same for the bottom of the viewport to find the last visible row.
+
+
+
+
+
+Dynamic row heights
+
+
+
+What if a row changes height?
+
+
+
+
+Row 2: 50 → 80
+
+
+
+
+You update the cached positions for the rows after it.
+
+
+
+There are several data structures for this:
+
+
+
+Recompute the whole prefix array (simple, fine for moderate sizes).
+
+Use a Fenwick tree (Binary Indexed Tree).
+
+Use a segment tree.
+
+Use another balanced tree structure that supports prefix sums efficiently.
+
+
+
+Many mature grids use one of the latter approaches because updates become much cheaper.
+
+
+
+
+
+Columns work the same way
+
+
+
+Widths:
+
+
+
+
+100
+
+150
+
+80
+
+250
+
+
+
+
+become:
+
+
+
+
+Col  Left  Right
+
+0      0     100
+
+1    100     250
+
+2    250     330
+
+3    330     580
+
+
+
+
+Binary search scrollLeft.
+
+
+
+
+
+You usually don't think in cells
+
+
+
+Another optimization is that you don't determine visibility per cell. You determine it per row and per column.
+
+
+
+
+Visible rows:
+
+120–145
+
+
+
+Visible columns:
+
+3–8
+
+
+
+
+Then render the Cartesian product:
+
+
+
+
+rows × columns
+
+
+
+
+So if 26 rows and 6 columns are visible, you render only 156 cells, regardless of whether the dataset contains a million rows.
+
+
+
+
+
+What about really tall cells?
+
+
+
+If your rows can become arbitrarily tall because of wrapped text or custom content, you have two common strategies:
+
+
+
+Measure lazily. Assume an estimated height until the row is rendered, then measure its actual height and update the layout cache.
+
+Require explicit heights. The model tells the spreadsheet each row's height up front, avoiding runtime measurement.
+
+
+
+Many virtualization libraries use the first approach because it's flexible, though it requires handling layout updates when measurements change.
+
+
+
+
+
+For a spreadsheet-like component, I'd recommend making the layout engine responsible for all of this. It could expose an API like:
+
+
+
+
+interface LayoutEngine {
+
+    rowTop(row: number): number;
+
+    rowHeight(row: number): number;
+
+
+
+    columnLeft(col: number): number;
+
+    columnWidth(col: number): number;
+
+
+
+    findRow(y: number): number;
+
+    findColumn(x: number): number;
+
+}
+
+
+
+
+The viewport manager then only asks:
+
+
+
+
+const firstRow = layout.findRow(scrollTop);
+
+const lastRow = layout.findRow(scrollTop + viewportHeight);
+
+
+
+const firstCol = layout.findColumn(scrollLeft);
+
+const lastCol = layout.findColumn(scrollLeft + viewportWidth);
+
+
+
+
+That cleanly separates where things are (layout) from what should be rendered (viewport).
+
+
+
+
+
+I'd make it part of the layout subsystem, not the viewport or renderer.
+
+
+
+Think of each subsystem owning one responsibility:
+
+
+
+
+Model
+
+  │
+
+  ▼
+
+Layout Engine
+
+  │
+
+  ▼
+
+Viewport
+
+  │
+
+  ▼
+
+Renderer
+
+
+
+
+Model
+
+
+
+The model knows about the data:
+
+
+
+
+model.rowCount();
+
+model.columnCount();
+
+model.getCell(row, col);
+
+model.rowHeight(row);
+
+model.columnWidth(col);
+
+
+
+
+It does not know where rows appear on screen.
+
+
+
+
+
+Layout Engine
+
+
+
+The layout engine turns logical sizes into physical positions.
+
+
+
+
+layout.rowTop(row);
+
+layout.rowHeight(row);
+
+
+
+layout.columnLeft(col);
+
+layout.columnWidth(col);
+
+
+
+layout.findRow(y);
+
+layout.findColumn(x);
+
+
+
+
+Internally, this is where you'd keep your prefix sums, Fenwick tree, caches, or whatever indexing structure you choose.
+
+
+
+The renderer doesn't care how findRow() works.
+
+
+
+
+
+Viewport
+
+
+
+The viewport manager answers:
+
+
+
+Given the current scroll position and viewport size, what should be visible?
+
+
+
+
+const firstRow = layout.findRow(scrollTop);
+
+const lastRow = layout.findRow(scrollTop + height);
+
+
+
+const firstCol = layout.findColumn(scrollLeft);
+
+const lastCol = layout.findColumn(scrollLeft + width);
+
+
+
+
+It doesn't know anything about row heights beyond asking the layout engine.
+
+
+
+
+
+Renderer
+
+
+
+The renderer receives something like:
+
+
+
+
+{
+
+    rows: [120, ..., 145],
+
+    columns: [3, ..., 8]
+
+}
+
+
+
+
+and paints them.
+
+
+
+It shouldn't know anything about scrolling math or binary searches.
+
+
+
+
+
+Why not put it in the viewport?
+
+
+
+Because viewport is stateful, while layout is structural.
+
+
+
+The viewport changes constantly:
+
+
+
+
+scrollTop
+
+scrollLeft
+
+width
+
+height
+
+
+
+
+The layout only changes when the document changes:
+
+
+
+row height changes
+
+column width changes
+
+rows inserted/deleted
+
+columns inserted/deleted
+
+
+
+Those are different lifecycles.
+
+
+
+
+
+I'd even encapsulate it further
+
+
+
+Rather than exposing lots of individual methods, you could have the layout engine provide a higher-level query:
+
+
+
+
+interface LayoutEngine {
+
+    getVisibleRegion(
+
+        scrollTop: number,
+
+        scrollLeft: number,
+
+        viewportWidth: number,
+
+        viewportHeight: number,
+
+        overscan: number
+
+    ): VisibleRegion;
+
+}
+
+
+
+
+where VisibleRegion contains:
+
+
+
+
+interface VisibleRegion {
+
+    firstRow: number;
+
+    lastRow: number;
+
+
+
+    firstColumn: number;
+
+    lastColumn: number;
+
+}
+
+
+
+
+Now the viewport manager doesn't even know how visibility is computed—it just asks the layout engine.
+
+
+
+
+
+So if I were organizing the project, it might look something like:
+
+
+
+
+Spreadsheet/
+
+├── model/
+
+│   └── SpreadsheetModel.ts
+
+├── layout/
+
+│   ├── LayoutEngine.ts
+
+│   ├── RowLayout.ts
+
+│   └── ColumnLayout.ts
+
+├── viewport/
+
+│   └── ViewportManager.ts
+
+├── interaction/
+
+│   ├── Selection.ts
+
+│   └── Editing.ts
+
+└── render/
+
+    ├── CellLayer.tsx
+
+    ├── HeaderLayer.tsx
+
+    └── OverlayLayer.tsx
+
+
+
+
+To me, layout is the natural home because mapping logical rows and columns to screen coordinates—and back again—is exactly what a layout engine is responsible for. The viewport then consumes that information to decide what portion of the layout to display.
+
+
+
+
+
+
+
+I see what you're asking now. You're asking where Spreadsheet.tsx itself belongs in that directory structure.
+
+
+
+I'd put it at the root because it's the composition point for everything else:
+
+
+
+
+Spreadsheet/
+
+├── Spreadsheet.tsx        ← public component
+
+├── model/
+
+│   └── SpreadsheetModel.ts
+
+├── layout/
+
+│   ├── LayoutEngine.ts
+
+│   ├── RowLayout.ts
+
+│   └── ColumnLayout.ts
+
+├── viewport/
+
+│   └── ViewportManager.ts
+
+├── interaction/
+
+│   ├── Selection.ts
+
+│   └── Editing.ts
+
+├── render/
+
+│   ├── CellLayer.tsx
+
+│   ├── HeaderLayer.tsx
+
+│   └── OverlayLayer.tsx
+
+└── hooks/
+
+    └── useSpreadsheet.ts
+
+
+
+
+Or, if you prefer separating public and private code:
+
+
+
+
+Spreadsheet/
+
+├── index.ts
+
+├── Spreadsheet.tsx        ← exported
+
+├── internal/
+
+│   ├── layout/
+
+│   ├── viewport/
+
+│   ├── interaction/
+
+│   └── render/
+
+└── model/
+
+
+
+
+Spreadsheet.tsx is the facade. It composes everything:
+
+
+
+
+export function Spreadsheet({ model }: Props) {
+
+    const controller = useSpreadsheet(model);
+
+
+
+    return (
+
+        <>
+
+            <HeaderLayer controller={controller} />
+
+            <CellLayer controller={controller} />
+
+            <OverlayLayer controller={controller} />
+
+        </>
+
+    );
+
+}
+
+
+
+
+Everything else is an implementation detail.
+
+
+
+
+
+Personally, if this is becoming a full-featured component library, I'd probably organize it like this:
+
+
+
+
+Spreadsheet/
+
+├── Spreadsheet.tsx        ← only public React component
+
+├── Spreadsheet.css
+
+├── index.ts
+
+│
+
+├── model/
+
+├── engine/
+
+│   ├── layout/
+
+│   ├── viewport/
+
+│   ├── interaction/
+
+│   └── editing/
+
+│
+
+└── render/
+
+    ├── CellLayer.tsx
+
+    ├── HeaderLayer.tsx
+
+    ├── OverlayLayer.tsx
+
+    └── EditorLayer.tsx
+
+
+
+
+Notice I renamed the non-React logic to engine. I think that's a better description than scattering layout, viewport, and interaction directly under the root—they're all parts of the spreadsheet engine, whereas render/ is specifically the React rendering layer. That separation becomes clearer as the project grows.
+
+
+
+
+
+
+
+I'd consider virtualization to be part of the viewport, not the layout.
+
+
+
+Here's how I separate the responsibilities:
+
+
+
+Model — What data exists?
+
+Layout — Where is each row/column located?
+
+Viewport — Which part of the layout is visible?
+
+Renderer — Draw the visible part.
+
+
+
+So:
+
+
+
+
+Model
+
+    │
+
+    ▼
+
+Layout
+
+    │
+
+    ▼
+
+Viewport (virtualization)
+
+    │
+
+    ▼
+
+Renderer
+
+
+
+
+Layout doesn't virtualize
+
+
+
+The layout knows things like:
+
+
+
+
+layout.rowTop(123);
+
+layout.rowHeight(123);
+
+layout.findRow(5000);
+
+
+
+
+It doesn't care whether you're rendering 10 rows or 10 million.
+
+
+
+Viewport virtualizes
+
+
+
+The viewport takes:
+
+
+
+
+scrollTop
+
+scrollLeft
+
+viewportWidth
+
+viewportHeight
+
+overscan
+
+
+
+
+and asks the layout:
+
+
+
+
+const firstRow = layout.findRow(scrollTop);
+
+const lastRow = layout.findRow(scrollTop + viewportHeight);
+
+
+
+
+Then it expands the range for overscan:
+
+
+
+
+return {
+
+    firstRow: Math.max(0, firstRow - overscanRows),
+
+    lastRow: Math.min(rowCount - 1, lastRow + overscanRows),
+
+    firstColumn,
+
+    lastColumn,
+
+};
+
+
+
+
+That's virtualization.
+
+
+
+Renderer just renders
+
+
+
+The renderer receives:
+
+
+
+
+{
+
+    firstRow: 120,
+
+    lastRow: 145,
+
+    firstColumn: 3,
+
+    lastColumn: 8
+
+}
+
+
+
+
+and loops over those indices.
+
+
+
+It doesn't know why those rows were chosen.
+
+
+
+
+
+I'd even rename it
+
+
+
+Instead of ViewportManager, I'd consider something like:
+
+
+
+
+viewport/
+
+├── ViewportState.ts      // scroll position, viewport size
+
+├── Virtualizer.ts        // computes visible region
+
+└── Viewport.ts           // facade over both
+
+
+
+
+Then the flow becomes:
+
+
+
+
+ViewportState
+
+    ↓
+
+Virtualizer
+
+    ↓
+
+VisibleRegion
+
+    ↓
+
+CellLayer
+
+
+
+
+This keeps virtualization as a focused concern. It depends on the current viewport state and the layout engine, but it doesn't own either.
+
+
+
+
+
+No, it isn't necessary at the beginning. In fact, for a project as complex as a spreadsheet, too much structure too early can make development slower.
+
+
+
+A lot of mature open-source projects have elaborate directory structures because they've evolved over years with many contributors. If you're starting from scratch, your goal should be to make the code easy to change, not to predict every future abstraction.
+
+
+
+For example, I'd be perfectly happy starting with something like:
+
+
+
+
+Spreadsheet/
+
+├── Spreadsheet.tsx
+
+├── Row.tsx
+
+├── Cell.tsx
+
+├── model.ts
+
+└── styles.css
+
+
+
+
+Even if Spreadsheet.tsx grows to 500–1000 lines, that's not automatically a problem if it's still understandable.
+
+
+
+Only when you notice patterns like:
+
+
+
+"Selection logic is taking 300 lines."
+
+"Scrolling code is mixed with editing code."
+
+"Clipboard handling is independent."
+
+
+
+does it become worth extracting:
+
+
+
+
+Spreadsheet/
+
+├── Spreadsheet.tsx
+
+├── Row.tsx
+
+├── Cell.tsx
+
+├── useSelection.ts
+
+├── useViewport.ts
+
+└── model.ts
+
+
+
+
+The file structure should reflect real complexity, not anticipated complexity.
+
+
+
+React components aren't the architecture
+
+
+
+One misconception is that every concept deserves its own component or directory.
+
+
+
+Your architecture is really about how responsibilities are divided:
+
+
+
+
+Spreadsheet
+
+    ↓
+
+Row
+
+    ↓
+
+Cell
+
+
+
+
+That's already an architecture.
+
+
+
+Whether those are in three files or thirty files doesn't change the design.
+
+
+
+Optimize when you have evidence
+
+
+
+Suppose six months from now you decide to virtualize.
+
+
+
+If you've kept the public API as:
+
+
+
+
+<Spreadsheet model={model} />
+
+
+
+
+then internally you might change:
+
+
+
+
+return <NaiveSpreadsheetView ... />;
+
+
+
+
+to
+
+
+
+
+return <VirtualizedSpreadsheetView ... />;
+
+
+
+
+You don't need to have both implementations today. You only need the boundary to be clear enough that the replacement is feasible.
+
+
+
+Extract around responsibilities, not nouns
+
+
+
+A common trap is organizing by "things":
+
+
+
+
+Cell/
+
+Row/
+
+Viewport/
+
+Selection/
+
+Interaction/
+
+Renderer/
+
+Layout/
+
+
+
+
+before those concepts have stabilized.
+
+
+
+Instead, extract code when one responsibility becomes difficult to reason about. For example:
+
+
+
+Editing logic becomes a file.
+
+Selection logic becomes a file.
+
+Viewport calculations become a file.
+
+
+
+Those extractions happen because they solve a maintenance problem, not because they sound architecturally pure.
+
+
+
+My rule of thumb
+
+
+
+I'd start with the simplest thing that can work:
+
+
+
+
+Spreadsheet/
+
+├── Spreadsheet.tsx
+
+├── Row.tsx
+
+├── Cell.tsx
+
+└── model.ts
+
+
+
+
+Then, whenever you find yourself scrolling through hundreds of lines to find the selection code, or you're afraid to change the scrolling code because it's intertwined with editing, that's the signal to extract a module.
+
+
+
+For a solo project, it's often better to let the architecture emerge from the implementation. You're not designing a framework for dozens of developers yet; you're building a spreadsheet. Once the behavior is correct and you can see where the complexity naturally accumulates, the right module boundaries become much more obvious than they are at the start.
+
+
+
+
+
+
+
+But styles.css I would split them up into Row.css, Cell.css! Otherwise, I don't think I would add too much stuff. And also, the state should not belong to the component but should be saved externally. In my application, I have a separate dedication for states such as current selection states and so on. These must be outsourced
+
+
+
+That sounds like a coherent approach.
+
+
+
+Splitting the styles by component is quite reasonable:
+
+
+
+
+Spreadsheet/
+
+├── Spreadsheet.tsx
+
+├── Spreadsheet.css
+
+├── Row.tsx
+
+├── Row.css
+
+├── Cell.tsx
+
+├── Cell.css
+
+└── model.ts
+
+
+
+
+Each component owns its visual appearance, which tends to make maintenance easier. Whether you use plain CSS, CSS Modules, or another styling approach is a separate decision.
+
+
+
+On the state, I actually think your idea is more important than the file layout.
+
+
+
+If you already have an application architecture where state lives outside the view, then Spreadsheet, Row, and Cell become much closer to views than owners of state.
+
+
+
+For example:
+
+
+
+
+Application
+
+    │
+
+    ▼
+
+SpreadsheetState
+
+    │
+
+    ├── selection
+
+    ├── editing
+
+    ├── scroll
+
+    ├── expandedNodes
+
+    └── ...
+
+    │
+
+    ▼
+
+Spreadsheet
+
+    │
+
+    ▼
+
+Row
+
+    │
+
+    ▼
+
+Cell
+
+
+
+
+The components receive the current state and notify the outside world about user interactions.
+
+
+
+For example:
+
+
+
+
+<Spreadsheet
+
+    model={model}
+
+    state={spreadsheetState}
+
+    onAction={dispatch}
+
+/>
+
+
+
+
+Then a cell click becomes something like:
+
+
+
+
+Cell
+
+    ↓
+
+pointerDown
+
+    ↓
+
+Spreadsheet
+
+    ↓
+
+dispatch({
+
+    type: "selectCell",
+
+    row,
+
+    column,
+
+})
+
+
+
+
+The state manager updates the selection, and React re-renders with the new state.
+
+
+
+This has several advantages:
+
+
+
+The spreadsheet is easier to test because its behavior depends on explicit inputs (model and state).
+
+You can serialize and restore state.
+
+Features like undo/redo become much easier if state changes flow through a central mechanism.
+
+The same state could, in principle, be observed by other parts of your application.
+
+
+
+I would still distinguish between application state and ephemeral view state.
+
+
+
+For example, these are often worth keeping externally:
+
+
+
+current selection
+
+active cell
+
+editing state
+
+expanded tree nodes
+
+column widths (if user-configurable)
+
+row heights (if user-configurable)
+
+
+
+Whereas some values are implementation details of the renderer:
+
+
+
+a reference to a DOM element
+
+whether the mouse is currently inside a particular cell during a pointer event
+
+cached measurements
+
+animation frame IDs
+
+
+
+Those don't usually need to live in the external state because they aren't part of the spreadsheet's logical state—they're implementation details.
+
+
+
+So I think the guiding principle is:
+
+
+
+Logical spreadsheet state (what the user would expect to persist or participate in undo/redo) lives outside the components.
+
+Rendering state (what's needed to draw efficiently or interact with the DOM) can stay inside the renderer.
+
+
+
+That keeps your React components relatively thin while allowing the spreadsheet's behavior to be driven by a central state model, which fits well with the architecture you've described.

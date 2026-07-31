@@ -8,6 +8,10 @@ import {
     type TabDescriptor,
     type ActiveTabSelectReason,
 } from "./views/tab-bar/";
+import {
+    SpreadsheetView,
+    type CellDescriptor,
+} from "./views/spreadsheet-view/";
 
 function manual_test_1() {
     ReactDOM.createRoot(document.getElementById("app")!).render(
@@ -313,9 +317,141 @@ function manual_test_2() {
     );
 }
 
-manual_test_2();
+/**
+ * An ARBITRARY business data structure for the spreadsheet. Like the tab bar,
+ * SpreadsheetView never sees this shape — it reaches in via getCell / counts /
+ * onCellEdit only. Here it happens to be a simple ledger of transactions.
+ */
+interface Txn {
+    date: string;
+    description: string;
+    amount: number;
+}
+
+interface LedgerState {
+    columns: { label: string; align?: "left" | "right" }[];
+    rows: Txn[];
+}
+
+function DataDrivenSpreadsheetDemo() {
+    const [ledger, setLedger] = useState<LedgerState>({
+        columns: [
+            { label: "Date" },
+            { label: "Description" },
+            { label: "Amount", align: "right" },
+        ],
+        rows: [
+            { date: "2026-01-03", description: "Opening balance", amount: 1000 },
+            { date: "2026-01-05", description: "Groceries", amount: -84.2 },
+            { date: "2026-01-09", description: "Salary", amount: 2500 },
+            { date: "2026-01-12", description: "Electricity", amount: -120.5 },
+        ],
+    });
+    const [log, setLog] = useState<string[]>([]);
+    const pushLog = (msg: string) =>
+        setLog((prev) => [msg, ...prev].slice(0, 6));
+
+    // ACCESS callbacks: random access into the business data. A grid asks only
+    // for the cells it needs (which pairs with future virtualization).
+    const getRowCount = (data: LedgerState) => data.rows.length;
+    const getColumnCount = (data: LedgerState) => data.columns.length;
+    const getColumnHeader = (data: LedgerState, col: number) =>
+        data.columns[col].label;
+
+    const getCell = (
+        data: LedgerState,
+        row: number,
+        col: number,
+    ): CellDescriptor => {
+        const txn = data.rows[row];
+        switch (col) {
+            case 0:
+                return { value: txn.date };
+            case 1:
+                return { value: txn.description };
+            case 2:
+                return {
+                    value: txn.amount.toFixed(2),
+                    align: "right",
+                };
+            default:
+                return { value: "" };
+        }
+    };
+
+    // MUTATE callback: apply a committed edit to the business data structure.
+    const handleCellEdit = (
+        row: number,
+        col: number,
+        value: string,
+        data: LedgerState,
+    ) => {
+        pushLog(`edit (${row},${col}) = "${value}"`);
+        setLedger(() => {
+            const rows = data.rows.map((r) => ({ ...r }));
+            const txn = rows[row];
+            if (col === 0) txn.date = value;
+            else if (col === 1) txn.description = value;
+            else if (col === 2) {
+                const n = Number(value);
+                if (!Number.isNaN(n)) txn.amount = n;
+            }
+            return { ...data, rows };
+        });
+    };
+
+    return (
+        <div style={{ fontFamily: "sans-serif", maxWidth: 640, marginTop: 32 }}>
+            <h3>Data-driven SpreadsheetView demo</h3>
+            <SpreadsheetView<LedgerState>
+                data={ledger}
+                getRowCount={getRowCount}
+                getColumnCount={getColumnCount}
+                getCell={getCell}
+                getColumnHeader={getColumnHeader}
+                onCellEdit={handleCellEdit}
+                onCellClick={(r, c) => pushLog(`click (${r},${c})`)}
+                onSelectionChange={(cell) =>
+                    pushLog(`select ${cell ? `(${cell.row},${cell.col})` : "none"}`)
+                }
+                editable
+                defaultActiveCell={{ row: 0, col: 0 }}
+            />
+            <pre
+                style={{
+                    background: "#f5f5f5",
+                    padding: 8,
+                    fontSize: 12,
+                    minHeight: 70,
+                }}
+            >
+                {log.map((l) => `${l}\n`).join("") || "(interaction log)"}
+            </pre>
+            <p style={{ fontSize: 12, color: "#666" }}>
+                Click a cell to select; arrow keys navigate; Enter/F2 or
+                double-click edits; Enter commits, Esc cancels.
+            </p>
+        </div>
+    );
+}
+
+function Demos() {
+    return (
+        <>
+            <DataDrivenTabBarDemo />
+            <DataDrivenSpreadsheetDemo />
+        </>
+    );
+}
+
+function manual_test_3() {
+    ReactDOM.createRoot(document.getElementById("root")!).render(<Demos />);
+}
+
+manual_test_3();
 
 // Keep unused references reachable to preserve prior manual demos.
 void manual_test_1;
+void manual_test_2;
 void AbstractParser;
 void React;

@@ -1,0 +1,57 @@
+/*
+ * The grid is TWO elements, not one:
+ *
+ *   .grid          the SCROLL VIEWPORT — clips and scrolls
+ *   .grid__table   the TABLE — sizes itself to its content
+ *
+ * They have to be separate. A table's width is determined by its content
+ * (intrinsic sizing), which is exactly what makes column auto-fit possible; but
+ * an element cannot simultaneously grow to fit its content and clip that content
+ * to a fixed box. Putting `overflow` on the wrapper keeps both properties.
+ *
+ * This split is also what makes the frozen header work: `position: sticky` on a
+ * header cell resolves against the nearest scrolling ancestor, which is `.grid`.
+ * No scroll listener, no JavaScript.
+ */
+.grid {
+    display: inline-block;
+    overflow: auto;
+    max-width: 100%;
+    max-height: 480px;
+    border: 1px solid #c0c0c0;
+    background-color: #ffffff;
+}
+
+.grid__table {
+    /*
+     * `collapse` is what gives a spreadsheet its single-pixel rules: adjacent
+     * cells SHARE one border. With flex rows every cell drew its own, so
+     * neighbours doubled up and each seam had to be cancelled by hand.
+     */
+    border-collapse: collapse;
+
+    /*
+     * `auto`, not `fixed`: let the browser size each column to its widest cell.
+     * This is the native version of "resize column to fit contents" and is the
+     * reason a <colgroup> width acts as a hint rather than a hard cap.
+     *
+     * If virtualization arrives later, switch this to `fixed` — measuring every
+     * cell is precisely the O(n) work virtualization exists to avoid.
+     */
+    table-layout: auto;
+
+    /* Collapsed borders leave no gaps, so the table needs no extra spacing. */
+    border-spacing: 0;
+}
+
+/*
+ * Column widths, expressed once per COLUMN rather than repeated on every cell.
+ * With `table-layout: auto` these are minimums the content may exceed.
+ */
+.grid__col {
+    width: 100px;
+}
+
+.grid__col-gutter {
+    width: 40px;
+}

@@ -1,0 +1,35 @@
+/*
+ * Column-header cells and the gutter corner.
+ *
+ * `position: sticky` is resolved against the scroll viewport in `Grid.css`, which
+ * is why freezing the header needs no JavaScript and no scroll listener.
+ */
+.grid__col-header {
+    padding: 4px 8px;
+    font-weight: 600;
+    text-align: center;
+    background-color: #f3f3f3;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #c0c0c0;
+
+    /* Frozen header row. `top: 0` sticks it to the viewport's top edge. */
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/*
+ * The corner is frozen in BOTH directions, so it must outrank the row gutter
+ * (z-index 1) and the header row (2) it overlaps.
+ */
+.grid__corner {
+    width: 40px;
+    background-color: #f3f3f3;
+    border-right: 1px solid #c0c0c0;
+    border-bottom: 1px solid #c0c0c0;
+
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}

@@ -141,6 +141,110 @@ describe("revealHorizontally — the three cases", () => {
     });
 });
 
+describe("CASE W — a tab wider than the viewport", () => {
+    /**
+     * `.tab` is a fixed 149px, so any `maxWidth` below roughly 165px makes the
+     * active tab wider than the strip. Such a tab can never be "fully visible",
+     * so cases A and B both apply and each overshoots past the other: the strip
+     * oscillated between two offsets for as long as the tab stayed active. That
+     * silently broke the idempotence the whole design leans on.
+     *
+     * Geometry here is built by hand rather than with `makeStrip`, because the
+     * point is a tab wider than `VIEW_W`.
+     */
+    const WIDE = 500; // > VIEW_W (350)
+
+    function makeWideStrip(
+        scrollLeft: number,
+        tabAbsLeft: number,
+        scrollWidth = 2000,
+    ) {
+        let current = scrollLeft;
+        const container = document.createElement("div");
+        Object.defineProperty(container, "scrollLeft", {
+            get: () => current,
+            set: (v: number) => {
+                current = v;
+            },
+            configurable: true,
+        });
+        Object.defineProperty(container, "clientWidth", {
+            value: VIEW_W,
+            configurable: true,
+        });
+        Object.defineProperty(container, "clientLeft", {
+            value: 0,
+            configurable: true,
+        });
+        Object.defineProperty(container, "scrollWidth", {
+            value: scrollWidth,
+            configurable: true,
+        });
+        container.getBoundingClientRect = () =>
+            ({ left: 0, width: VIEW_W }) as DOMRect;
+        container.scrollTo = ((opts: ScrollToOptions) => {
+            if (opts.left !== undefined) current = opts.left;
+        }) as typeof container.scrollTo;
+
+        const target = document.createElement("div");
+        /** Re-measure the tab against the container's current scroll offset. */
+        const remeasure = () =>
+            fakeBox(target, { left: tabAbsLeft - current, width: WIDE });
+        remeasure();
+        container.appendChild(target);
+        return { container, target, remeasure };
+    }
+
+    it("aligns the leading edge instead of oscillating", () => {
+        const { container, target } = makeWideStrip(600, 500);
+        revealHorizontally(container, target, 8);
+        // Leading edge flush with the viewport: no margin, because a margin only
+        // pushes more of an already-unfittable tab out of sight.
+        expect(container.scrollLeft).toBe(500);
+    });
+
+    it("converges and STAYS: repeated reveals never move the strip again", () => {
+        // The regression test proper. Before the fix this alternated 142/207
+        // forever with a 100px viewport; here it must settle after one step.
+        const { container, target, remeasure } = makeWideStrip(600, 500);
+
+        revealHorizontally(container, target, 8);
+        const settled = container.scrollLeft;
+
+        for (let i = 0; i < 5; i++) {
+            remeasure();
+            revealHorizontally(container, target, 8);
+            expect(container.scrollLeft).toBe(settled);
+        }
+    });
+
+    it("scrolls back leftwards to the leading edge when clipped on the left", () => {
+        // Left edge off-screen to the left: the visible part is the tab's middle,
+        // so the leading edge still has to be brought back into view.
+        const { container, target } = makeWideStrip(700, 500);
+        revealHorizontally(container, target, 8);
+        expect(container.scrollLeft).toBe(500);
+    });
+
+    it("does nothing when the leading edge is already flush", () => {
+        const { container, target } = makeWideStrip(500, 500);
+        revealHorizontally(container, target, 8);
+        expect(container.scrollLeft).toBe(500);
+    });
+
+    it("prefers the leading edge over the clamp at the far end", () => {
+        // The wide tab is the LAST one, so scrollWidth is exactly its right edge
+        // (1900 + 500 = 2400) and max scrollLeft is 2050. Aligning the leading
+        // edge asks for 1900, which is in range and needs no clamping — whereas
+        // chasing the trailing edge would ask for 2058 and be clamped to 2050,
+        // pushing the tab's start off-screen. Distinguishing the two is the point
+        // of this test; asserting only "it is clamped" passes either way.
+        const { container, target } = makeWideStrip(0, 1900, 2400);
+        revealHorizontally(container, target, 8);
+        expect(container.scrollLeft).toBe(1900);
+    });
+});
+
 // ---------------------------------------------------------------------------
 // Hook integration: WHEN does revealing happen?
 // ---------------------------------------------------------------------------

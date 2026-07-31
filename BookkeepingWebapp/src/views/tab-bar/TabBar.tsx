@@ -146,9 +146,11 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
 
     activeIndexRef.current = activeIndex;
 
-    // If the active tab vanished (e.g. it was closed), fall back to the first.
-    // In controlled mode this surfaces as an `onActiveTabSelect(..., "fallback")`
-    // request rather than being silently swallowed.
+    // Resolve the active tab against the tabs that actually exist. Two cases:
+    // seeding the first tab when nothing has ever been active, and falling back
+    // when a non-null active id names a tab that vanished (e.g. it was closed).
+    // In controlled mode both surface as `onActiveTabSelect` requests rather
+    // than being silently swallowed. A controlled `null` is left alone.
     active.reconcile(activeExists, firstTabId);
 
     return (

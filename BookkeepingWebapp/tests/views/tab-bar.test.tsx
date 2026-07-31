@@ -61,6 +61,87 @@ describe("active-tab port — read half (activeTabId)", () => {
         expect(isActive("Three")).toBe(false);
     });
 
+    it("lets a host REST in null — no request is made to fill the gap", () => {
+        // The test above only proves the *render* is right, and it does so with a
+        // host that ignores requests. A host doing what the docs say (applying
+        // the request) used to be dragged straight off null onto the first tab,
+        // because seeding was implemented as a vanished-tab fallback.
+        const onActiveTabSelect = vi.fn();
+        const { rerender } = render(
+            <TabBar<State>
+                data={threeDocs}
+                forEachTab={forEachTab}
+                activeTabId={null}
+                onActiveTabSelect={onActiveTabSelect}
+            />,
+        );
+        expect(onActiveTabSelect).not.toHaveBeenCalled();
+
+        // Re-rendering must not accumulate requests either: the old code
+        // re-proposed the first tab on EVERY render, since the loop guard
+        // compared "d1" against null and never matched.
+        act(() => {
+            rerender(
+                <TabBar<State>
+                    data={threeDocs}
+                    forEachTab={forEachTab}
+                    activeTabId={null}
+                    onActiveTabSelect={onActiveTabSelect}
+                />,
+            );
+        });
+        expect(onActiveTabSelect).not.toHaveBeenCalled();
+    });
+
+    it("stays on null when the host honours every request it receives", () => {
+        // The end-to-end version of the above: a cooperating host, wired exactly
+        // as the README tells hosts to wire themselves.
+        const seen: (string | null)[] = [];
+        function Host() {
+            const [activeId, setActiveId] = useState<string | null>(null);
+            seen.push(activeId);
+            return (
+                <TabBar<State>
+                    data={threeDocs}
+                    forEachTab={forEachTab}
+                    activeTabId={activeId}
+                    onActiveTabSelect={setActiveId}
+                />
+            );
+        }
+        render(<Host />);
+
+        expect(seen).toEqual([null]);
+        expect(isActive("One")).toBe(false);
+    });
+
+    it("clears to null after a tab was active, and stays there", () => {
+        const onActiveTabSelect = vi.fn();
+        function Host() {
+            const [activeId, setActiveId] = useState<string | null>("d2");
+            return (
+                <>
+                    <button onClick={() => setActiveId(null)}>clear</button>
+                    <TabBar<State>
+                        data={threeDocs}
+                        forEachTab={forEachTab}
+                        activeTabId={activeId}
+                        onActiveTabSelect={(id, data, reason) => {
+                            onActiveTabSelect(id, data, reason);
+                            setActiveId(id);
+                        }}
+                    />
+                </>
+            );
+        }
+        render(<Host />);
+        expect(isActive("Two")).toBe(true);
+
+        act(() => screen.getByText("clear").click());
+        expect(isActive("Two")).toBe(false);
+        expect(onActiveTabSelect).not.toHaveBeenCalled();
+    });
+
     it("follows external modification of the controlled value", () => {
         function Host() {
             const [activeId, setActiveId] = useState<string | null>("d1");
@@ -357,6 +438,137 @@ describe("uncontrolled mode is unchanged", () => {
         act(() => (tab("Two") as HTMLElement).click());
         expect(isActive("Two")).toBe(true);
         expect(isActive("One")).toBe(false);
+    });
+});
+
+describe("seeding the first active tab — reason 'initial'", () => {
+    it("reports the default seed as 'initial', not as a 'fallback'", () => {
+        // Nothing was deleted on a fresh mount, so calling this a fallback told
+        // the host "your active tab no longer exists" about a tab that never
+        // existed. Seeding is its own reason.
+        const onActiveTabSelect = vi.fn();
+        render(
+            <TabBar<State>
+                data={threeDocs}
+                forEachTab={forEachTab}
+                onActiveTabSelect={onActiveTabSelect}
+            />,
+        );
+
+        expect(onActiveTabSelect).toHaveBeenCalledTimes(1);
+        expect(onActiveTabSelect).toHaveBeenCalledWith(
+            "d1",
+            threeDocs,
+            "initial" satisfies ActiveTabSelectReason,
+        );
+        expect(isActive("One")).toBe(true);
+    });
+
+    it("seeds at most once, even across re-renders", () => {
+        const onActiveTabSelect = vi.fn();
+        const { rerender } = render(
+            <TabBar<State>
+                data={threeDocs}
+                forEachTab={forEachTab}
+                onActiveTabSelect={onActiveTabSelect}
+            />,
+        );
+        act(() => {
+            rerender(
+                <TabBar<State>
+                    data={threeDocs}
+                    forEachTab={forEachTab}
+                    onActiveTabSelect={onActiveTabSelect}
+                />,
+            );
+        });
+        expect(onActiveTabSelect).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not seed when an explicit defaultActiveTabId states the value", () => {
+        const onActiveTabSelect = vi.fn();
+        render(
+            <TabBar<State>
+                data={threeDocs}
+                forEachTab={forEachTab}
+                defaultActiveTabId="d3"
+                onActiveTabSelect={onActiveTabSelect}
+            />,
+        );
+        expect(isActive("Three")).toBe(true);
+        expect(onActiveTabSelect).not.toHaveBeenCalled();
+    });
+
+    it("honours an explicit defaultActiveTabId of null: starts with nothing active", () => {
+        // The uncontrolled mirror of "a host may rest in null".
+        const onActiveTabSelect = vi.fn();
+        render(
+            <TabBar<State>
+                data={threeDocs}
+                forEachTab={forEachTab}
+                defaultActiveTabId={null}
+                onActiveTabSelect={onActiveTabSelect}
+            />,
+        );
+        expect(isActive("One")).toBe(false);
+        expect(isActive("Two")).toBe(false);
+        expect(isActive("Three")).toBe(false);
+        expect(onActiveTabSelect).not.toHaveBeenCalled();
+    });
+
+    it("still selects normally after starting from an explicit null", () => {
+        render(
+            <TabBar<State>
+                data={threeDocs}
+                forEachTab={forEachTab}
+                defaultActiveTabId={null}
+            />,
+        );
+        act(() => (tab("Two") as HTMLElement).click());
+        expect(isActive("Two")).toBe(true);
+    });
+
+    it("defers seeding until tabs actually exist", () => {
+        const onActiveTabSelect = vi.fn();
+        const empty: State = { docs: [] };
+        const { rerender } = render(
+            <TabBar<State>
+                data={empty}
+                forEachTab={forEachTab}
+                onActiveTabSelect={onActiveTabSelect}
+            />,
+        );
+        // Nothing to seed with yet — and crucially not a null "fallback".
+        expect(onActiveTabSelect).not.toHaveBeenCalled();
+
+        act(() => {
+            rerender(
+                <TabBar<State>
+                    data={threeDocs}
+                    forEachTab={forEachTab}
+                    onActiveTabSelect={onActiveTabSelect}
+                />,
+            );
+        });
+        expect(onActiveTabSelect).toHaveBeenCalledWith(
+            "d1",
+            threeDocs,
+            "initial",
+        );
+        expect(isActive("One")).toBe(true);
+    });
+
+    it("a controlled host is never seeded — it states its own initial value", () => {
+        const onActiveTabSelect = vi.fn();
+        render(
+            <TabBar<State>
+                data={threeDocs}
+                forEachTab={forEachTab}
+                activeTabId="d2"
+                onActiveTabSelect={onActiveTabSelect}
+            />,
+        );
+        expect(onActiveTabSelect).not.toHaveBeenCalled();
     });
 });
 

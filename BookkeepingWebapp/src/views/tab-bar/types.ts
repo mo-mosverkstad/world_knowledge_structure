@@ -42,12 +42,17 @@ export type TabVisitor = (tab: TabDescriptor, index: number) => void;
  *                       `forEachTab` (it was closed or removed), so the
  *                       component proposes a replacement: the first tab, or
  *                       `null` when no tabs remain.
+ *   - `"initial"`     — nothing has been active yet and no initial value was
+ *                       stated, so the component proposes the first tab. Fires
+ *                       at most once, and only in uncontrolled mode (a
+ *                       controlled host states its own initial value).
  *
  * The distinction matters because only the first is a deliberate user action.
  * A host that records, mirrors or animates selection changes usually wants to
- * treat the two differently.
+ * treat the three differently — in particular, `"initial"` is not a transition
+ * away from anything, so it is rarely an undo step.
  */
-export type ActiveTabSelectReason = "user-select" | "fallback";
+export type ActiveTabSelectReason = "user-select" | "fallback" | "initial";
 
 /**
  * How the tab bar reveals the active tab when it scrolls out of view.
@@ -202,7 +207,8 @@ export interface TabBarProps<TData> {
      * See {@link ActiveTabSelectReason} for why the request is being made. The
      * `"fallback"` case is the important one for controlled hosts: it is how
      * the component reports "the tab you have marked active no longer exists,
-     * here is a replacement".
+     * here is a replacement". Note that a controlled `null` is a resting state,
+     * not a dead id — holding it produces no requests at all.
      */
     onActiveTabSelect?: (
         tabId: string | null,
@@ -212,8 +218,12 @@ export interface TabBarProps<TData> {
     /**
      * Initial active tab id for the uncontrolled case. When omitted, the first
      * tab yielded by `forEachTab` becomes active (resolved during the first
-     * traversal — no separate accessor needed). Ignored when `activeTabId` is
+     * traversal — no separate accessor needed, and reported as an
+     * `onActiveTabSelect(..., "initial")`). Ignored when `activeTabId` is
      * present.
+     *
+     * Passing `null` explicitly means "start with nothing active" and suppresses
+     * that seeding, exactly as `defaultValue=""` leaves an `<input>` empty.
      */
     defaultActiveTabId?: string | null;
 

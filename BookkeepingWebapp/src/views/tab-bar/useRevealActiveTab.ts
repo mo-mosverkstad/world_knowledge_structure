@@ -71,7 +71,8 @@ const ACTIVE_TAB_SELECTOR = '[role="tab"][aria-selected="true"]';
  *              ▲                                   ▲
  *        scrollLeft              scrollLeft + clientWidth
  *
- * Three cases:
+ * Four cases:
+ *   W  target is wider than the viewport  → align its leading edge (see below)
  *   A  target starts before the viewport  → scroll left  (nudge by the deficit)
  *   B  target ends after the viewport     → scroll right (nudge by the excess)
  *   C  already fully visible              → do nothing
@@ -79,6 +80,13 @@ const ACTIVE_TAB_SELECTOR = '[role="tab"][aria-selected="true"]';
  * Case C makes the operation minimal and idempotent: re-revealing a visible tab
  * never moves the strip, so this can run on every active-tab change without
  * yanking the view around.
+ *
+ * Case W is what keeps that idempotence unconditional. A tab wider than the
+ * viewport can never satisfy case C, and cases A and B then both apply and each
+ * overshoots past the other, so the strip oscillates between two offsets for as
+ * long as the tab stays active. Checking the width first replaces "make it fully
+ * visible", which is unachievable, with "show as much of it as possible from the
+ * start", which is reachable and stable.
  *
  * Measured with `getBoundingClientRect` rather than `offsetLeft` because
  * `offsetLeft` is relative to the nearest *positioned* ancestor and would break
@@ -101,7 +109,14 @@ export function revealHorizontally(
     const viewportWidth = container.clientWidth;
 
     let delta = 0;
-    if (start < 0) {
+    if (targetRect.width > viewportWidth) {
+        // CASE W — the tab cannot fit, so "fully visible" is unreachable and
+        // cases A and B would fight each other forever. Align the leading edge
+        // and accept that the trailing end stays clipped. Checked FIRST, because
+        // an over-wide tab also satisfies A or B.
+        if (start === 0) return;
+        delta = start;
+    } else if (start < 0) {
         // CASE A — clipped on the left.
         delta = start - margin;
     } else if (end > viewportWidth) {

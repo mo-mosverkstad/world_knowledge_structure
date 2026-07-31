@@ -205,11 +205,12 @@ TabBar never learns that an undo happened. There is nothing to synchronise.
 
 Two things to get right:
 
-- **Don't record `"fallback"` selections as their own undo step.** Closing a tab
-  fires `onTabClose` *and* an `onActiveTabSelect(..., "fallback")`. That is one
-  user action, so it should be one undo entry — otherwise the first Ctrl+Z only
-  restores the selection and the tab comes back on the second press. That is what
-  `reason` is for.
+- **Don't record `"fallback"` or `"initial"` selections as their own undo step.**
+  Closing a tab fires `onTabClose` *and* an `onActiveTabSelect(..., "fallback")`.
+  That is one user action, so it should be one undo entry — otherwise the first
+  Ctrl+Z only restores the selection and the tab comes back on the second press.
+  `"initial"` is not a transition away from anything at all, so it is never an undo
+  step. That is what `reason` is for.
 - **Snapshot the whole `workspace`, not just `documents`.** Otherwise undo
   restores the tabs but leaves the selection wherever it drifted to.
 
@@ -222,7 +223,7 @@ changes.
 ## `reason`: why the component is asking
 
 ```ts
-type ActiveTabSelectReason = "user-select" | "fallback";
+type ActiveTabSelectReason = "user-select" | "fallback" | "initial";
 ```
 
 ```
@@ -230,6 +231,9 @@ type ActiveTabSelectReason = "user-select" | "fallback";
   "fallback"      the tab you have marked active no longer exists
                   (closed or removed); here is a replacement — the
                   first tab, or null if none remain
+  "initial"       nothing has been active yet and no initial value was
+                  stated, so here is the first tab. At most once, and
+                  only in uncontrolled mode
 ```
 
 The `"fallback"` case exists because in controlled mode the component *cannot*
@@ -248,7 +252,13 @@ fix a dead active id itself; it doesn't own the value. So it tells you:
    you setWorkspace(...) — or refuse, and nothing happens
 ```
 
-Most hosts handle both reasons identically:
+`"initial"` is separate from `"fallback"` because seeding and recovering are
+different events that merely happen to land on the same tab. A fresh mount has
+not lost anything, so reporting it as a fallback would tell a host "your active
+tab no longer exists" about a tab that never existed — misleading for anything
+that logs, and wrong for anything that records undo steps.
+
+Most hosts handle all reasons identically:
 
 ```tsx
 onActiveTabSelect={(id, _data, reason) => {
@@ -283,6 +293,22 @@ replaces — it puts you one step behind and gives you two copies of the same fa
 
 Omitting the prop hands ownership back to the component. It does **not** mean
 "nothing selected". Pass `null` for the empty selection.
+
+### `null` is a destination you can rest in
+
+`null` is a state the component will sit in indefinitely, not a gap it tries to
+fill. Holding it produces **no** `onActiveTabSelect` requests at all:
+
+```tsx
+// Stays empty. The tab bar does not argue.
+<TabBar activeTabId={null} onActiveTabSelect={setActiveKey} … />
+```
+
+This is why the vanished-tab check only fires for a *non-null* id absent from the
+traversal: an id naming a missing tab is broken, whereas `null` names no tab by
+design and is already resolved. The uncontrolled equivalent is an explicit
+`defaultActiveTabId={null}`, which starts with nothing active and suppresses the
+`"initial"` seed — the same way `defaultValue=""` leaves an `<input>` empty.
 
 ## `index` is derived, not addressable
 
@@ -332,7 +358,10 @@ A percentage resolves against the *containing block*, so the parent needs a
 definite width for `"50%"` to behave as expected.
 
 Tabs use `flex: 0 0 auto`, so they never compress to fit — past `maxWidth` they
-overflow and become scrollable rather than squeezing.
+overflow and become scrollable rather than squeezing. One consequence: a `maxWidth`
+narrower than a single tab (`.tab` is a fixed `149px`) means the active tab can
+never be shown in full, and revealing then aligns its leading edge — see CASE W in
+[The arithmetic](#the-arithmetic).
 
 ## The scrollbar appears on demand
 
@@ -398,6 +427,13 @@ One coordinate space: pixels from the container's left content edge.
 ```
 
 ```
+  CASE W — wider than the viewport             → align the leading edge
+           ╞═════════ visible ═════════╡
+     ┌───────────────────────────────────────┐
+     │                 t2                    │
+     └───────────────────────────────────────┘
+     delta = start          (no margin: it would only hide more)
+
   CASE A — starts before the viewport          → scroll left
      ┌────┐
      │ t2 │      ╞═════════ visible ═════════╡
@@ -420,6 +456,22 @@ One coordinate space: pixels from the container's left content edge.
 Case C makes the operation **minimal and idempotent**: re-revealing a visible tab
 never moves the strip. The result is clamped to `[0, scrollWidth − clientWidth]`
 so a margin near either end cannot overscroll.
+
+Case W is what makes that idempotence *unconditional*, and it is checked first
+because an over-wide tab also satisfies A or B. `.tab` is a fixed `149px`, so any
+`maxWidth` below roughly `165px` produces a tab the viewport cannot fit. Such a
+tab can never satisfy case C, and A and B then both apply and each overshoots past
+the other, so the strip oscillates between two offsets for as long as that tab
+stays active (measured: 492 ↔ 658 with a 350px viewport). Case W replaces the
+unachievable goal "make it fully visible" with the reachable one "show it from the
+start", which converges in a single step and stays put:
+
+```
+  without CASE W          with CASE W
+  scrollLeft 492  ┐       scrollLeft 500  ┐
+             658  ├ …                500  ├ …  (settled)
+             492  ┘                   500  ┘
+```
 
 Measured with `getBoundingClientRect`, not `offsetLeft`, because `offsetLeft` is
 relative to the nearest *positioned* ancestor and would break silently depending
@@ -619,7 +671,7 @@ Every path that changes the active tab funnels through a single private
 ```
    select(id)        ─┐   from a user click / keypress
                       ├──▶  requestChange(id, reason)
-   reconcile(...)    ─┘   from the vanished-tab check
+   reconcile(...)    ─┘   from the seed / vanished-tab check
                                     │
                        ┌────────────┴─────────────┐
                        ▼                          ▼
@@ -649,10 +701,32 @@ selection intent without taking ownership.
         ├─ uncontrolled → setInternalId("d1")
         └─ controlled   → onActiveTabSelect("d1", data, "fallback")
 
-   Guarded: if the proposed replacement already equals the current active
-   id, the request is skipped — otherwise a controlled host that ignores
-   the fallback would spin in a render loop.
+   Guarded three ways:
+     · a resolved `null` is skipped — it is a resting state, not a gap
+     · seeding is a separate branch, reported as "initial" (see below)
+     · if the proposed replacement already equals the current active id
+       the request is skipped, otherwise a controlled host that ignores
+       the fallback would spin in a render loop
 ```
+
+`reconcile` resolves two situations that both end up on "the first tab" but are
+not the same event:
+
+```
+   hasSeeded?   activeId    activeExists   →  action
+   ──────────────────────────────────────────────────────────────────
+   no           —           —                 request(firstId, "initial")
+   yes          null        —                 nothing: null is a destination
+   yes          "dX"        true              nothing: all good
+   yes          "dX"        false             request(firstId, "fallback")
+```
+
+`hasSeeded` starts true whenever the initial value was *stated* — controlled mode
+states it, and so does an explicit `defaultActiveTabId` (including `null`). Only
+"uncontrolled and nothing stated" needs seeding, and it latches after one request.
+Folding seeding into the fallback branch is what previously made `null`
+unholdable: every render read the resting `null` as a gap and re-proposed the
+first tab, and the loop guard could not stop it because `"d1" !== null`.
 
 ## Design principles
 
@@ -710,7 +784,7 @@ Everything else is a private helper whose composition can change freely.
 | `activeTabId`        | `string \| null`                            | Controlled active tab, READ half. Present ⇒ controlled.                |
 | `onActiveTabSelect`  | `(id \| null, data, reason) => void`        | Controlled active tab, WRITE half. A request, which you may refuse.    |
 | `onActiveTabChange`  | `(id \| null, index \| null, data) => void` | Notification only: the active tab settled on this id / index.          |
-| `defaultActiveTabId` | `string \| null`                            | Initial active tab (uncontrolled); defaults to the first tab.          |
+| `defaultActiveTabId` | `string \| null`                            | Initial active tab (uncontrolled); omitted ⇒ first tab, `null` ⇒ none.  |
 | `className`          | `string`                                    | Extra class on the container.                                          |
 
 `onTabClick` is a free-form behavior hook and fires independently of selection.
@@ -816,6 +890,124 @@ deliberately is not a general DnD framework.
 
 **RTL is untested.** `scrollLeft` semantics differ in right-to-left writing modes.
 The rect-delta math should mostly survive, but this is not verified.
+
+---
+
+# Change log — resting `null` and over-wide tabs
+
+Two defects found by re-reading the component against its own documentation. Both
+were reachable through the public API, and both had tests that *looked* like they
+covered the case but did not.
+
+## 1. Controlled `activeTabId={null}` could not be held
+
+The docs called `null` "an explicit, legal state". It rendered correctly but was
+not a state the component would stay in. A host that applied requests as
+instructed was dragged straight back onto the first tab:
+
+```
+   host state       component
+   null       ──▶   onActiveTabSelect("d1", data, "fallback")
+   "d1"       ◀──   (host applies it, as documented)
+```
+
+Worse, an *ignoring* host was asked again on every single render, because the loop
+guard compares the proposal against the current active id and `"d1" !== null`.
+
+**Root cause: seeding was implemented as a fallback.** "The first tab becomes
+active by default" reused the vanished-tab path, so `reconcile` could not tell
+"nothing has been chosen yet" from "the chosen tab was destroyed" — and a resting
+`null` looked like the former forever.
+
+**Fix.** Separate the two, and let `null` rest:
+
+- a `hasSeeded` latch, true from the start whenever the initial value was *stated*
+  (controlled mode, or an explicit `defaultActiveTabId` — including `null`);
+- a new `"initial"` reason, so a fresh mount no longer reports the misleading
+  "your active tab no longer exists";
+- the vanished-tab branch now skips a resolved `null` outright.
+
+`defaultActiveTabId={null}` consequently became meaningful: it starts uncontrolled
+mode with nothing active, mirroring the controlled case.
+
+Note this widens `ActiveTabSelectReason` to three members. Hosts that switch
+exhaustively on it must add a branch; hosts that ignore it (the common case, and
+what the demo does) are unaffected.
+
+**Why the old test missed it.** `"treats null as 'nothing active'"` passed
+`onActiveTabSelect={() => {}}` — a host that refuses everything. It proved the
+render was right, never that the state was reachable. The replacement tests use a
+cooperating host and also count requests.
+
+## 2. A tab wider than the viewport made the strip oscillate
+
+`.tab` is a fixed `149px`, so `maxWidth={120}` — a legal prop value — produces an
+active tab the viewport cannot fit. Cases A and B then both apply and each
+overshoots past the other:
+
+```
+   pass 0: scrollLeft=200  start=-50  end=99   fullyVisible=false
+   pass 1: scrollLeft=142  start=8    end=157  fullyVisible=false
+   pass 2: scrollLeft=207  start=-57  end=92   fullyVisible=false
+   pass 3: scrollLeft=142  ← 142 ↔ 207, forever
+```
+
+The idempotence the whole reveal design rests on comes from case C, and case C is
+unreachable when full visibility is impossible.
+
+**Fix.** A case W checked *before* A and B: when the target is wider than the
+viewport, align its leading edge and stop, with no margin (a margin would only
+push more of an unfittable tab out of sight). This trades the unachievable goal
+"make it fully visible" for the reachable "show it from the start", restoring
+convergence in one step.
+
+## Verification
+
+- **230 tests pass** — 176 pre-existing, 54 for the tab bar (up from 39).
+- `tsc --noEmit` clean apart from the same pre-existing unrelated error in
+  `src/syntax-plugins/math`; `vite build` succeeds.
+- Every part of both fixes was confirmed to *bite*, by sabotaging it and watching
+  named tests fail:
+
+```
+  sabotage                                  tests failed
+  ────────────────────────────────────────────────────────
+  disable the case-W branch                 5   (oscillates 492 ↔ 658)
+  drop the `activeId === null` guard        4
+  report the seed as "fallback"             2
+  never latch `hasSeeded`                   5
+  treat defaultId={null} as unstated        1
+```
+
+  One test did *not* bite on the first attempt: an "is still clamped" assertion
+  passed under sabotage, because both code paths clamp to the same maximum. It was
+  rewritten around a geometry where aligning the leading edge (1900) and chasing
+  the trailing edge (2058 → clamped to 2050) give different answers.
+
+New coverage:
+
+```
+  resting null     no request is made to fill the gap
+                   no requests accumulate across re-renders
+                   a cooperating host stays on null
+                   clearing to null after a tab was active sticks
+                   uncontrolled defaultActiveTabId={null} starts empty
+                   selecting still works after starting from null
+
+  seeding          reported as "initial", not "fallback"
+                   fires at most once across re-renders
+                   suppressed by an explicit defaultActiveTabId
+                   deferred until tabs actually exist
+                   never happens in controlled mode
+
+  case W           leading edge aligned instead of oscillating
+                   converges and STAYS across repeated reveals
+                   scrolls back left when the leading edge is off-screen
+                   no-op when already flush
+                   leading edge preferred over the far-end clamp
+```
+
+Still not verified visually: `npm run dev` has not been run against these changes.
 
 ---
 

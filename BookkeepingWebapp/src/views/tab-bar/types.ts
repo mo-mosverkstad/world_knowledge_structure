@@ -49,6 +49,27 @@ export type TabVisitor = (tab: TabDescriptor, index: number) => void;
  */
 export type ActiveTabSelectReason = "user-select" | "fallback";
 
+/**
+ * How the tab bar reveals the active tab when it scrolls out of view.
+ *
+ * Exposed as options rather than hard-coded because this is a generic component:
+ * an editor integration usually wants the reveal to be imperceptible, while a
+ * presentation-style UI may prefer to animate it.
+ */
+export interface RevealActiveTabOptions {
+    /**
+     * Scroll animation. Default `"instant"` — a generic component should feel
+     * immediate, not laggy. Pass `"smooth"` to animate; that is automatically
+     * downgraded to instant when the user has `prefers-reduced-motion: reduce`.
+     */
+    behavior?: ScrollBehavior;
+    /**
+     * Pixels of breathing room left between the revealed tab and the viewport
+     * edge, so the tab does not sit flush against the clip. Default 8.
+     */
+    margin?: number;
+}
+
 export interface TabBarProps<TData> {
     // ---- DATA PORT -----------------------------------------------------
     /**
@@ -109,6 +130,37 @@ export interface TabBarProps<TData> {
     closable?: boolean;
     /** Allow tabs to be reordered via drag & drop. Default: false. */
     reorderable?: boolean;
+
+    // ---- SIZING & OVERFLOW ---------------------------------------------
+    /**
+     * Maximum width of the tab strip. A `number` is taken as pixels (matching
+     * React's `style` convention); a `string` is passed through to CSS verbatim,
+     * so relative and computed units all work:
+     *
+     *   maxWidth={400}                        →  max-width: 400px
+     *   maxWidth="50%"                        →  max-width: 50%
+     *   maxWidth="clamp(200px, 40vw, 600px)"  →  as written
+     *
+     * Tabs stack up to that width; beyond it the strip scrolls horizontally.
+     * Note that a percentage resolves against the containing block, so the
+     * parent needs a definite width for `"50%"` to mean what you expect.
+     */
+    maxWidth?: number | string;
+    /**
+     * Keep the active tab visible: when the active tab changes and it lies
+     * outside the scrolled viewport, the strip scrolls just far enough to
+     * reveal it.
+     *
+     * This happens for *any* active-tab change, including one driven entirely
+     * from outside the component (a host writing its own state). Callers never
+     * request a scroll — revealing is a consequence of the active tab changing,
+     * observed internally, so nothing on the caller's side needs to know that
+     * scrolling exists.
+     *
+     * `true` (the default) uses the defaults of {@link RevealActiveTabOptions};
+     * `false` disables revealing; an object customises it.
+     */
+    revealActiveTab?: boolean | RevealActiveTabOptions;
 
     // ---- ACTIVE-TAB PORT ------------------------------------------------
     // `activeTabId` and `onActiveTabSelect` are the READ and WRITE halves of

@@ -4,6 +4,9 @@
     justify-content: space-between;
     gap: 6px;
     width: 149px;
+    /* Never compress: past the strip's max-width the tabs must OVERFLOW (and so
+     * become scrollable) rather than squeezing to fit. */
+    flex: 0 0 auto;
     height: 100%;
     box-sizing: border-box;
     padding: 5px 8px;

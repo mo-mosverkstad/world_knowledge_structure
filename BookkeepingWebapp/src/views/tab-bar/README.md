@@ -39,8 +39,10 @@ interface MyState {
 />;
 ```
 
-See `src/main.tsx` (`DataDrivenTabBarDemo`) for a full working example, including
-buttons that move the active tab without going through the component at all.
+See `src/main.tsx` (`DataDrivenTabBarDemo`) for a full working example: 17 tabs so
+the strip overflows on a normal display, buttons that add randomly generated
+closable tabs, and previous / next / clear buttons that move the active tab
+without going through the component at all.
 
 ---
 
@@ -300,13 +302,216 @@ address tabs by `id`.
 
 ---
 
-# Internals
+# Overflow: max width, scrolling, and revealing the active tab
+
+## `maxWidth`
+
+A `number` is pixels (matching React's `style` convention); a `string` goes to CSS
+verbatim, so relative and computed units all work:
+
+```tsx
+<TabBar maxWidth={400} />                       // max-width: 400px
+<TabBar maxWidth="50%" />                       // max-width: 50%
+<TabBar maxWidth="clamp(200px, 40vw, 600px)" /> // as written
+```
+
+```
+  ┌─ parent ───────────────────────────────────────────────┐
+  │  ┌─ .tabs   max-width: 400px ───────────────┐          │
+  │  │ overflow-x: auto  ← the scroll viewport  │          │
+  │  ╞══════════════════════════════════════════╡          │
+  │  │ t1 │ t2 │ t3 │ t4 │ t5 │ t6 ┊ t7 … t17              │
+  │  └─────────────────────────────┴────────────┘          │
+  │      ▲                         ▲    ▲                  │
+  │      └──── clientWidth ────────┘    └ clipped, reached  │
+  │                                       by scrolling      │
+  └────────────────────────────────────────────────────────┘
+```
+
+A percentage resolves against the *containing block*, so the parent needs a
+definite width for `"50%"` to behave as expected.
+
+Tabs use `flex: 0 0 auto`, so they never compress to fit — past `maxWidth` they
+overflow and become scrollable rather than squeezing.
+
+## The scrollbar appears on demand
+
+`Tabs.css` keeps the strip `overflow: hidden` at rest and switches to
+`overflow-x: auto` on `:hover`, `:active` and `:focus-within`, so an idle
+scrollbar never competes visually with the tabs.
+
+Two details that make this work:
+
+- **`:focus-within`, not `:focus`.** The container has `role="tablist"` but no
+  `tabIndex`, so it can never match `:focus`. Individual tabs carry
+  `tabIndex={0}`, and `:focus-within` matches while any of them holds focus —
+  which is what makes the scrollbar reachable for keyboard users.
+- **`scrollbar-gutter: stable`.** Without it, `overflow` flipping to `auto`
+  inserts a scrollbar that eats into the fixed `27px` height, and since `.tab` is
+  `height: 100%` every tab visibly squashes as the pointer enters. Reserving the
+  gutter makes appearing and disappearing reflow-free.
+
+`overflow: hidden` does **not** block programmatic scrolling — `scrollLeft` still
+works — so revealing the active tab is unaffected while the bar is hidden.
+
+## Revealing the active tab
+
+When the active tab changes and it lies outside the viewport, the strip scrolls
+just far enough to show it.
+
+### Nothing requests a scroll — it is observed
+
+This is the important design property. `useRevealActiveTab` watches `activeId`
+and reacts to a *change of value*; it is never called:
+
+```
+   coupled                          decoupled (what this does)
+   ─────────────────────            ────────────────────────────
+   select(id) {                     useLayoutEffect(() => {
+       setState(id);                    reveal();
+       reveal();  ← the setter      }, [activeId]);
+   }             knows about                ▲
+                 scrolling                  └─ nobody knows this exists
+```
+
+Both behave identically for a click. Only the observing form *also* fires when
+the host changes the active tab entirely on its own — a keyboard shortcut, a
+route change, an undo — because in that case there is no call site to attach a
+`reveal()` to:
+
+```tsx
+// Scrolls the tab into view. Mentions neither scrolling nor the component.
+setWorkspace((p) => ({ ...p, activeKey: "d17" }));
+```
+
+### The arithmetic
+
+One coordinate space: pixels from the container's left content edge.
+
+```
+  0                                                       scrollWidth
+  ├──────────────────────────────────────────────────────────────┤
+  │ t1 │ t2 │ t3 │ t4 │ t5 │ t6 │ t7 │ t8 │ t9 │t10 │t11 │t12 │
+           ╞═══════════ clientWidth ═══════════╡
+           ▲                                   ▲
+     scrollLeft              scrollLeft + clientWidth
+```
+
+```
+  CASE A — starts before the viewport          → scroll left
+     ┌────┐
+     │ t2 │      ╞═════════ visible ═════════╡
+     └────┘
+     delta = start − margin
+
+  CASE B — ends after the viewport             → scroll right
+                 ╞═════════ visible ═════════╡      ┌────┐
+                                                    │ t12│
+                                                    └────┘
+     delta = end − clientWidth + margin
+
+  CASE C — already fully visible               → DO NOTHING
+                 ╞═════════ visible ═════════╡
+                       ┌────┐
+                       │ t7 │
+                       └────┘
+```
+
+Case C makes the operation **minimal and idempotent**: re-revealing a visible tab
+never moves the strip. The result is clamped to `[0, scrollWidth − clientWidth]`
+so a margin near either end cannot overscroll.
+
+Measured with `getBoundingClientRect`, not `offsetLeft`, because `offsetLeft` is
+relative to the nearest *positioned* ancestor and would break silently depending
+on the container's `position`. Rect deltas are already relative to the current
+scroll offset; subtracting `clientLeft` removes the border so the comparison
+against `clientWidth` is exact.
+
+### Why not `scrollIntoView()`
+
+```
+   ┌─ the page (scrollable) ─────────────────┐
+   │  ...content above...                    │
+   │  ┌─ .tabs (scrollable) ──────────┐      │
+   │  │ t1 │ t2 │ t3 │ ...            │      │
+   │  └───────────────────────────────┘      │
+   └─────────────────────────────────────────┘
+
+   scrollIntoView walks up and scrolls EVERY scrollable ancestor
+   → selecting a tab can jump the whole page
+```
+
+Writing `container.scrollTo({ left })` touches exactly one element.
+
+### `useLayoutEffect`, not `useEffect`
+
+```
+  useEffect  (would flash)
+  render ─▶ commit ─▶ ▓ PAINT ▓ ─▶ measure ─▶ scroll ─▶ ▓ PAINT ▓
+                          │                                 │
+                          └── user sees the OLD position ────┘
+
+  useLayoutEffect  (correct)
+  render ─▶ commit ─▶ measure ─▶ scroll ─▶ ▓ PAINT ▓
+```
+
+Layout effects run after the DOM is committed but before paint, so the correction
+lands in the same frame. Most visible on first mount, when the initially active
+tab may be far down the strip.
+
+### One trigger, on purpose
+
+```
+  event                                  re-reveals?
+  ─────────────────────────────────────────────────────
+  active tab changed (click or external)     YES
+  user scrolled by hand                      no
+  unrelated parent re-render                 no
+  tab closed / reordered elsewhere           no
+  container resized                          no
+```
+
+Only `activeId` is a dependency. Adding more triggers — "the active tab moved
+because an earlier one closed", "the container resized" — would pull reorder
+state, drag state and resize observers into this hook, giving it several
+unrelated reasons to change. It would also re-assert scroll position on mutations
+the user did not initiate, which is what makes such implementations feel like
+they are fighting the pointer.
+
+The trade: reorder or close a tab *before* the active one and the active tab
+shifts position without being re-revealed. It stays selected and highlighted,
+just possibly scrolled out of view.
+
+### Finding the active tab
+
+`container.querySelector('[role="tab"][aria-selected="true"]')` — reading an
+attribute `Tab` already sets for accessibility. This is why `Tab.tsx` needs no ref
+plumbing and stays untouched.
+
+### `revealActiveTab`
+
+```tsx
+<TabBar revealActiveTab />                              // default: instant
+<TabBar revealActiveTab={false} />                      // off
+<TabBar revealActiveTab={{ behavior: "smooth" }} />     // animate
+<TabBar revealActiveTab={{ margin: 0 }} />              // flush to the edge
+```
+
+| Option     | Default     | Meaning                                              |
+| ---------- | ----------- | ---------------------------------------------------- |
+| `behavior` | `"instant"` | `ScrollBehavior`. Instant by default so it never feels laggy; `"smooth"` is downgraded to instant under `prefers-reduced-motion: reduce`. |
+| `margin`   | `8`         | Px of breathing room between the tab and the edge.    |
+
+The behavior is passed per call to `scrollTo`, not set as `scroll-behavior` in
+CSS, which keeps the choice in props where a caller can override it.
+
+
 
 ## Structure
 
 ```
   ┌──────────────── YOUR COMPONENT (owns data + active tab) ───────┐
-  │  data ↓  forEachTab ↓  activeTabId ↓                           │
+  │  data ↓  forEachTab ↓  activeTabId ↓  maxWidth ↓               │
   │  onTabClose ↑  onTabReorder ↑  onActiveTabSelect ↑             │
   └──────┬─────────────────────────────────────────────────────────┘
          ▼
@@ -316,19 +521,28 @@ address tabs by `id`.
   ║   forEachTab(data, visit)  ── ONE PASS, deriving ──▶            ║
   ║       tabElements[]   firstTabId   activeExists   activeIndex   ║
   ║                                                               ║
-  ║   ┌──────────────────────┐   ┌────────────────────────────┐    ║
-  ║   │ useActiveTab         │   │ useDragReorder             │    ║
-  ║   │  which tab is active │   │  drag-to-reorder mechanics │    ║
-  ║   └──────────────────────┘   └────────────────────────────┘    ║
+  ║   containerRef ─────────────────────────────────┐              ║
+  ║                                                 │              ║
+  ║  ┌──────────────┐ ┌────────────────┐ ┌──────────▼───────────┐  ║
+  ║  │ useActiveTab │ │ useDragReorder │ │ useRevealActiveTab   │  ║
+  ║  │  state only  │ │  drag only     │ │  DOM only            │  ║
+  ║  │  no DOM      │ │  no scrolling  │ │  no state            │  ║
+  ║  └──────┬───────┘ └────────────────┘ └──────────▲───────────┘  ║
+  ║         │ activeId        ✗ no link             │              ║
+  ║         └───────────────────────────────────────┘              ║
   ╚═══════════════════════════════════════════════════════════════╝
          │
          ▼
-  ┌─ Tabs.tsx ─── the container markup ───────────────────────────┐
+  ┌─ Tabs.tsx ─── container markup + THE SCROLL VIEWPORT ─────────┐
   │   ┌─ Tab.tsx ─┐ ┌─ Tab.tsx ─┐ ┌─ Tab.tsx ─┐                   │
   │   │  raw DOM  │ │  events → │ │  semantic │  × n              │
   │   └───────────┘ └───────────┘ └───────────┘                   │
   └───────────────────────────────────────────────────────────────┘
 ```
+
+Three hooks, one arrow between them. Each has exactly one reason to change:
+`useActiveTab` touches no DOM, `useRevealActiveTab` holds no state, and neither
+knows `useDragReorder` exists.
 
 ## One writer inside `useActiveTab`
 
@@ -397,12 +611,13 @@ selection intent without taking ownership.
 | ------------------- | ---------------------------------------------------------------------------- | ---------- |
 | `index.tsx`         | Front door. Re-exports the public API only.                                  | -          |
 | `TabBar.tsx`        | The behavior coordinator; composes the pieces below.                          | Yes public |
-| `types.ts`          | Public contract: `TabBarProps`, `TabDescriptor`, `TabVisitor`, `ActiveTabSelectReason`. | Yes public |
-| `Tabs.tsx`          | Internal UI: the tab-strip container markup.                                 | No private |
+| `types.ts`          | Public contract: `TabBarProps`, `TabDescriptor`, `TabVisitor`, `ActiveTabSelectReason`, `RevealActiveTabOptions`. | Yes public |
+| `Tabs.tsx`          | Internal UI: the tab-strip container; also the scroll viewport.               | No private |
 | `Tab.tsx`           | Internal UI: a single tab; raw→semantic event translation.                   | No private |
 | `useActiveTab.ts`   | Internal hook: active-tab ownership, the single writer, fallback, notify.     | No private |
 | `useDragReorder.ts` | Internal hook: drag-to-reorder mechanics (single indexed list).               | No private |
-| `Tabs.css`          | Styles for the tab-strip container.                                          | -          |
+| `useRevealActiveTab.ts` | Internal hook: scroll the active tab into view when it changes.           | No private |
+| `Tabs.css`          | Styles for the strip: overflow, on-demand scrollbar, gutter.                  | -          |
 | `Tab.css`           | Styles for a tab: active / disabled / close / drop-target.                    | -          |
 
 Only `TabBar` and the types in `types.ts` are exported from `index.tsx`.
@@ -423,6 +638,8 @@ Everything else is a private helper whose composition can change freely.
 | `onTabReorder`       | `(from, to, data) => void`                  | Mutate callback: reorder within your structure.                        |
 | `closable`           | `boolean`                                   | Show the × affordance (per-tab override via `TabDescriptor.closable`). |
 | `reorderable`        | `boolean`                                   | Enable drag-and-drop reordering.                                       |
+| `maxWidth`           | `number \| string`                          | Bound the strip; beyond it, it scrolls. Number ⇒ px, string ⇒ verbatim CSS. |
+| `revealActiveTab`    | `boolean \| RevealActiveTabOptions`         | Keep the active tab visible. Default `true`, instant.                  |
 | `activeTabId`        | `string \| null`                            | Controlled active tab, READ half. Present ⇒ controlled.                |
 | `onActiveTabSelect`  | `(id \| null, data, reason) => void`        | Controlled active tab, WRITE half. A request, which you may refuse.    |
 | `onActiveTabChange`  | `(id \| null, index \| null, data) => void` | Notification only: the active tab settled on this id / index.          |
@@ -444,6 +661,87 @@ interface TabDescriptor {
     disabled?: boolean;  // disable interaction with this tab
 }
 ```
+
+---
+
+# Change log — overflow and revealing (this feature)
+
+## What was added
+
+```
+  types.ts                    + maxWidth?: number | string
+                              + revealActiveTab?: boolean | RevealActiveTabOptions
+                              + RevealActiveTabOptions { behavior, margin }
+  useRevealActiveTab.ts       + NEW. Single dep: activeId. Exports
+                                revealHorizontally() for testing.
+  Tabs.tsx                    ~ accepts ref (the scroll viewport) and maxWidth
+  Tabs.css                    ~ :focus → :focus-within (the container is not
+                                focusable, so :focus could never match)
+                              ~ + scrollbar-gutter: stable, scrollbar-width: thin
+                                (stops tabs squashing when the bar appears)
+                              ~ KEEPS overflow:hidden + hover-auto by design
+  Tab.css                     ~ + flex: 0 0 auto  (overflow, never compress)
+  TabBar.tsx                  ~ containerRef; wires the third hook
+  index.tsx                   + exports RevealActiveTabOptions
+  Tab.tsx                     UNTOUCHED
+  useActiveTab.ts             UNTOUCHED
+  useDragReorder.ts           UNTOUCHED
+  src/main.tsx                ~ 17 generated tabs; add / add-5 / reset buttons
+```
+
+`useActiveTab` and `useDragReorder` being untouched is the point: revealing is a
+third independent concern that needed no change to either.
+
+## Verification
+
+- **213 tests pass** — 176 pre-existing, 17 for the active-tab port, 20 new for
+  overflow and revealing.
+- `tsc --noEmit` clean apart from one pre-existing, unrelated error in
+  `src/syntax-plugins/math`; `vite build` succeeds.
+- Both new suites were confirmed to *bite*. Removing CASE C failed 3 tests;
+  changing the effect's dependency to "every render" failed the
+  don't-fight-the-user test.
+
+Coverage:
+
+```
+  arithmetic       CASE A / B / C
+                   idempotent (revealing twice does not move)
+                   clamped at the far end, never below zero
+                   zero margin honoured
+
+  when it fires    external activeTabId change → reveals
+                   user click → reveals
+                   newly active tab already visible → no scroll
+                   unrelated re-render while the user has scrolled
+                     away → no scroll  ← the fighting-the-user case
+                   revealActiveTab={false} → nothing
+                   nothing active → nothing
+
+  behavior         defaults to "instant"
+                   "smooth" honoured
+                   "smooth" downgraded under prefers-reduced-motion
+
+  maxWidth         number → px, string → verbatim, omitted → no style
+```
+
+jsdom has no layout engine, so the tests fake element geometry (rects,
+`clientWidth`, `scrollWidth`) around the real component DOM. The arithmetic and
+the hook's decisions are genuinely exercised; actual browser layout is not.
+
+## Known limits
+
+**Content-width changes do not retrigger.** If a tab *before* the active one gets
+wider — a `dirty` marker appearing, a late-loading font — the active tab shifts
+without being re-revealed. Fixable with a `ResizeObserver` on the content; not
+built, on the same "one trigger" reasoning.
+
+**Edge auto-scroll during drag is a separate feature.** Dragging a tab toward the
+container edge ought to scroll the strip. That belongs to `useDragReorder`, which
+deliberately is not a general DnD framework.
+
+**RTL is untested.** `scrollLeft` semantics differ in right-to-left writing modes.
+The rect-delta math should mostly survive, but this is not verified.
 
 ---
 

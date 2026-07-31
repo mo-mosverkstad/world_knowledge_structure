@@ -55,22 +55,51 @@ interface WorkspaceState {
     activeKey: string | null;
 }
 
+const DOC_KINDS = ["ledger", "report", "settings"] as const;
+
+/** Word pool for randomly generated document labels. */
+const LABEL_WORDS = [
+    "January", "February", "March", "Q1", "Q2", "Annual", "Draft", "Audit",
+    "Payroll", "Invoices", "Receipts", "Assets", "Vendors", "Taxes", "Budget",
+    "Forecast", "Notes",
+];
+
+const pick = <T,>(xs: readonly T[]): T =>
+    xs[Math.floor(Math.random() * xs.length)];
+
+/** Monotonic id source, so keys stay unique across adds and closes. */
+let nextDocId = 100;
+
+function randomDoc(): WorkspaceDoc {
+    return {
+        key: `d${nextDocId++}`,
+        label: `${pick(LABEL_WORDS)} ${pick(LABEL_WORDS)}`,
+        kind: pick(DOC_KINDS),
+        dirty: Math.random() < 0.3,
+    };
+}
+
+/**
+ * Enough tabs to overflow a normal display, so both the scrolling and the
+ * reveal-on-activate behavior are visible immediately. At 149px per tab, 17
+ * tabs need roughly 2.5k px of strip.
+ */
+function initialDocuments(): WorkspaceDoc[] {
+    const home: WorkspaceDoc = {
+        key: "d1",
+        label: "Home",
+        kind: "report",
+        dirty: false,
+        locked: true, // pinned open: per-tab `closable: false`
+    };
+    return [home, ...Array.from({ length: 16 }, randomDoc)];
+}
+
 function DataDrivenTabBarDemo() {
-    const [workspace, setWorkspace] = useState<WorkspaceState>({
-        documents: [
-            {
-                key: "d1",
-                label: "Home",
-                kind: "report",
-                dirty: false,
-                locked: true,
-            },
-            { key: "d2", label: "January Ledger", kind: "ledger", dirty: true },
-            { key: "d3", label: "Q1 Report", kind: "report", dirty: false },
-            { key: "d4", label: "Settings", kind: "settings", dirty: false },
-        ],
+    const [workspace, setWorkspace] = useState<WorkspaceState>(() => ({
+        documents: initialDocuments(),
         activeKey: "d1",
-    });
+    }));
     const [log, setLog] = useState<string[]>([]);
 
     const pushLog = (msg: string) =>
@@ -161,6 +190,32 @@ function DataDrivenTabBarDemo() {
         });
     };
 
+    // ADD a randomly generated document. `activate` demonstrates the reveal
+    // behavior: the new tab is appended at the far end, well outside the
+    // viewport, and simply setting `activeKey` scrolls it into view. Note that
+    // nothing here mentions scrolling — the tab bar observes the active-tab
+    // change and reveals it on its own.
+    const addRandomDoc = (activate: boolean) => {
+        const doc = randomDoc();
+        pushLog(`add ${doc.key} (${doc.label})${activate ? " + activate" : ""}`);
+        setWorkspace((prev) => ({
+            documents: [...prev.documents, doc],
+            activeKey: activate ? doc.key : prev.activeKey,
+        }));
+    };
+
+    // ADD several at once, to overflow the strip again after closing many.
+    const addManyDocs = (count: number) => {
+        pushLog(`add ${count} docs`);
+        setWorkspace((prev) => ({
+            ...prev,
+            documents: [
+                ...prev.documents,
+                ...Array.from({ length: count }, randomDoc),
+            ],
+        }));
+    };
+
     const active = workspace.documents.find(
         (d) => d.key === workspace.activeKey,
     );
@@ -178,6 +233,8 @@ function DataDrivenTabBarDemo() {
                 activeTabId={workspace.activeKey}
                 onActiveTabSelect={handleActiveSelect}
                 onActiveTabChange={handleActiveChange}
+                // ---- SIZING: bound the strip so 17 tabs overflow ----
+                maxWidth="100%"
                 closable
                 reorderable
             />
@@ -204,6 +261,30 @@ function DataDrivenTabBarDemo() {
                 </button>
             </div>
 
+            <div style={{ display: "flex", gap: 8, padding: "0 4px 12px" }}>
+                <button type="button" onClick={() => addRandomDoc(true)}>
+                    + add &amp; activate
+                </button>
+                <button type="button" onClick={() => addRandomDoc(false)}>
+                    + add (stay put)
+                </button>
+                <button type="button" onClick={() => addManyDocs(5)}>
+                    + add 5
+                </button>
+                <button
+                    type="button"
+                    onClick={() => {
+                        pushLog("reset");
+                        setWorkspace({
+                            documents: initialDocuments(),
+                            activeKey: "d1",
+                        });
+                    }}
+                >
+                    reset
+                </button>
+            </div>
+
             <pre
                 style={{
                     background: "#f5f5f5",
@@ -215,8 +296,12 @@ function DataDrivenTabBarDemo() {
                 {log.map((l) => `${l}\n`).join("") || "(interaction log)"}
             </pre>
             <p style={{ fontSize: 12, color: "#666" }}>
-                Try: click tabs, drag to reorder, press × to close. "Home" is
-                pinned (not closable).
+                Try: click tabs, drag to reorder, press × to close, and add
+                new ones. "Home" is pinned (not closable); every generated tab
+                is closable. The strip scrolls when it overflows — the
+                scrollbar appears while you hover or keyboard-focus it. "add
+                &amp; activate" and "previous / next" both scroll the active tab
+                into view without asking the component to.
             </p>
         </div>
     );

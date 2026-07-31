@@ -1,12 +1,40 @@
+/*
+ * The tab strip is the horizontal SCROLL VIEWPORT. `max-width` (set per instance
+ * from the `maxWidth` prop) decides where overflow begins; everything past it is
+ * reachable by scrolling.
+ */
 .tabs {
     width: 100%;
     height: 27px;
-    overflow: hidden;
     white-space: nowrap;
+
+    /*
+     * Scrollbar on demand: hidden at rest so it never competes visually with the
+     * tabs, revealed while the strip is being used. `overflow: hidden` does NOT
+     * prevent programmatic scrolling — `scrollLeft` still works — so revealing
+     * the active tab is unaffected while the bar is hidden.
+     */
+    overflow: hidden;
+
+    /*
+     * Reserve the scrollbar gutter permanently. Without this, `overflow`
+     * flipping to `auto` on hover inserts a scrollbar that eats into the fixed
+     * 27px height, and since `.tab` is `height: 100%` every tab visibly squashes
+     * as the pointer enters. Reserving the space costs a few px once and makes
+     * the appear/disappear reflow-free.
+     */
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
 }
 
+/*
+ * `:focus-within`, not `:focus`: the container itself is not focusable (it has
+ * `role="tablist"` but no tabIndex), so `:focus` could never match. Individual
+ * tabs carry `tabIndex={0}`, and `:focus-within` matches while any of them holds
+ * focus — which is what makes the scrollbar reachable for keyboard users.
+ */
 .tabs:hover,
 .tabs:active,
-.tabs:focus {
+.tabs:focus-within {
     overflow-x: auto;
 }

@@ -3,6 +3,7 @@ import { Tabs } from "./Tabs";
 import { Tab } from "./Tab";
 import { useActiveTab } from "./useActiveTab";
 import { useDragReorder } from "./useDragReorder";
+import { useRevealActiveTab } from "./useRevealActiveTab";
 import { type TabBarProps, type TabDescriptor } from "./types";
 
 /**
@@ -35,6 +36,8 @@ import { type TabBarProps, type TabDescriptor } from "./types";
  *   5. active port   - `activeTabId` (read) + `onActiveTabSelect` (write): the
  *                      active tab is caller policy, so the caller may own and
  *                      change it from outside the component.
+ *   6. overflow      - `maxWidth` bounds the strip; `useRevealActiveTab` keeps
+ *                      the active tab visible when it scrolls out of view.
  */
 export function TabBar<TData>(props: TabBarProps<TData>) {
     const {
@@ -49,12 +52,17 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
         reorderable = false,
         activeTabId,
         defaultActiveTabId,
+        maxWidth,
+        revealActiveTab = true,
         className,
     } = props;
 
     // `data` is read inside callbacks that must not be re-created per render.
     const dataRef = useRef(data);
     dataRef.current = data;
+
+    // Handle on the scroll viewport, needed to reveal the active tab.
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // The active index is derived during the render pass below, and reported
     // alongside the id. Held in a ref so the notify callback — which fires from
@@ -77,6 +85,20 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
             ? (from, to) => onTabReorder(from, to, data)
             : undefined,
         enabled: reorderable,
+    });
+
+    // ---- Encapsulated concern: keeping the active tab visible ---------
+    // Purely OBSERVES `active.activeId`. Nothing here or elsewhere asks it to
+    // scroll, which is what keeps revealing decoupled from selecting: a host
+    // that changes the active tab from its own state triggers it just the same.
+    const reveal =
+        typeof revealActiveTab === "object" ? revealActiveTab : undefined;
+    useRevealActiveTab({
+        containerRef,
+        activeId: active.activeId,
+        enabled: revealActiveTab !== false,
+        behavior: reveal?.behavior,
+        margin: reveal?.margin,
     });
 
     // ---- Semantic-event handlers (behavior coordination only) ---------
@@ -129,7 +151,11 @@ export function TabBar<TData>(props: TabBarProps<TData>) {
     // request rather than being silently swallowed.
     active.reconcile(activeExists, firstTabId);
 
-    return <Tabs className={className}>{tabElements}</Tabs>;
+    return (
+        <Tabs ref={containerRef} className={className} maxWidth={maxWidth}>
+            {tabElements}
+        </Tabs>
+    );
 }
 
 export default TabBar;

@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import "./style.css";
 import { Grid } from "./Grid";
 import { Row } from "./Row";
@@ -6,6 +6,7 @@ import { Cell } from "./Cell";
 import { ColumnHeader, CornerCell } from "./ColumnHeader";
 import { useSelection } from "./useSelection";
 import { useEditing } from "./useEditing";
+import { useReturnFocus } from "./useReturnFocus";
 import {
     type CellAddress,
     type SpreadsheetViewProps,
@@ -31,6 +32,8 @@ import {
  *                          change notify). This is the seam for keeping logical
  *                          selection state OUTSIDE the component.
  *   - `useEditing`      — the ephemeral editing state (editing cell + draft).
+ *   - `useReturnFocus`  — gives keyboard focus back to the container when the
+ *                          inline editor closes, so navigation keeps working.
  *
  * The UI layer renders a native `<table>`; see `Grid.tsx` for why (column-scoped
  * widths, intrinsic sizing, collapsed borders, native spanning, real header
@@ -82,6 +85,14 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
         onCommit: (cell, value) =>
             onCellEdit?.(cell.row, cell.col, value, data),
     });
+
+    // ---- Encapsulated concern: focus restoration ----------------------
+    // The editor <input> takes focus while it is open; when it unmounts the
+    // browser drops focus to <body>, and the key handler below then never fires
+    // again. Purely OBSERVES the editing flag — no commit path calls it, so
+    // Enter, Escape and blur are all covered by the same three lines.
+    const containerRef = useRef<HTMLDivElement>(null);
+    useReturnFocus({ containerRef, isEditing: editing.isEditing });
 
     const isActive = (row: number, col: number) =>
         selection.activeCell?.row === row &&
@@ -213,6 +224,7 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
 
     return (
         <div
+            ref={containerRef}
             className="spreadsheet"
             onKeyDown={onKeyDown}
             // Container is focusable so it can receive navigation keys.

@@ -442,6 +442,152 @@ describe("native table markup", () => {
         expect(cell.querySelector("input")).not.toBeNull();
     });
 });
+describe("focus is returned when the editor closes", () => {
+    /**
+     * The editor `<input>` takes focus while open. When it unmounts, the browser
+     * has nowhere to put focus and drops it on `<body>` — which is outside the
+     * grid, so the container's keydown handler stops receiving arrow keys. The
+     * symptom is "editing one cell breaks keyboard navigation for good", and the
+     * cause is focus, not the navigation code.
+     *
+     * These tests assert on `document.activeElement` and then on real navigation
+     * dispatched at the focused element, rather than on the container directly —
+     * dispatching on the container would pass even with focus lost, which is
+     * exactly how this escaped the original suite.
+     */
+    const outerOf = (container: HTMLElement) =>
+        container.querySelector(".spreadsheet") as HTMLElement;
+
+    /** Press a key wherever focus actually is, as a real keyboard would. */
+    const pressWhereFocused = (key: string) =>
+        fireEvent.keyDown(
+            (document.activeElement ?? document.body) as HTMLElement,
+            { key },
+        );
+
+    it("returns focus to the grid after committing with Enter", () => {
+        const { container } = renderSheet({
+            editable: true,
+            onCellEdit: vi.fn(),
+            defaultActiveCell: { row: 0, col: 0 },
+        });
+        const outer = outerOf(container);
+        outer.focus();
+
+        fireEvent.keyDown(outer, { key: "F2" });
+        const input = container.querySelector("input.cell__editor")!;
+        expect(document.activeElement).toBe(input);
+
+        fireEvent.keyDown(input, { key: "Enter" });
+        expect(document.activeElement).toBe(outer);
+    });
+
+    it("keeps arrow keys working after an edit — the actual reported bug", () => {
+        const { container } = renderSheet({
+            editable: true,
+            onCellEdit: vi.fn(),
+            defaultActiveCell: { row: 0, col: 0 },
+        });
+        const outer = outerOf(container);
+        outer.focus();
+
+        fireEvent.keyDown(outer, { key: "F2" });
+        fireEvent.keyDown(container.querySelector("input.cell__editor")!, {
+            key: "Enter",
+        });
+
+        // Dispatched at whatever is focused. Before the fix that was <body> and
+        // the selection stayed put.
+        pressWhereFocused("ArrowDown");
+        expect(activeCell()).toBe(cellAt(1, 0));
+        pressWhereFocused("ArrowRight");
+        expect(activeCell()).toBe(cellAt(1, 1));
+    });
+
+    it("returns focus after cancelling with Escape", () => {
+        const { container } = renderSheet({
+            editable: true,
+            onCellEdit: vi.fn(),
+            defaultActiveCell: { row: 0, col: 0 },
+        });
+        const outer = outerOf(container);
+        outer.focus();
+
+        fireEvent.keyDown(outer, { key: "F2" });
+        fireEvent.keyDown(container.querySelector("input.cell__editor")!, {
+            key: "Escape",
+        });
+
+        expect(document.activeElement).toBe(outer);
+        pressWhereFocused("ArrowDown");
+        expect(activeCell()).toBe(cellAt(1, 0));
+    });
+
+    it("returns focus after a double-click edit too", () => {
+        const { container } = renderSheet({
+            editable: true,
+            onCellEdit: vi.fn(),
+        });
+        const outer = outerOf(container);
+        outer.focus();
+
+        fireEvent.doubleClick(cellAt(0, 0));
+        fireEvent.keyDown(container.querySelector("input.cell__editor")!, {
+            key: "Enter",
+        });
+        expect(document.activeElement).toBe(outer);
+    });
+
+    it("does NOT steal focus when the user clicked elsewhere", () => {
+        // Committing by blur means the user moved focus deliberately. Yanking it
+        // back would fight them — the usual way focus restoration goes wrong.
+        const { container } = render(
+            <>
+                <input id="outside" />
+                <SpreadsheetView<Ledger>
+                    data={ledger}
+                    getRowCount={getRowCount}
+                    getColumnCount={getColumnCount}
+                    getCell={getCell}
+                    editable
+                    onCellEdit={vi.fn()}
+                    defaultActiveCell={{ row: 0, col: 0 }}
+                />
+            </>,
+        );
+        const outer = outerOf(container);
+        outer.focus();
+        fireEvent.keyDown(outer, { key: "F2" });
+
+        const editor = container.querySelector("input.cell__editor")!;
+        const outside = container.querySelector("#outside") as HTMLInputElement;
+        outside.focus();
+        fireEvent.blur(editor);
+
+        expect(document.activeElement).toBe(outside);
+    });
+
+    it("does not grab focus on mount or on unrelated re-renders", () => {
+        // The hook watches the editing transition only, so a grid that has never
+        // been edited must never pull focus to itself.
+        const { rerender } = renderSheet({ editable: true, onCellEdit: vi.fn() });
+        expect(document.activeElement).toBe(document.body);
+
+        act(() => {
+            rerender(
+                <SpreadsheetView<Ledger>
+                    data={ledger}
+                    getRowCount={getRowCount}
+                    getColumnCount={getColumnCount}
+                    getCell={getCell}
+                    editable
+                    onCellEdit={vi.fn()}
+                />,
+            );
+        });
+        expect(document.activeElement).toBe(document.body);
+    });
+});
 describe("the data port stays opaque", () => {
     it("asks for exactly the cells of the rectangular region", () => {
         const spy = vi.fn(getCell);

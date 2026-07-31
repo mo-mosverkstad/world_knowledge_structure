@@ -69,8 +69,8 @@ See `src/main.tsx` (`DataDrivenSpreadsheetDemo`) for a full working example.
   [Controlled selection is read-only](#controlled-selection-is-read-only-unlike-the-tab-bar).
   *Ephemeral* editing state (which cell is being edited, the draft text) stays
   inside the renderer.
-- **Focused hooks.** Each concern (selection, editing) is its own hook, so the
-  coordinator holds no primitive state.
+- **Focused hooks.** Each concern (selection, editing, focus restoration) is its
+  own hook, so the coordinator holds no primitive state.
 
 ## Why a native table
 
@@ -150,6 +150,7 @@ its own "renders no raw HTML" rule. That markup now lives in `ColumnHeader.tsx`.
 | `Cell.tsx` / `.css`   | Internal UI: one `<td>`; raw→semantic events; inline editor.        | No private |
 | `useSelection.ts`     | Internal hook: active-cell state, click/arrow move, clamp, notify.  | No private |
 | `useEditing.ts`       | Internal hook: ephemeral editing cell + draft.                      | No private |
+| `useReturnFocus.ts`   | Internal hook: give focus back to the grid when the editor closes.  | No private |
 | `style.css`           | Styles for the outer key-handling container only.                   | —         |
 
 Only `SpreadsheetView` and the types in `types.ts` are exported from `index.tsx`.
@@ -194,7 +195,48 @@ interface CellDescriptor {
   column 1.
 - **Edit:** double-click, or press Enter / F2 on the active cell. Enter commits,
   Escape cancels, blur commits. Arrow keys are inert while editing (the editor
-  stops their propagation), so they move the caret, not the selection.
+  stops their propagation), so they move the caret, not the selection. When the
+  editor closes, focus returns to the grid so navigation keeps working — see
+  [Focus returns to the grid](#focus-returns-to-the-grid-when-the-editor-closes).
+
+### Focus returns to the grid when the editor closes
+
+Keyboard navigation lives on the outer container, so it only works while focus
+is inside the grid. The inline editor takes focus when it opens, and when it
+unmounts the browser has nowhere to put focus and drops it on `<body>` — outside
+the container. Measured before the fix:
+
+```
+   F2            focus: INPUT.cell__editor   selection: a2
+   Enter commit  focus: BODY                 selection: a2   <- focus lost
+   ArrowDown     focus: BODY                 selection: a2   <- nothing moves
+
+   (dispatching the same ArrowDown directly at the container DID move it,
+    which is how we know the navigation code was never the problem)
+```
+
+So editing one cell disabled arrow-key navigation for the rest of the session.
+`useReturnFocus` fixes it by returning focus to the container on the
+`isEditing: true -> false` transition.
+
+Two properties are worth stating, because they are what separates focus
+restoration from focus *stealing*:
+
+- **Observed, not called.** The hook watches the editing flag; no commit path
+  invokes it. That is why Enter, Escape and blur are all covered by the same
+  three lines, and why `useEditing` stays a pure state container that knows
+  nothing about the DOM — the same decoupling as the tab bar's
+  `useRevealActiveTab`.
+- **Only when focus was genuinely lost.** If the user committed by clicking
+  something else, that something else is now focused and is left alone. Focus is
+  restored only when `document.activeElement` is `<body>`, the root, or nothing.
+
+It is a *layout* effect, so focus lands in the same frame the editor disappears
+rather than after a paint in which the document has no focused element.
+
+Note this is a separate problem from cells not being focusable (see the scope
+notes): focus is restored to the *container*, which is where the key handler is.
+Per-cell focus with a roving tabindex would be a further change.
 
 ### Controlled selection is read-only, unlike the tab bar
 
@@ -223,8 +265,7 @@ recorded here rather than implied to work.
 
 ## Tests
 
-`tests/views/spreadsheet.test.tsx` — 40 tests, in two deliberately different
-styles:
+`tests/views/spreadsheet.test.tsx` — 46 tests, in three groups:
 
 - **30 behaviour tests**, written only in terms of ARIA roles, rendered text and
   user actions — never `div` vs `table`. These were written *before* the move to
@@ -233,11 +274,24 @@ styles:
 - **10 structure tests**, which pin the native markup itself. The behaviour
   tests would happily keep passing if the grid regressed to a stack of `div`s,
   so the requirement needs its own tests.
+- **6 focus tests**, which assert on `document.activeElement` and then dispatch
+  keys at whatever is focused rather than at the container. Dispatching at the
+  container passes even when focus has been lost, which is exactly how the
+  post-edit navigation bug slipped past the first suite.
 
-Each group was confirmed to *bite* by sabotaging the implementation: reverting
-`Cell` to a `<div>` fails 2, removing `<colgroup>` fails 2, and dropping
-`role="grid"` fails 9 (including all the keyboard-navigation tests, since they
-locate the grid by role).
+Each group was confirmed to *bite* by sabotaging the implementation:
+
+```
+  sabotage                                        tests failed
+  ------------------------------------------------------------
+  revert Cell to a <div>                          2
+  remove <colgroup>                               2
+  drop role="grid"                                9  (incl. all navigation,
+                                                      which locates by role)
+  remove focus restoration                        4
+  drop the focusWasLost guard (steal focus)       1
+  weaken the editing-transition check            1  (grabs focus on mount)
+```
 
 Two traps worth remembering when extending these:
 
@@ -286,8 +340,11 @@ Known gaps that are defects rather than unbuilt features:
   arrow keys are dropped when `activeCell` is supplied.
 - **Cells are not focusable in practice.** Each `<td>` carries
   `tabIndex={active ? 0 : -1}`, the roving-tabindex pattern, but nothing calls
-  `.focus()`, so keyboard focus stays on the outer container. The `tabIndex` is
-  currently decoration.
+  `.focus()` on a cell, so keyboard focus lives on the outer container. The
+  `tabIndex` is currently decoration. This is *not* the post-edit navigation bug
+  — that one is fixed by returning focus to the container. Moving focus to the
+  active cell itself would be a further change, and would let
+  `useReturnFocus` target the cell rather than the container.
 - **No `aria-rowcount` / `aria-colcount` / `aria-rowindex` / `aria-colindex`.**
   Harmless while the whole grid is rendered; required once virtualization means
   the DOM holds only a window of the data.

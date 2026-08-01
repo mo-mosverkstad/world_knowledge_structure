@@ -1,0 +1,112 @@
+/*
+ * The floating edit box: ONE instance, absolutely positioned inside `.grid`.
+ *
+ * Being a descendant of the scroll container is what makes two behaviours free:
+ *
+ *   - PANNING. An absolutely positioned child of a scrolling ancestor scrolls
+ *     with the content, so the box tracks its cell with no scroll handler.
+ *   - CLIPPING. The scroll container clips its own absolutely positioned
+ *     descendants, so panning away reveals progressively less of the box and
+ *     eventually none of it. "As long as one character fits, show it" needs no
+ *     threshold and no code; it is continuous by construction.
+ */
+.cell-editor {
+    position: absolute;
+    /*
+     * ABOVE the sticky header (row 2) and the frozen corner (3). A deliberate
+     * choice: the box being typed in is the thing the user is looking at, so it
+     * wins over the header. The consequence is that scrolling down far enough
+     * while editing hides the column headers behind the box.
+     */
+    z-index: 4;
+
+    /* Position and size are supplied per-instance from the resolved ladder. */
+    box-sizing: border-box;
+    padding: 3px 8px;
+    font: inherit;
+    background: #ffffff;
+    color: inherit;
+
+    /*
+     * A visible frame, because the box now floats over other cells and needs to
+     * read as one object rather than as text spilling across columns.
+     */
+    border: 2px solid #3574f0;
+    outline: none;
+    /* Lifted off the cells it covers, so the boundary stays legible. */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+
+    /*
+     * `resize: none` because the size is derived from the cell, the content and
+     * the viewport; a drag handle would immediately disagree with all three.
+     */
+    resize: none;
+
+    /*
+     * Horizontal overflow is never scrolled. Running out of width is rung 3 of
+     * the ladder, which WRAPS — sideways scrolling would hide the start of the
+     * value, which is the opposite of what is wanted.
+     */
+    overflow-x: hidden;
+    /* `overflow-y` is set inline: it only becomes `auto` at rung 4. */
+
+    /*
+     * Rungs 1 and 2: a single line that has room to grow does NOT wrap, so the
+     * box can widen to fit it. `.cell-editor--wrap` switches this off once the
+     * growth ceiling is reached.
+     */
+    white-space: pre;
+}
+
+/*
+ * Rung 3: growth has stopped, so the text must fold instead of extending. Applied
+ * by the LADDER rather than by the multiline prop, because a long single-line
+ * value that has run out of room has to wrap too.
+ *
+ * `pre-wrap` keeps explicit line breaks AND wraps long lines; plain `pre` would
+ * keep the breaks but refuse to wrap.
+ */
+.cell-editor--wrap {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+/*
+ * A multiline cell always wraps, even when it would still have room to widen:
+ * its value is prose, and prose that keeps extending rightwards is unreadable.
+ */
+.cell-editor--multiline {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+/*
+ * The measuring mirror. A <textarea> can only report the width it was GIVEN, so it
+ * cannot say how wide it wants to be — which is what rung 2 needs. This holds the
+ * same text in the same font with no wrapping, and its `scrollWidth` is that
+ * answer.
+ *
+ * It must be laid out (so it has a width) but invisible and non-interactive. Hence
+ * off-screen positioning rather than `display: none`, which would report zero.
+ */
+.cell-editor__mirror {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Out of sight without being removed from layout. */
+    visibility: hidden;
+    pointer-events: none;
+    z-index: -1;
+
+    /* Must match the editor's text metrics exactly, or the measurement lies. */
+    box-sizing: border-box;
+    padding: 3px 8px;
+    border: 2px solid transparent;
+    font: inherit;
+
+    /* No wrapping: that is the whole point. */
+    white-space: pre;
+    /* Never constrain it, or `scrollWidth` would report the constraint. */
+    width: max-content;
+    max-width: none;
+}

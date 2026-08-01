@@ -59,6 +59,18 @@ const cellAt = (row: number, col: number) => cells()[row * 3 + col];
 const activeCell = () =>
     cells().find((c) => c.getAttribute("aria-selected") === "true");
 
+/**
+ * The editor is a SINGLE floating overlay, a sibling of the `<table>` rather than
+ * a child of the cell. Locating it from the document (not from inside a cell) is
+ * therefore the correct query, and it also encodes the invariant that only one
+ * editor can ever exist.
+ */
+const editor = () =>
+    document.querySelector("textarea.cell-editor") as HTMLTextAreaElement | null;
+/** How many editors exist. Should never exceed 1. */
+const editorCount = () =>
+    document.querySelectorAll("textarea.cell-editor").length;
+
 function renderSheet(overrides: Record<string, unknown> = {}) {
     return render(
         <SpreadsheetView<Ledger>
@@ -242,8 +254,7 @@ describe("keyboard navigation", () => {
 });
 
 describe("editing", () => {
-    const editorIn = (cell: HTMLElement) =>
-        cell.querySelector("input") as HTMLInputElement | null;
+    const editorIn = (_cell?: HTMLElement) => editor();
 
     /**
      * Note: `fireEvent` throughout, not hand-built DOM events. A raw
@@ -253,7 +264,7 @@ describe("editing", () => {
     const openEditor = (row: number, col: number) => {
         const cell = cellAt(row, col) as HTMLElement;
         fireEvent.doubleClick(cell);
-        return { cell, input: editorIn(cell) };
+        return { cell, input: editor() };
     };
 
     it("is not editable without onCellEdit, even when editable is true", () => {
@@ -452,12 +463,54 @@ describe("native table markup", () => {
         expect(viewport.querySelector("table")).not.toBeNull();
     });
 
-    it("puts the editor inside the cell it edits", () => {
-        renderSheet({ editable: true, onCellEdit: vi.fn() });
+    it("puts the editor OUTSIDE the table, as a sibling overlay", () => {
+        // It used to live inside the <td>. That made growing it past the cell
+        // impossible, because the table algorithm owns a cell's box — and it
+        // forced the draft to be broadcast to every cell on every keystroke.
+        const { container } = renderSheet({
+            editable: true,
+            onCellEdit: vi.fn(),
+        });
         const cell = cellAt(1, 1) as HTMLElement;
         fireEvent.doubleClick(cell);
-        expect(cell.tagName).toBe("TD");
-        expect(cell.querySelector("input")).not.toBeNull();
+
+        const ed = editor();
+        expect(ed).not.toBeNull();
+        expect(cell.querySelector("textarea")).toBeNull();
+        // A child of the scroll container, which is what makes it scroll with the
+        // content and be clipped by the viewport without any JavaScript.
+        expect(ed!.parentElement).toBe(container.querySelector(".grid"));
+        expect(ed!.closest("table")).toBeNull();
+    });
+
+    it("never has more than one editor", () => {
+        // The structural version of "only one cell can be edited at a time".
+        renderSheet({ editable: true, onCellEdit: vi.fn() });
+        expect(editorCount()).toBe(0);
+
+        fireEvent.doubleClick(cellAt(0, 0));
+        expect(editorCount()).toBe(1);
+
+        // Opening another cell must move the editor, not add one.
+        fireEvent.doubleClick(cellAt(2, 1));
+        expect(editorCount()).toBe(1);
+    });
+
+    it("does not re-render the table while typing", () => {
+        // The invalidation win. Before the overlay, the draft was a prop on every
+        // Cell, so one keystroke cost 100 getCell calls on a 9-cell grid's
+        // equivalent (measured: 50 cells x 2 passes). Now typing must not touch
+        // the table at all.
+        const spy = vi.fn(getCell);
+        renderSheet({ editable: true, onCellEdit: vi.fn(), getCell: spy });
+        fireEvent.doubleClick(cellAt(0, 1));
+
+        spy.mockClear();
+        fireEvent.change(editor()!, { target: { value: "a" } });
+        fireEvent.change(editor()!, { target: { value: "ab" } });
+        fireEvent.change(editor()!, { target: { value: "abc" } });
+
+        expect(spy).not.toHaveBeenCalled();
     });
 });
 describe("focus is returned when the editor closes", () => {
@@ -493,7 +546,7 @@ describe("focus is returned when the editor closes", () => {
         outer.focus();
 
         fireEvent.keyDown(outer, { key: "F2" });
-        const input = container.querySelector("input.cell__editor")!;
+        const input = editor()!;
         expect(document.activeElement).toBe(input);
 
         fireEvent.keyDown(input, { key: "Enter" });
@@ -510,7 +563,7 @@ describe("focus is returned when the editor closes", () => {
         outer.focus();
 
         fireEvent.keyDown(outer, { key: "F2" });
-        fireEvent.keyDown(container.querySelector("input.cell__editor")!, {
+        fireEvent.keyDown(editor()!, {
             key: "Enter",
         });
 
@@ -532,7 +585,7 @@ describe("focus is returned when the editor closes", () => {
         outer.focus();
 
         fireEvent.keyDown(outer, { key: "F2" });
-        fireEvent.keyDown(container.querySelector("input.cell__editor")!, {
+        fireEvent.keyDown(editor()!, {
             key: "Escape",
         });
 
@@ -550,7 +603,7 @@ describe("focus is returned when the editor closes", () => {
         outer.focus();
 
         fireEvent.doubleClick(cellAt(0, 0));
-        fireEvent.keyDown(container.querySelector("input.cell__editor")!, {
+        fireEvent.keyDown(editor()!, {
             key: "Enter",
         });
         expect(document.activeElement).toBe(outer);
@@ -577,10 +630,10 @@ describe("focus is returned when the editor closes", () => {
         outer.focus();
         fireEvent.keyDown(outer, { key: "F2" });
 
-        const editor = container.querySelector("input.cell__editor")!;
+        const ed = editor()!;
         const outside = container.querySelector("#outside") as HTMLInputElement;
         outside.focus();
-        fireEvent.blur(editor);
+        fireEvent.blur(ed, { relatedTarget: outside });
 
         expect(document.activeElement).toBe(outside);
     });
@@ -616,26 +669,41 @@ describe("multiline cells", () => {
      *     new binding, matching Excel;
      *   - the line break goes in AT THE CARET, not at the end.
      */
-    const editorIn = (cell: HTMLElement) =>
-        cell.querySelector("input, textarea") as
-            | HTMLInputElement
-            | HTMLTextAreaElement
-            | null;
-
     const openEditor = (row: number, col: number) => {
         const cell = cellAt(row, col) as HTMLElement;
         fireEvent.doubleClick(cell);
-        return { cell, editor: editorIn(cell)! };
+        return { cell, editor: editor()! };
     };
 
-    it("uses a <textarea> when multiline, because <input> drops newlines", () => {
+    it("always uses a <textarea>, because <input> drops newlines", () => {
+        // The element no longer switches on `multiline`. One <textarea> serves
+        // both modes so the caret and key handling are identical either way;
+        // `multiline` gates the newline BINDING and the wrapping, not the element.
         renderSheet({ editable: true, onCellEdit: vi.fn(), multiline: true });
+        expect(openEditor(0, 1).editor.tagName).toBe("TEXTAREA");
+
+        cleanup();
+        renderSheet({ editable: true, onCellEdit: vi.fn() });
         expect(openEditor(0, 1).editor.tagName).toBe("TEXTAREA");
     });
 
-    it("uses an <input> when not multiline", () => {
+    it("marks the editor multiline so wrapping differs", () => {
+        // The CSS hook that decides `pre` vs `pre-wrap`. jsdom applies no
+        // stylesheets, so the class is the observable part here.
+        renderSheet({ editable: true, onCellEdit: vi.fn(), multiline: true });
+        expect(
+            openEditor(0, 1).editor.classList.contains(
+                "cell-editor--multiline",
+            ),
+        ).toBe(true);
+
+        cleanup();
         renderSheet({ editable: true, onCellEdit: vi.fn() });
-        expect(openEditor(0, 1).editor.tagName).toBe("INPUT");
+        expect(
+            openEditor(0, 1).editor.classList.contains(
+                "cell-editor--multiline",
+            ),
+        ).toBe(false);
     });
 
     it("proves the element choice is necessary, not cosmetic", () => {
@@ -653,28 +721,28 @@ describe("multiline cells", () => {
     it("inserts a line break on Alt+Enter without committing", () => {
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit, multiline: true });
-        const { cell, editor } = openEditor(0, 1);
+        const { cell, editor: ed } = openEditor(0, 1);
 
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
 
         // Still editing, and nothing was committed.
-        expect(editorIn(cell)).not.toBeNull();
+        expect(editor()).not.toBeNull();
         expect(onCellEdit).not.toHaveBeenCalled();
-        expect(editor.value).toContain("\n");
+        expect(ed.value).toContain("\n");
     });
 
     it("inserts the break AT THE CARET, not at the end", () => {
         renderSheet({ editable: true, onCellEdit: vi.fn(), multiline: true });
-        const { editor } = openEditor(0, 1); // "Opening"
+        const { editor: ed } = openEditor(0, 1); // "Opening"
 
         // Put the caret after "Open".
-        editor.setSelectionRange(4, 4);
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
+        ed.setSelectionRange(4, 4);
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
 
-        expect(editor.value).toBe("Open\ning");
+        expect(ed.value).toBe("Open\ning");
         // And the caret sits just after the inserted break, so typing continues
         // on the new line. A hand-rolled string splice loses this.
-        expect(editor.selectionStart).toBe(5);
+        expect(ed.selectionStart).toBe(5);
     });
 
     it("does not destroy the value when the editor opens fully selected", () => {
@@ -683,26 +751,26 @@ describe("multiline cells", () => {
         // would wipe the whole cell and leave a bare newline — the common case,
         // and silent data loss. It collapses the selection instead.
         renderSheet({ editable: true, onCellEdit: vi.fn(), multiline: true });
-        const { editor } = openEditor(0, 1); // "Opening", fully selected
+        const { editor: ed } = openEditor(0, 1); // "Opening", fully selected
 
-        expect(editor.selectionStart).toBe(0);
-        expect(editor.selectionEnd).toBe("Opening".length);
+        expect(ed.selectionStart).toBe(0);
+        expect(ed.selectionEnd).toBe("Opening".length);
 
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
 
-        expect(editor.value).toBe("Opening\n");
+        expect(ed.value).toBe("Opening\n");
     });
 
     it("collapses a selection to its end rather than overwriting it", () => {
         renderSheet({ editable: true, onCellEdit: vi.fn(), multiline: true });
-        const { editor } = openEditor(0, 1); // "Opening"
+        const { editor: ed } = openEditor(0, 1); // "Opening"
 
-        editor.setSelectionRange(0, 4); // select "Open"
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
+        ed.setSelectionRange(0, 4); // select "Open"
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
 
         // Alt+Enter ADDS a line; it never deletes text. Deleting has its own keys.
-        expect(editor.value).toBe("Open\ning");
-        expect(editor.selectionStart).toBe(5);
+        expect(ed.value).toBe("Open\ning");
+        expect(ed.selectionStart).toBe(5);
     });
 
     it("survives the blur that pressing Alt causes — the reported bug", () => {
@@ -713,34 +781,34 @@ describe("multiline cells", () => {
         // sending the blur too.
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit, multiline: true });
-        const { cell, editor } = openEditor(0, 1);
-        editor.setSelectionRange(4, 4);
+        const { cell, editor: ed } = openEditor(0, 1);
+        ed.setSelectionRange(4, 4);
 
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
         // Alt hands focus to browser chrome, which is outside the document.
-        fireEvent.blur(editor, { relatedTarget: null });
+        fireEvent.blur(ed, { relatedTarget: null });
 
         expect(onCellEdit).not.toHaveBeenCalled();
-        expect(editorIn(cell)).not.toBeNull();
-        expect(editorIn(cell)!.value).toBe("Open\ning");
+        expect(editor()).not.toBeNull();
+        expect(editor()!.value).toBe("Open\ning");
     });
 
     it("can build several lines across repeated Alt+Enter and Alt blurs", () => {
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit, multiline: true });
-        const { cell, editor } = openEditor(0, 1);
+        const { cell, editor: ed } = openEditor(0, 1);
 
-        fireEvent.change(editor, { target: { value: "one" } });
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
-        fireEvent.blur(editor, { relatedTarget: null });
-        fireEvent.change(editorIn(cell)!, { target: { value: "one\ntwo" } });
-        fireEvent.keyDown(editorIn(cell)!, { key: "Enter", altKey: true });
-        fireEvent.blur(editorIn(cell)!, { relatedTarget: null });
-        fireEvent.change(editorIn(cell)!, { target: { value: "one\ntwo\nthree" } });
+        fireEvent.change(ed, { target: { value: "one" } });
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
+        fireEvent.blur(ed, { relatedTarget: null });
+        fireEvent.change(editor()!, { target: { value: "one\ntwo" } });
+        fireEvent.keyDown(editor()!, { key: "Enter", altKey: true });
+        fireEvent.blur(editor()!, { relatedTarget: null });
+        fireEvent.change(editor()!, { target: { value: "one\ntwo\nthree" } });
 
         // Only the final plain Enter commits.
         expect(onCellEdit).not.toHaveBeenCalled();
-        fireEvent.keyDown(editorIn(cell)!, { key: "Enter" });
+        fireEvent.keyDown(editor()!, { key: "Enter" });
         expect(onCellEdit).toHaveBeenCalledWith(
             0,
             1,
@@ -751,39 +819,39 @@ describe("multiline cells", () => {
 
     it("is not left stranded open by an ignored blur", () => {
         // Refusing to commit on a null-relatedTarget blur must not trap the user
-        // in the editor. Every normal way out still works afterwards.
+        // in the ed. Every normal way out still works afterwards.
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit, multiline: true });
-        const { cell, editor } = openEditor(0, 1);
+        const { cell, editor: ed } = openEditor(0, 1);
 
-        fireEvent.blur(editor, { relatedTarget: null }); // Alt pressed
-        expect(editorIn(cell)).not.toBeNull();
+        fireEvent.blur(ed, { relatedTarget: null }); // Alt pressed
+        expect(editor()).not.toBeNull();
 
         // Clicking another cell moves focus within the document, so it commits.
-        fireEvent.blur(editorIn(cell)!, { relatedTarget: cellAt(2, 0) });
+        fireEvent.blur(editor()!, { relatedTarget: cellAt(2, 0) });
         expect(onCellEdit).toHaveBeenCalledTimes(1);
-        expect(editorIn(cell)).toBeNull();
+        expect(editor()).toBeNull();
     });
 
     it("Escape still works after an ignored blur", () => {
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit, multiline: true });
-        const { cell, editor } = openEditor(0, 1);
+        const { cell, editor: ed } = openEditor(0, 1);
 
-        fireEvent.blur(editor, { relatedTarget: null });
-        fireEvent.keyDown(editorIn(cell)!, { key: "Escape" });
+        fireEvent.blur(ed, { relatedTarget: null });
+        fireEvent.keyDown(editor()!, { key: "Escape" });
 
-        expect(editorIn(cell)).toBeNull();
+        expect(editor()).toBeNull();
         expect(onCellEdit).not.toHaveBeenCalled();
     });
 
     it("commits the multiline value on plain Enter", () => {
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit, multiline: true });
-        const { editor } = openEditor(0, 1);
+        const { editor: ed } = openEditor(0, 1);
 
-        fireEvent.change(editor, { target: { value: "line one\nline two" } });
-        fireEvent.keyDown(editor, { key: "Enter" });
+        fireEvent.change(ed, { target: { value: "line one\nline two" } });
+        fireEvent.keyDown(ed, { key: "Enter" });
 
         expect(onCellEdit).toHaveBeenCalledWith(
             0,
@@ -796,24 +864,24 @@ describe("multiline cells", () => {
     it("Enter still commits rather than adding a line, as in Excel", () => {
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit, multiline: true });
-        const { cell, editor } = openEditor(0, 1);
+        const { cell, editor: ed } = openEditor(0, 1);
 
-        fireEvent.keyDown(editor, { key: "Enter" });
+        fireEvent.keyDown(ed, { key: "Enter" });
 
         expect(onCellEdit).toHaveBeenCalledTimes(1);
-        expect(editorIn(cell)).toBeNull();
+        expect(editor()).toBeNull();
     });
 
     it("Escape still abandons a multiline draft", () => {
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit, multiline: true });
-        const { cell, editor } = openEditor(0, 1);
+        const { cell, editor: ed } = openEditor(0, 1);
 
-        fireEvent.change(editor, { target: { value: "a\nb" } });
-        fireEvent.keyDown(editor, { key: "Escape" });
+        fireEvent.change(ed, { target: { value: "a\nb" } });
+        fireEvent.keyDown(ed, { key: "Escape" });
 
         expect(onCellEdit).not.toHaveBeenCalled();
-        expect(editorIn(cell)).toBeNull();
+        expect(editor()).toBeNull();
     });
 
     it("Alt+Enter is inert in a single-line cell", () => {
@@ -828,13 +896,13 @@ describe("multiline cells", () => {
         // update is requested at all.
         const onCellEdit = vi.fn();
         renderSheet({ editable: true, onCellEdit });
-        const { cell, editor } = openEditor(0, 1);
+        const { cell, editor: ed } = openEditor(0, 1);
 
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
 
         expect(onCellEdit).not.toHaveBeenCalled();
-        expect(editorIn(cell)).not.toBeNull(); // did not commit
-        expect(editor.value).not.toContain("\n");
+        expect(editor()).not.toBeNull(); // did not commit
+        expect(ed.value).not.toContain("\n");
     });
 
     it("does not even attempt an insertion in a single-line cell", () => {
@@ -847,8 +915,8 @@ describe("multiline cells", () => {
         );
         try {
             renderSheet({ editable: true, onCellEdit: vi.fn() });
-            const { editor } = openEditor(0, 1);
-            fireEvent.keyDown(editor, { key: "Enter", altKey: true });
+            const { editor: ed } = openEditor(0, 1);
+            fireEvent.keyDown(ed, { key: "Enter", altKey: true });
             expect(spy).not.toHaveBeenCalled();
         } finally {
             spy.mockRestore();
@@ -866,8 +934,16 @@ describe("multiline cells", () => {
                 multiline: c === 1,
             }),
         });
-        expect(openEditor(0, 1).editor.tagName).toBe("TEXTAREA");
-        expect(openEditor(0, 2).editor.tagName).toBe("INPUT");
+        expect(
+            openEditor(0, 1).editor.classList.contains(
+                "cell-editor--multiline",
+            ),
+        ).toBe(true);
+        expect(
+            openEditor(0, 2).editor.classList.contains(
+                "cell-editor--multiline",
+            ),
+        ).toBe(false);
     });
 
     it("a per-cell override can opt OUT of a multiline view", () => {
@@ -880,7 +956,11 @@ describe("multiline cells", () => {
                 multiline: false,
             }),
         });
-        expect(openEditor(0, 1).editor.tagName).toBe("INPUT");
+        expect(
+            openEditor(0, 1).editor.classList.contains(
+                "cell-editor--multiline",
+            ),
+        ).toBe(false);
     });
 
     it("marks multiline cells so committed newlines are not collapsed", () => {
@@ -923,8 +1003,8 @@ describe("multiline cells", () => {
         outer.focus();
 
         fireEvent.keyDown(outer, { key: "F2" });
-        const editor = container.querySelector("textarea.cell__editor")!;
-        fireEvent.keyDown(editor, { key: "Enter" });
+        const ed = editor()!;
+        fireEvent.keyDown(ed, { key: "Enter" });
 
         expect(document.activeElement).toBe(outer);
     });
@@ -940,9 +1020,9 @@ describe("multiline cells", () => {
         outer.focus();
 
         fireEvent.keyDown(outer, { key: "F2" });
-        const editor = container.querySelector("textarea.cell__editor")!;
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
-        fireEvent.keyDown(editor, { key: "Enter" });
+        const ed = editor()!;
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
+        fireEvent.keyDown(ed, { key: "Enter" });
 
         fireEvent.keyDown(
             (document.activeElement ?? document.body) as HTMLElement,
@@ -960,11 +1040,209 @@ describe("multiline cells", () => {
             multiline: true,
             defaultActiveCell: { row: 1, col: 1 },
         });
-        const { editor } = openEditor(1, 1);
-        fireEvent.keyDown(editor, { key: "Enter", altKey: true });
+        const { editor: ed } = openEditor(1, 1);
+        fireEvent.keyDown(ed, { key: "Enter", altKey: true });
         expect(activeCell()).toBe(cellAt(1, 1));
     });
 });
+describe("the editor grows over neighbouring cells — end to end", () => {
+    /**
+     * The pure ladder is covered exhaustively in
+     * `spreadsheet-editor-geometry.test.ts`. This checks the WIRING: that measured
+     * placement, reported content metrics and the resolved size actually reach the
+     * DOM as inline styles.
+     *
+     * jsdom reports every measurement as zero, so a layout is faked around the
+     * real component: a 100px cell in a 500px viewport, with 8px characters and
+     * 24px lines. The arithmetic and the plumbing are exercised; real layout is
+     * not, and cannot be here.
+     */
+    function fakeLayout() {
+        const { container } = renderSheet({
+            editable: true,
+            onCellEdit: vi.fn(),
+        });
+
+        const grid = container.querySelector(".grid") as HTMLElement;
+        for (const [prop, value] of [
+            ["clientWidth", 500],
+            ["clientHeight", 300],
+            ["clientLeft", 0],
+            ["clientTop", 0],
+            ["scrollLeft", 0],
+            ["scrollTop", 0],
+        ] as const) {
+            Object.defineProperty(grid, prop, { value, configurable: true });
+        }
+        grid.getBoundingClientRect = () =>
+            ({ left: 0, top: 0, width: 500, height: 300 }) as DOMRect;
+
+        const cell = cellAt(0, 0) as HTMLElement;
+        cell.getBoundingClientRect = () =>
+            ({ left: 0, top: 0, width: 100, height: 24 }) as DOMRect;
+
+        fireEvent.doubleClick(cell);
+
+        const ta = editor()!;
+        const mirror = document.querySelector(
+            ".cell-editor__mirror",
+        ) as HTMLElement;
+
+        // 8px per character; the mirror never wraps, so this is natural width.
+        Object.defineProperty(mirror, "scrollWidth", {
+            get: () => (mirror.textContent ?? "").length * 8,
+            configurable: true,
+        });
+        // Height the text needs at whatever width the box currently has.
+        Object.defineProperty(ta, "scrollHeight", {
+            get: () => {
+                const w = parseFloat(ta.style.width || "100") || 100;
+                const chars = ta.value.length;
+                const perLine = Math.max(1, Math.floor(w / 8));
+                return Math.max(24, Math.ceil(chars / perLine) * 24);
+            },
+            configurable: true,
+        });
+
+        const type = (text: string) =>
+            fireEvent.change(ta, { target: { value: text } });
+
+        return { ta, type };
+    }
+
+    it("rung 1: stays cell-sized when the content fits", () => {
+        const { ta, type } = fakeLayout();
+        type("short");
+        expect(ta.style.width).toBe("100px");
+        expect(ta.classList.contains("cell-editor--wrap")).toBe(false);
+    });
+
+    it("rung 2: widens PAST its own cell rather than wrapping inside it", () => {
+        // The behaviour that was wrong before: overflow used to fold immediately
+        // inside the cell's width. It must expand over the neighbours first.
+        const { ta, type } = fakeLayout();
+        type("this is much much longer than the cell");
+        expect(parseFloat(ta.style.width)).toBeGreaterThan(100);
+        expect(parseFloat(ta.style.width)).toBeLessThanOrEqual(500);
+        expect(ta.classList.contains("cell-editor--wrap")).toBe(false);
+        // One line still, because it had room to grow.
+        expect(ta.style.height).toBe("24px");
+    });
+
+    it("rung 3: stops at the viewport edge, then wraps and grows downward", () => {
+        const { ta, type } = fakeLayout();
+        type("x".repeat(120));
+        expect(ta.style.width).toBe("500px");
+        expect(ta.classList.contains("cell-editor--wrap")).toBe(true);
+        expect(parseFloat(ta.style.height)).toBeGreaterThan(24);
+    });
+
+    it("rung 4: caps the height at the visible bottom and scrolls", () => {
+        const { ta, type } = fakeLayout();
+        type("y".repeat(4000));
+        expect(ta.style.width).toBe("500px");
+        expect(parseFloat(ta.style.height)).toBeLessThanOrEqual(300);
+        expect(ta.style.overflowY).toBe("auto");
+    });
+
+    it("climbs the rungs in order as the draft grows", () => {
+        const { ta, type } = fakeLayout();
+        const trace: string[] = [];
+        for (const text of ["ab", "a".repeat(30), "b".repeat(120), "c".repeat(4000)]) {
+            type(text);
+            trace.push(
+                `${parseFloat(ta.style.width)}x${parseFloat(ta.style.height)} wrap=${ta.classList.contains("cell-editor--wrap")} scroll=${ta.style.overflowY === "auto"}`,
+            );
+        }
+        expect(trace).toEqual([
+            "100x24 wrap=false scroll=false",
+            "240x24 wrap=false scroll=false",
+            "500x48 wrap=true scroll=false",
+            "500x300 wrap=true scroll=true",
+        ]);
+    });
+
+    it("shrinks back down when text is deleted", () => {
+        // The ladder is a pure function of the current content, so it must descend
+        // as readily as it climbs.
+        const { ta, type } = fakeLayout();
+        type("z".repeat(200));
+        const grown = parseFloat(ta.style.width);
+        type("z");
+        expect(grown).toBeGreaterThan(100);
+        expect(ta.style.width).toBe("100px");
+        expect(ta.classList.contains("cell-editor--wrap")).toBe(false);
+    });
+});
+
+describe("viewport sizing", () => {
+    /**
+     * The viewport bounds are not only cosmetic: the floating editor grows only as
+     * far as the VISIBLE region allows, so `maxWidth`/`maxHeight` are what decide
+     * where the editor stops widening (ladder rung 3) and stops growing downward
+     * (rung 4). They were hardcoded in CSS before, which made those rungs
+     * impossible to exercise by hand.
+     *
+     * Same contract as the tab bar's `maxWidth`, deliberately: a number is pixels,
+     * a string is passed to CSS verbatim so relative units work.
+     */
+    const gridOf = (container: HTMLElement) =>
+        container.querySelector(".grid") as HTMLElement;
+
+    it("applies numbers as pixels", () => {
+        const { container } = renderSheet({ maxWidth: 600, maxHeight: 300 });
+        const grid = gridOf(container);
+        expect(grid.style.maxWidth).toBe("600px");
+        expect(grid.style.maxHeight).toBe("300px");
+    });
+
+    it("passes percentages through verbatim", () => {
+        const { container } = renderSheet({
+            maxWidth: "80%",
+            maxHeight: "60vh",
+        });
+        const grid = gridOf(container);
+        expect(grid.style.maxWidth).toBe("80%");
+        expect(grid.style.maxHeight).toBe("60vh");
+    });
+
+    it("passes computed units through, so clamp() works", () => {
+        const { container } = renderSheet({
+            maxHeight: "clamp(200px, 50vh, 700px)",
+        });
+        expect(gridOf(container).style.maxHeight).toBe(
+            "clamp(200px, 50vh, 700px)",
+        );
+    });
+
+    it("sets no inline size when omitted, so the CSS defaults win", () => {
+        // If this emitted an empty or `undefined` value it would override the
+        // stylesheet and the grid would have no bounds at all.
+        const { container } = renderSheet();
+        const grid = gridOf(container);
+        expect(grid.getAttribute("style")).toBeNull();
+        expect(grid.style.maxWidth).toBe("");
+        expect(grid.style.maxHeight).toBe("");
+    });
+
+    it("accepts one axis without forcing the other", () => {
+        const { container } = renderSheet({ maxHeight: 200 });
+        const grid = gridOf(container);
+        expect(grid.style.maxHeight).toBe("200px");
+        expect(grid.style.maxWidth).toBe("");
+    });
+
+    it("puts the bounds on the scroll viewport, not the table", () => {
+        // The table sizes itself to its content and cannot also clip it; bounding
+        // the table instead of the viewport would break both scrolling and the
+        // editor's clipping.
+        const { container } = renderSheet({ maxWidth: 600, maxHeight: 300 });
+        expect(gridOf(container).style.maxHeight).toBe("300px");
+        const table = container.querySelector("table") as HTMLElement;
+        expect(table.style.maxHeight).toBe("");
+    });
+});
+
 describe("the data port stays opaque", () => {
     it("asks for exactly the cells of the rectangular region", () => {
         const spy = vi.fn(getCell);

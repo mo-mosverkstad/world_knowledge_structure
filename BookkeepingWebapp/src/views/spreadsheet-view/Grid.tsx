@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, type Ref } from "react";
 import "./Grid.css";
 
 /**
@@ -53,13 +53,48 @@ export interface GridProps {
      */
     columns?: ReactNode;
     className?: string;
+    /**
+     * Floating layers drawn OVER the table: the cell editor, and later a range
+     * selection box. Rendered as siblings of the `<table>` inside the scroll
+     * container, which is what lets them escape the table's layout flow while
+     * still scrolling and clipping with the content.
+     */
+    overlay?: ReactNode;
+    /**
+     * Handle on the scroll viewport. The overlay geometry is measured against
+     * this element, so the coordinator needs a reference to it.
+     */
+    scrollRef?: Ref<HTMLDivElement>;
+    /**
+     * Maximum size of the scroll viewport. A number is pixels; a string is used
+     * verbatim so `%`, `vh`, `clamp()` etc. all work. Beyond it the grid scrolls.
+     */
+    maxWidth?: number | string;
+    maxHeight?: number | string;
 }
 
-export function Grid({ children, columnHeader, columns, className }: GridProps) {
+export function Grid({
+    children,
+    columnHeader,
+    columns,
+    className,
+    overlay,
+    scrollRef,
+    maxWidth,
+    maxHeight,
+}: GridProps) {
     return (
         // The scroll viewport. Separate from the table because a table sizes
-        // itself to its content and therefore cannot also clip it.
-        <div className="grid">
+        // itself to its content and therefore cannot also clip it. It is also
+        // the overlay's containing block (`position: relative` in Grid.css), so
+        // floating layers scroll with the content and are clipped by it.
+        <div
+            className="grid"
+            ref={scrollRef}
+            // Inline because these are per-instance data, not style rules. A
+            // bare number becomes px, matching React's own `style` handling.
+            style={{ maxWidth, maxHeight }}
+        >
             <table
                 className={className ? `grid__table ${className}` : "grid__table"}
                 // Explicit: a bare <table> is a static `table`, not an
@@ -74,6 +109,7 @@ export function Grid({ children, columnHeader, columns, className }: GridProps) 
                 )}
                 <tbody className="grid__body">{children}</tbody>
             </table>
+            {overlay}
         </div>
     );
 }

@@ -16,6 +16,23 @@
 .grid {
     display: inline-block;
     overflow: auto;
+    /*
+     * Containing block for the floating overlays (the cell editor, and later a
+     * selection box). Combined with `overflow: auto` above, this is what makes
+     * them scroll WITH the content and be CLIPPED by the viewport, both without
+     * any JavaScript.
+     */
+    position: relative;
+    /*
+     * Defaults only. Both are overridden per instance from the `maxWidth` /
+     * `maxHeight` props, which is why they are inline styles there rather than
+     * rules here: the size of one grid is instance DATA, not a style shared by
+     * every grid.
+     *
+     * These bounds decide more than scrolling. The floating cell editor grows
+     * only as far as the visible region allows, so the viewport size is also
+     * what decides where the editor stops widening and starts wrapping.
+     */
     max-width: 100%;
     max-height: 480px;
     border: 1px solid #c0c0c0;

@@ -348,12 +348,28 @@ function DataDrivenSpreadsheetDemo() {
                 description: "Salary\nmonthly, after tax",
                 amount: 2500,
             },
+            {
+                date: "2026-01-15",
+                // Long on purpose: editing this is what walks the size ladder
+                // from "fits the cell" all the way to "scrolls internally".
+                description:
+                    "Annual insurance premium, paid in full, covering both the "
+                    + "office contents and the professional indemnity rider",
+                amount: -1899.99,
+            },
+            { date: "2026-01-18", description: "Coffee beans", amount: -42 },
+            { date: "2026-01-22", description: "Client invoice", amount: 3400 },
             { date: "2026-01-12", description: "Electricity", amount: -120.5 },
         ],
     });
     const [log, setLog] = useState<string[]>([]);
     const pushLog = (msg: string) =>
         setLog((prev) => [msg, ...prev].slice(0, 6));
+
+    // Viewport bounds, adjustable so the editor size ladder can be seen by hand.
+    // Strings throughout, to exercise the relative-unit path as well as px.
+    const [maxWidth, setMaxWidth] = useState("480px");
+    const [maxHeight, setMaxHeight] = useState("150px");
 
     // ACCESS callbacks: random access into the business data. A grid asks only
     // for the cells it needs (which pairs with future virtualization).
@@ -409,6 +425,40 @@ function DataDrivenSpreadsheetDemo() {
     return (
         <div style={{ fontFamily: "sans-serif", maxWidth: 640, marginTop: 32 }}>
             <h3>Data-driven SpreadsheetView demo</h3>
+
+            {/*
+             * A deliberately SMALL viewport, and adjustable, because the editor
+             * only grows as far as the visible region allows. With a viewport
+             * larger than the content you can never reach the interesting rungs
+             * of the ladder by hand — the box always has room and never wraps.
+             */}
+            <div style={{ display: "flex", gap: 12, padding: "0 4px 12px" }}>
+                <label style={{ fontSize: 12 }}>
+                    max width{" "}
+                    <select
+                        value={maxWidth}
+                        onChange={(e) => setMaxWidth(e.target.value)}
+                    >
+                        <option value="320px">320px</option>
+                        <option value="480px">480px</option>
+                        <option value="50%">50%</option>
+                        <option value="100%">100%</option>
+                    </select>
+                </label>
+                <label style={{ fontSize: 12 }}>
+                    max height{" "}
+                    <select
+                        value={maxHeight}
+                        onChange={(e) => setMaxHeight(e.target.value)}
+                    >
+                        <option value="90px">90px</option>
+                        <option value="150px">150px</option>
+                        <option value="30vh">30vh</option>
+                        <option value="480px">480px</option>
+                    </select>
+                </label>
+            </div>
+
             <SpreadsheetView<LedgerState>
                 data={ledger}
                 getRowCount={getRowCount}
@@ -421,6 +471,8 @@ function DataDrivenSpreadsheetDemo() {
                     pushLog(`select ${cell ? `(${cell.row},${cell.col})` : "none"}`)
                 }
                 editable
+                maxWidth={maxWidth}
+                maxHeight={maxHeight}
                 defaultActiveCell={{ row: 0, col: 0 }}
             />
             <pre
@@ -438,6 +490,13 @@ function DataDrivenSpreadsheetDemo() {
                 double-click edits; Enter commits, Esc cancels. The
                 Description column is multiline: Alt+Enter inserts a line
                 break at the caret.
+            </p>
+            <p style={{ fontSize: 12, color: "#666" }}>
+                To watch the editor size ladder, edit the long Description on
+                2026-01-15 with max width 320px: the box first grows sideways
+                over the Amount column, then stops at the viewport edge and
+                wraps downward, then stops at the bottom and scrolls. Shrinking
+                max height to 90px reaches the scrolling rung sooner.
             </p>
         </div>
     );

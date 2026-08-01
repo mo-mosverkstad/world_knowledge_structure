@@ -37,6 +37,8 @@ interface Ledger {
     }}
     onCellEdit={(row, col, value) => applyEdit(row, col, value)}
     editable
+    maxWidth="100%"
+    maxHeight="60vh"
 />;
 ```
 
@@ -147,9 +149,12 @@ its own "renders no raw HTML" rule. That markup now lives in `ColumnHeader.tsx`.
 | `Grid.tsx` / `.css`   | Internal UI: scroll viewport + `<table>`, `<colgroup>`, `<thead>`.  | No private |
 | `ColumnHeader.tsx` / `.css` | Internal UI: one `<th scope="col">`, plus the gutter corner.  | No private |
 | `Row.tsx` / `.css`    | Internal UI: one `<tr>` + optional `<th scope="row">` gutter.       | No private |
-| `Cell.tsx` / `.css`   | Internal UI: one `<td>`; raw→semantic events; inline editor.        | No private |
+| `Cell.tsx` / `.css`   | Internal UI: one `<td>`; display + raw→semantic events.             | No private |
+| `CellEditor.tsx` / `.css` | Internal UI: the single floating edit box, drawn over the table. | No private |
+| `editorLadder.ts`     | The four-rung size ladder (pure) + placement measurement.           | No private |
+| `useEditorGeometry.ts` | Internal hook: re-measures on scroll, relayout and draft change.   | No private |
 | `useSelection.ts`     | Internal hook: active-cell state, click/arrow move, clamp, notify.  | No private |
-| `useEditing.ts`       | Internal hook: ephemeral editing cell + draft.                      | No private |
+| `useEditing.ts`       | Internal hook: WHICH cell is being edited (not the draft text).     | No private |
 | `useReturnFocus.ts`   | Internal hook: give focus back to the grid when the editor closes.  | No private |
 | `style.css`           | Styles for the outer key-handling container only.                   | —         |
 
@@ -171,6 +176,8 @@ Only `SpreadsheetView` and the types in `types.ts` are exported from `index.tsx`
 | `onSelectionChange` | `(cell \| null, data) => void`                       | Fires when the active cell changes.                 |
 | `editable`          | `boolean`                                            | Enable editing (per-cell override via descriptor).  |
 | `multiline`         | `boolean`                                            | Allow line breaks (per-cell override via descriptor).|
+| `maxWidth`          | `number \| string`                                  | Viewport bound. Number is px; string is verbatim CSS. |
+| `maxHeight`         | `number \| string`                                  | Viewport bound. Defaults: `"100%"` / `480`.          |
 | `activeCell`        | `CellAddress \| null`                                | Controlled selection. READ-ONLY today — see below.  |
 | `defaultActiveCell` | `CellAddress`                                        | Initial selection (uncontrolled).                   |
 | `className`         | `string`                                             | Extra class on the `<table>` element.               |
@@ -204,6 +211,169 @@ interface CellDescriptor {
 - **Multiline:** with `multiline`, `Alt+Enter` inserts a line break at the caret
   while `Enter` still commits — see [Multiline cells](#multiline-cells).
 
+### Viewport size
+
+`maxWidth` and `maxHeight` bound the scroll viewport. A `number` is pixels
+(matching React's `style` convention); a `string` goes to CSS verbatim, so
+relative and computed units work:
+
+```tsx
+<SpreadsheetView maxWidth={600} maxHeight={300} />                  // px
+<SpreadsheetView maxWidth="80%" maxHeight="60vh" />                 // relative
+<SpreadsheetView maxHeight="clamp(200px, 50vh, 700px)" />           // computed
+```
+
+Omit them and the defaults in `Grid.css` apply (`100%` wide, `480px` tall). Both
+were hardcoded there before, with no way for a caller to change them.
+
+The bounds go on the scroll VIEWPORT, never the table: a table sizes itself to
+its content and so cannot also clip it, which is why those are two elements.
+
+These are not merely cosmetic. The floating editor grows only as far as the
+*visible* region allows, so the viewport size is what decides where the editor
+stops widening (rung 3) and stops growing downward (rung 4). A viewport larger
+than the content means the editor always has room, so the interesting rungs can
+never be reached — which is exactly why they were hard to observe by hand while
+the size was fixed in CSS. `src/main.tsx` exposes both as dropdowns for that
+reason.
+
+Same contract as the tab bar's `maxWidth`, deliberately: one sizing idiom across
+the module rather than two.
+
+### The editor is a floating layer, not a cell child
+
+The edit box lives OUTSIDE the table, as a sibling of it inside the scroll
+container:
+
+```
+  DIV.grid          position: relative; overflow: auto   <- scroll container
+    TABLE           cells, rows, headers                 <- layer 1
+    TEXTAREA.cell-editor   position: absolute            <- layer 2
+```
+
+It used to be a child of the `<td>`. Two reasons it had to move:
+
+**Layout.** An element inside a `<td>` is sized by the table algorithm, so it
+cannot exceed its column, cannot overlay the rows below, and cannot have a
+height independent of its row. Growing an editor downward over neighbouring
+rows — the Excel behaviour — is therefore not expressible inside a cell at any
+amount of effort.
+
+**Invalidation.** The draft text had to be a prop on every `Cell`, since any
+cell might be the edited one. Measured on a 50-cell grid, per keystroke:
+
+```
+   before   102 getCell calls across 50 distinct cells
+   after      0
+```
+
+Typing went from O(cells) to O(1). Note that moving the *element* was not
+enough: while the draft still lived in the coordinator, every keystroke
+re-rendered `SpreadsheetView` and its render loop called `getCell` for all 50
+cells anyway. The STATE had to move too, which is why `useEditing` now owns only
+"which cell is being edited" and `CellEditor` owns the text.
+
+`Cell` got smaller as a result: it lost `editing`, `draft`, `onDraftChange`,
+`onCommitEdit` and `onCancelEdit`, keeping `onBeginEdit` for double-click. It is
+display plus event translation again.
+
+#### What panning costs, and what it does not
+
+The overlay is positioned in the scroll container's CONTENT coordinates, so:
+
+- **Position is free.** An absolutely positioned child of a scrolling ancestor
+  scrolls with the content. No scroll handler, no per-frame updates, no drift —
+  the same mechanism that gives frozen headers without JavaScript.
+- **Clipping is free.** The scroll container clips its own absolutely positioned
+  descendants, so panning away reveals progressively less of the box and
+  eventually none of it. "As long as one character fits, show it" needs no
+  threshold and no code.
+- **Size is not free.** The width tracks the visible part of the cell and the
+  height is capped by the room below it, and both depend on the scroll offset.
+  So one scroll listener runs while editing, writing two numbers.
+
+A third trigger has nothing to do with scrolling: column widths come from
+`table-layout: auto`, so new data, a late font or a window resize can move the
+cell with no scroll event at all. A `ResizeObserver` on the table covers that.
+This is why the geometry is MEASURED from the cell rather than computed from
+props — there is no width to look up.
+
+#### Sizing: a four-rung ladder
+
+Each rung is reached only when the one before it runs out of room:
+
+```
+  1  FITS THE CELL          the box is exactly the cell's size
+  2  WIDER THAN THE CELL    grow rightwards OVER the neighbouring columns
+  3  HIT THE VISIBLE EDGE   stop growing, WRAP, and grow downwards instead
+  4  HIT THE BOTTOM         stop growing, scroll internally
+```
+
+```
+  1  +--------+                  2  +--------+---------------+
+     | short| |                     | a much longer value|  |
+     +--------+                     +--------+---------------+
+
+  3  +--------+-------+ <- edge  4  +--------+-------+ <- edge
+     | a very long    |            | a very long    |
+     | value that     |            | value that     |
+     | wrapped        |            | wrapped and    | <- scrolls
+     +--------+-------+            +--------+-------+ <- bottom
+```
+
+Rung 2 is the one worth stating plainly, because the first implementation got it
+wrong: overflow expands the box past its OWN cell before it folds. Wrapping
+inside the cell's width would waste all the horizontal room to the right.
+
+The arithmetic:
+
+```
+  width   = clamp(naturalWidth,  cellWidth, maxWidth)
+  height  = clamp(contentHeight, minHeight, maxHeight)
+  wrap    = naturalWidth  > maxWidth      growth was CAPPED
+  scroll  = contentHeight > height        growth was capped again
+```
+
+Note `wrap` is decided by whether the box COULD have grown further, not by
+whether the text happens to be long. That is what separates rungs 2 and 3: at
+rung 2 the box grew and the text is still one line; at rung 3 growth stopped so
+the text has to fold. And `clamp` applies the floor last, so a cell with almost
+no room below it still renders at cell height rather than collapsing.
+
+This lives in `editorLadder.ts` as a PURE function. jsdom has no layout engine,
+so isolating the decisions from the DOM reads is what makes them verifiable at
+all — the measuring code stays thin enough to check by eye, and every rung it
+feeds is covered by exact tests.
+
+#### Measuring what the content wants
+
+Rung 2 needs to know how wide the text would be if it were never wrapped, and a
+`<textarea>` cannot answer that: it only knows the width it has been GIVEN. So a
+hidden MIRROR element holds the same text in the same font with no wrapping, and
+its `scrollWidth` is the natural width. The mirror is `aria-hidden`, and it is
+positioned off-screen rather than `display: none`, which would report zero.
+
+The editor reports its metrics upward after each draft change, which is the one
+place the draft crosses a component boundary. It carries two numbers, not the
+text, so typing still does not re-render the table.
+
+`maxWidth` is clamped against the visible RIGHT edge but never the left.
+Clamping both would re-anchor the box as you pan, so the text would rewrap
+mid-scroll — instability. Clamping only the right means panning right merely
+clips the box's left side and the wrap survives.
+
+`maxHeight` is "as much room as is VISIBLE", not "as much as exists", so
+scrolling the edited cell higher lets the box grow further. The editor never
+scrolls the grid itself to make room; it only uses what the user has made
+available.
+
+#### Stacking
+
+The editor is `z-index: 4`, ABOVE the sticky header (2) and the frozen corner
+(3). A deliberate choice: the box being typed in is what the user is looking at,
+so it wins. The consequence is that scrolling down far enough while editing
+hides the column headers behind the box.
+
 ### Multiline cells
 
 `multiline` (view-wide, or per cell via the descriptor) lets a value contain
@@ -230,11 +400,12 @@ An `<input>` *silently discards* newlines. Measured:
    textarea.value = "a\nb"   ->  "a\nb"
 ```
 
-So no amount of key handling could make an `<input>` hold a line break; only
-the element choice can. `multiline` therefore switches the editor to a
-`<textarea>`. That assertion is itself a test, so if `<input>` ever gains
-newline support the decision gets revisited rather than silently outliving its
-reason.
+So no amount of key handling could make an `<input>` hold a line break. The
+editor is therefore ALWAYS a `<textarea>`, in both modes: one element keeps the
+caret and key handling identical either way, and `multiline` gates the newline
+BINDING and the wrapping rather than the element. That `<input>` assertion is
+itself a test, so if it ever gains newline support the decision gets revisited
+rather than silently outliving its reason.
 
 #### Why `setRangeText`, not string splicing
 
@@ -298,6 +469,19 @@ Such cells also switch to `vertical-align: top` and `height: auto`, so a
 wrapped cell grows and the row height follows it — native table behaviour, no
 measurement code. Note jsdom applies no stylesheets, so the tests can only
 verify that the class hook is present; the rendered result is unverified.
+
+`tests/views/spreadsheet-editor-geometry.test.ts` adds 22 tests: the four-rung
+ladder verified exactly (it is a pure function), plus placement measurement with
+faked rects (the technique the tab bar's scroll tests use). A further six tests
+in the main file drive the whole thing end to end through the component, with a
+faked layout, to check that resolved sizes actually reach the DOM as inline
+styles — a pure ladder can be perfect while the plumbing is broken.
+
+Two of those did not bite on the first attempt: the fixture built each cell rect
+already adjusted for its own scroll offset, so content and viewport coordinates
+gave the same answer and the test could not tell them apart. Rewritten to assert
+absolute values across several scroll offsets, they now fail against both
+sabotages.
 
 ### Focus returns to the grid when the editor closes
 
@@ -365,7 +549,9 @@ recorded here rather than implied to work.
 
 ## Tests
 
-`tests/views/spreadsheet.test.tsx` — 70 tests, in four groups:
+Two files, 106 tests.
+
+`tests/views/spreadsheet.test.tsx` — 84 behaviour and structure tests:
 
 - **30 behaviour tests**, written only in terms of ARIA roles, rendered text and
   user actions — never `div` vs `table`. These were written *before* the move to
@@ -405,6 +591,16 @@ Each group was confirmed to *bite* by sabotaging the implementation:
   remove the cell--multiline class               1
   let a null-relatedTarget blur commit           3  (bug 1 below)
   replace the selection instead of collapsing    2  (bug 2 below)
+  return viewport instead of content coords      4  (editor detaches on scroll)
+  drop the right clamp on width                  2
+  clamp the left edge too                        2  (rewraps while panning)
+  let maxHeight fall below the cell height       1
+  clamp the editor width to its own cell        10  (rung 2 gone: the bug)
+  always wrap                                    5
+  remove the height cap                          4
+  starve maxWidth to the cell                    2
+  reverse the clamp order                        1
+  drop the inline viewport size                   5
 ```
 
 One of those needed a second attempt. "Alt+Enter is inert in a single-line cell"

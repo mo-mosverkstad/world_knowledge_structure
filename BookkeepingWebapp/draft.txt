@@ -1,0 +1,1040 @@
+11% λ > Now, this feature can be concluded. The next feature is about setting a maximum value of the width box. The width can be in pixels but can also be percentage (relative or something like that). One can stack as much tabs as possible there, but when overflown, the scrolling behavior must be implemented with a scroll-bar. Remember that if one try to make one tab as active, if cannot be visible from the viewport, it must be scrolled so it can be visible, which is the hardest part of this feature I have no idea how to solve Now sketch how the new feature can be accomplished and how this hardest problem can be solved
+
+
+> No code changes — sketch only. I re-read the two stylesheets, and there's a problem in the existing CSS that decides part of this
+design.
+
+## The feature splits into two very unequal halves
+
+  Part 1  max-width + scrollbar        ~10 lines, mostly CSS
+  Part 2  scroll the active tab into view    the actual work
+
+
+Part 1 is nearly free. Part 2 is where the difficulty is, but not in the place you'd expect — the arithmetic is about eight lines.
+The hard part is deciding when to run it.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+# Part 1 — max width and the scrollbar
+
+## API
+
+One prop, following React's own style convention where a number means pixels:
+
+tsx
+maxWidth?: number | string;
+
+<TabBar maxWidth={400} />        // → max-width: 400px
+<TabBar maxWidth="50%" />        // → max-width: 50%
+<TabBar maxWidth="clamp(200px, 40vw, 600px)" />   // anything CSS accepts
+
+
+Applied as an inline style on the container in Tabs.tsx. Percentages, vw, calc(), clamp() all come along for free because CSS
+resolves them, not us.
+
+  ┌─ parent ───────────────────────────────────────────────┐
+  │                                                        │
+  │  ┌─ .tabs  width:100%; max-width:400px ─────┐          │
+  │  │ overflow-x:auto  ← the scroll viewport   │          │
+  │  ╞══════════════════════════════════════════╡          │
+  │  │ t1 │ t2 │ t3 │ t4 │ t5 │ t6 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ t7…t13 │
+  │  └──────────────────────────────────────────┘          │
+  │      ▲                                    ▲   ▲        │
+  │      └── clientWidth (what you see) ──────┘   │        │
+  │                                    clipped, reachable  │
+  │                                    only by scrolling   │
+  └────────────────────────────────────────────────────────┘
+
+
+One gotcha worth knowing: max-width: 50% resolves against the containing block. If the parent is a flex item or has no definite width,
+a percentage can collapse or behave unexpectedly. Nothing we can fix in the component — just a documentation note.
+
+## A bug in the current CSS
+
+Tabs.css today:
+
+css
+.tabs {
+    height: 27px;
+    overflow: hidden;          /* ← no scrollbar */
+}
+.tabs:hover, .tabs:active, .tabs:focus {
+    overflow-x: auto;          /* ← scrollbar appears only on hover */
+}
+
+
+Two problems for this feature:
+
+The scrollbar only exists on hover, which is the opposite of what you asked for. Note that overflow: hidden does not block
+programmatic scrolling — scrollLeft still works — so scroll-into-view would function, but the user gets no visible affordance and can
+'t scroll by hand.
+
+Toggling overflow on hover reflows the box. With height: 27px fixed and .tab { height: 100% }, a classic ~15px horizontal scrollbar
+eats over half the content box, so tabs visibly squash when the pointer enters. Fix by making the scrollbar permanent and thin:
+
+css
+.tabs {
+    position: relative;       /* also useful for the measuring math */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;  /* applies to programmatic scrollLeft too */
+    min-height: 27px;         /* replace fixed height so the bar fits */
+}
+@media (prefers-reduced-motion: reduce) {
+    .tabs { scroll-behavior: auto; }
+}
+
+
+scroll-behavior: smooth in CSS also governs scrollLeft assignments from JS, so smooth animation needs zero JavaScript — and the
+reduced-motion query handles accessibility for free.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+# Part 2 — scrolling the active tab into view
+
+## Don't use scrollIntoView()
+
+The obvious answer is tab.scrollIntoView({ inline: "nearest" }). I'd avoid it:
+
+   ┌─ the page (scrollable) ─────────────────┐
+   │  ...lots of content above...            │
+   │  ┌─ .tabs (scrollable) ──────────┐      │
+   │  │ t1 │ t2 │ t3 │ ...            │      │
+   │  └───────────────────────────────┘      │
+   └─────────────────────────────────────────┘
+
+   scrollIntoView scrolls EVERY scrollable ancestor, not just .tabs
+   → selecting a tab can jump the whole page
+
+
+block: "nearest" reduces it but doesn't contain it. Writing container.scrollLeft directly touches exactly one element and nothing
+else. It's also trivially cancellable and testable.
+
+## The arithmetic
+
+Everything happens in one coordinate space: pixels from the container's left content edge.
+
+  content space (0 … scrollWidth)
+  0                                                          scrollWidth
+  ├─────────────────────────────────────────────────────────────────┤
+  │ t1 │ t2 │ t3 │ t4 │ t5 │ t6 │ t7 │ t8 │ t9 │t10 │t11 │t12 │t13 │
+                 ╞═══════════ visible ═══════════╡
+                 ▲                               ▲
+           scrollLeft            scrollLeft + clientWidth
+
+
+Three cases, and the third is the important one:
+
+  CASE A — tab starts before the viewport         → scroll left
+     ┌────┐
+     │ t2 │      ╞═════════ visible ═════════╡
+     └────┘
+     scrollLeft += (tabStart − viewStart) − margin
+
+  CASE B — tab ends after the viewport            → scroll right
+                 ╞═════════ visible ═════════╡      ┌────┐
+                                                    │ t12│
+                                                    └────┘
+     scrollLeft += (tabEnd − viewEnd) + margin
+
+  CASE C — already fully visible                  → DO NOTHING
+                 ╞═════════ visible ═════════╡
+                       ┌────┐
+                       │ t7 │
+                       └────┘
+
+
+Case C makes the operation minimal and idempotent — the same behaviour as inline: "nearest", and the reason selecting an already-
+visible tab doesn't cause a jarring re-centre. The small margin (say 8px) leaves a sliver of the neighbouring tab showing, which both
+looks less clipped and hints that there's more content.
+
+Measure with rectangles rather than offsetLeft:
+
+   delta = tabRect.left − containerRect.left − container.clientLeft
+   visible region is [0, container.clientWidth]
+
+
+offsetLeft is relative to the nearest positioned ancestor, so it silently breaks unless .tabs is position: relative. The rect-delta
+version has no such dependency, and it already accounts for the current scroll position. clientLeft subtracts the container's border
+so the comparison against clientWidth is exact.
+
+## Timing — the first real trap
+
+  useEffect  (WRONG)
+  render ─▶ DOM commit ─▶ ▓ PAINT ▓ ─▶ measure ─▶ set scrollLeft ─▶ ▓ PAINT ▓
+                              │                                        │
+                              └─ user sees the OLD scroll position ─────┘
+                                        = a visible flash
+
+  useLayoutEffect  (RIGHT)
+  render ─▶ DOM commit ─▶ measure ─▶ set scrollLeft ─▶ ▓ PAINT ▓
+                                                          │
+                                            user only ever sees the
+                                            correct position
+
+
+Layout effects run after React commits the DOM but before the browser paints, so the scroll correction lands in the same frame. This
+matters most on first mount: if activeTabId is the 20th tab, useEffect would paint tab 1 and then snap.
+
+## When to run it — the actual hard part
+
+This is the part I'd think about longest, because the failure mode is subtle: an over-eager implementation fights the user.
+
+If you scroll manually to inspect tab 12 while tab 1 is active, and any unrelated re-render re-asserts the scroll, the view yanks
+back to tab 1. That rules out the tempting "just run the check on every render, it's idempotent" approach.
+
+So the trigger set has to be deliberate:
+
+  trigger                              detected by        re-scroll?
+  ──────────────────────────────────────────────────────────────────
+  active tab changed                   activeId dep         YES
+  active tab moved (reorder / close    activeIndex dep      YES
+    of an earlier tab)
+  container resized (%, vw, responsive) ResizeObserver      YES*
+  user scrolled by hand                — nothing —          NO
+  unrelated parent re-render           — nothing —          NO
+  drag in progress                     isDragging guard     NO
+
+
+Two of those fall out of work already done:
+
+- **activeIndex** is already computed for free during the existing single forEachTab traversal — we added it for onActiveTabChange.
+It's a sound proxy for "the active tab's horizontal position changed": closing or reordering an earlier tab changes it, while changes
+after the active tab don't move it and correctly trigger nothing.
+- **isDragging** is already exposed by useDragReorder. Without this guard, dragging the active tab would trigger scroll corrections
+mid-drag and fight the pointer.
+
+The * on resize is a genuine judgement call: re-asserting on resize can also yank a user who has scrolled away. The compromise is to
+remember whether the active tab was visible before the resize and only re-assert if it was. Cheap to do, and I'd default to it.
+
+## Finding the active tab's DOM node
+
+The coordinator builds tabElements but holds no DOM references, so there are three ways in:
+
+  (a) query the container      container.querySelector('[aria-selected="true"]')
+      → zero plumbing. Tab.tsx UNTOUCHED. Reads one attribute Tab already
+        sets for accessibility, so it's the most stable thing about the markup.
+
+  (b) ref map in the coordinator    Map<id, HTMLElement>, ref callback per Tab
+      → adds a prop to Tab plus map lifecycle. Over-provisioned: we only ever
+        need the ONE active node, never arbitrary lookup by id.
+
+  (c) let each Tab scroll itself   useLayoutEffect inside Tab, keyed on `active`
+      → elegantly local, but scatters the concern and can't see reorder,
+        resize or drag state.
+
+
+I'd take (a). It keeps Tab.tsx untouched, matching how the last feature left it, and aria-selected is a semantic contract rather than
+a styling detail.
+
+## Where it lives
+
+A third focused hook alongside the existing two, which is the pattern the directory already follows:
+
+  ╔══ TabBar.tsx ════════════════════════════════════════════════╗
+  ║   containerRef ──────────────────────────┐                   ║
+  ║                                          │                   ║
+  ║   ┌────────────────┐ ┌────────────────┐ ┌▼─────────────────┐ ║
+  ║   │ useActiveTab   │ │ useDragReorder │ │ useScrollActive  │ ║
+  ║   │  which tab is  │ │  drag          │ │  IntoView        │ ║
+  ║   │  active        │ │  mechanics     │ │  keep it visible │ ║
+  ║   └───────┬────────┘ └───────┬────────┘ └──────▲───────────┘ ║
+  ║           │ activeId         │ isDragging      │              ║
+  ║           └──────────────────┴─────────────────┘              ║
+  ║                     + activeIndex (already derived)           ║
+  ╚══════════════════════════════════════════════════════════════╝
+                            │ ref
+                            ▼
+                   ┌─ Tabs.tsx ─────────────────┐
+                   │  the scroll viewport       │
+                   │  accepts ref + maxWidth    │
+                   └────────────────────────────┘
+
+
+ts
+useScrollActiveIntoView({
+    containerRef,
+    activeId,        // from useActiveTab
+    activeIndex,     // free from the render traversal
+    enabled: scrollActiveIntoView && !reorder.isDragging,
+    margin: 8,
+});
+
+
+## Files
+
+  types.ts                  + maxWidth?: number | string
+                            + scrollActiveIntoView?: boolean   (default true)
+  Tabs.tsx                  ~ accept ref (React 19: a plain prop)
+                            ~ apply maxWidth as an inline style
+  Tabs.css                  ~ permanent thin scrollbar, position:relative,
+                              scroll-behavior, drop the hover-overflow trick,
+                              min-height instead of fixed height
+  useScrollActiveIntoView.ts  + NEW — measure, decide, set scrollLeft
+  TabBar.tsx                ~ containerRef, wire the third hook
+  Tab.tsx                   UNTOUCHED
+  Tab.css                   ~ possibly flex-shrink:0 so tabs never compress
+  useActiveTab.ts           UNTOUCHED
+
+
+## Known limits I'd document rather than solve
+
+Content-width changes don't retrigger. If a tab before the active one gets wider — your dirty dot appending  •, or a late-loading font
+— offsetLeft shifts but neither activeIndex nor a container ResizeObserver notices. Fixable with a ResizeObserver on the content,
+but I'd wait for it to actually bother you.
+
+Edge auto-scroll during drag is a separate feature. Dragging a tab toward the container edge ought to scroll the strip. That's
+useDragReorder's business, not this hook's, and the README already says that hook deliberately isn't a general DnD framework.
+
+RTL. scrollLeft semantics differ in right-to-left writing modes. The rect-delta math mostly survives it, but I wouldn't claim RTL
+support without testing it.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+Two decisions I'd like your call on before implementing:
+
+1. Does maxWidth deserve a prop at all? The component already accepts className, so a caller can set max-width in their own CSS with
+zero component changes. A prop is more discoverable and self-documenting; CSS is less API surface. I lean toward adding the prop
+since you asked for it explicitly, but it's genuinely optional.
+
+2. Nearest or centred? I've sketched nearest — minimal movement, matching browser tab strips and inline: "nearest". Centring the
+active tab is a different feel, and more disruptive on every selection.
+
+Say go and I'll build it, including tests for the three scroll cases and the don't-fight-the-user behaviour.
+
+ ▸ Credits: 4.26 • Time: 3m 8s
+
+---
+
+2nd, there is a question if every cell should have its own editbox. I feel it very redundant. Why? In such spreadsheet, only one cell is allowed to be edited. Also, I don't think every cell should be equipped with an editbox, it's a bit too much and wastes memory. My idea is to let it to turn different layers, but stacked on each other and must sync each other, meaning if I pan around, all layers must move together, not one by one separately, otherwise it would break the feeling. 1st one is the cellular one UI with cells and rows (which is direct wrapper of HTML table). This is straightforward and just the feeling of it. The 2nd is the selection box. The 3rd is the editbox. Notice that if it fits inside the cell, fit inside it. Otherwise, if it overflows that cell, then expand it until the table width has come to an end. In that case, nonetheless, wrap the edit box. If it is pathologically too large and hit the bottom, it is allowed to be scrolled. Also, whenever panning the region, if I move the cell of being edited upwards, I leave more room for the editbox to grow, which takes as much space as possible for it to grow.
+
+
+3rd, there are multiple things as well
+
+---
+
+"Why React but no component libraries?"
+
+I took exactly one dependency for rendering and none for components, and the dividing line is a single question: does this dictate my
+data shape or my design? React dictates neither — it gives me reconciliation and a component model and asks for nothing back. A
+component library dictates at least one, usually both.
+
+Concretely, every grid library I looked at requires rows: T[] in its public API. You materialize your data into their shape and hand
+it over. My components require operations instead: the tab bar takes a single-pass iterator, forEachTab(data, visit), and the grid
+takes random access, getCell(data, row, col). The data itself is an opaque generic. So they work directly over a tree, a linked list,
+or a remote source with no adapter layer — and the tab bar builds no projection array at all, which matters because indexed access
+over a linked list would be O(n²). The grid reads only the cells it renders, so cost scales with what's on screen rather than with
+the dataset. That's dependency inversion, and it's the one thing a library structurally cannot concede, because a fixed data shape is
+what its API is made of.
+
+I should address the obvious counter: headless libraries solve the styling half of this. TanStack Table ships zero markup and zero
+styles, and React Aria does the same for behaviour. So "I didn't want their design taste" isn't a real argument — but the data
+contract still is, and for a bookkeeping app there's a licensing dimension too: AG Grid's advanced features are commercial, and
+Handsontable requires a paid licence for commercial use.
+
+The payoff showed up when I moved the grid from divs to a native <table>. I'd written 30 behaviour tests against the old markup,
+phrased only in ARIA roles and user actions, and all 30 passed unchanged against the new elements. Swapping the entire DOM
+representation touched no orchestration code, because the host owns the data shape and the coordinator never knows which element
+anything is.
+
+Now the cost, because it wasn't free. My tab bar puts 33 tab stops on the page with 17 tabs and has no arrow-key navigation. The grid
+has cells carrying a roving tabIndex that nothing ever focuses, no aria-rowcount/aria-colcount, and controlled selection with no
+write half. React Aria would have given me correct ARIA and focus management on day one. I accepted that trade for control over the
+data contract and the interaction model, and every gap is written down in the module READMEs rather than waiting to be discovered. I'
+m carrying the maintenance burden deliberately: 276 tests, and I verified each one bites by sabotaging the implementation and
+checking that the right tests fail.
+
+Where would I take the dependency? A date picker, a rich-text editor, a charting library — standard widgets with a huge correctness
+surface and no design differentiation to protect. I built these two because the tab bar's data model and the grid's access pattern are
+the design.
+
+For the C++ version, same principle, different runtime. I'd keep React's declarative authoring model, because that's what makes UI
+code readable, but not its runtime strategy. Allocating a fresh tree every render and diffing it is allocation-heavy and pointer-
+chasing — close to the opposite of what you want when you care about cache behaviour. So I'd pair React-like authoring with fine-
+grained invalidation over flat, contiguous storage: touch only what changed. That tension between the authoring model and the
+reconciliation strategy is the interesting part of the problem.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+Thirty-second version, if they want it short:
+
+One dependency for rendering, none for components. React dictates neither my data shape nor my design; component libraries dictate
+both. Every grid library wants rows: T[] — mine takes operations over an opaque structure, so it works over a tree or a remote source
+and reads only what it renders. The cost was accessibility: my tab bar has no arrow-key navigation and too many tab stops, which
+React Aria would have handled. I took that trade for control over the data contract, and the gaps are documented rather than hidden.
+
+
+------------------
+
+> You're right about the architecture, but wrong about the current cost — and the real cost is worse than the one you're worried
+about. Here's what I measured before designing anything.
+
+## Correcting the premise first
+
+There is no per-cell editbox. Measured on a 50-cell grid: 0 editors before editing, 1 while editing. Cell renders
+editing ? <input> : <span>, so exactly one editor is ever mounted. So the memory concern doesn't apply — you're not paying for 50
+hidden inputs.
+
+But there is a real cost, and it's worse than memory. Every keystroke re-renders the entire grid:
+
+getCell calls for ONE keystroke:        100   (50 cells x 2 passes)
+getCell calls for TWO more keystrokes:  200
+
+
+The draft string lives in useEditing, which lives in the coordinator, so typing one character invalidates every cell. At 50 cells
+that's invisible; at 5,000 it's typing lag. That's the argument for extracting the editor — not allocation, but invalidation scope.
+Your instinct was right, your reason was slightly off.
+
+## The structural argument, which is the stronger one
+
+Your overflow requirement is impossible in the current design, and this is independent of performance. Measured parent chain:
+
+INPUT.cell__editor -> TD.cell -> TR.row -> TBODY -> TABLE -> DIV.grid
+
+
+An element inside a <td> is laid out by the table. It cannot exceed its column's width — the table algorithm owns that box. So "expand
+until the table width ends, then wrap, then scroll" cannot be built inside a <td> at all. The editor must leave the table's layout
+flow. That alone justifies the change.
+
+## Where I'd push back on your design
+
+You proposed three layers: cells, selection box, editbox. I'd argue for two, not three.
+
+Selection is currently an inset box-shadow on the <td> — it costs nothing, needs no synchronisation, and cannot drift out of
+alignment because it is the cell. Promoting it to a floating layer means it must be positioned, kept in sync while scrolling, and re-
+measured on every column resize. You'd be adding a synchronisation problem to solve a problem you don't have.
+
+The editor is different: it must escape the table box to satisfy your overflow rule. So it earns the layer; selection doesn't. Two
+layers — the table, plus one floating editor that exists only while editing.
+
+If you later want range selection (a rectangle over many cells), that genuinely does need its own layer, since it can't be expressed
+as per-cell shadows. That's the point to add layer three — when the requirement arrives.
+
+## On synchronised panning
+
+Your concern is exactly right, and there's a cheap way to get it. Don't position the editor against the viewport — position it inside
+the .grid scroll container, absolutely, in content coordinates. Then scrolling moves it automatically, because it's part of the
+scrolled content. No scroll listener, no per-frame updates, no drift — the same reason position: sticky already gives you frozen
+headers with no JavaScript.
+
+The alternative (fixed-position overlay plus a scroll handler subtracting scrollLeft/scrollTop) is what produces the lag you're
+describing. Avoid it.
+
+This requires .grid to become position: relative, which it currently isn't.
+
+## The growth rule needs a decision from you
+
+"Move the edited cell upwards to leave more room" — I want to check what you mean, because there are two readings:
+
+1. Passive: the editor grows downward until it hits the viewport bottom, then scrolls internally. If you happen to scroll the cell
+higher, more room exists and it grows further. The editor never moves the view.
+2. Active: activating the editor scrolls the grid to maximise room below the cell.
+
+I'd argue for (1). Option (2) means opening an editor moves the content under your pointer, which is the same class of "fighting the
+user" problem your tab bar deliberately avoids in useRevealActiveTab. Reading your phrasing — "*if I* move the cell upwards" — I
+think you mean (1), but confirm.
+
+## Sketch of the shape
+
+DIV.spreadsheet                        key handling, focus
+  DIV.grid            position: relative, overflow: auto   <- scroll container
+    TABLE.grid__table                  cells, selection, headers
+    DIV.grid__editor-layer  position: absolute, in CONTENT coords
+      TEXTAREA                         the single editor, only while editing
+
+
+Geometry comes from one getBoundingClientRect on the active cell at edit start, converted to content coordinates. Width:
+max(cellWidth, min(contentWidth - cellLeft, naturalWidth)). Height: grows with content, capped at viewportBottom - cellTop, then
+overflow-y: auto.
+
+## Two consequences you should know before I start
+
+25 existing tests locate the editor inside the cell (cell.querySelector("input")). They'd need rewriting to query the layer. That's
+mechanical, but it means the change isn't small — and it's exactly the kind of churn that hides regressions, so I'd want the
+behaviour assertions to stay identical and only the lookup to change.
+
+jsdom cannot verify any of the geometry. No layout engine, so widths, overflow and clamping would be tested the way the tab bar's
+scroll code is: by faking getBoundingClientRect around the real component. The arithmetic gets tested; the visual result does not.
+Given that two of my last three claims about "working" were wrong until you checked in a browser, you should expect to verify this
+one visually.
+
+Confirm the passive-growth reading and whether you accept two layers instead of three, and I'll build it.
+
+
+Basically I have no idea how this can be done otherwise. I am still considering this problem a while pondering. Because I think that deduplicating a edit box doesn't look the best idea??? First, I would not regard the tests, because they can be thrown away and rebuilt, tests are more like temporal stuff. But considering the main codebase, I could have one layer for actaul data and then layer above for selection box and also the textbox. Why? One reason is that the edit box and selection can only exist one. You can however NOT get into edit cell in two different cells, that should be impossible. Other idea is less memory footprint. And remember that selection marker should be unique and only be selected in one way. The selection marker however, can span a contigous range. In this case, bordering would be awkward otherwise. Another problem I encounter is that if I don't do this kind of layering, say I want to edit a cell that has grown pathologically. In this case, I would have to enlarge the edit box, while keeping the cell size if not committing. It's like the Excel behavior. Overflowing the cellwidth cause a wrap around, width remains static but one can see how the edit box grows vertically when I let the edit box grow. Also, say that I am trying to edit a pathologically large cell and doesn't fit in the viewport either horizontally or vertically. In this case, I have to overlay an edit box so that I can scroll and see, letting it take as much VISIBLE SPACE AS POSSIBLE, NOT PHYSICALLY! Using this approach, it is not farely possible, since I see how stubborn the cells are in terms of viewing. Consider these problems and help me decide before implementing and doing any features right now.
+
+In case you don't understand, here's a picture
+1        | 2        | 3         |
+---------+----------+-----------+
+aabbccdd | eeffgg   | hhjjkkll  |
+---------+----------+-----------+
+next 1   | next 2   | next 3    |
+---------+----------+-----------+
+
+when I have a short text on text edit box (_ points to next available character):
+1        | 2        | 3         |
+---------============-----------+
+aabbccdd = short_   = hhjjkkll  |
+---------============-----------+
+next 1   | next 2   | next 3    |
+---------+----------+-----------+
+
+now, when editing that the box grows pathologically large, I want this behavior (in row 1, cell 2), _ points to next available character:
+1        | 2        | 3         |
+---------============-----------+
+aabbccdd = very long= hhjjkkll  |
+---------= text I'm =-----------+
+next 1   = writing_ = next 3    |
+---------============-----------+
+
+> Let me settle the facts first, then give you a recommendation.
+
+## Your memory argument is wrong, but your conclusion is right
+
+Measured on a 50-cell grid: 0 editors in the DOM before editing, 1 while editing. Cell renders editing ? <input> : <span>, so there has
+never been a per-cell editbox. Drop that reason — it will not survive scrutiny.
+
+But typing costs this:
+
+getCell calls for ONE keystroke:  100   (50 cells x 2 render passes)
+
+
+The draft lives in the coordinator and is passed to every Cell, so each character invalidates the whole grid. Invisible at 50 cells,
+typing lag at 5,000. That is the performance argument, and it's stronger than allocation.
+
+## Your diagram contradicts what you said last message
+
+Last message: "expand it until the table width has come to an end." Your diagram: the editor stays exactly column 2's width and grows
+downward over the rows below.
+
+I'd take the diagram. It's one rule instead of two, it needs no logic deciding which columns to cover, and it matches Excel's wrap-
+text behaviour. It also means the editor's width comes free from the cell it's over. Confirm that's what you want, because it
+materially changes the work.
+
+(Excel does expand horizontally when wrapping is off. You could map that to multiline later — multiline grows down, single-line grows
+right. I'd not build both now.)
+
+## Three reasons that hold up
+
+1. Layout escape — this one is decisive. Measured parent chain today:
+
+INPUT.cell__editor -> TD.cell -> TR.row -> TBODY -> TABLE -> DIV.grid
+
+
+An element inside a <td> is sized by the table algorithm. It cannot exceed its cell, cannot overlay the rows below, and cannot be
+given a height independent of the row. Your "as much visible space as possible, not physically" requirement is unbuildable in the
+current structure — that's why the cells feel stubborn. Nothing else in this discussion is as load-bearing as this.
+
+2. Invalidation scope — the 100-calls-per-keystroke number above.
+
+3. Range selection borders — your argument, and I withdraw my objection. Last message I argued selection shouldn't get a layer
+because inset box-shadow costs nothing. That holds for a single cell; it collapses for a range. With border-collapse: collapse, a
+border between two cells is shared, so drawing a range outline via cell borders fights the collapsing algorithm, and per-cell inset
+shadows would draw lines on the range's interior edges too. Doing it per-cell means computing, for every cell, whether it sits on the
+range's top/right/bottom/left edge. One absolutely-positioned rectangle with one border is genuinely simpler. (That's reasoning, not
+measurement — jsdom has no layout engine, so I can't demonstrate border collapsing in a test.)
+
+So: three layers, as you proposed.
+
+## Shape
+
+DIV.spreadsheet                                    keys, focus
+  DIV.grid          position: relative; overflow: auto      scroll container
+    TABLE.grid__table                              cells, headers  (layer 1)
+    DIV.grid__selection-layer   position: absolute          (layer 2)
+    DIV.grid__editor-layer      position: absolute          (layer 3)
+
+
+Panning syncs for free if both overlays are positioned in content coordinates inside .grid — they're part of the scrolled content, so
+scrolling moves them with no listener and no drift. Same mechanism that already gives you sticky headers without JavaScript. The
+alternative — a fixed overlay plus a scroll handler subtracting scrollLeft — is exactly what produces the lag you're worried about.
+
+.grid is not position: relative today; it would need to be.
+
+## Two problems this creates
+
+Relayout, not panning, is the hard sync. Column widths come from table-layout: auto, so the browser decides them. Overlays must
+measure the cell (getBoundingClientRect), not compute it. Panning is free, but a column width changing — new data, a late font, a
+window resize — moves the cell without any scroll event. That needs a ResizeObserver on the table while editing. This is the one
+genuinely new moving part.
+
+The growth cap does need a scroll listener. "As much visible space as possible" means
+maxHeight = (scrollTop + clientHeight) - cellTop. That depends on scroll position, so scrolling the cell upward has to recompute it.
+Cheap — one listener, only while editing, updating one CSS value — but it's not zero, and it's the price of that specific
+requirement. Capping at the content bottom instead would need no listener but wouldn't do what you asked.
+
+Stacking needs deciding: the editor should be above cells but below the sticky header, or it will float over the frozen row when you
+scroll. Headers are currently z-index 2 and the corner 3; they'd move above the overlays.
+
+## The payoff you haven't mentioned
+
+Cell gets smaller. If the editor overlay is opaque and covers the cell, the cell doesn't need to know an edit is happening at all — it
+loses editing, draft, onDraftChange, onCommitEdit and onCancelEdit, keeping only onBeginEdit for double-click. It goes back to pure
+display plus event translation, and typing then touches nothing inside the table. That's your coordinator-versus-UI principle landing
+properly, and it's why I think this is the right change rather than merely a possible one.
+
+## How I'd sequence it
+
+Editor layer first, selection layer second. The editor layer is forced by a requirement you have now; the selection layer is forced
+by range selection, which you don't have yet. Doing them together means two sets of geometry bugs at once, and geometry is the part
+jsdom cannot check.
+
+On tests: I'll keep every behavioural assertion and change only how the editor is located. Those 25 tests are what caught both
+multiline bugs, and the Alt+Enter and focus-restoration paths all run through the editor — I'd rather not rebuild that safety net
+from scratch mid-refactor.
+
+Given that I twice told you multiline worked when it didn't, expect to verify this in the browser rather than trusting a green suite.
+Geometry is exactly where jsdom is blind.
+
+To proceed I need: static width confirmed (per your diagram), and agreement to do the editor layer alone first.
+
+ ▸ Credits: 4.20 • Time: 1m 48s
+
+And remember that 36% λ > It would be good to proceed using static width, but still one problem: how many layers do I need? Also, edit layer has to react when I pan around. For instance (doing the:
+
+Viewport
++===============================================+
+= 1       | 2                      | 3          =           |
+=---------+------------------------+------------=-----------+
+= one     | two (with more text)...| long text t=hat not fit|
+=---------+------------------------+------------=-----------+
+
+Now, when I try to edit 3:
++===============================================+
+= 1       | 2                      | 3          =           |
+=---------+------------------------*************=-----------+
+= one     | two (with more text)...* long text *=hat not fit|
+=---------+------------------------* that not  *=-----------+
+= ...     | ...                    * fit       *=
+= ...     | ...                    *************=
+
+And then say I'm panning right:
+       +==============================================+
+  1    =  | 2                      | 3                =     |
+ ------=--+------------------------*************-----------+
+  one  =  | two (with more text)...* long text *=hat not fit|
+ ------=--+------------------------* that not  *=-----------+
+  ...  =  | ...                    * fit       *=
+  ...  =  | ...                    *************=
+
+^C
+
+
+36% λ > It would be good to proceed using static width, but still one problem: how many layers do I need? Also, edit layer has to react when I pan around. Note how = denote border of viewport and * as border for edit box. Notice how they are overlayed on each other!:
+
+Viewport
++===============================================+
+= 1       | 2                      | 3          =           |
+=---------+------------------------+------------=-----------+
+= one     | two (with more text)...| long text t=hat not fit|
+=---------+------------------------+------------=-----------+
+
+Now, when I try to edit 3:
++===============================================+
+= 1       | 2                      | 3          =           |
+=---------+------------------------*************=-----------+
+= one     | two (with more text)...* long text *=hat not fit|
+=---------+------------------------* that not  *=-----------+
+= ...     | ...                    * fit       *=
+= ...     | ...                    *************=
+
+And then say I'm panning right:
+       +==============================================+
+  1    =  | 2                      | 3                =     |
+ ------=--+------------------------*******************=-----+
+  one  =  | two (with more text)...* long text that  *=t fit|
+ ------=--+------------------------* not fit         *=-----+
+  ...  =  | ...                    *******************=
+
+> Let me get the exact stacking facts before answering, since they constrain the design.
+I will run the following command: echo "=== z-index / position in play today ==="
+grep -n "z-index\|position:" src/views/spreadsheet-view/*.css | tr -d '\r'
+echo
+echo "=== does .grid establish a containing block? ==="
+sed -n '/^\.grid {/,/^}/p' src/views/spreadsheet-view/Grid.css | tr -d '\r' (in ../../mnt/c/Users/EWANBIN/OneDrive - Ericsson/misc/backup2/Sanders.Wang/github/world_knowledge_structure/BookkeepingWebapp) (using tool: shell)
+Purpose: Get exact z-index and position values
+
+=== z-index / position in play today ===
+src/views/spreadsheet-view/ColumnHeader.css:4: * `position: sticky` is resolved against the scroll viewport in `Grid.css`, which
+src/views/spreadsheet-view/ColumnHeader.css:16:    position: sticky;
+src/views/spreadsheet-view/ColumnHeader.css:18:    z-index: 2;
+src/views/spreadsheet-view/ColumnHeader.css:23: * (z-index 1) and the header row (2) it overlaps.
+src/views/spreadsheet-view/ColumnHeader.css:31:    position: sticky;
+src/views/spreadsheet-view/ColumnHeader.css:34:    z-index: 3;
+src/views/spreadsheet-view/Grid.css:12: * This split is also what makes the frozen header work: `position: sticky` on a
+src/views/spreadsheet-view/Row.css:13: * `.grid`). z-index 1 puts it above ordinary cells but below the header row (2)
+src/views/spreadsheet-view/Row.css:27:    position: sticky;
+src/views/spreadsheet-view/Row.css:29:    z-index: 1;
+
+=== does .grid establish a containing block? ===
+.grid {
+    display: inline-block;
+    overflow: auto;
+    max-width: 100%;
+    max-height: 480px;
+    border: 1px solid #c0c0c0;
+    background-color: #ffffff;
+}
+ - Completed in 0.52s
+
+> Your diagrams change one thing I had wrong, so let me correct that first — it affects the answer.
+
+## The width rule is not what I confirmed last message
+
+Counting your ASCII: the edit box is 13 characters wide in diagram 2, and 19 in diagram 3 after panning right. The text re-wraps from
+long text to long text that. So the editor is not simply "the column's width" — it's the column's width clamped to the visible region
+:
+
+width = min(cellRight, viewportRight) - cellLeft
+
+
+When the cell fits, that's the cell width. When the cell runs past the viewport edge, it's the visible part. That's your "as much
+VISIBLE SPACE AS POSSIBLE, NOT PHYSICALLY" from earlier — I read it as vertical-only, but you meant both axes. "Static" then means
+only "it never expands across neighbouring columns", which your diagram confirms: the box stays inside column 3 and grows downward
+over the rows below.
+
+## How many layers: three visually, two structurally
+
+That distinction is the whole answer to your synchronisation worry.
+
+DIV.grid                      position: relative; overflow: auto    <- scroll container
+  TABLE.grid__table           cells, rows, headers                  <- layer 1
+  DIV.grid__overlay           position: absolute; content coords
+    DIV.selection-box                                               <- layer 2
+    TEXTAREA.editor                                                 <- layer 3
+
+
+Three z-ordered things, but one overlay container, not two. That matters for exactly the reason you raised ("all layers must move
+together, not one by one"): siblings in one positioned container share a single coordinate origin, so they cannot drift apart. Two
+separate containers means two places that must independently agree about where content starts — and that's where "one by one" drift
+comes from. One container makes the sync structural rather than something code has to maintain.
+
+Inside it, selection and editor stay separate elements because their geometry rules differ: selection spans a contiguous range and
+needs no clamping; the editor covers one cell and is clamped to the viewport.
+
+## Panning: position is free, size is not
+
+This is the part worth being precise about, because it's half free and half not.
+
+Position syncs for free. Both overlays live inside the scroll container and are positioned in content coordinates, so they're part of
+the scrolled content. Scrolling moves them with zero JavaScript, no listener, no per-frame update, no drift — the same mechanism that
+already gives you sticky headers.
+
+Size does not. Your diagrams require the width to change as panning reveals more of the cell, and that width depends on scrollLeft:
+
+visibleWidth = (scrollLeft + clientWidth) - cellLeft
+maxHeight    = (scrollTop + clientHeight) - cellTop
+
+
+Both are scroll-dependent, so while editing there's one scroll listener recomputing two CSS values. Cheap — one listener, only during
+an edit, writing width and max-height — but not free, and I'd rather state it than imply CSS handles everything.
+
+I considered the alternative: put the overlay in viewport coordinates so clamping becomes pure CSS. Rejected it — then panning has to
+move the editor every frame, and a position error is far more visible than a size error. Content coordinates plus a size listener is
+the better trade.
+
+A third sync that isn't panning at all: column widths come from table-layout: auto, so the browser decides them. The overlays must
+measure the cell, never compute it. A column width changing — new data, a late font, a window resize — moves the cell with no scroll
+event, so a ResizeObserver on the table is needed while editing. This is the genuinely new moving part, and it's easy to forget
+because it isn't panning.
+
+## Two things you need to decide
+
+What happens when the cell's left edge scrolls off-screen? Your diagrams only pan far enough that column 3's left edge stays visible.
+Pan further and either (a) the editor's left edge sticks to the viewport edge and it stops tracking the cell, or (b) it scrolls out
+of view with the cell. I'd pick (b): it keeps the editor anchored to what it's editing, and (a) means the box detaches from its cell,
+which reads as a bug.
+
+Should the editor pass under the sticky header, or over it? Headers are z-index: 2, corner 3, row gutter 1 today. If you scroll down
+while editing, the edited cell moves up toward the header. I'd put the overlay at z-index: 1 so headers stay authoritative and the
+editor slides under them. Since the editor is always inside its own column it can never overlap the row gutter, so sharing z-index: 1
+with the gutter is safe — and where equal values meet, DOM order favours the overlay anyway. No renumbering needed.
+
+.grid also has to gain position: relative; it has none today.
+
+## The payoff, restated
+
+Cell gets smaller, not bigger. Once an opaque editor overlays the cell, the cell no longer needs to know editing exists — it loses
+editing, draft, onDraftChange, onCommitEdit, onCancelEdit, keeping only onBeginEdit for double-click. Typing then touches nothing
+inside the table, which kills the 100-getCell-calls-per-keystroke broadcast as a side effect rather than as a separate optimisation.
+
+Confirm the two decisions above and I'll build the editor layer alone first — the selection layer isn't forced until you add range
+selection, and doing both at once means debugging two sets of geometry simultaneously, which is precisely where jsdom can't help.
+
+ ▸ Credits: 5.88 • Time: 3m 1s
+
+36% λ > I can understand that, and that's what I would like. Now the cell doesn't handle much responsibilities, which is what I would think of in terms of separation of concerns. However, another problem raises is how many layers do I need? Also, in previous design, does every keystroke really repaint the UI??? And if I layer it, how often will repainting be, explain it to me, since I don't have
+very much idea though
+
+> Three questions. The middle one I can answer with measurements; the third needs a distinction that matters.
+
+## 1. How many layers
+
+Three z-ordered things, two DOM containers:
+
+DIV.grid                    position: relative; overflow: auto
+  TABLE.grid__table         cells, rows, headers          <- layer 1
+  DIV.grid__overlay         position: absolute            <- ONE container
+    DIV.selection-box                                     <- layer 2
+    TEXTAREA.editor                                       <- layer 3
+
+
+Not three containers. Siblings inside one positioned container share a single coordinate origin, so selection and editor cannot drift
+apart — that's your "must move together" requirement satisfied structurally, not by code that has to keep them agreeing. Two
+containers would mean two places independently deciding where content starts, which is exactly how "one by one" drift happens.
+
+## 2. Does every keystroke really repaint? Measured, yes — but "re-render" not "repaint"
+
+On a 50-cell grid, typing one character:
+
+getCell calls for ONE keystroke:        100    (50 cells x 2 passes)
+getCell calls for TWO more keystrokes:  200
+
+
+Every cell's getCell runs on every keystroke. The reason is a straight line through your code: the draft string lives in useEditing
+inside the coordinator, SpreadsheetView re-runs when it changes, and its render loop calls getCell for all 50 cells and rebuilds all
+50 <Cell> elements.
+
+Note it's 2 passes, not 1 — one for onChange updating the draft, one more from the coordinator's own re-render path. So the multiplier
+is worse than the cell count suggests.
+
+## 3. Where repainting actually happens — the distinction that matters
+
+Three separate stages, and only the last is real repainting:
+
+React re-render — your getCell runs, <Cell> elements are recreated as JavaScript objects. This is the 100 calls. Pure JS, no DOM
+touched yet.
+
+DOM mutation — React diffs old against new. Today the cells' output is identical between keystrokes (same value, same class, same
+attributes), so React writes almost nothing. The 100 calls produce nearly zero DOM changes.
+
+Browser layout and paint — only for what actually changed in the DOM.
+
+So today's cost is stage 1: wasted JavaScript, not wasted pixels. That's why 50 cells feels instant — you're throwing away work the
+diff then discards. At 5,000 cells it becomes typing lag, because stage 1 scales with cell count while the useful work stays
+constant.
+
+One caveat: this depends on getCell being cheap. Your demo's is a switch returning a fresh object — fine. If someone's getCell
+formatted currency or hit a cache, 5,000 calls per keystroke would hurt immediately. The contract says "expected O(1)", and this is
+why that matters.
+
+## What layering changes
+
+Once the editor is an overlay sibling of the table, the draft no longer flows into Cell. Cell loses editing, draft, onDraftChange,
+onCommitEdit and onCancelEdit — keeping only onBeginEdit. Then:
+
+| | today | with the overlay |
+|---|---|---|
+| getCell calls per keystroke | 100 | 0 |
+| React re-renders per keystroke | whole grid | the editor only |
+| DOM writes per keystroke | ~0 (diff absorbs it) | 1 (the textarea) |
+| scales with cell count? | yes | no |
+
+Typing becomes O(1) in grid size instead of O(cells). And it's not an optimisation you bolt on — it falls out of the editor no longer
+living inside the table.
+
+Honest cost on the other side. You trade per-keystroke work for per-scroll work. Your diagrams need the editor's width to track the
+visible region, and that depends on scrollLeft, so while editing there's one scroll listener writing two CSS values (width,
+max-height). Scrolling position stays free — the overlay is inside the scrolled content, so it moves with no JavaScript, same as your
+sticky headers.
+
+Net: keystrokes go from O(cells) to O(1); scrolling-while-editing goes from 0 to O(1). Good trade, but not free, and only while an
+edit is open.
+
+Two decisions still open from my last message, and I don't want to guess:
+
+- When the cell's left edge scrolls off-screen entirely, does the editor scroll away with the cell, or stick to the viewport edge? I'
+d pick scroll-away — a box detached from its cell reads as a bug.
+- Editor under the sticky header, or over it? I'd pick under, so headers stay authoritative.
+
+ ▸ Credits: 2.83 • Time: 24s
+
+36% λ > I thought the architecture was one layer stacked over the other one! But what would the structure look like??? Also, why does current trigger re-rendering on every keystroke??? And could the problem be mitigated when using layers??? I have no idea
+
+> Yes — they are stacked on each other visually. My "two containers" phrasing was confusing. Stacking is about what you see; the DOM
+is about parent/child. Let me draw both.
+
+## The structure
+
+Today — the editor is inside a table cell:
+
+DIV.spreadsheet
+  DIV.grid                          overflow: auto      <- scrolls
+    TABLE.grid__table
+      TBODY
+        TR.row
+          TD.cell                                       <- the table owns this box
+            INPUT.cell__editor                          <- trapped inside it
+
+
+Proposed — the editor is a sibling of the table:
+
+DIV.spreadsheet
+  DIV.grid                position: relative; overflow: auto
+    TABLE.grid__table                                   <- layer 1 (cells)
+      TBODY > TR > TD.cell                              <- no editor in here
+    DIV.grid__overlay     position: absolute            <- one positioned container
+      DIV.selection-box                                 <- layer 2
+      TEXTAREA.editor                                   <- layer 3
+
+
+Side view of what you see:
+
+        layer 3   TEXTAREA          <- on top
+        layer 2   selection box
+        layer 1   TABLE (cells)     <- underneath
+        ---------------------------
+                  DIV.grid (scrolls all three together)
+
+
+So: three stacked layers, yes. But layers 2 and 3 are siblings in one positioned container, not nested boxes. That's deliberate —
+siblings share one coordinate origin, so the selection box and the editor cannot drift apart from each other. Two separate containers
+would mean two places independently deciding where content starts, which is how "one moves without the other" happens.
+
+And all three sit inside .grid, which is the thing that scrolls — so panning moves all three together for free.
+
+## Why every keystroke re-renders now
+
+Follow the draft string. It's one straight line:
+
+you type "x"
+      |
+      v
+INPUT onChange  ->  onDraftChange("x")
+      |
+      v
+useEditing setDraft("x")            <- state lives in the COORDINATOR
+      |
+      v
+SpreadsheetView re-runs             <- because its state changed
+      |
+      v
+for every row, for every col:  getCell(data, row, col)   <- all 50 cells
+                               <Cell ... draft={draft} />
+
+
+The cause is the last line. Every <Cell> receives draft as a prop, because any cell might be the one being edited. So the draft is
+broadcast to all 50, and React must re-run the whole loop to deliver it. Measured: 100 getCell calls per keystroke (50 cells × 2
+passes).
+
+The important nuance: this is wasted JavaScript, not wasted pixels. The 49 non-editing cells produce identical output, so React's diff
+writes nothing to the DOM and the browser repaints almost nothing. That's why 50 cells feels instant. At 5,000 cells the JS cost
+scales while the useful work stays fixed — that's when you feel typing lag.
+
+## Why layers fix it
+
+The fix isn't an optimisation, it's a consequence. Move the editor out of the table and draft no longer has any reason to reach Cell:
+
+you type "x"
+      |
+      v
+TEXTAREA onChange  ->  setDraft("x")
+      |
+      v
+the OVERLAY re-renders              <- one element
+      |
+      v
+the TABLE is untouched              <- getCell never runs
+
+
+Cell stops needing draft, editing, onDraftChange, onCommitEdit and onCancelEdit — it keeps only onBeginEdit for double-click. Nothing
+about typing flows through the table anymore.
+
+| per keystroke | today | with layers |
+|---|---|---|
+| getCell calls | 100 | 0 |
+| components re-rendered | all 50 cells | the editor |
+| scales with grid size? | yes | no |
+
+Typing becomes O(1) in grid size instead of O(cells).
+
+The cost you take on instead: your diagrams need the editor's width to track the visible region, and that depends on scrollLeft. So
+while an edit is open there's one scroll listener writing two CSS values. Scroll position stays free (the overlay is inside the
+scrolled content); only the size needs recomputing. Keystrokes go O(cells) → O(1); scrolling-while-editing goes 0 → O(1).
+
+Two decisions still open before I build:
+
+- When the cell scrolls fully off-screen, does the editor scroll away with it, or stick to the viewport edge? I'd say scroll away — a
+box detached from its cell reads as broken.
+- Editor under or over the sticky header? I'd say under, so the frozen header stays authoritative.
+
+ ▸ Credits: 1.91 • Time: 31s
+
+36% λ > Oh, there are still 2 problems left, I almost missed it! Now, if cells scrolls out of view, it should not be displayed. one stress case is that if I have only size of one character, it must be displayed, either horizontally or vertically. Only when there is absolutely zero characters left for it to be displayed, then the editor overlay box cannot be displayed. However, this is when user pan away from the cell. But if the user pan towards the cell where the cell part shows up, then it may appear. (hard to explain here, but more like excel-behavior)
+Also, I don't really understand what meaning editor under or over the sticky header???
+
+> Both are good catches. The first one has a pleasant answer: you get it for free.
+
+## 1. Clipping as you pan away
+
+You don't need any code for this. It falls out of where the overlay lives.
+
+.grid is the scroll container (overflow: auto) and will be the overlay's containing block (position: relative). When both are true,
+the browser clips the absolutely-positioned overlay to .grid's box. So:
+
+pan away  ->  less and less of the editor is drawn
+           ->  one character's worth left, one character shows
+           ->  zero left, nothing shows
+pan back  ->  it reappears, progressively
+
+
+That's the browser's own clipping, not logic you maintain. It's continuous by nature, so "as long as one character fits, show it"
+needs no threshold and no special case — there's nothing to get wrong.
+
+The one thing this does depend on: the overlay must be a child of .grid, not of .spreadsheet. If it sat outside the scroll container
+it would neither scroll nor clip, and you'd be writing all of this by hand.
+
+The sub-decision inside this. My width rule clamps against the right edge: width = min(cellRight, viewportRight) - cellLeft. Should it
+also clamp against the left edge when you pan past the cell?
+
+I'd say no. If you clamp the left too, the box re-anchors and the text rewraps while you pan — the wrapping changes under your eyes as
+you scroll, which reads as instability. If you clamp only the right, then panning right just clips the box's left side: the text
+stays wrapped exactly as it was, and you see progressively less of it. Panning left still rewraps, which is the transition your own
+diagrams show and want.
+
+So: rewrap when the available width changes, clip when you're simply scrolling past. Different causes, different responses.
+
+## 2. What "under or over the sticky header" means
+
+Your header row is position: sticky; top: 0, so it stays pinned at the top of the viewport while body rows scroll underneath it. Now
+suppose you're editing a cell in row 5 and you scroll down. Row 5 travels upward and the editor travels with it — and eventually they
+arrive where the header is sitting. Two possible outcomes:
+
+EDITOR OVER THE HEADER (higher z-index)
++=========================================+
+= *********************** | 3            =   <- the box has covered
+= * long text that not  * |--------------=      "1 | 2", the column
+= * fit                 * | ...          =      headers are gone
+= *********************** |--------------=
+
+EDITOR UNDER THE HEADER (lower z-index)
++=========================================+
+= 1        | 2            | 3            =   <- headers stay put
+=----------+--------------+--------------=
+= * fit    * | ...        | ...          =   <- box slid behind them,
+=----------+--------------+--------------=      only its lower part shows
+
+
+Current values: header row z-index: 2, corner 3, row gutter 1.
+
+I'd put the overlay at z-index: 1 — under. The header is a fixed landmark telling you which column you're in; an edit box painting
+over it looks like a rendering fault. And since the editor is always inside its own column, it can never reach the row gutter, so
+sharing z-index: 1 with the gutter is harmless. No renumbering.
+
+That was the last open decision. Unless you disagree on either point, I have what I need to build the editor layer.
+
+ ▸ Credits: 3.51 • Time: 1m 2s
+
+36% λ > For the 2nd question, I choose editor over the header, which by the image looks like excel-behavior
+
+> Noted — editor over the header. That's your call and it's a coherent one: the box you're typing in is the thing you're looking at,
+so it wins. I can't verify Excel's exact behaviour from here, so I'll take your reading of it.
+
+Concretely that means the overlay sits above the corner cell too (z-index: 4, since header row is 2 and corner is 3). One consequence
+worth knowing: scrolling down far enough while editing will hide the column headers behind the box. That's inherent to the choice,
+not a bug.

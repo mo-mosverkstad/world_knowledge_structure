@@ -126,6 +126,32 @@ export interface SpreadsheetViewProps<TData> {
      */
     multiline?: boolean;
 
+    // ---- SIZING & OVERFLOW ---------------------------------------------
+    /**
+     * Maximum size of the scroll viewport. A `number` is taken as pixels
+     * (matching React's `style` convention); a `string` is passed through to CSS
+     * verbatim, so relative and computed units all work:
+     *
+     *   maxWidth={600}                        →  max-width: 600px
+     *   maxWidth="80%"                        →  max-width: 80%
+     *   maxHeight="60vh"                      →  max-height: 60vh
+     *   maxHeight="clamp(200px, 50vh, 700px)" →  as written
+     *
+     * Rows and columns stack up to that size; beyond it the grid scrolls.
+     *
+     * These bounds are not only cosmetic — the floating cell editor grows only
+     * as far as the VISIBLE region allows (see the size ladder in the README),
+     * so the viewport size decides where the editor stops widening and starts
+     * wrapping.
+     *
+     * A percentage resolves against the containing block, so the parent needs a
+     * definite size for `"80%"` to mean what you expect. Defaults:
+     * `maxWidth: "100%"` and `maxHeight: 480`.
+     */
+    maxWidth?: number | string;
+    /** See {@link SpreadsheetViewProps.maxWidth}. */
+    maxHeight?: number | string;
+
     // ---- SELECTION CONTROL ---------------------------------------------
     /**
      * Controlled active cell. When provided (including `null`), the component

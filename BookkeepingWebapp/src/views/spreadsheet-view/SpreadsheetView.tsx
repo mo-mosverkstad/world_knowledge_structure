@@ -1,9 +1,14 @@
-import { useRef, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode } from "react";
 import "./style.css";
 import { Grid } from "./Grid";
 import { Row } from "./Row";
 import { Cell } from "./Cell";
 import { ColumnHeader, CornerCell } from "./ColumnHeader";
+import { CellEditor } from "./CellEditor";
+import {
+    useEditorGeometry,
+    type ContentMetrics,
+} from "./useEditorGeometry";
 import { useSelection } from "./useSelection";
 import { useEditing } from "./useEditing";
 import { useReturnFocus } from "./useReturnFocus";
@@ -27,6 +32,9 @@ import {
  *                          hosts the inline editor.
  *   - `ColumnHeader`    — internal UI: one column-header cell, plus the corner
  *                          square above the row-number gutter.
+ *   - `CellEditor`      — internal UI: the single floating edit box, drawn OVER
+ *                          the table so it can grow past its cell.
+ *   - `useEditorGeometry` — measures where that box goes.
  *   - `useSelection`    — the "which cell is active" concern (controlled/
  *                          uncontrolled, click select, arrow-key move, clamp,
  *                          change notify). This is the seam for keeping logical
@@ -49,6 +57,8 @@ import {
  *                   rectangular region and pairs with virtualization later.
  *   3. mutate cb  — `onCellEdit`.
  *   4. behavior   — `onCellClick`, `onSelectionChange` (caller-defined).
+ *   5. sizing     — `maxWidth` / `maxHeight` bound the scroll viewport, and so
+ *                   also bound how far the floating editor may grow.
  *
  * NOTE: virtualization / a layout engine are intentionally NOT built yet. The
  * random-access `getCell` contract is shaped so a viewport can later ask for
@@ -66,6 +76,8 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
         onSelectionChange,
         editable = false,
         multiline = false,
+        maxWidth,
+        maxHeight,
         activeCell,
         defaultActiveCell,
         className,
@@ -94,6 +106,34 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
     // Enter, Escape and blur are all covered by the same three lines.
     const containerRef = useRef<HTMLDivElement>(null);
     useReturnFocus({ containerRef, isEditing: editing.isEditing });
+
+    // ---- Encapsulated concern: where the floating editor goes ---------
+    // The editor lives OUTSIDE the table (see `CellEditor`), so its placement
+    // has to be measured from the real cell rather than derived from props:
+    // column widths come from `table-layout: auto`, i.e. from the browser.
+    const scrollRef = useRef<HTMLDivElement>(null);
+    // What the draft currently wants. Reported by the editor, which is the only
+    // component that can measure its own text — a <textarea> cannot say how wide
+    // it would like to be, so the editor uses a hidden mirror element.
+    const [contentMetrics, setContentMetrics] =
+        useState<ContentMetrics | null>(null);
+    const editorGeometry = useEditorGeometry({
+        gridRef: scrollRef,
+        cell: editing.editingCell,
+        contentMetrics,
+    });
+
+    // Drop stale metrics when the edited cell changes. Without this the new
+    // editor would be sized from the PREVIOUS cell's content for one frame,
+    // which is visible as a flash at the wrong width.
+    const lastEditedRef = useRef<string | null>(null);
+    const editedKey = editing.editingCell
+        ? `${editing.editingCell.row}:${editing.editingCell.col}`
+        : null;
+    if (lastEditedRef.current !== editedKey) {
+        lastEditedRef.current = editedKey;
+        if (contentMetrics !== null) setContentMetrics(null);
+    }
 
     const isActive = (row: number, col: number) =>
         selection.activeCell?.row === row &&
@@ -166,15 +206,13 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
                     active={isActive(row, col)}
                     editing={isEditing(row, col)}
                     editable={cellEditable}
-                    draft={editing.draft}
+                    row={r}
+                    col={c}
                     onSelect={() => {
                         selection.select({ row: r, col: c });
                         onCellClick?.(r, c, data);
                     }}
                     onBeginEdit={() => beginEdit(r, c, cellEditable)}
-                    onDraftChange={editing.change}
-                    onCommitEdit={editing.commit}
-                    onCancelEdit={editing.cancel}
                 />,
             );
         }
@@ -187,6 +225,34 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
 
     // Keep the active cell within bounds if the grid shrank.
     selection.reconcile(rowCount, colCount);
+
+    // Stable identity so reporting metrics cannot itself trigger a re-measure
+    // loop. The editor calls this after each draft change.
+    const handleContentMetrics = useCallback((m: ContentMetrics) => {
+        setContentMetrics((prev) =>
+            prev &&
+            prev.naturalWidth === m.naturalWidth &&
+            prev.contentHeight === m.contentHeight
+                ? prev
+                : m,
+        );
+    }, []);
+
+    // ---- Presentation flags for the edited cell ------------------------
+    // Read from the descriptor of the cell being edited, so the floating editor
+    // wraps and aligns the way that cell does. One extra `getCell` call while an
+    // edit is open, not one per keystroke per cell.
+    let editingCellMultiline = multiline;
+    let editingCellAlign: "left" | "center" | "right" | undefined;
+    if (editing.editingCell) {
+        const d = getCell(
+            data,
+            editing.editingCell.row,
+            editing.editingCell.col,
+        );
+        editingCellMultiline = d.multiline ?? multiline;
+        editingCellAlign = d.align;
+    }
 
     // ---- Grid-level keyboard navigation -------------------------------
     // Arrow keys move the selection; Enter/F2 begin editing the active cell.
@@ -236,6 +302,28 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
                 className={className}
                 columnHeader={columnHeader}
                 columns={columns}
+                scrollRef={scrollRef}
+                maxWidth={maxWidth}
+                maxHeight={maxHeight}
+                overlay={
+                    // The floating layer. Rendered only while editing, so the
+                    // grid pays nothing for it at rest.
+                    editing.editingCell && editorGeometry ? (
+                        <CellEditor
+                            geometry={editorGeometry}
+                            // `key` remounts the editor when the edited cell
+                            // changes, so its internal draft is reseeded
+                            // instead of leaking from the previous cell.
+                            key={`${editing.editingCell.row}:${editing.editingCell.col}`}
+                            initialDraft={editing.initialDraft}
+                            multiline={editingCellMultiline}
+                            align={editingCellAlign}
+                            onContentMetrics={handleContentMetrics}
+                            onCommitEdit={editing.commit}
+                            onCancelEdit={editing.cancel}
+                        />
+                    ) : undefined
+                }
             >
                 {rows}
             </Grid>

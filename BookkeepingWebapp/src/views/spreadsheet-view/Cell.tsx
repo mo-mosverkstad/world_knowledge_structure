@@ -13,8 +13,9 @@ import "./Cell.css";
  *   editor input                ->  onDraftChange
  *   editor Enter / blur         ->  onCommitEdit
  *   editor Escape               ->  onCancelEdit
+ *   editor Alt+Enter            ->  a line break, handled entirely in here
  *
- * When `editing` is true it renders an <input>; otherwise it renders the value.
+ * When `editing` is true it renders an editor; otherwise it renders the value.
  * It knows nothing about the data model.
  *
  * The element is a native `<td>`, so column alignment and width come from the
@@ -23,12 +24,29 @@ import "./Cell.css";
  * role `cell` — verified, not assumed — and `cell` is the static-table role,
  * while `gridcell` is the interactive one. The element gives us layout; the role
  * still has to state the interaction contract.
+ *
+ * MULTILINE
+ * ---------
+ * `multiline` switches the editor element from `<input>` to `<textarea>`. That is
+ * not cosmetic: an `<input>` *silently discards* newlines. Assigning `"a\nb"` to
+ * one yields `"ab"` (measured), so no key handling could make it hold a line
+ * break. Only the element choice can.
+ *
+ * Line breaks are inserted with `setRangeText`, not by splicing the draft string
+ * by hand. Hand-splicing loses the caret: the browser has already applied the new
+ * value and put the caret at the end, so typing a break in the middle of a word
+ * jumps to the end of the text (measured: caret 12 instead of 6 in
+ * `"hello| world"`). `setRangeText` performs the edit *and* moves the caret in one
+ * step, and because the resulting DOM value is then pushed into state unchanged,
+ * React has nothing to rewrite and the caret survives the re-render.
  */
 export interface CellProps {
     value: ReactNode;
     active: boolean;
     editing: boolean;
     editable: boolean;
+    /** Whether this cell's value may contain line breaks. */
+    multiline?: boolean;
     align?: "left" | "center" | "right";
     className?: string;
     tooltip?: string;
@@ -43,12 +61,41 @@ export interface CellProps {
     onCancelEdit: () => void;
 }
 
+/**
+ * Insert a line break at the caret of a text control, then report the resulting
+ * value. Returns the new value so the caller can keep controlled state in sync.
+ *
+ * `setRangeText` is used deliberately over `value.slice(...) + "\n" + ...`:
+ * hand-splicing loses the caret, because the browser has already applied the
+ * value and put the caret at the end (measured: caret 12 instead of 6 in
+ * `"hello| world"`). `setRangeText` edits the text and moves the caret in one
+ * step, keeping the DOM the single source of truth for both.
+ *
+ * COLLAPSE FIRST, DO NOT REPLACE
+ * ------------------------------
+ * A selection is collapsed to its END before inserting, rather than being
+ * overwritten by the break. That matters because the editor opens with its whole
+ * value SELECTED (`.select()`, so typing replaces it, as a grid should). With a
+ * replacing insert, the very first Alt+Enter destroyed the entire cell value and
+ * left just a newline — the common case, and silent data loss.
+ *
+ * Collapsing is also the safer reading of the gesture: Alt+Enter asks to ADD a
+ * line, never to delete text. Deleting has its own keys.
+ */
+function insertLineBreak(el: HTMLTextAreaElement): string {
+    const end = el.selectionEnd ?? el.value.length;
+    // start === end: a pure insertion at the selection's end, replacing nothing.
+    el.setRangeText("\n", end, end, "end");
+    return el.value;
+}
+
 export function Cell(props: CellProps) {
     const {
         value,
         active,
         editing,
         editable,
+        multiline = false,
         align,
         className,
         tooltip,
@@ -60,22 +107,73 @@ export function Cell(props: CellProps) {
         onCancelEdit,
     } = props;
 
-    const inputRef = useRef<HTMLInputElement>(null);
+    // One ref for either element; only one is ever mounted.
+    const editorRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
 
     // Focus + select the editor as soon as editing begins.
     useEffect(() => {
-        if (editing && inputRef.current) {
-            inputRef.current.focus();
-            inputRef.current.select();
+        if (editing && editorRef.current) {
+            editorRef.current.focus();
+            editorRef.current.select();
         }
     }, [editing]);
 
     const classes = ["cell"];
     if (active) classes.push("cell--active");
     if (editing) classes.push("cell--editing");
+    if (multiline) classes.push("cell--multiline");
     if (className) classes.push(className);
 
     const style = align ? { textAlign: align } : undefined;
+
+    /**
+     * Shared key handling for both editor elements.
+     *
+     * Order matters: Alt+Enter is checked before plain Enter, otherwise the
+     * commit branch would swallow it and a line break could never be typed.
+     */
+    const onEditorKeyDown = (
+        e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        if (e.key === "Enter" && e.altKey) {
+            // Never a commit. In a single-line cell it is simply inert, so a
+            // stray newline cannot reach a value the caller parses as a number.
+            e.preventDefault();
+            if (multiline) {
+                onDraftChange(
+                    insertLineBreak(e.currentTarget as HTMLTextAreaElement),
+                );
+            }
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            onCommitEdit();
+        } else if (e.key === "Escape") {
+            e.preventDefault();
+            onCancelEdit();
+        }
+        // Keep keystrokes inside the editor.
+        e.stopPropagation();
+    };
+
+    const editorProps = {
+        className: "cell__editor",
+        value: draft,
+        onChange: (
+            e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+        ) => onDraftChange(e.target.value),
+        onBlur: (
+            e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+        ) => {
+            // A blur is only a commit when the user moved focus to ANOTHER
+            // element. Focus leaving the document entirely is not an edit
+            // decision, and on Windows/Linux pressing Alt hands focus to the
+            // browser menu bar — so Alt+Enter used to blur the editor and
+            // commit the draft, making a line break impossible to type.
+            if (e.relatedTarget === null) return;
+            onCommitEdit();
+        },
+        onKeyDown: onEditorKeyDown,
+    };
 
     return (
         <td
@@ -93,24 +191,17 @@ export function Cell(props: CellProps) {
             }}
         >
             {editing ? (
-                <input
-                    ref={inputRef}
-                    className="cell__editor"
-                    value={draft}
-                    onChange={(e) => onDraftChange(e.target.value)}
-                    onBlur={() => onCommitEdit()}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            e.preventDefault();
-                            onCommitEdit();
-                        } else if (e.key === "Escape") {
-                            e.preventDefault();
-                            onCancelEdit();
-                        }
-                        // Keep keystrokes inside the editor.
-                        e.stopPropagation();
-                    }}
-                />
+                multiline ? (
+                    <textarea
+                        ref={editorRef}
+                        // Grows with the draft instead of scrolling a fixed box,
+                        // so the whole value stays visible while editing.
+                        rows={Math.min(draft.split("\n").length, 8)}
+                        {...editorProps}
+                    />
+                ) : (
+                    <input ref={editorRef} {...editorProps} />
+                )
             ) : (
                 <span className="cell__value">{value}</span>
             )}

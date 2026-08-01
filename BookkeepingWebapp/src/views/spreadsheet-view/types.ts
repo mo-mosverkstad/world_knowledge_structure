@@ -35,6 +35,15 @@ export interface CellDescriptor {
     editable?: boolean;
     /** Horizontal alignment hint (e.g. numbers right-aligned). */
     align?: "left" | "center" | "right";
+    /**
+     * Per-cell override of the view's `multiline` prop. When omitted, the
+     * view's `multiline` decides.
+     *
+     * This is a per-COLUMN decision in practice: a description cell may want
+     * wrapped prose, while the amount and date beside it must stay single-line
+     * so a stray newline cannot reach a numeric parser.
+     */
+    multiline?: boolean;
     /** Extra class name for the cell (e.g. domain-specific highlighting). */
     className?: string;
     /** Optional native tooltip. */
@@ -93,6 +102,29 @@ export interface SpreadsheetViewProps<TData> {
      * via `CellDescriptor.editable`. Default: false.
      */
     editable?: boolean;
+    /**
+     * Allow cell values to contain line breaks. Per-cell override via
+     * {@link CellDescriptor.multiline}. Default: false.
+     *
+     * Two things change when this is on:
+     *
+     *   - the inline editor becomes a `<textarea>`, because an `<input>`
+     *     silently discards newlines — assigning `"a\nb"` to one yields
+     *     `"ab"`, so no amount of key handling can make it hold a line break;
+     *   - the committed value renders with `white-space: pre-wrap`, so stored
+     *     newlines are shown instead of being collapsed into spaces.
+     *
+     * Key bindings while editing (`Alt+Enter` only applies when multiline):
+     *
+     *     Enter       commit
+     *     Escape      abandon
+     *     Alt+Enter   insert a line break at the caret
+     *
+     * Enter keeps meaning "commit" rather than "new line" because that is what
+     * a grid user expects: the common action gets the unmodified key, and the
+     * rarer one takes the modifier. It matches Excel.
+     */
+    multiline?: boolean;
 
     // ---- SELECTION CONTROL ---------------------------------------------
     /**

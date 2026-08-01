@@ -65,6 +65,7 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
         onCellClick,
         onSelectionChange,
         editable = false,
+        multiline = false,
         activeCell,
         defaultActiveCell,
         className,
@@ -159,6 +160,7 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
                     key={col}
                     value={descriptor.value}
                     align={descriptor.align}
+                    multiline={descriptor.multiline ?? multiline}
                     className={descriptor.className}
                     tooltip={descriptor.tooltip}
                     active={isActive(row, col)}

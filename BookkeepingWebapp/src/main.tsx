@@ -343,7 +343,11 @@ function DataDrivenSpreadsheetDemo() {
         rows: [
             { date: "2026-01-03", description: "Opening balance", amount: 1000 },
             { date: "2026-01-05", description: "Groceries", amount: -84.2 },
-            { date: "2026-01-09", description: "Salary", amount: 2500 },
+            {
+                date: "2026-01-09",
+                description: "Salary\nmonthly, after tax",
+                amount: 2500,
+            },
             { date: "2026-01-12", description: "Electricity", amount: -120.5 },
         ],
     });
@@ -368,7 +372,9 @@ function DataDrivenSpreadsheetDemo() {
             case 0:
                 return { value: txn.date };
             case 1:
-                return { value: txn.description };
+                // Only the description wraps. The date and amount stay
+                // single-line so a stray newline cannot reach Number().
+                return { value: txn.description, multiline: true };
             case 2:
                 return {
                     value: txn.amount.toFixed(2),
@@ -429,7 +435,9 @@ function DataDrivenSpreadsheetDemo() {
             </pre>
             <p style={{ fontSize: 12, color: "#666" }}>
                 Click a cell to select; arrow keys navigate; Enter/F2 or
-                double-click edits; Enter commits, Esc cancels.
+                double-click edits; Enter commits, Esc cancels. The
+                Description column is multiline: Alt+Enter inserts a line
+                break at the caret.
             </p>
         </div>
     );

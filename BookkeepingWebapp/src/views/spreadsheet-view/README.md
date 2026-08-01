@@ -170,6 +170,7 @@ Only `SpreadsheetView` and the types in `types.ts` are exported from `index.tsx`
 | `onCellClick`       | `(row, col, data) => void`                           | Behavior hook: what a click means.                  |
 | `onSelectionChange` | `(cell \| null, data) => void`                       | Fires when the active cell changes.                 |
 | `editable`          | `boolean`                                            | Enable editing (per-cell override via descriptor).  |
+| `multiline`         | `boolean`                                            | Allow line breaks (per-cell override via descriptor).|
 | `activeCell`        | `CellAddress \| null`                                | Controlled selection. READ-ONLY today — see below.  |
 | `defaultActiveCell` | `CellAddress`                                        | Initial selection (uncontrolled).                   |
 | `className`         | `string`                                             | Extra class on the `<table>` element.               |
@@ -180,6 +181,7 @@ Only `SpreadsheetView` and the types in `types.ts` are exported from `index.tsx`
 interface CellDescriptor {
     value: ReactNode;                        // rendered content
     editable?: boolean;                      // per-cell override of `editable`
+    multiline?: boolean;                     // per-cell override of `multiline`
     align?: "left" | "center" | "right";     // alignment hint
     className?: string;                       // domain-specific styling
     tooltip?: string;                         // native tooltip
@@ -194,10 +196,108 @@ interface CellDescriptor {
   before applying the delta, so `ArrowDown` lands on row 1 and `ArrowRight` on
   column 1.
 - **Edit:** double-click, or press Enter / F2 on the active cell. Enter commits,
-  Escape cancels, blur commits. Arrow keys are inert while editing (the editor
+  Escape cancels, and blurring commits — but only when focus moves to another
+  element, not when it leaves the page. Arrow keys are inert while editing (the editor
   stops their propagation), so they move the caret, not the selection. When the
   editor closes, focus returns to the grid so navigation keeps working — see
   [Focus returns to the grid](#focus-returns-to-the-grid-when-the-editor-closes).
+- **Multiline:** with `multiline`, `Alt+Enter` inserts a line break at the caret
+  while `Enter` still commits — see [Multiline cells](#multiline-cells).
+
+### Multiline cells
+
+`multiline` (view-wide, or per cell via the descriptor) lets a value contain
+line breaks. Key bindings while editing:
+
+```
+   Enter       commit
+   Escape      abandon
+   Alt+Enter   insert a line break at the caret   (multiline cells only)
+```
+
+Enter keeps meaning *commit* rather than *new line*, matching Excel: the common
+action gets the unmodified key and the rarer one takes the modifier. In a
+single-line cell `Alt+Enter` is inert — deliberately not falling through to
+commit, so a stray newline can never reach a value the caller parses as a
+number.
+
+#### Why the element has to change
+
+An `<input>` *silently discards* newlines. Measured:
+
+```
+   input.value    = "a\nb"   ->  "ab"     <- the break is gone
+   textarea.value = "a\nb"   ->  "a\nb"
+```
+
+So no amount of key handling could make an `<input>` hold a line break; only
+the element choice can. `multiline` therefore switches the editor to a
+`<textarea>`. That assertion is itself a test, so if `<input>` ever gains
+newline support the decision gets revisited rather than silently outliving its
+reason.
+
+#### Why `setRangeText`, not string splicing
+
+The obvious implementation — `draft.slice(0, caret) + "\n" + draft.slice(caret)`
+— loses the caret. The browser has already applied the value and placed the
+caret at the end, so inserting a break mid-word jumps the caret to the end of
+the text. Measured on `"hello| world"` with the caret at 5:
+
+```
+   hand splice     value "hello\n world"   caret 12   <- unusable
+   setRangeText    value "hello\n world"   caret 6
+```
+
+`setRangeText` performs the edit and moves the caret in one step, and it
+replaces the current *selection* when there is one — which is what a user
+pressing Alt+Enter over selected text expects. The resulting DOM value is then
+pushed into React state unchanged, so React has nothing to rewrite and the
+caret survives the re-render. The DOM stays the single source of truth for both
+text and caret position.
+
+#### Two bugs this feature had first
+
+Both were reported from a real browser while the jsdom tests were green, which
+is the useful lesson: the tests sent only `keydown`, and neither bug lives in a
+keydown.
+
+**1. Alt itself committed the edit.** `onBlur` was wired straight to commit. On
+Windows and Linux, pressing Alt hands focus to the browser menu bar, which blurs
+the editor — so the cell committed the instant Alt went down and a line break
+could never be typed. The fix is to distinguish *why* focus left:
+
+```
+   blur, relatedTarget = <some element>   the user moved focus  -> commit
+   blur, relatedTarget = null             focus left the page   -> ignore
+```
+
+Only the first is an edit decision. Ignoring the second does not trap the user:
+clicking another cell, Enter and Escape all still work afterwards, and each of
+those is a test.
+
+**2. The first Alt+Enter destroyed the cell value.** The editor opens with its
+whole value SELECTED, so that typing replaces it — correct grid behaviour. But
+`setRangeText` *replaces the selection*, so inserting a break over a full
+selection wiped the value and left a bare newline. Silent data loss, in the
+common case.
+
+The insertion now collapses the selection to its end instead of overwriting it,
+which is also the safer reading of the gesture: Alt+Enter asks to ADD a line and
+never to delete text. Deleting has its own keys.
+
+#### The display half
+
+Storing a newline is not enough to show one. A cell is `white-space: nowrap` by
+default, which renders `"a\nb"` as `"a b"` — the value would be right and the
+display wrong. Multiline cells get a `cell--multiline` class carrying
+`white-space: pre-wrap`, which keeps explicit breaks *and* still wraps long
+lines. Plain `pre` would keep the breaks but refuse to wrap, letting one long
+line widen the column under `table-layout: auto`.
+
+Such cells also switch to `vertical-align: top` and `height: auto`, so a
+wrapped cell grows and the row height follows it — native table behaviour, no
+measurement code. Note jsdom applies no stylesheets, so the tests can only
+verify that the class hook is present; the rendered result is unverified.
 
 ### Focus returns to the grid when the editor closes
 
@@ -265,7 +365,7 @@ recorded here rather than implied to work.
 
 ## Tests
 
-`tests/views/spreadsheet.test.tsx` — 46 tests, in three groups:
+`tests/views/spreadsheet.test.tsx` — 70 tests, in four groups:
 
 - **30 behaviour tests**, written only in terms of ARIA roles, rendered text and
   user actions — never `div` vs `table`. These were written *before* the move to
@@ -278,6 +378,13 @@ recorded here rather than implied to work.
   keys at whatever is focused rather than at the container. Dispatching at the
   container passes even when focus has been lost, which is exactly how the
   post-edit navigation bug slipped past the first suite.
+- **24 multiline tests**, covering the key bindings, caret placement, the
+  per-cell override in both directions, and the interaction with focus
+  restoration. One of them asserts the platform fact the design rests on — that
+  `<input>` drops newlines — so the element choice cannot outlive its reason.
+  Several send the `blur` that follows a keypress in a real browser, not just
+  the keypress: both shipped multiline bugs were invisible to keydown-only
+  tests.
 
 Each group was confirmed to *bite* by sabotaging the implementation:
 
@@ -291,7 +398,20 @@ Each group was confirmed to *bite* by sabotaging the implementation:
   remove focus restoration                        4
   drop the focusWasLost guard (steal focus)       1
   weaken the editing-transition check            1  (grabs focus on mount)
+  always use <input> (never <textarea>)           8
+  hand-splice instead of setRangeText            1  (caret lands at the end)
+  let Alt+Enter fall through to commit           4
+  drop the single-line guard on insertion        1
+  remove the cell--multiline class               1
+  let a null-relatedTarget blur commit           3  (bug 1 below)
+  replace the selection instead of collapsing    2  (bug 2 below)
 ```
+
+One of those needed a second attempt. "Alt+Enter is inert in a single-line cell"
+passed even with the guard removed, because an `<input>` strips the newline by
+itself — the DOM looks identical either way, so the test could not distinguish
+guarded from unguarded. It now spies on `setRangeText` to assert that no
+insertion is even attempted, which does bite.
 
 Two traps worth remembering when extending these:
 

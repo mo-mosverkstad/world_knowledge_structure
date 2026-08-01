@@ -1,0 +1,50 @@
+/*
+ * Styles for the hierarchical ledger demo.
+ *
+ * Indentation is a CLASS on the cell, not markup wrapped around the text. That is
+ * deliberate: the grid seeds its editor with `String(descriptor.value)`, so a cell
+ * whose value is a React element cannot be edited (the draft becomes
+ * "[object Object]"). Keeping the label a plain string and shifting it with
+ * padding is what lets a tree row stay editable.
+ */
+.depth-0 {
+    padding-left: 8px;
+}
+
+.depth-1 {
+    padding-left: 24px;
+}
+
+.depth-2 {
+    padding-left: 40px;
+}
+
+.depth-3 {
+    padding-left: 56px;
+}
+
+.depth-4 {
+    padding-left: 72px;
+}
+
+/* Parent rows show a computed subtotal, so they read as derived, not entered. */
+.subtotal {
+    font-weight: 600;
+    color: #444;
+}
+
+.twisty {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    line-height: 1;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    background: #f3f3f3;
+}
+
+.twisty:hover {
+    background: #e4e4e4;
+}

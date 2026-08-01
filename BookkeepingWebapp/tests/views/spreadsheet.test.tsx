@@ -1243,6 +1243,160 @@ describe("viewport sizing", () => {
     });
 });
 
+describe("the data set shrinking while an edit is open", () => {
+    /**
+     * The edited address lives in state, so it outlives changes to the data. When
+     * rows or columns disappear mid-edit — a collapsed tree node, a filter, a
+     * deletion — the grid used to ask `getCell` for a cell that no longer exists,
+     * and the exception surfaced inside the CALLER's own accessor:
+     *
+     *     Cannot read properties of undefined (reading 'account')
+     *
+     * Measured before the fix: editing row 3, then shrinking to one row, produced
+     * requests `["0/1", "3/1", ...]` — row 3 asked of a one-row data set. With no
+     * editor open there was no bad request, which is what identified the culprit
+     * as the edited-cell lookup rather than the render loop.
+     *
+     * `useEditing` cannot prevent this itself: it is deliberately ignorant of the
+     * data, so only the coordinator knows the bounds.
+     */
+    interface Shrinkable {
+        rows: string[];
+    }
+
+    /** A caller that indexes its own array unguardedly, as callers do. */
+    function ShrinkHost({
+        onRequest,
+    }: {
+        onRequest?: (row: number, count: number) => void;
+    }) {
+        const [rows, setRows] = useState(["a", "b", "c", "d"]);
+        return (
+            <>
+                <button onClick={() => setRows(["a"])}>shrink</button>
+                <SpreadsheetView<Shrinkable>
+                    data={{ rows }}
+                    getRowCount={(d) => d.rows.length}
+                    getColumnCount={() => 1}
+                    getCell={(d, r): CellDescriptor => {
+                        onRequest?.(r, d.rows.length);
+                        return { value: d.rows[r].toUpperCase() };
+                    }}
+                    editable
+                    onCellEdit={vi.fn()}
+                />
+            </>
+        );
+    }
+
+    it("never asks for a cell outside the data", () => {
+        const requests: string[] = [];
+        render(
+            <ShrinkHost
+                onRequest={(row, count) => requests.push(`${row}/${count}`)}
+            />,
+        );
+
+        // Edit the last row, then remove it.
+        fireEvent.doubleClick(screen.getAllByRole("gridcell")[3]);
+        expect(editor()).not.toBeNull();
+
+        requests.length = 0;
+        fireEvent.click(screen.getByText("shrink"));
+
+        // Every request must name a row that exists.
+        for (const request of requests) {
+            const [row, count] = request.split("/").map(Number);
+            expect(row).toBeLessThan(count);
+        }
+    });
+
+    it("does not throw when the edited row disappears", () => {
+        render(<ShrinkHost />);
+        fireEvent.doubleClick(screen.getAllByRole("gridcell")[3]);
+        expect(() => fireEvent.click(screen.getByText("shrink"))).not.toThrow();
+    });
+
+    it("abandons the edit rather than leaving the editor floating", () => {
+        // An editor hovering over a cell that no longer exists is worse than no
+        // editor: committing it would write to an address that means something
+        // else now.
+        render(<ShrinkHost />);
+        fireEvent.doubleClick(screen.getAllByRole("gridcell")[3]);
+        expect(editor()).not.toBeNull();
+
+        fireEvent.click(screen.getByText("shrink"));
+        expect(editor()).toBeNull();
+    });
+
+    it("keeps an edit whose row survives the shrink", () => {
+        // The guard must not be over-broad: shrinking is only fatal to edits that
+        // were outside the new bounds.
+        render(<ShrinkHost />);
+        fireEvent.doubleClick(screen.getAllByRole("gridcell")[0]);
+        expect(editor()).not.toBeNull();
+
+        fireEvent.click(screen.getByText("shrink"));
+        expect(editor()).not.toBeNull();
+    });
+});
+
+describe("row gutter labels", () => {
+    /**
+     * The gutter defaults to `row + 1`, the row's VISIBLE POSITION, which is right
+     * for a flat sheet. It is wrong wherever rows can be hidden — collapsing a tree
+     * node renumbers every row below it — so callers can supply their own labels.
+     */
+    it("defaults to the 1-based visible position", () => {
+        renderSheet({ getColumnHeader });
+        expect(
+            screen.getAllByRole("rowheader").map((h) => h.textContent),
+        ).toEqual(["1", "2", "3"]);
+    });
+
+    it("lets the caller supply labels instead", () => {
+        renderSheet({
+            getColumnHeader,
+            getRowHeader: (_d: Ledger, row: number) => `R${row * 10}`,
+        });
+        expect(
+            screen.getAllByRole("rowheader").map((h) => h.textContent),
+        ).toEqual(["R0", "R10", "R20"]);
+    });
+
+    it("accepts labels that are not consecutive, which is the point", () => {
+        // A tree numbers rows by identity, so the visible labels have gaps where
+        // collapsed rows would have been.
+        const stable = [1, 5, 11];
+        renderSheet({
+            getColumnHeader,
+            getRowHeader: (_d: Ledger, row: number) => stable[row],
+        });
+        expect(
+            screen.getAllByRole("rowheader").map((h) => h.textContent),
+        ).toEqual(["1", "5", "11"]);
+    });
+
+    it("shows no gutter at all when there are no column headers", () => {
+        // The gutter exists to align with the header strip, so without headers
+        // there is nothing to align to and the callback is not consulted.
+        const getRowHeader = vi.fn(() => "X");
+        renderSheet({ getRowHeader });
+        expect(screen.queryAllByRole("rowheader")).toHaveLength(0);
+        expect(getRowHeader).not.toHaveBeenCalled();
+    });
+
+    it("receives the data port, so labels can be derived from it", () => {
+        renderSheet({
+            getColumnHeader,
+            getRowHeader: (d: Ledger, row: number) => d.rows[row].description,
+        });
+        expect(
+            screen.getAllByRole("rowheader").map((h) => h.textContent),
+        ).toEqual(["Opening", "Groceries", "Salary"]);
+    });
+});
+
 describe("the data port stays opaque", () => {
     it("asks for exactly the cells of the rectangular region", () => {
         const spy = vi.fn(getCell);

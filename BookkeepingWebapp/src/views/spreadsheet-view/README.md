@@ -171,6 +171,7 @@ Only `SpreadsheetView` and the types in `types.ts` are exported from `index.tsx`
 | `getColumnCount`    | `(data) => number`                                   | Number of columns.                                  |
 | `getCell`           | `(data, row, col) => CellDescriptor`                 | Random-access cell projection (O(1) expected).      |
 | `getColumnHeader`   | `(data, col) => ReactNode`                           | Optional column header; enables the header strip.   |
+| `getRowHeader`      | `(data, row) => ReactNode`                           | Gutter label. Defaults to `row + 1`; see below.      |
 | `onCellEdit`        | `(row, col, value, data) => void`                    | Mutate callback: apply a committed edit.            |
 | `onCellClick`       | `(row, col, data) => void`                           | Behavior hook: what a click means.                  |
 | `onSelectionChange` | `(cell \| null, data) => void`                       | Fires when the active cell changes.                 |
@@ -210,6 +211,46 @@ interface CellDescriptor {
   [Focus returns to the grid](#focus-returns-to-the-grid-when-the-editor-closes).
 - **Multiline:** with `multiline`, `Alt+Enter` inserts a line break at the caret
   while `Enter` still commits — see [Multiline cells](#multiline-cells).
+
+### The row gutter numbers positions, unless you say otherwise
+
+The gutter (the numbered strip on the left) defaults to `row + 1` — the row's
+VISIBLE POSITION. That is correct for a flat sheet, where row 5 *is* the fifth
+row.
+
+It is wrong wherever rows can be HIDDEN. Collapse a tree node and every row
+below it renumbers, so rows appear to move when they have not. Measured on the
+hierarchical demo before the fix:
+
+```
+  expanded:              1=Assets 2=Cash 3=Checking 4=Savings 5=Receivables ... 8=Liabilities
+  after collapsing Cash: 1=Assets 2=Cash 3=Receivables ...                     6=Liabilities
+                                          ^^^^^^^^^^^^^^ renumbered
+```
+
+"Liabilities" was row 8 expanded and row 2 collapsed — the same row, two
+different numbers, because the label counted screen position rather than
+identifying the row.
+
+`getRowHeader` hands that decision to the caller, which is the only party that
+knows whether its rows have stable identities. A tree assigns each node an
+ordinal over the WHOLE data set, so collapsing hides numbers instead of
+reshuffling them:
+
+```
+  all expanded:            1 2 3 4 5 6 7 8 9 10 11
+  Cash collapsed:          1 2       5 6 7 8 9 10 11
+  + Receivables collapsed: 1 2       5     8 9 10 11
+  + Assets collapsed:      1               8 9 10 11
+```
+
+See `HierarchicalLedgerDemo.tsx` for the counting: every node consumes a number
+whether it is visible or not, so a collapsed subtree still advances the counter.
+Note the counter must descend through hidden descendants at EVERY depth, not
+just one level, or deep subtrees under-count.
+
+The gutter is only rendered when `getColumnHeader` is supplied, since it exists
+to align with the header strip; without headers this callback is never consulted.
 
 ### Viewport size
 
@@ -549,9 +590,9 @@ recorded here rather than implied to work.
 
 ## Tests
 
-Two files, 106 tests.
+Two files, 115 tests.
 
-`tests/views/spreadsheet.test.tsx` — 84 behaviour and structure tests:
+`tests/views/spreadsheet.test.tsx` — 93 behaviour and structure tests:
 
 - **30 behaviour tests**, written only in terms of ARIA roles, rendered text and
   user actions — never `div` vs `table`. These were written *before* the move to
@@ -601,6 +642,7 @@ Each group was confirmed to *bite* by sabotaging the implementation:
   starve maxWidth to the cell                    2
   reverse the clamp order                        1
   drop the inline viewport size                   5
+  ignore getRowHeader (always row + 1)            8  (across both suites)
 ```
 
 One of those needed a second attempt. "Alt+Enter is inert in a single-line cell"

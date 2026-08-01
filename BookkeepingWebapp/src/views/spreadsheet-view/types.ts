@@ -71,6 +71,26 @@ export interface SpreadsheetViewProps<TData> {
      * well with viewporting. Expected O(1).
      */
     getCell: (data: TData, row: number, col: number) => CellDescriptor;
+    /**
+     * Optional label for the row gutter (the numbered strip on the left).
+     * Defaults to `row + 1`, i.e. the row's VISIBLE POSITION.
+     *
+     * That default is right for a flat sheet, where row 5 *is* the fifth row.
+     * It is wrong wherever rows can be hidden: collapse a tree node and every
+     * row below it renumbers, so the gutter reshuffles even though those rows
+     * did not move. Measured on the hierarchical demo: "Liabilities" showed as
+     * row 8 expanded and row 2 collapsed.
+     *
+     * Supplying this lets the caller number rows by IDENTITY instead of
+     * position — a stable ordinal assigned over the whole data set — so
+     * collapsing hides numbers rather than renumbering the survivors:
+     *
+     *     1, 2, 3, 4, 5, 8, 11      not      1, 2, 3, 4, 5, 6, 7
+     *
+     * Only consulted when the gutter is shown, which today means when
+     * `getColumnHeader` is supplied.
+     */
+    getRowHeader?: (data: TData, row: number) => ReactNode;
     /** Optional column header label for column `col`. */
     getColumnHeader?: (data: TData, col: number) => ReactNode;
 
@@ -86,6 +106,25 @@ export interface SpreadsheetViewProps<TData> {
         value: string,
         data: TData,
     ) => void;
+
+    // ---- EDIT LIFECYCLE -------------------------------------------------
+    /**
+     * Fired when an edit BEGINS, with the address being edited. Optional.
+     *
+     * Why this exists: a `(row, col)` pair is not a stable address. Any change
+     * that reorders or removes rows — collapsing a tree node, filtering, sorting,
+     * deleting — leaves the remembered edit address pointing at a DIFFERENT
+     * value. Committing then writes to the wrong place, silently.
+     *
+     * The component cannot detect this: to it, row 2 is row 2. Only the caller
+     * knows what identifies a row (a path, a primary key, a document id). So a
+     * caller whose row set can change under an open edit should record the
+     * identity here and compare it in {@link SpreadsheetViewProps.onCellEdit},
+     * discarding the edit if it no longer matches.
+     *
+     * Callers with a fixed row set can ignore this entirely.
+     */
+    onEditBegin?: (row: number, col: number, data: TData) => void;
 
     // ---- BEHAVIOR HOOKS (caller-defined side effects) ------------------
     /**

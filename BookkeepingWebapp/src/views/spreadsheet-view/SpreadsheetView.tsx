@@ -1,4 +1,10 @@
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import {
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+    type ReactNode,
+} from "react";
 import "./style.css";
 import { Grid } from "./Grid";
 import { Row } from "./Row";
@@ -71,8 +77,10 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
         getColumnCount,
         getCell,
         getColumnHeader,
+        getRowHeader,
         onCellEdit,
         onCellClick,
+        onEditBegin,
         onSelectionChange,
         editable = false,
         multiline = false,
@@ -145,6 +153,10 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
     const beginEdit = (row: number, col: number, cellEditable: boolean) => {
         if (!cellEditable) return;
         const current = getCell(data, row, col);
+        // Reported BEFORE the edit opens, so a caller can record what identifies
+        // this row while it is still unambiguous. See `onEditBegin`: a (row, col)
+        // pair stops meaning the same thing as soon as rows move.
+        onEditBegin?.(row, col, data);
         editing.begin({ row, col }, String(current.value ?? ""));
     };
 
@@ -217,7 +229,19 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
             );
         }
         rows.push(
-            <Row key={row} header={getColumnHeader ? row + 1 : undefined}>
+            <Row
+                key={row}
+                // `row + 1` is the row's VISIBLE POSITION, which is only the
+                // right label when no rows are hidden. A caller that can hide
+                // rows supplies its own stable numbering instead.
+                header={
+                    getColumnHeader
+                        ? getRowHeader
+                            ? getRowHeader(data, row)
+                            : row + 1
+                        : undefined
+                }
+            >
                 {cells}
             </Row>,
         );
@@ -244,7 +268,17 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
     // edit is open, not one per keystroke per cell.
     let editingCellMultiline = multiline;
     let editingCellAlign: "left" | "center" | "right" | undefined;
-    if (editing.editingCell) {
+    // BOUNDS CHECK, not a nicety. The edited address is remembered in state,
+    // so it outlives a change to the data: when rows or columns disappear while
+    // an edit is open — a collapsed tree node, a filter, a deletion — this asked
+    // `getCell` for a cell that no longer exists and threw inside the CALLER's
+    // own accessor. `useEditing` cannot prevent it either, since it is deliberately
+    // ignorant of the data.
+    const editingInBounds =
+        editing.editingCell !== null &&
+        editing.editingCell.row < rowCount &&
+        editing.editingCell.col < colCount;
+    if (editing.editingCell && editingInBounds) {
         const d = getCell(
             data,
             editing.editingCell.row,
@@ -253,6 +287,14 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
         editingCellMultiline = d.multiline ?? multiline;
         editingCellAlign = d.align;
     }
+
+    // An edit whose cell has vanished is abandoned rather than left floating
+    // over nothing. Deferred to an effect because a setState during render is
+    // illegal; the render below simply skips the overlay in the meantime.
+    useEffect(() => {
+        if (editing.editingCell && !editingInBounds) editing.cancel();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [editingInBounds, editing.editingCell]);
 
     // ---- Grid-level keyboard navigation -------------------------------
     // Arrow keys move the selection; Enter/F2 begin editing the active cell.
@@ -308,7 +350,7 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
                 overlay={
                     // The floating layer. Rendered only while editing, so the
                     // grid pays nothing for it at rest.
-                    editing.editingCell && editorGeometry ? (
+                    editing.editingCell && editingInBounds && editorGeometry ? (
                         <CellEditor
                             geometry={editorGeometry}
                             // `key` remounts the editor when the edited cell

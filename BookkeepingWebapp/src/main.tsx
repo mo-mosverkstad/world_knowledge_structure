@@ -12,6 +12,7 @@ import {
     SpreadsheetView,
     type CellDescriptor,
 } from "./views/spreadsheet-view/";
+import { HierarchicalLedgerDemo } from "./HierarchicalLedgerDemo";
 
 function manual_test_1() {
     ReactDOM.createRoot(document.getElementById("app")!).render(
@@ -507,6 +508,9 @@ function Demos() {
         <>
             <DataDrivenTabBarDemo />
             <DataDrivenSpreadsheetDemo />
+            {/* Hierarchy as a CUSTOMISATION: same flat grid, tree in the
+                caller. See HierarchicalLedgerDemo.tsx. */}
+            <HierarchicalLedgerDemo />
         </>
     );
 }

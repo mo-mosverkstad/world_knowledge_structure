@@ -1,0 +1,30 @@
+/*
+ * A row is a native <tr>; the table's layout algorithm aligns its cells with
+ * every other row's, so this file no longer needs a flex track.
+ */
+.row {
+    /* Borders live on the cells, because `border-collapse` merges them there. */
+}
+
+/*
+ * The row-number gutter, frozen horizontally.
+ *
+ * `left: 0` sticks it to the viewport's left edge (the scroll container is
+ * `.grid`). z-index 1 puts it above ordinary cells but below the header row (2)
+ * and the corner (3), which is the stacking order a frozen top-left corner needs.
+ */
+.row__header {
+    width: 40px;
+    padding: 3px 2px;
+    box-sizing: border-box;
+    font-weight: normal;
+    text-align: center;
+    color: #444;
+    background-color: #F8F8F8;
+    border-right: 1px solid #c0c0c0;
+    border-bottom: 1px solid #e8e8e8;
+
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}

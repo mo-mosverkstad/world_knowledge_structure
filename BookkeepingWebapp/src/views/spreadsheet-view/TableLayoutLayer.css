@@ -1,0 +1,42 @@
+/*
+ * The grid's layout container. Everything here is about how the table lays
+ * itself out; nothing about what the data means.
+ */
+.table-layout {
+    /*
+     * `collapse` merges each cell's border with its neighbour's, so a shared 1px
+     * seam is drawn instead of two abutting 1px borders making 2px. Cells only
+     * declare right/bottom edges (see Cell.css) and rely on this.
+     */
+    border-collapse: collapse;
+    /*
+     * `auto` lets column widths follow their content, which is what a
+     * spreadsheet wants before the user has resized anything. Cells cap
+     * themselves with `max-width` so one long value cannot stretch a column
+     * indefinitely. Switch to `fixed` once columns become explicitly sized —
+     * that is a change to this file alone.
+     */
+    table-layout: auto;
+    font-size: 13px;
+    background: #ffffff;
+    /* A table is inline by default, which leaves a baseline gap beneath it. */
+    display: table;
+}
+
+/*
+ * The row-number gutter column. Declared once here rather than on every
+ * `.row__header` cell, which is the reason for using <colgroup> at all.
+ */
+.table-layout__gutter-col {
+    width: 40px;
+}
+
+/*
+ * The header row. Kept here rather than in ColumnHeader.css because it is about
+ * how the strip sits in the table, not how one header cell looks.
+ */
+.table-layout__header-row {
+    /* Cells opt out of text selection so a drag across headers does not
+     * highlight their labels; that gesture will mean column resize/select. */
+    user-select: none;
+}

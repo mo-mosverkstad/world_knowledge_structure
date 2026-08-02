@@ -1,0 +1,103 @@
+/*
+ * A cell is a native <td>. Width comes from the column (<colgroup> in Grid.css),
+ * not from here — that is the point of using a table: one declaration sizes the
+ * whole column instead of every cell repeating it and hoping they agree.
+ */
+.cell {
+    height: 24px;
+    padding: 3px 5px;
+    box-sizing: border-box;
+    /* Only the right/bottom edges are drawn; `border-collapse` merges each seam
+     * with the neighbour's, so a shared 1px line results rather than 2px. */
+    border-right: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* Keep long text from widening the column under `table-layout: auto`. */
+    max-width: 240px;
+    cursor: cell;
+    outline: none;
+    /* Vertical centring is a table-cell property, so no flexbox is needed. */
+    vertical-align: middle;
+}
+
+.cell--active {
+    /*
+     * `inset` box-shadow rather than a border: a real border would change the
+     * cell's box and, with collapsed borders, could nudge the column's width as
+     * selection moves. A shadow paints inside the existing box.
+     */
+    box-shadow: inset 0 0 0 2px #3574f0;
+}
+
+.cell--editing {
+    padding: 0;
+    box-shadow: inset 0 0 0 2px #3574f0;
+}
+
+/*
+ * A multiline cell must PRESERVE the newlines it stores. The default
+ * `white-space: nowrap` above collapses "a\nb" into "a b", so a committed line
+ * break would be invisible — the value would be right and the display wrong.
+ *
+ * `pre-wrap` keeps explicit breaks AND still wraps long lines. `pre` would keep
+ * the breaks but refuse to wrap, letting one long line widen the column under
+ * `table-layout: auto`.
+ *
+ * `height: 24px` is dropped to `auto` so a wrapped cell can grow; the row
+ * height follows, which is how a native table behaves once a cell is taller.
+ * Alignment stays `top` here, because centring prose against single-line
+ * neighbours looks like a mistake.
+ */
+.cell--multiline {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    height: auto;
+    vertical-align: top;
+    /* `text-overflow: ellipsis` is meaningless once the text wraps. */
+    text-overflow: clip;
+}
+
+.cell--multiline .cell__value {
+    /* Inherit the wrapping decision rather than restating it. */
+    white-space: inherit;
+    overflow-wrap: inherit;
+    text-overflow: clip;
+}
+
+.cell__value {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cell__editor {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 3px 8px;
+    border: none;
+    outline: none;
+    font: inherit;
+    background: #ffffff;
+}
+
+/*
+ * The <textarea> editor. `resize: none` because the cell decides the size — a
+ * user-dragged corner handle would desynchronise the editor from the column.
+ * `display: block` removes the inline-element baseline gap that otherwise leaves
+ * a few stray pixels under the editor.
+ */
+textarea.cell__editor {
+    display: block;
+    resize: none;
+    /* Inherit the cell's wrapping so the draft lays out like the committed
+     * value; without this the editor and the result disagree visually. */
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    /* Let `rows` drive the height instead of the cell's fixed 24px. */
+    height: auto;
+    min-height: 24px;
+    overflow-y: auto;
+}

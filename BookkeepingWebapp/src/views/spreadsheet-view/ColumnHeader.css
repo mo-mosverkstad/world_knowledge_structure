@@ -1,0 +1,39 @@
+/*
+ * Column-header cells and the gutter corner.
+ *
+ * `position: sticky` here resolves against the nearest scrolling ancestor. There
+ * is no scroll viewport yet, so the stickiness is inert — it costs nothing and
+ * starts working the moment a scroll container is added, with no JavaScript and
+ * no scroll listener.
+ */
+.column-header {
+    padding: 4px 8px;
+    font-weight: 600;
+    text-align: center;
+    background-color: #f3f3f3;
+    border-right: 1px solid #e0e0e0;
+    /* Heavier than the cell borders below, so the header reads as a boundary. */
+    border-bottom: 1px solid #c0c0c0;
+    white-space: nowrap;
+
+    /* Frozen header row: `top: 0` pins it to the viewport's top edge. */
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/*
+ * The corner is frozen in BOTH directions, so it overlaps the row gutter
+ * (z-index 1) and the header row (2) and must outrank both.
+ */
+.column-header__corner {
+    width: 40px;
+    background-color: #f3f3f3;
+    border-right: 1px solid #c0c0c0;
+    border-bottom: 1px solid #c0c0c0;
+
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}

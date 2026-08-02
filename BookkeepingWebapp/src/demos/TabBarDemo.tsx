@@ -3,7 +3,7 @@ import {
     TabBar,
     type TabDescriptor,
     type ActiveTabSelectReason,
-} from "../views/tab-bar/";
+} from "../views/tab-bar";
 
 /**
  * An ARBITRARY business data structure. The tab bar knows nothing about this
@@ -66,7 +66,7 @@ function initialDocuments(): WorkspaceDoc[] {
     return [home, ...Array.from({ length: 16 }, randomDoc)];
 }
 
-export function DataDrivenTabBarDemo() {
+export function TabBarDemo() {
     const [workspace, setWorkspace] = useState<WorkspaceState>(() => ({
         documents: initialDocuments(),
         activeKey: "d1",

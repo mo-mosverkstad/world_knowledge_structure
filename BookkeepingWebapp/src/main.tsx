@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import ReactDOM from "react-dom/client";
 import { App } from "./App.tsx"
 
@@ -7,4 +8,8 @@ if (!root) {
     throw new Error("Missing #root element");
 }
 
-ReactDOM.createRoot(root).render(<App />);
+ReactDOM.createRoot(root).render(
+    <StrictMode>
+        <App />
+    </StrictMode>
+);

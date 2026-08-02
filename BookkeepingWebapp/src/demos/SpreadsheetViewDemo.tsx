@@ -52,6 +52,9 @@ export function SpreadsheetViewDemo() {
                 getRowHeader={(_d, row) => row + 1}
                 // Stable keys, so React follows records rather than positions.
                 getRowKey={(d, row) => d.rows[row].id}
+                // Without this, a double-click is ignored: `Cell` only requests
+                // an edit when it is told the cell is editable.
+                editable
             />
         </div>
     );

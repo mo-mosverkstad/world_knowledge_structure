@@ -18,6 +18,18 @@
     max-width: 240px;
     cursor: cell;
     outline: none;
+    /*
+     * Double-clicking a cell means "edit it", not "select this word". The browser
+     * starts that text selection on the second MOUSEDOWN, which is dispatched
+     * before `dblclick` exists — so `event.preventDefault()` in a double-click
+     * handler runs after the fact and cancels nothing (measured:
+     * `defaultPrevented` becomes true, and the selection still appears).
+     *
+     * Preventing the default on `mousedown` would work, but it also suppresses
+     * focus, which the grid needs for keyboard navigation. Declaring the text
+     * unselectable is the only fix that does not trade one behaviour for another.
+     */
+    user-select: none;
     /* Vertical centring is a table-cell property, so no flexbox is needed. */
     vertical-align: middle;
 }

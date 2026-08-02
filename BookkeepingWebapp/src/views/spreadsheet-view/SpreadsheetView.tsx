@@ -62,8 +62,14 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
                 getColumnHeader ? (col) => getColumnHeader(data, col) : undefined
             }
             className={className}
-            onCellSelect={(row, col) => onCellClick?.(row, col, data)}
-            onCellBeginEdit={(row, col) => onEditBegin?.(row, col, data)}
+            onCellSelect={(row, col) => {
+                onCellClick?.(row, col, data);
+                console.log(`select cell (${row}, ${col})`);
+            }}
+            onCellBeginEdit={(row, col) => {
+                onEditBegin?.(row, col, data);
+                console.log(`begin edit cell (${row}, ${col})`);
+            }}
         />
     );
 }

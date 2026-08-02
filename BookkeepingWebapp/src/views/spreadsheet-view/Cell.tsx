@@ -69,6 +69,10 @@ export function Cell(props: CellProps) {
             data-row={row}
             data-col={col}
             onClick={() => onSelect()}
+            // No `preventDefault` here: a double-click's text selection is
+            // started by the browser on the second mousedown, so by the time
+            // `dblclick` fires there is no default action left to cancel
+            // (measured). `user-select: none` in Cell.css is what suppresses it.
             onDoubleClick={() => {
                 if (editable) onBeginEdit();
             }}

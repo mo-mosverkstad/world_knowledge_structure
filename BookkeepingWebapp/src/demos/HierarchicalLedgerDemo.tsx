@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
     SpreadsheetView,
     type CellDescriptor,
-} from "./views/spreadsheet-view-old";
+} from "../views/spreadsheet-view-old";
 import "./HierarchicalLedgerDemo.css";
 
 /**

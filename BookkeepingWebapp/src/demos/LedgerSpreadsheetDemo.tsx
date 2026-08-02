@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
     SpreadsheetView,
     type CellDescriptor,
-} from "./views/spreadsheet-view-old";
+} from "../views/spreadsheet-view-old";
 
 /**
  * An ARBITRARY business data structure for the spreadsheet. Like the tab bar,

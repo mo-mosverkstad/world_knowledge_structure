@@ -4,7 +4,7 @@ import {
     measurePlacement,
     resolveEditorSize,
     type EditorMeasurements,
-} from "../../src/views/spreadsheet-view/editorLadder";
+} from "../../src/views/spreadsheet-view-old/editorLadder";
 
 /**
  * Geometry tests for the floating editor.

@@ -68,13 +68,25 @@ export function useEditing(
 
     const commit = useCallback(
         (value: string) => {
-            setEditingCell((cell) => {
-                if (cell) onCommit?.(cell, value);
-                return null;
-            });
+            // The caller is notified OUTSIDE the state updater, deliberately.
+            //
+            // This used to read `setEditingCell((cell) => { onCommit(cell);
+            // return null; })`, which is wrong: React may invoke an updater
+            // during the RENDER phase, and may invoke it more than once. So
+            // `onCommit` ran mid-render, and a caller that set its own state
+            // from it produced React's "Cannot update a component while
+            // rendering a different component" warning. An updater must be a
+            // pure function of the previous state; side effects do not belong
+            // in one.
+            //
+            // Reading `editingCell` directly is safe because `commit` only ever
+            // runs from an event handler, where the current render's value is
+            // the one being committed.
+            if (editingCell) onCommit?.(editingCell, value);
+            setEditingCell(null);
             setInitialDraft("");
         },
-        [onCommit],
+        [editingCell, onCommit],
     );
 
     const cancel = useCallback(() => {

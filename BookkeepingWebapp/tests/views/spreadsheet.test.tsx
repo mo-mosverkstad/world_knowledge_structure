@@ -1,12 +1,12 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useState } from "react";
+import { StrictMode, useState } from "react";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { SpreadsheetView } from "../../src/views/spreadsheet-view";
+import { SpreadsheetView } from "../../src/views/spreadsheet-view-old";
 import {
     type CellAddress,
     type CellDescriptor,
-} from "../../src/views/spreadsheet-view";
+} from "../../src/views/spreadsheet-view-old";
 
 afterEach(cleanup);
 
@@ -1473,6 +1473,109 @@ describe("stable row keys", () => {
         expect(
             screen.queryAllByRole("gridcell").map((c) => c.textContent),
         ).toEqual(["Gamma", "Alpha", "Beta"]);
+    });
+});
+
+describe("commit does not notify from inside a state updater", () => {
+    /**
+     * `useEditing.commit` used to call `onCommit` from inside a `setEditingCell`
+     * updater. React may run an updater during the RENDER phase and may run it more
+     * than once, so the caller's own `setState` executed mid-render — reported in a
+     * real browser as:
+     *
+     *   Cannot update a component (`DataDrivenSpreadsheetDemo`) while rendering a
+     *   different component (`SpreadsheetView`)
+     *
+     * An updater must be a pure function of the previous state. The notification
+     * now happens before the updater, in the event handler where it belongs.
+     *
+     * HONEST LIMITATION: these tests do NOT catch that bug. Measured, React does
+     * not double-invoke this particular updater even under StrictMode
+     * (`onCellEdit` fires once either way), and jsdom never emits the warning,
+     * so reverting the fix leaves them all green.
+     *
+     * They are kept as a guard on the SURROUNDING behaviour -- a commit notifies
+     * once, delivers its value, and closes the editor -- so a future rewrite of
+     * `commit` cannot silently break those. The render-phase violation itself is
+     * only observable in a real browser, which is how it was found.
+     */
+    interface Counted {
+        rows: string[];
+    }
+
+    /** Reports how many times the caller's own state update took effect. */
+    function CommitHost() {
+        const [rows, setRows] = useState(["a", "b", "c"]);
+        const [commits, setCommits] = useState(0);
+        return (
+            <>
+                <output data-testid="commits">{commits}</output>
+                <SpreadsheetView<Counted>
+                    data={{ rows }}
+                    getRowCount={(d) => d.rows.length}
+                    getColumnCount={() => 1}
+                    getCell={(d, r): CellDescriptor => ({ value: d.rows[r] })}
+                    editable
+                    onCellEdit={(row, _col, value) => {
+                        // TWO caller setStates from the commit callback, which is
+                        // what surfaced the warning.
+                        setCommits((n) => n + 1);
+                        setRows((prev) =>
+                            prev.map((v, i) => (i === row ? value : v)),
+                        );
+                    }}
+                />
+            </>
+        );
+    }
+
+    const editorEl = () =>
+        document.querySelector("textarea.cell-editor") as HTMLTextAreaElement;
+
+    it("applies the caller's state update exactly once per commit", () => {
+        // If `onCommit` ran inside an updater, React could invoke it more than
+        // once and this count would exceed 1.
+        render(<CommitHost />);
+        fireEvent.doubleClick(screen.getAllByRole("gridcell")[1]);
+        fireEvent.change(editorEl(), { target: { value: "EDITED" } });
+        fireEvent.keyDown(editorEl(), { key: "Enter" });
+
+        expect(screen.getByTestId("commits").textContent).toBe("1");
+    });
+
+    it("still delivers the committed value to the caller", () => {
+        render(<CommitHost />);
+        fireEvent.doubleClick(screen.getAllByRole("gridcell")[1]);
+        fireEvent.change(editorEl(), { target: { value: "EDITED" } });
+        fireEvent.keyDown(editorEl(), { key: "Enter" });
+
+        expect(
+            screen.getAllByRole("gridcell").map((c) => c.textContent),
+        ).toEqual(["a", "EDITED", "c"]);
+    });
+
+    it("closes the editor after committing", () => {
+        render(<CommitHost />);
+        fireEvent.doubleClick(screen.getAllByRole("gridcell")[1]);
+        fireEvent.keyDown(editorEl(), { key: "Enter" });
+        expect(editor()).toBeNull();
+    });
+
+    it("counts one commit per edit across several edits", () => {
+        render(<CommitHost />);
+        for (const [index, value] of [
+            [0, "one"],
+            [1, "two"],
+            [2, "three"],
+        ] as const) {
+            fireEvent.doubleClick(screen.getAllByRole("gridcell")[index]);
+            fireEvent.change(editorEl(), { target: { value } });
+            fireEvent.keyDown(editorEl(), { key: "Enter" });
+        }
+        expect(screen.getByTestId("commits").textContent).toBe("3");
+        expect(
+            screen.getAllByRole("gridcell").map((c) => c.textContent),
+        ).toEqual(["one", "two", "three"]);
     });
 });
 

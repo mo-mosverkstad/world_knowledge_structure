@@ -78,6 +78,7 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
         getCell,
         getColumnHeader,
         getRowHeader,
+        getRowKey,
         onCellEdit,
         onCellClick,
         onEditBegin,
@@ -230,7 +231,10 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
         }
         rows.push(
             <Row
-                key={row}
+                // A STABLE key when the caller supplies one, so React follows
+                // records rather than slots. Falls back to the index, which is
+                // correct only while the row set cannot change.
+                key={getRowKey ? getRowKey(data, row) : row}
                 // `row + 1` is the row's VISIBLE POSITION, which is only the
                 // right label when no rows are hidden. A caller that can hide
                 // rows supplies its own stable numbering instead.

@@ -72,6 +72,26 @@ export interface SpreadsheetViewProps<TData> {
      */
     getCell: (data: TData, row: number, col: number) => CellDescriptor;
     /**
+     * A STABLE identity for the row, used as its React key.
+     *
+     * Defaults to the row index. That default is fine while the row set never
+     * changes, but it makes React treat "row 2" as the same row across renders
+     * even after a different record has moved into that position — so anything
+     * attached to a row and not managed by React (an open editor, focus, scroll
+     * position inside a cell) stays with the SLOT instead of following the
+     * record.
+     *
+     * Measured with index keys: rotating three rows left the DOM element that
+     * showed "Alpha" showing "Gamma" — React rewrote text in place rather than
+     * moving elements. Inserting a row above an open editor left the editor on
+     * the same index, now naming a different record.
+     *
+     * Return something derived from the record itself (a primary key, a document
+     * id, a minted counter), never its position. A positional value passed here
+     * achieves nothing, since it changes exactly when rows move.
+     */
+    getRowKey?: (data: TData, row: number) => string | number;
+    /**
      * Optional label for the row gutter (the numbered strip on the left).
      * Defaults to `row + 1`, i.e. the row's VISIBLE POSITION.
      *

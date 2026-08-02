@@ -1397,6 +1397,85 @@ describe("row gutter labels", () => {
     });
 });
 
+describe("stable row keys", () => {
+    /**
+     * `getRowKey` decides whether React treats a row as "the same row" across
+     * renders. With the default index key, row 2 is always row 2, so React rewrites
+     * text in place when the contents shift; with a stable key it MOVES the
+     * existing element instead.
+     *
+     * The difference only shows when the row COUNT stays the same. An insert
+     * changes the count, so React creates an element either way and the two
+     * strategies are indistinguishable — which is why these tests reorder rather
+     * than insert. (My first attempt at this test used an insert and passed even
+     * with `getRowKey` ignored.)
+     */
+    interface Row {
+        id: number;
+        label: string;
+    }
+
+    function RotateHost({ useIdKeys }: { useIdKeys: boolean }) {
+        const [rows, setRows] = useState<Row[]>([
+            { id: 1, label: "Alpha" },
+            { id: 2, label: "Beta" },
+            { id: 3, label: "Gamma" },
+        ]);
+        return (
+            <>
+                <button onClick={() => setRows((p) => [p[2], p[0], p[1]])}>
+                    rotate
+                </button>
+                <SpreadsheetView<{ rows: Row[] }>
+                    data={{ rows }}
+                    getRowCount={(d) => d.rows.length}
+                    getColumnCount={() => 1}
+                    getCell={(d, r): CellDescriptor => ({
+                        value: d.rows[r].label,
+                    })}
+                    {...(useIdKeys
+                        ? { getRowKey: (d: { rows: Row[] }, r: number) => d.rows[r].id }
+                        : {})}
+                />
+            </>
+        );
+    }
+
+    /** Tag the element showing "Alpha", rotate, and report what it holds. */
+    const tagRotateAndRead = (useIdKeys: boolean) => {
+        render(<RotateHost useIdKeys={useIdKeys} />);
+        const alpha = screen
+            .queryAllByRole("gridcell")
+            .find((c) => c.textContent === "Alpha")! as HTMLElement;
+        alpha.dataset.tag = "followed";
+
+        fireEvent.click(screen.getByText("rotate"));
+
+        return document.querySelector('[data-tag="followed"]')?.textContent;
+    };
+
+    it("without getRowKey, an element's content follows its SLOT", () => {
+        // React sees "key 0 is still key 0" and patches the text, so the element
+        // that showed Alpha ends up showing whatever moved into position 0.
+        expect(tagRotateAndRead(false)).toBe("Gamma");
+    });
+
+    it("with getRowKey, an element follows its RECORD", () => {
+        // React recognises the key and MOVES the element, so it keeps its content.
+        expect(tagRotateAndRead(true)).toBe("Alpha");
+    });
+
+    it("rotating produces the same visible order either way", () => {
+        // The output is correct in both cases, which is why this is latent rather
+        // than an immediate bug: it matters only for state React does not manage.
+        render(<RotateHost useIdKeys={false} />);
+        fireEvent.click(screen.getByText("rotate"));
+        expect(
+            screen.queryAllByRole("gridcell").map((c) => c.textContent),
+        ).toEqual(["Gamma", "Alpha", "Beta"]);
+    });
+});
+
 describe("the data port stays opaque", () => {
     it("asks for exactly the cells of the rectangular region", () => {
         const spy = vi.fn(getCell);

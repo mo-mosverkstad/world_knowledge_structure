@@ -172,6 +172,7 @@ Only `SpreadsheetView` and the types in `types.ts` are exported from `index.tsx`
 | `getCell`           | `(data, row, col) => CellDescriptor`                 | Random-access cell projection (O(1) expected).      |
 | `getColumnHeader`   | `(data, col) => ReactNode`                           | Optional column header; enables the header strip.   |
 | `getRowHeader`      | `(data, row) => ReactNode`                           | Gutter label. Defaults to `row + 1`; see below.      |
+| `getRowKey`         | `(data, row) => string \| number`                    | Stable row identity for React. Defaults to the index.|
 | `onCellEdit`        | `(row, col, value, data) => void`                    | Mutate callback: apply a committed edit.            |
 | `onCellClick`       | `(row, col, data) => void`                           | Behavior hook: what a click means.                  |
 | `onSelectionChange` | `(cell \| null, data) => void`                       | Fires when the active cell changes.                 |
@@ -211,6 +212,37 @@ interface CellDescriptor {
   [Focus returns to the grid](#focus-returns-to-the-grid-when-the-editor-closes).
 - **Multiline:** with `multiline`, `Alt+Enter` inserts a line break at the caret
   while `Enter` still commits — see [Multiline cells](#multiline-cells).
+
+### Rows are identified by position, unless you say otherwise
+
+React uses a `key` to decide whether a rendered row is the SAME row as last
+time. The default here is the row index, which means row 2 is always "row 2" —
+even after a different record moved into that position. React then rewrites the
+text in place instead of moving the element.
+
+Measured by tagging the DOM element showing "Alpha" and rotating three rows:
+
+```
+  rows after rotating:   [Gamma, Alpha, Beta]
+
+  index keys   the tagged element now shows "Gamma"   <- followed the SLOT
+  getRowKey    the tagged element still shows "Alpha"  <- followed the RECORD
+```
+
+The visible output is correct either way, which is why this is latent rather
+than an immediate bug. It matters for anything attached to a row that React does
+not manage — focus, scroll position inside a cell, a future card-in-cell with
+its own state.
+
+Note the difference only appears when the row COUNT is unchanged. An insert
+changes the count, so React creates an element either way and the two
+strategies are indistinguishable — the tests reorder rather than insert for
+exactly this reason. (A first attempt using an insert passed even with
+`getRowKey` ignored, so it proved nothing.)
+
+Return something derived from the record — a primary key, a document id, a
+minted counter. A positional value achieves nothing here, since it changes
+exactly when rows move.
 
 ### The row gutter numbers positions, unless you say otherwise
 
@@ -590,9 +622,9 @@ recorded here rather than implied to work.
 
 ## Tests
 
-Two files, 115 tests.
+Two files, 118 tests, plus 13 for CRUD in the ledger demo.
 
-`tests/views/spreadsheet.test.tsx` — 93 behaviour and structure tests:
+`tests/views/spreadsheet.test.tsx` — 96 behaviour and structure tests:
 
 - **30 behaviour tests**, written only in terms of ARIA roles, rendered text and
   user actions — never `div` vs `table`. These were written *before* the move to
@@ -643,6 +675,9 @@ Each group was confirmed to *bite* by sabotaging the implementation:
   reverse the clamp order                        1
   drop the inline viewport size                   5
   ignore getRowHeader (always row + 1)            8  (across both suites)
+  ignore getRowKey (always the index)             1
+  store the selection as an index, not an id      3  (in the ledger demo)
+  drop the stale-edit id guard                    1  (in the ledger demo)
 ```
 
 One of those needed a second attempt. "Alt+Enter is inert in a single-line cell"

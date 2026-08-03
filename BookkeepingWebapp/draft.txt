@@ -1038,3 +1038,2299 @@ so it wins. I can't verify Excel's exact behaviour from here, so I'll take your 
 Concretely that means the overlay sits above the corner cell too (z-index: 4, since header row is 2 and corner is 3). One consequence
 worth knowing: scrolling down far enough while editing will hide the column headers behind the box. That's inherent to the choice,
 not a bug.
+
+
+---
+
+Implement selection range state:
+
+That makes sense. The confusing part is that you are trying to satisfy two requirements that pull in opposite directions:
+
+The selection must be accessible outside the rendering layer.
+Changing the selection should rerender only the small selection overlay.
+
+The intuitive solution is: the selection is kept in a small shared object, and the overlay listens to that object. React does not need to own every piece of application state through useState.
+
+Think of it as a radio station
+
+The selection controller is a small radio station:
+
+Selection controller
+    current selection: A1:C4
+
+
+Different code can interact with it:
+
+Mouse interaction → changes selection
+Delete rows      → changes selection
+Undo             → changes selection
+Sheet replacement → changes selection
+
+
+The selection overlay is the only React component tuned to that station:
+
+Selection controller broadcasts a change
+                  ↓
+Selection overlay hears it
+                  ↓
+Selection overlay rerenders
+
+
+The cell layer is not listening, so it does not rerender.
+
+There is only one selection
+
+There are not two synchronized selection values.
+
+SelectionController
+└── contains the one authoritative selection
+
+SelectionLayer
+└── displays that selection
+
+
+The overlay does not own another copy. It asks the controller for the current value.
+
+Start with this small controller
+
+Forget generic types, undo, structural transformations, and optimizations for the moment:
+
+interface CellPosition {
+    row: number;
+    column: number;
+}
+
+interface SelectionRange {
+    anchor: CellPosition;
+    focus: CellPosition;
+}
+
+class SelectionController {
+    private selection: SelectionRange = {
+        anchor: { row: 0, column: 0 },
+        focus: { row: 0, column: 0 },
+    };
+
+    private listeners = new Set<() => void>();
+
+    getSelection = (): SelectionRange => {
+        return this.selection;
+    };
+
+    setSelection(selection: SelectionRange): void {
+        this.selection = selection;
+
+        for (const listener of this.listeners) {
+            listener();
+        }
+    }
+
+    subscribe = (listener: () => void): (() => void) => {
+        this.listeners.add(listener);
+
+        return () => {
+            this.listeners.delete(listener);
+        };
+    };
+}
+
+
+This object holds the selection. It is just TypeScript.
+
+Create the controller once in your demo
+import { useRef, useState } from "react";
+
+export function SpreadsheetViewDemo() {
+    const [ledger, setLedger] =
+        useState<LedgerState>(INITIAL);
+
+    const selectionControllerRef =
+        useRef<SelectionController | null>(null);
+
+    if (selectionControllerRef.current === null) {
+        selectionControllerRef.current =
+            new SelectionController();
+    }
+
+    return (
+        <SpreadsheetView<LedgerState>
+            data={ledger}
+            selectionController={
+                selectionControllerRef.current
+            }
+            getRowCount={data => data.rows.length}
+            getColumnCount={() => COLUMNS.length}
+            getCell={(data, row, column) => {
+                const descriptor = COLUMNS[column];
+
+                return {
+                    value:
+                        data.rows[row][descriptor.key],
+                    align: descriptor.align,
+                };
+            }}
+            getColumnHeader={(_data, column) =>
+                COLUMNS[column].label
+            }
+            getRowHeader={(_data, row) => row + 1}
+            getRowKey={(data, row) =>
+                data.rows[row].id
+            }
+            editable
+        />
+    );
+}
+
+
+There are now two kinds of ownership:
+
+SpreadsheetViewDemo
+├── ledger data, using useState
+└── stable selection controller, using useRef
+
+
+The useRef is important because it keeps the same controller object between renders.
+
+The demo does not read the current selection while rendering. Therefore, changing the controller's selection does not rerender the demo.
+
+The selection layer listens to the controller
+
+Inside SpreadsheetView:
+
+function SpreadsheetView<Data>(
+    props: SpreadsheetViewProps<Data>,
+) {
+    return (
+        <div className="spreadsheet">
+            <CellLayer {...props} />
+
+            <SelectionLayer
+                controller={
+                    props.selectionController
+                }
+            />
+
+            <EditorLayer />
+        </div>
+    );
+}
+
+
+Only SelectionLayer subscribes:
+
+import { useSyncExternalStore } from "react";
+
+function SelectionLayer({
+    controller,
+}: {
+    controller: SelectionController;
+}) {
+    const selection = useSyncExternalStore(
+        controller.subscribe,
+        controller.getSelection,
+    );
+
+    return (
+        <SelectionOverlay
+            selection={selection}
+        />
+    );
+}
+
+
+useSyncExternalStore tells React:
+
+This value is stored outside React. Please rerender this component when the external object reports that the value changed.
+
+It plays a similar rendering role to useState, but the value itself belongs to the controller.
+
+Selecting a cell
+
+Suppose the user clicks row 3, column 1.
+
+The interaction code performs:
+
+controller.setSelection({
+    anchor: {
+        row: 3,
+        column: 1,
+    },
+    focus: {
+        row: 3,
+        column: 1,
+    },
+});
+
+
+Then this happens:
+
+controller.setSelection(...)
+           ↓
+Controller saves the new selection
+           ↓
+Controller calls its listeners
+           ↓
+React knows SelectionLayer is listening
+           ↓
+React calls SelectionLayer() again
+           ↓
+SelectionOverlay moves
+
+
+These components are not called because of this subscription:
+
+SpreadsheetViewDemo
+SpreadsheetView
+CellLayer
+EditorLayer
+
+Deleting rows
+
+External code can access the same controller:
+
+function deleteRows(
+    at: number,
+    count: number,
+): void {
+    setLedger(previous =>
+        removeRows(previous, at, count)
+    );
+
+    const current =
+        selectionController.getSelection();
+
+    const adjusted =
+        adjustSelectionAfterDeletingRows(
+            current,
+            at,
+            count,
+        );
+
+    selectionController.setSelection(adjusted);
+}
+
+
+This produces two independent notifications:
+
+Ledger data changed
+    ↓
+Spreadsheet data rendering updates
+
+Selection changed
+    ↓
+Selection overlay updates
+
+
+Both are part of one logical action, but they have separate, narrow rendering paths.
+
+Later, you can wrap these into one command so nobody forgets to update the selection:
+
+spreadsheetCommands.deleteRows(at, count);
+
+
+That command would internally modify both the business data and the selection controller.
+
+Undo works the same way
+
+Before deletion, record:
+
+const historyEntry = {
+    dataBefore: ledger,
+    selectionBefore:
+        selectionController.getSelection(),
+};
+
+
+Undo restores both:
+
+setLedger(historyEntry.dataBefore);
+
+selectionController.setSelection(
+    historyEntry.selectionBefore,
+);
+
+
+Again:
+
+restoring ledger data updates the cell layer;
+restoring selection updates the overlay.
+Why not just use useState?
+
+Here is the fundamental rule:
+
+If a component owns a value through useState, changing that value rerenders that component.
+
+If you write:
+
+function SpreadsheetViewDemo() {
+    const [selection, setSelection] =
+        useState(initialSelection);
+
+    return (
+        <SpreadsheetView
+            selection={selection}
+            onSelectionChange={setSelection}
+        />
+    );
+}
+
+
+then every selection change rerenders SpreadsheetViewDemo.
+
+There is no special way to keep useState in SpreadsheetViewDemo while preventing SpreadsheetViewDemo from rerendering. Rerendering its owner is precisely how useState works.
+
+Your choices are therefore:
+
+Choice A: useState in the demo
+Simple
+Externally accessible
+Demo rerenders on selection changes
+
+
+You can protect the expensive cell layer with React.memo.
+
+Choice B: External selection controller
+Externally accessible
+Only subscribing components rerender
+Slightly more infrastructure
+
+
+For your headless component, Choice B matches your requirements better.
+
+Is it still React state?
+
+Technically, the selection is not stored by useState. It is external state observed by React.
+
+That is not a workaround or misuse. React supports both:
+
+useState
+    React owns value
+    owning component rerenders
+
+useSyncExternalStore
+    external object owns value
+    subscribing component rerenders
+
+
+Your business data can still use useState:
+
+const [ledger, setLedger] =
+    useState<LedgerState>(INITIAL);
+
+
+Your selection can use an external controller:
+
+const selectionControllerRef =
+    useRef(new SelectionController());
+
+
+The two kinds of state coexist.
+
+The simplest mental picture
+                         ┌─────────────────────┐
+                         │ SelectionController │
+                         │                     │
+Mouse click ────────────►│ setSelection()      │
+Delete rows ────────────►│                     │
+Undo ───────────────────►│                     │
+                         └──────────┬──────────┘
+                                    │ notifies
+                                    ▼
+                         ┌─────────────────────┐
+                         │ SelectionLayer      │
+                         │ rerenders overlay   │
+                         └─────────────────────┘
+
+                         ┌─────────────────────┐
+                         │ CellLayer           │
+                         │ not subscribed      │
+                         │ does not rerender   │
+                         └─────────────────────┘
+
+
+So the central idea is simply:
+
+Store one selection in an externally accessible object. Let only the selection overlay subscribe to that object. Everyone else can modify it without subscribing to it.
+
+(using useSyncExternalStore)
+
+Yes. useSyncExternalStore is a React hook intended for exactly this situation:
+
+The state is stored outside React, but a React component needs to rerender when that external state changes.
+
+It takes two essential functions:
+
+useSyncExternalStore(subscribe, getSnapshot)
+
+subscribe tells React how to listen for changes.
+getSnapshot tells React how to read the current value.
+Minimal example
+1. An ordinary TypeScript store owns the selection
+export interface CellPosition {
+    row: number;
+    column: number;
+}
+
+export interface SelectionRange {
+    anchor: CellPosition;
+    focus: CellPosition;
+}
+
+export class SelectionStore {
+    private selection: SelectionRange = {
+        anchor: { row: 0, column: 0 },
+        focus: { row: 0, column: 0 },
+    };
+
+    private readonly listeners = new Set<() => void>();
+
+    getSnapshot = (): SelectionRange => {
+        return this.selection;
+    };
+
+    subscribe = (listener: () => void): (() => void) => {
+        this.listeners.add(listener);
+
+        return () => {
+            this.listeners.delete(listener);
+        };
+    };
+
+    setSelection(next: SelectionRange): void {
+        if (
+            this.selection.anchor.row === next.anchor.row &&
+            this.selection.anchor.column === next.anchor.column &&
+            this.selection.focus.row === next.focus.row &&
+            this.selection.focus.column === next.focus.column
+        ) {
+            return;
+        }
+
+        this.selection = next;
+
+        for (const listener of this.listeners) {
+            listener();
+        }
+    }
+}
+
+
+There is only one selection, stored inside SelectionStore.
+
+2. The overlay subscribes to it
+import { useSyncExternalStore } from "react";
+
+interface SelectionLayerProps {
+    store: SelectionStore;
+}
+
+export function SelectionLayer({
+    store,
+}: SelectionLayerProps) {
+    const selection = useSyncExternalStore(
+        store.subscribe,
+        store.getSnapshot,
+    );
+
+    return (
+        <div>
+            Selected from
+            {" "}
+            ({selection.anchor.row}, {selection.anchor.column})
+            {" "}
+            to
+            {" "}
+            ({selection.focus.row}, {selection.focus.column})
+        </div>
+    );
+}
+
+
+When this executes:
+
+store.setSelection({
+    anchor: { row: 2, column: 1 },
+    focus: { row: 5, column: 3 },
+});
+
+
+the process is:
+
+SelectionStore changes its snapshot
+        ↓
+SelectionStore invokes its listeners
+        ↓
+React calls getSnapshot()
+        ↓
+React sees a different snapshot object
+        ↓
+SelectionLayer rerenders
+
+
+The parent does not need to rerender.
+
+Using it in your demo
+
+Create the selection store once:
+
+import { useRef, useState } from "react";
+
+export function SpreadsheetViewDemo() {
+    const [ledger, setLedger] =
+        useState<LedgerState>(INITIAL);
+
+    const selectionStoreRef =
+        useRef<SelectionStore | null>(null);
+
+    if (selectionStoreRef.current === null) {
+        selectionStoreRef.current =
+            new SelectionStore();
+    }
+
+    return (
+        <SpreadsheetView<LedgerState>
+            data={ledger}
+            selectionStore={selectionStoreRef.current}
+            getRowCount={data => data.rows.length}
+            getColumnCount={() => COLUMNS.length}
+            getCell={(data, row, column) => {
+                const descriptor = COLUMNS[column];
+
+                return {
+                    value:
+                        data.rows[row][descriptor.key],
+                    align: descriptor.align,
+                };
+            }}
+            getColumnHeader={(_data, column) =>
+                COLUMNS[column].label
+            }
+            getRowHeader={(_data, row) => row + 1}
+            getRowKey={(data, row) =>
+                data.rows[row].id
+            }
+            editable
+        />
+    );
+}
+
+
+Then inside SpreadsheetView:
+
+export function SpreadsheetView<Data>({
+    selectionStore,
+    ...props
+}: SpreadsheetViewProps<Data>) {
+    return (
+        <div className="spreadsheet">
+            <CellLayer {...props} />
+
+            <SelectionLayer
+                store={selectionStore}
+            />
+
+            <EditorLayer />
+        </div>
+    );
+}
+
+
+Only SelectionLayer calls useSyncExternalStore. SpreadsheetViewDemo, SpreadsheetView, and CellLayer do not subscribe to the current selection.
+
+External modification
+
+Because the store is externally accessible, insertion and deletion code can modify it:
+
+function insertRows(at: number, count: number): void {
+    setLedger(previous =>
+        insertLedgerRows(previous, at, count)
+    );
+
+    const selection =
+        selectionStoreRef.current!.getSnapshot();
+
+    selectionStoreRef.current!.setSelection(
+        transformSelectionAfterInsert(
+            selection,
+            at,
+            count,
+        ),
+    );
+}
+
+
+Undo can restore an earlier selection:
+
+selectionStore.setSelection(
+    historyEntry.selectionBefore,
+);
+
+
+The mouse interaction can update it:
+
+selectionStore.setSelection({
+    anchor: dragStart,
+    focus: currentCell,
+});
+
+
+These all modify the same authoritative selection.
+
+Two important rules
+getSnapshot() must be stable
+
+It should return the same object until the selection changes:
+
+getSnapshot = () => this.selection;
+
+
+Do not return a newly copied object:
+
+// Wrong: appears changed every time React reads it.
+getSnapshot = () => ({
+    ...this.selection,
+});
+
+
+React compares snapshots using Object.is. If getSnapshot() always creates a new object, React can repeatedly detect changes even though the logical selection stayed the same.
+
+Methods passed to the hook must remain bound
+
+Using arrow functions ensures that this still refers to the store:
+
+getSnapshot = () => this.selection;
+
+subscribe = listener => {
+    // ...
+};
+
+
+Ordinary class methods would require binding:
+
+this.subscribe = this.subscribe.bind(this);
+
+
+Arrow properties are simpler here.
+
+Comparison with useState
+
+With useState:
+
+function Owner() {
+    const [selection, setSelection] =
+        useState(initialSelection);
+}
+
+
+React owns the state, and updating it rerenders Owner.
+
+With useSyncExternalStore:
+
+function SelectionLayer({ store }: Props) {
+    const selection = useSyncExternalStore(
+        store.subscribe,
+        store.getSnapshot,
+    );
+}
+
+
+The external store owns the state, and updating it rerenders the subscribing component, SelectionLayer.
+
+So, for your case:
+
+Ledger data
+    → useState in the demo
+    → editing data rerenders the demo and data layer
+
+Selection
+    → SelectionStore outside React
+    → useSyncExternalStore inside SelectionLayer
+    → selecting cells rerenders only SelectionLayer
+
+
+useSyncExternalStore is therefore the bridge between your externally modifiable headless selection state and the narrow React layer responsible for rendering it.
+
+---
+
+Yes, you have the basic flow, with one important correction:
+
+Store positions in the scrollable content’s coordinate system, not as absolute positions within the visible viewport.
+
+The viewport is only the window through which you see the larger table. Both the cells and the selection overlay should normally live inside the same scrollable content element.
+
+Recommended DOM structure
+<div
+    ref={viewportRef}
+    style={{
+        width: viewportWidth,
+        height: viewportHeight,
+        overflow: "auto",
+        position: "relative",
+    }}
+>
+    <div
+        style={{
+            position: "relative",
+            width: layout.totalWidth,
+            height: layout.totalHeight,
+        }}
+    >
+        <TableLayoutLayer
+            data={data}
+            layout={layout}
+        />
+
+        <SelectionLayer
+            selectionStore={selectionStore}
+            layout={layout}
+        />
+
+        <EditBoxLayer
+            editorStore={editorStore}
+            layout={layout}
+        />
+    </div>
+</div>
+
+
+Conceptually:
+
+Scrollable viewport
+└── Large scrollable content
+    ├── Cells
+    ├── Selection overlay
+    └── Edit-box overlay
+
+
+Because all three layers are inside the same scrollable content, the browser scrolls them together. The selection layer usually does not need to subtract scrollTop or scrollLeft.
+
+What the axes represent
+
+You need two mappings:
+
+row index    → content-space Y position and height
+column index → content-space X position and width
+
+
+For example:
+
+interface AxisLayout {
+    getStart(index: number): number;
+    getSize(index: number): number;
+    findIndexAt(position: number): number;
+    readonly totalSize: number;
+}
+
+
+Then the complete layout is:
+
+interface TableLayout {
+    rows: AxisLayout;
+    columns: AxisLayout;
+
+    readonly totalWidth: number;
+    readonly totalHeight: number;
+}
+
+
+The two directions are important.
+
+Rendering
+row/column index → pixel position
+
+const x = layout.columns.getStart(column);
+const y = layout.rows.getStart(row);
+
+const width = layout.columns.getSize(column);
+const height = layout.rows.getSize(row);
+
+Hit testing
+pointer position → row/column index
+
+const column = layout.columns.findIndexAt(contentX);
+const row = layout.rows.findIndexAt(contentY);
+
+
+The cell layer, selection layer and pointer interaction logic all use the same layout object.
+
+Do not rebuild the position cache after every selection change
+
+This is the critical answer to your question.
+
+A selection change does not change:
+
+row positions;
+column positions;
+row heights;
+column widths;
+total content size.
+
+Therefore, it must not rebuild the axis layout.
+
+Your dependencies should look like this:
+
+Data structure/order/size change
+        ↓
+Axis layout may change
+
+Selection change
+        ↓
+Axis layout unchanged
+        ↓
+Only selection rectangle recalculated
+
+
+The layout should be persistent across renders, or memoized from only the values that affect geometry.
+
+For example:
+
+const layout = useMemo(
+    () =>
+        createTableLayout({
+            rowCount: getRowCount(data),
+            columnCount: getColumnCount(data),
+            getRowHeight,
+            getColumnWidth,
+        }),
+    [
+        dataLayoutRevision,
+        getRowHeight,
+        getColumnWidth,
+    ],
+);
+
+
+However, be careful with using data itself as the dependency:
+
+// Potentially rebuilds layout after every cell-value edit.
+useMemo(() => createTableLayout(data), [data]);
+
+
+Editing a cell value might create a new data object even though geometry did not change.
+
+A better dependency is a dedicated layout or projection revision:
+
+const layout = useMemo(
+    () =>
+        createTableLayout({
+            rowCount,
+            columnCount,
+            getRowHeight,
+            getColumnWidth,
+        }),
+    [
+        layoutRevision,
+        rowCount,
+        columnCount,
+        getRowHeight,
+        getColumnWidth,
+    ],
+);
+
+
+A value edit does not change layoutRevision. Inserting a row, resizing a column or expanding a hierarchy node does.
+
+Fixed-size rows and columns need no cache
+
+If every row has the same height and every column has the same width, positions are simple arithmetic:
+
+class FixedAxisLayout implements AxisLayout {
+    constructor(
+        private readonly count: number,
+        private readonly itemSize: number,
+    ) {}
+
+    getStart(index: number): number {
+        return index * this.itemSize;
+    }
+
+    getSize(_index: number): number {
+        return this.itemSize;
+    }
+
+    findIndexAt(position: number): number {
+        return Math.max(
+            0,
+            Math.min(
+                this.count - 1,
+                Math.floor(position / this.itemSize),
+            ),
+        );
+    }
+
+    get totalSize(): number {
+        return this.count * this.itemSize;
+    }
+}
+
+
+Nothing needs rebuilding when the selection changes.
+
+const rowLayout = new FixedAxisLayout(
+    rowCount,
+    ROW_HEIGHT,
+);
+
+const columnLayout = new FixedAxisLayout(
+    columnCount,
+    COLUMN_WIDTH,
+);
+
+
+The selection rectangle is then cheap to calculate.
+
+Variable sizes may require an index
+
+With variable row heights:
+
+row 0: 24 px
+row 1: 30 px
+row 2: 50 px
+row 3: 24 px
+
+
+The starting positions are cumulative:
+
+row 0 starts at 0
+row 1 starts at 24
+row 2 starts at 54
+row 3 starts at 104
+
+
+You could initially use prefix positions:
+
+class VariableAxisLayout implements AxisLayout {
+    private readonly starts: number[];
+
+    constructor(private readonly sizes: readonly number[]) {
+        this.starts = new Array(sizes.length + 1);
+        this.starts[0] = 0;
+
+        for (let index = 0; index < sizes.length; index++) {
+            this.starts[index + 1] =
+                this.starts[index] + sizes[index];
+        }
+    }
+
+    getStart(index: number): number {
+        return this.starts[index];
+    }
+
+    getSize(index: number): number {
+        return this.sizes[index];
+    }
+
+    findIndexAt(position: number): number {
+        let low = 0;
+        let high = this.sizes.length;
+
+        while (low < high) {
+            const middle = Math.floor(
+                (low + high) / 2,
+            );
+
+            if (this.starts[middle + 1] <= position) {
+                low = middle + 1;
+            } else {
+                high = middle;
+            }
+        }
+
+        return Math.min(
+            low,
+            this.sizes.length - 1,
+        );
+    }
+
+    get totalSize(): number {
+        return this.starts[this.sizes.length];
+    }
+}
+
+
+This layout index should be rebuilt or updated only when geometry changes, not when selection changes.
+
+For your fully dependency-inverted design, the renderer need not decide whether this is implemented with:
+
+arithmetic;
+a prefix array;
+a Fenwick tree;
+a segment tree;
+an order-statistic tree;
+a paged index;
+another injected implementation.
+
+It only consumes the AxisLayout capability.
+
+Converting a click into a logical cell
+
+Because the viewport scrolls, a browser pointer coordinate must be converted into content coordinates.
+
+function getCellAtPointer(
+    event: React.PointerEvent,
+    viewport: HTMLDivElement,
+    layout: TableLayout,
+): CellPosition {
+    const bounds = viewport.getBoundingClientRect();
+
+    const contentX =
+        event.clientX -
+        bounds.left +
+        viewport.scrollLeft;
+
+    const contentY =
+        event.clientY -
+        bounds.top +
+        viewport.scrollTop;
+
+    return {
+        row: layout.rows.findIndexAt(contentY),
+        column: layout.columns.findIndexAt(contentX),
+    };
+}
+
+
+If you have frozen headers, subtract or otherwise account for them:
+
+const contentX =
+    event.clientX -
+    bounds.left +
+    viewport.scrollLeft -
+    rowHeaderWidth;
+
+const contentY =
+    event.clientY -
+    bounds.top +
+    viewport.scrollTop -
+    columnHeaderHeight;
+
+
+The resulting selection remains logical:
+
+selectionStore.setSelection({
+    anchor: cell,
+    focus: cell,
+});
+
+
+You do not place the pixel coordinates inside the selection store.
+
+Converting a selection into an overlay rectangle
+
+The overlay uses the shared layout:
+
+function getSelectionRectangle(
+    selection: SelectionRange,
+    layout: TableLayout,
+): Rectangle {
+    const firstRow = Math.min(
+        selection.anchor.row,
+        selection.focus.row,
+    );
+
+    const lastRow = Math.max(
+        selection.anchor.row,
+        selection.focus.row,
+    );
+
+    const firstColumn = Math.min(
+        selection.anchor.column,
+        selection.focus.column,
+    );
+
+    const lastColumn = Math.max(
+        selection.anchor.column,
+        selection.focus.column,
+    );
+
+    const top =
+        layout.rows.getStart(firstRow);
+
+    const bottom =
+        layout.rows.getStart(lastRow) +
+        layout.rows.getSize(lastRow);
+
+    const left =
+        layout.columns.getStart(firstColumn);
+
+    const right =
+        layout.columns.getStart(lastColumn) +
+        layout.columns.getSize(lastColumn);
+
+    return {
+        x: left,
+        y: top,
+        width: right - left,
+        height: bottom - top,
+    };
+}
+
+
+Rendering it:
+
+function SelectionOverlay({
+    rectangle,
+}: {
+    rectangle: Rectangle;
+}) {
+    return (
+        <div
+            style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                width: rectangle.width,
+                height: rectangle.height,
+                transform: `translate(
+                    ${rectangle.x}px,
+                    ${rectangle.y}px
+                )`,
+                border: "2px solid #107c41",
+                boxSizing: "border-box",
+                pointerEvents: "none",
+            }}
+        />
+    );
+}
+
+
+Using transform is often convenient for moving overlays because the logical top-left origin remains fixed.
+
+What causes the selection layer to rerender?
+
+The selection rectangle depends on two sources:
+
+rectangle = derive(selection, layout)
+
+
+Therefore, it must recalculate when either changes.
+
+function SelectionLayer({
+    selectionStore,
+    layoutStore,
+}: SelectionLayerProps) {
+    const selection = useSyncExternalStore(
+        selectionStore.subscribe,
+        selectionStore.getSnapshot,
+    );
+
+    const layoutSnapshot = useSyncExternalStore(
+        layoutStore.subscribe,
+        layoutStore.getSnapshot,
+    );
+
+    if (!selection) {
+        return null;
+    }
+
+    const rectangle = getSelectionRectangle(
+        selection,
+        layoutSnapshot,
+    );
+
+    return (
+        <SelectionOverlay rectangle={rectangle} />
+    );
+}
+
+
+The behavior becomes:
+
+Click another cell
+    ↓
+Selection changes
+    ↓
+SelectionLayer rerenders
+    ↓
+Rectangle recalculated against unchanged layout
+
+
+Or:
+
+Column width changes
+    ↓
+Layout changes
+    ↓
+SelectionLayer rerenders
+    ↓
+Same logical selection gets a new rectangle
+
+
+Or:
+
+Cell value changes
+    ↓
+CellDataLayer rerenders
+    ↓
+Layout unchanged
+    ↓
+Selection unchanged
+    ↓
+SelectionLayer need not rerender
+
+Structural changes require two separate responses
+
+Suppose a row is inserted above the selected range.
+
+Two things happen:
+
+The logical selection may be transformed.
+The axis layout changes because rows were inserted.
+Insert row
+    ├── update row projection/layout
+    └── transform logical selection
+
+
+The selection overlay then derives its new rectangle from the updated selection and updated layout.
+
+For example:
+
+selection before:
+    rows 5 through 8
+
+insert one row at position 2
+
+selection after:
+    rows 6 through 9
+
+
+If stable row IDs are used instead, the logical selection may not need to change at all. The projection resolves the selected IDs to their new visible positions, and the new layout supplies their coordinates.
+
+You may not need the layout to be React state
+
+The layout can be a stable object with an externally observed revision:
+
+interface LayoutSnapshot {
+    revision: number;
+}
+
+interface LayoutController {
+    getSnapshot(): LayoutSnapshot;
+    subscribe(listener: () => void): () => void;
+
+    getRowStart(index: number): number;
+    getRowSize(index: number): number;
+
+    getColumnStart(index: number): number;
+    getColumnSize(index: number): number;
+
+    findRowAt(y: number): number;
+    findColumnAt(x: number): number;
+
+    getTotalWidth(): number;
+    getTotalHeight(): number;
+}
+
+
+The controller remains stable. Internally, it updates its geometry index only when necessary.
+
+useSyncExternalStore(
+    layout.subscribe,
+    layout.getSnapshot,
+);
+
+const rectangle = calculateSelectionRectangle(
+    selection,
+    layout,
+);
+
+
+The snapshot revision tells React when geometry must be recomputed. The controller provides the actual lookup functions.
+
+Your accurate final mental model
+
+Your interpretation is almost right. I would phrase it this way:
+
+1. The table has persistent X-axis and Y-axis layout models.
+
+2. Those models map:
+   index → pixel position
+   pixel position → index
+
+3. The cell layer uses the models to place cells.
+
+4. Pointer handling uses the models to identify the clicked cell.
+
+5. The selection store stores logical cell positions, not pixels.
+
+6. The selection layer uses the same layout models to derive
+   the overlay rectangle.
+
+7. Selection changes do not rebuild the axes.
+
+8. Structural or sizing changes update the relevant axes and
+   cause the overlay geometry to be derived again.
+
+
+So no, you should not rebuild the axis-position cache during every selection-layer render. Keep the geometry model stable, change it only when row or column geometry changes, and use it as the common cohesive dependency shared by the cell, interaction, selection, and editing layers.
+
+
+---
+
+(Architecture)
+Because the little data sheet is for manual testing. The production can reach millions of rows in terms of data. Another thing I thought about is that since I have 3 layers, one for cell grid, one for selection range, and one for edit box, with two side integrators as hooks such as TableGeometry and EditBox (useTableGeometry and useEditBox), in the spreadsheet-view wrapper component, it does not need to know anything about how fine-grained memoization or how many cells needed to be loaded in this current position. However, all of these concerns about rendering cells should be encapsulated inside the table grid, and let it decide. 
+
+Yes, that is a much cleaner responsibility boundary. SpreadsheetView should compose the major layers and shared services, while TableGridLayer owns the mechanics of efficiently materializing and rendering the visible cells.
+
+A sensible responsibility split
+SpreadsheetView
+├── creates/connects shared interaction services
+├── establishes viewport and content coordinate system
+├── composes independent layers
+└── does not iterate through business rows or cells
+
+Scrollable content
+├── TableGridLayer
+├── SelectionRangeLayer
+└── EditBoxLayer
+
+
+The wrapper should remain fairly boring:
+
+function SpreadsheetView<TData>(
+    props: SpreadsheetViewProps<TData>,
+) {
+    const geometry = useTableGeometry({
+        viewport: props.viewport,
+        rowSizing: props.rowSizing,
+        columnSizing: props.columnSizing,
+    });
+
+    const editBox = useEditBox({
+        geometry,
+        onCommit: props.onCellEdit,
+    });
+
+    return (
+        <div
+            ref={geometry.viewportRef}
+            style={{
+                width: props.viewportWidth,
+                height: props.viewportHeight,
+                overflow: "auto",
+                position: "relative",
+            }}
+        >
+            <div
+                style={{
+                    position: "relative",
+                    width: geometry.contentWidth,
+                    height: geometry.contentHeight,
+                }}
+            >
+                <TableGridLayer
+                    source={props.source}
+                    geometry={geometry}
+                />
+
+                <SelectionRangeLayer
+                    selection={props.selection}
+                    geometry={geometry}
+                />
+
+                <EditBoxLayer
+                    controller={editBox}
+                    geometry={geometry}
+                />
+            </div>
+        </div>
+    );
+}
+
+
+Nothing in this wrapper needs to know:
+
+how many rows are loaded;
+whether rows come from an array, AVL tree or B+ tree;
+how the visible range is traversed;
+whether rendering is memoized per row or per cell;
+whether partial loading uses pages or cursors;
+how cell invalidation works;
+which cell components currently exist.
+
+Those are grid-layer concerns.
+
+What TableGridLayer should own
+
+TableGridLayer is the virtualization and cell-materialization boundary. It should decide:
+
+Which rows and columns intersect the viewport.
+How much rendering overscan is needed.
+Which loaded windows are missing.
+When more data should be requested.
+Which visible render units should be mounted.
+Whether rows or cells are the optimal memoization unit.
+How changes invalidate existing visible units.
+How stable row and column identities become React keys.
+
+Conceptually:
+
+function TableGridLayer<TData>({
+    source,
+    geometry,
+}: TableGridLayerProps<TData>) {
+    const renderWindow = useRenderWindow(geometry);
+
+    const materializedWindow = useMaterializedWindow({
+        source,
+        renderWindow,
+    });
+
+    return (
+        <VisibleGrid
+            source={source}
+            geometry={geometry}
+            window={materializedWindow}
+        />
+    );
+}
+
+
+The wrapper only sees one component:
+
+<TableGridLayer source={source} geometry={geometry} />
+
+
+The grid layer may internally contain:
+
+TableGridLayer
+├── viewport-window controller
+├── loading-demand controller
+├── row traversal
+├── visible-row descriptors
+└── independently rendered rows
+    └── independently rendered cells, if needed
+
+Separate rendering overscan from loading buffer
+
+For millions of rows, these should not necessarily be the same range:
+
+interface GridWindows {
+    visible: AxisWindow;
+    rendered: AxisWindow;
+    requested: AxisWindow;
+    materialized: AxisWindow;
+}
+
+
+For example:
+
+Visible rows:       1000 to 1030
+Rendered rows:       990 to 1040
+Materialized rows:   800 to 1300
+
+
+The grid layer can render 50 rows while keeping a much larger range available through the provider. It should not create React components for every loaded row.
+
+Loaded does not mean rendered.
+Rendered does not necessarily mean visible.
+
+
+That distinction is essential at production scale.
+
+Let the source support demand, not prescribe paging
+
+The grid should preferably express viewport demand without assuming page numbers:
+
+interface GridDemand<RowAnchor, ColumnAnchor> {
+    rows: {
+        anchor: RowAnchor;
+        beforePixels: number;
+        afterPixels: number;
+    };
+
+    columns: {
+        anchor: ColumnAnchor;
+        beforePixels: number;
+        afterPixels: number;
+    };
+}
+
+
+The injected source decides how to fulfill it:
+
+interface PartialGridSource<RowId, ColumnId> {
+    traverseRows(
+        window: TraversalWindow,
+        visitor: (row: VisibleRow<RowId>) => void,
+    ): TraversalResult;
+
+    traverseColumns(
+        window: TraversalWindow,
+        visitor: (
+            column: VisibleColumn<ColumnId>,
+        ) => void,
+    ): TraversalResult;
+
+    requestCoverage(
+        demand: GridDemand<unknown, unknown>,
+        signal: AbortSignal,
+    ): Promise<void>;
+}
+
+
+The source might use pages, cursors, B+ tree leaves, generated data, a database, or something else. Neither SpreadsheetView nor TableGridLayer needs to know.
+
+Fine-grained rendering stays inside the grid layer
+
+Initially, TableGridLayer might use row-level render units:
+
+function VisibleGrid<RowId, ColumnId>({
+    rows,
+    columns,
+    source,
+    geometry,
+}: VisibleGridProps<RowId, ColumnId>) {
+    return (
+        <>
+            {rows.map(row => (
+                <VisibleRow
+                    key={row.id}
+                    row={row}
+                    columns={columns}
+                    source={source}
+                    geometry={geometry}
+                />
+            ))}
+        </>
+    );
+}
+
+
+Each row has an opaque revision:
+
+interface VisibleRow<RowId> {
+    id: RowId;
+    visibleIndex: number;
+    revision: unknown;
+}
+
+
+The row renderer can be memoized based on that revision:
+
+const VisibleRow = React.memo(
+    VisibleRowImplementation,
+    (previous, next) =>
+        previous.row.id === next.row.id &&
+        previous.row.revision === next.row.revision &&
+        previous.columns === next.columns &&
+        previous.geometry.revision ===
+            next.geometry.revision &&
+        previous.source === next.source,
+);
+
+
+If profiling later shows that one row is still too coarse, VisibleRow may internally render independently subscribed cells. That change does not affect SpreadsheetView or its public API.
+
+This is good encapsulation:
+
+Version 1:
+TableGridLayer uses row-level memoization
+
+Version 2:
+TableGridLayer uses cell-level subscriptions
+
+SpreadsheetView remains unchanged.
+
+Geometry is a shared service, not a grid implementation detail
+
+One qualification is important: the grid layer may own cell materialization and rendering, but it should not privately own geometry if selection and editing need the same coordinates.
+
+useTableGeometry is therefore a good side integration at the composition level.
+
+                  TableGeometry
+                 ↙      ↓       ↘
+        TableGridLayer Selection EditBox
+
+
+All layers consume the same geometry capability:
+
+interface TableGeometry<RowId, ColumnId> {
+    readonly revision: number;
+
+    getCellRectangle(
+        rowId: RowId,
+        columnId: ColumnId,
+    ): Rectangle | undefined;
+
+    getRangeRectangles(
+        range: SelectionRange<RowId, ColumnId>,
+    ): readonly Rectangle[];
+
+    findCellAtContentPoint(
+        x: number,
+        y: number,
+    ): CellAddress<RowId, ColumnId> | undefined;
+
+    getContentExtent(): {
+        width: number;
+        height: number;
+    };
+}
+
+
+This does not mean SpreadsheetView performs geometry calculations itself. It only obtains and distributes the geometry service.
+
+The grid layer uses it to position cells. The selection layer uses it to position range overlays. The edit box uses it to position the editor.
+
+Be careful about what useTableGeometry returns
+
+If the hook returns a new object on every wrapper render:
+
+function useTableGeometry() {
+    return {
+        getCellRectangle,
+        findCellAtPoint,
+        contentWidth,
+        contentHeight,
+    };
+}
+
+
+then memoized layers may see a changed geometry prop every time.
+
+Prefer a stable controller identity:
+
+function useTableGeometry(
+    options: GeometryOptions,
+): TableGeometryController {
+    const controllerRef =
+        useRef<TableGeometryController | null>(null);
+
+    if (controllerRef.current === null) {
+        controllerRef.current =
+            new TableGeometryController(options);
+    }
+
+    useLayoutEffect(() => {
+        controllerRef.current!.configure(options);
+    }, [options.projectionRevision, options.sizingRevision]);
+
+    return controllerRef.current;
+}
+
+
+Or memoize the returned object carefully. The central point is:
+
+Same geometry state
+→ same geometry/controller identity
+
+Geometry changed
+→ revision changes and relevant subscribers update
+
+useEditBox may belong closer to EditBoxLayer
+
+There is a useful test for hook placement:
+
+Which components actually need the hook’s changing state?
+
+If only EditBoxLayer needs the current draft text and editing mode, put useEditBox inside that layer:
+
+function EditBoxLayer({
+    commands,
+    geometry,
+}: EditBoxLayerProps) {
+    const editor = useEditBox({
+        commands,
+        geometry,
+    });
+
+    return <EditBox controller={editor} />;
+}
+
+
+This prevents every keystroke from rerendering the wrapper.
+
+If other layers need only stable edit commands, separate commands from changing editor state:
+
+interface EditCommands {
+    begin(address: CellAddress): void;
+    cancel(): void;
+    commit(): void;
+}
+
+interface EditSnapshot {
+    address?: CellAddress;
+    draft: string;
+    phase: "idle" | "editing" | "committing";
+}
+
+
+Then only the edit layer subscribes to EditSnapshot. The pointer interaction layer can call stable commands.
+
+The wrapper should compose capabilities, not snapshots
+
+This distinction is important.
+
+Less desirable:
+
+const geometryState = useTableGeometry();
+const editBoxState = useEditBox();
+const selectionState = useSelection();
+
+return (
+    <>
+        <TableGridLayer geometryState={geometryState} />
+        <SelectionLayer selectionState={selectionState} />
+        <EditBoxLayer editBoxState={editBoxState} />
+    </>
+);
+
+
+Every changing snapshot causes the wrapper to rerender.
+
+Prefer stable capabilities:
+
+const geometry = useStableTableGeometryController();
+const editor = useStableEditController();
+
+return (
+    <>
+        <TableGridLayer geometry={geometry} />
+        <SelectionLayer
+            geometry={geometry}
+            selection={selectionController}
+        />
+        <EditBoxLayer
+            geometry={geometry}
+            editor={editor}
+        />
+    </>
+);
+
+
+Each layer subscribes to only the snapshots it needs.
+
+A suitable final boundary
+SpreadsheetView
+Responsibilities:
+- establish viewport
+- establish content coordinate space
+- connect injected capabilities
+- compose layers
+- route high-level interaction commands
+
+TableGridLayer
+Responsibilities:
+- derive visible window
+- traverse visible rows and columns
+- request partial materialization
+- render visible cells
+- choose row/cell memoization granularity
+- subscribe to cell or row changes
+- expose or report measurements to geometry
+
+SelectionRangeLayer
+Responsibilities:
+- subscribe to logical selection
+- subscribe to relevant geometry changes
+- derive range rectangles
+- render overlays
+
+EditBoxLayer
+Responsibilities:
+- subscribe to edit-session state
+- subscribe to target-cell geometry
+- render and position the active editor
+- collect draft input
+- emit commit/cancel commands
+
+TableGeometry
+Responsibilities:
+- map logical addresses to content coordinates
+- map content coordinates to logical addresses
+- manage dimensions and layout revision
+- preserve one coordinate system across layers
+
+One caution about “the grid decides everything”
+
+The grid should decide rendering strategy, but it should not decide business semantics.
+
+It may decide:
+
+virtualization window;
+overscan size;
+row versus cell render units;
+cache eviction;
+prefetch timing.
+
+It should not decide:
+
+whether deleting rows moves selection to the previous or next row;
+whether collapsing a hierarchy preserves hidden selection;
+whether an edit participates in undo;
+whether a sheet replacement clears history;
+how records are persisted.
+
+Those stay in injected controllers or policies.
+
+So yes, your proposed direction is sound:
+
+SpreadsheetView is the composition boundary. TableGridLayer is the rendering and virtualization boundary. The wrapper should not know the number of currently materialized cells or the memoization strategy.
+
+With millions of rows, that encapsulation is not merely stylistic. It allows you to replace the grid’s internal rendering strategy later without changing the headless API, business-data adapter, selection model, or editor layer.
+
+
+---
+
+Yes, you are very close, and the separation of responsibilities you describe is good. There is just one important correction:
+
+The subscription listener should normally not modify the business data. A command handler modifies the business data, then the change source notifies subscribers about what changed.
+
+Otherwise, a listener becomes both an observer and a mutation authority, which can produce loops and make behavior depend on whether a UI component is currently mounted.
+
+Two separate directions
+
+Think of the architecture as having a command channel and a notification channel:
+
+UI → command → business model
+UI ← change notification ← business model
+
+Command channel
+
+The UI reports the user’s intention:
+
+commands.commitCell({
+    rowId,
+    columnId,
+    value,
+});
+
+
+This command has authority to modify the business data.
+
+Notification channel
+
+After the business model has successfully applied the operation, it reports the result:
+
+changes.publish({
+    type: "cell-updated",
+    rowId,
+    columnId,
+});
+
+
+Subscribers use the notification to invalidate rendering, selection, layout or other derived state. They should not apply the original business mutation again.
+
+Correct flow for editing a cell
+1. User types into CellEditor
+2. CellEditor owns only the temporary draft
+3. User commits
+4. CellEditor sends CommitCell command
+5. Command handler validates the value
+6. Command handler modifies authoritative business data
+7. Command handler publishes CellUpdated
+8. Relevant rendered cell is notified
+9. That cell reads its new value and rerenders
+10. Editor closes
+
+
+In code:
+
+interface SpreadsheetCommands<RowId, ColumnId> {
+    commitCell(command: {
+        rowId: RowId;
+        columnId: ColumnId;
+        value: unknown;
+    }): void;
+}
+
+type SpreadsheetChange<RowId, ColumnId> =
+    | {
+          type: "cell-updated";
+          rowId: RowId;
+          columnId: ColumnId;
+      }
+    | {
+          type: "rows-inserted";
+          at: number;
+          rowIds: readonly RowId[];
+      }
+    | {
+          type: "rows-deleted";
+          at: number;
+          rowIds: readonly RowId[];
+      }
+    | {
+          type: "columns-inserted";
+          at: number;
+          columnIds: readonly ColumnId[];
+      }
+    | {
+          type: "columns-deleted";
+          at: number;
+          columnIds: readonly ColumnId[];
+      }
+    | {
+          type: "projection-reset";
+      };
+
+interface SpreadsheetChangeSource<RowId, ColumnId> {
+    subscribe(
+        listener: (
+            change: SpreadsheetChange<RowId, ColumnId>,
+        ) => void,
+    ): () => void;
+}
+
+
+The command implementation might be:
+
+function commitCell(command: {
+    rowId: RowId;
+    columnId: ColumnId;
+    value: unknown;
+}): void {
+    businessModel.updateCell(
+        command.rowId,
+        command.columnId,
+        command.value,
+    );
+
+    changePublisher.publish({
+        type: "cell-updated",
+        rowId: command.rowId,
+        columnId: command.columnId,
+    });
+}
+
+What the listener does
+
+A rendering listener receives the notification:
+
+changeSource.subscribe(change => {
+    switch (change.type) {
+        case "cell-updated":
+            invalidateRenderedCell(
+                change.rowId,
+                change.columnId,
+            );
+            break;
+
+        case "rows-inserted":
+        case "rows-deleted":
+            invalidateVisibleRows();
+            break;
+
+        case "projection-reset":
+            invalidateEntireVisibleWindow();
+            break;
+    }
+});
+
+
+The important distinction is:
+
+Command handler:
+    changes authoritative business data
+
+Subscriber:
+    reacts to the completed change
+
+
+A mounted cell subscriber might simply reread the value:
+
+function handleCellInvalidated(): void {
+    const latestDescriptor = source.getCell(
+        rowId,
+        columnId,
+    );
+
+    updateRenderedSnapshot(latestDescriptor);
+}
+
+
+This is a useful combination of push and pull:
+
+Push:
+    "Cell 42/amount changed."
+
+Pull:
+    "Give me the current value of cell 42/amount."
+
+
+The notification need not carry the new business value. It only identifies what became stale.
+
+Why the listener should not perform the mutation
+
+Suppose the listener itself updates the business data:
+
+Cell editor publishes "cell changed"
+        ↓
+Listener updates business data
+
+
+Several problems appear.
+
+No listener might exist
+
+If TableGridLayer is unmounted, there may be no listener. The business operation would never happen.
+
+There may be multiple listeners
+
+You might eventually have:
+
+the visible grid;
+an audit panel;
+a formula engine;
+a validation system;
+a selection controller;
+a persistence adapter.
+
+If every listener interprets the event as a command, the mutation could happen more than once.
+
+A listener might subscribe late
+
+Change notifications usually describe completed changes. A newly mounted listener should read the current snapshot, not replay old business commands.
+
+Notification loops become possible
+Listener receives event
+→ listener changes business model
+→ business model emits another event
+→ listener receives another event
+
+
+Therefore, subscriptions are best treated as observation, not authority.
+
+Cell editor responsibility
+
+Your instinct regarding CellEdit is right. It should have a narrow responsibility:
+
+CellEdit
+├── display the current editing value
+├── maintain the temporary draft
+├── handle keyboard and input events
+├── request commit or cancellation
+└── not know how business data is stored
+
+
+For example:
+
+interface CellEditProps<RowId, ColumnId> {
+    rowId: RowId;
+    columnId: ColumnId;
+    initialValue: string;
+
+    onCommit(request: {
+        rowId: RowId;
+        columnId: ColumnId;
+        value: string;
+    }): void;
+
+    onCancel(): void;
+}
+
+function CellEdit<RowId, ColumnId>({
+    rowId,
+    columnId,
+    initialValue,
+    onCommit,
+    onCancel,
+}: CellEditProps<RowId, ColumnId>) {
+    const [draft, setDraft] = useState(initialValue);
+
+    return (
+        <input
+            value={draft}
+            onChange={event => {
+                setDraft(event.currentTarget.value);
+            }}
+            onKeyDown={event => {
+                if (event.key === "Enter") {
+                    onCommit({
+                        rowId,
+                        columnId,
+                        value: draft,
+                    });
+                }
+
+                if (event.key === "Escape") {
+                    onCancel();
+                }
+            }}
+        />
+    );
+}
+
+
+CellEdit does not mutate Txn, an AVL tree, a B+ tree or anything else. It emits a semantic request.
+
+Structural operations follow the same flow
+
+Consider inserting a row:
+
+UI requests InsertRows
+        ↓
+Command handler modifies business structure
+        ↓
+Command handler records undo information
+        ↓
+Command handler resolves selection policy
+        ↓
+Command handler publishes RowsInserted
+        ↓
+Grid updates visible traversal/layout
+        ↓
+Selection overlay updates if necessary
+
+
+The command could be:
+
+commands.insertRows({
+    at: 10,
+    count: 3,
+});
+
+
+After successfully applying it:
+
+changePublisher.publish({
+    type: "rows-inserted",
+    at: 10,
+    rowIds: insertedRowIds,
+});
+
+
+Different listeners react according to their responsibilities:
+
+TableGridLayer
+    → invalidates row traversal and rendered window
+
+TableGeometry
+    → inserts three row sizes into its Y-axis model
+
+SelectionController
+    → transforms logical selection if required
+
+EditBoxController
+    → relocates or cancels the active editor
+
+HistoryController
+    → already received the transaction information
+
+
+However, I would preferably have the transaction controller process model, selection and history atomically, then publish the outcome. The subscribers should not collectively define the business transaction.
+
+A transaction result is even cleaner
+
+Instead of the command handler publishing unrelated notifications as it works, it can produce one completed transaction result:
+
+interface SpreadsheetTransactionResult<
+    RowId,
+    ColumnId
+> {
+    changes: readonly SpreadsheetChange<
+        RowId,
+        ColumnId
+    >[];
+
+    selectionEffect?: SelectionEffect<
+        RowId,
+        ColumnId
+    >;
+
+    layoutEffect?: LayoutEffect;
+}
+
+function execute(
+    command: SpreadsheetCommand,
+): SpreadsheetTransactionResult {
+    const result = businessModel.apply(command);
+
+    history.record(result.historyEntry);
+    selectionController.apply(result.selectionEffect);
+
+    changePublisher.publish(result.changes);
+
+    return result;
+}
+
+
+That prevents the UI from being responsible for coordinating a multi-part mutation.
+
+Authority map
+
+The responsibilities can be summarized like this:
+
+Cell editor
+    Authority over:
+    - temporary draft
+    - commit/cancel intention
+
+Command or transaction handler
+    Authority over:
+    - business mutation
+    - validation
+    - undo entry
+    - transaction success or failure
+
+Business model
+    Authority over:
+    - authoritative cell and structural data
+
+Change publisher
+    Authority over:
+    - announcing completed invalidations
+
+TableGridLayer
+    Authority over:
+    - visible rendering
+    - virtualization
+    - rendering cache invalidation
+    - partial-load demand
+
+Selection controller
+    Authority over:
+    - logical selection state
+    - selection transformations
+
+TableGeometry
+    Authority over:
+    - content-space positions and dimensions
+
+EditBoxLayer
+    Authority over:
+    - editor presentation and temporary draft
+
+The clean final flow
+CellEdit
+    .onCommit(request)
+
+        ↓
+
+SpreadsheetCommands
+    .commitCell(request)
+
+        ↓
+
+BusinessModel
+    .updateCell(...)
+
+        ↓
+
+ChangePublisher
+    .publish({
+        type: "cell-updated",
+        rowId,
+        columnId,
+    })
+
+        ↓
+
+TableGridLayer
+    invalidates that mounted cell
+
+        ↓
+
+Cell renderer
+    pulls the latest descriptor and rerenders
+
+
+So your conclusion is essentially correct: this separates the editor from business mutation and allows the grid to update precisely. Just rename the roles mentally:
+
+The editor sends a command describing the requested change.
+The command handler has mutation authority.
+The subscription mechanism communicates the completed result.
+The listener invalidates and rerenders, but does not perform the original business mutation.
+
+That distinction will keep the architecture deterministic and prevent subscriptions from becoming hidden command handlers.

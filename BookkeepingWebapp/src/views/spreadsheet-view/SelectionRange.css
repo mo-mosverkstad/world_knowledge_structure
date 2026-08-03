@@ -1,0 +1,24 @@
+/* Drawn over the table, so no cell needs a class and no cell re-renders. */
+.selection-range {
+    position: absolute;
+    background: rgba(53, 116, 240, 0.12);
+    border: 1px solid #3574f0;
+    box-sizing: border-box;
+    /* Below the sticky header (2) and corner (3). */
+    z-index: 1;
+    /* Without this the box swallows clicks meant for the cells it covers. */
+    pointer-events: none;
+}
+
+/*
+ * The cell that receives typing. NO background: an opaque one would paint over
+ * the cell's own text. Punching the range's fill back out is not possible with a
+ * plain box, so the marker is an outline only.
+ */
+.selection-range__active-cell {
+    position: absolute;
+    box-shadow: inset 0 0 0 2px #3574f0;
+    box-sizing: border-box;
+    z-index: 1;
+    pointer-events: none;
+}

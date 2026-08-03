@@ -1,76 +1,59 @@
 import { type ReactNode } from "react";
+import { type SelectionController } from "./SelectionController";
 
-/** A cell position in the grid. */
 export interface CellAddress {
     row: number;
     col: number;
 }
 
-/**
- * How a single cell should be presented. The caller projects one of these out of
- * its business data on demand via `getCell`; the component never sees the domain
- * type behind it.
- */
 export interface CellDescriptor {
-    /** What is rendered in the cell. Any node; commonly a string or number. */
     value: ReactNode;
-    /** Per-cell override of the view's `editable` prop. */
+    /** Overrides the view's `editable`. */
     editable?: boolean;
-    /** Horizontal alignment hint (e.g. numbers right-aligned). */
     align?: "left" | "center" | "right";
-    /** Per-cell override of the view's `multiline` prop. Affects wrapping. */
+    /** Overrides the view's `multiline`. Affects wrapping. */
     multiline?: boolean;
-    /** Extra class name for the cell. */
     className?: string;
-    /** Optional native tooltip. */
     tooltip?: string;
 }
 
 export interface SpreadsheetViewProps<TData> {
-    // ---- DATA PORT -----------------------------------------------------
     /** The business data structure. Opaque to the component. */
     data: TData;
 
-    // ---- ACCESSORS (random access, one call per rendered cell) ----------
     getRowCount: (data: TData) => number;
     getColumnCount: (data: TData) => number;
     getCell: (data: TData, row: number, col: number) => CellDescriptor;
 
-    /**
-     * Optional column header, shown in a frozen strip above the grid. Omit for no
-     * header row. Given the column index, so the caller decides whether that
-     * means a field name, a spreadsheet letter, or anything else.
-     */
+    /** Omit for no header strip / no row gutter. */
     getColumnHeader?: (data: TData, col: number) => ReactNode;
-
-    /**
-     * Optional row header, shown in the left gutter. Omit for no gutter.
-     * Given the row index so the caller can number rows however it likes.
-     */
     getRowHeader?: (data: TData, row: number) => ReactNode;
 
     /**
-     * Optional stable identity for a row, used as the React key. Without it the
-     * row index is the key, which makes React match rows by POSITION: insert a
-     * row and every row after it is treated as changed.
+     * Stable row identity for React's key. Without it the row index is the key, so
+     * React matches rows by position rather than by record.
      */
     getRowKey?: (data: TData, row: number) => string | number;
 
-    // ---- BEHAVIOUR HOOKS -----------------------------------------------
-    /** Fired when a cell is clicked. */
     onCellClick?: (row: number, col: number, data: TData) => void;
-    /**
-     * Fired when the user asks to edit a cell, before any editing starts. The
-     * caller can capture the record's identity here, because a row index may
-     * name a different record by the time the edit finishes.
-     */
+    /** Before editing starts, so the caller can capture the record's identity. */
     onEditBegin?: (row: number, col: number, data: TData) => void;
 
-    // ---- CUSTOMISATION -------------------------------------------------
-    /** Allow cells to be edited. Per-cell `editable` overrides this. */
+    /**
+     * Selection store, created and held by the host (see `useSelectionController`).
+     * Omit it and the grid has no selection.
+     *
+     * A stable reference rather than a value, so selection changes never flow
+     * through the render tree and the table is not re-rendered. The host holding it
+     * can also drive selection from outside the grid.
+     */
+    selectionController?: SelectionController;
+
     editable?: boolean;
-    /** Allow cell values to contain line breaks. Per-cell `multiline` overrides. */
     multiline?: boolean;
-    /** Optional extra class name for the outer container. */
     className?: string;
+
+    /** Bounds the scroll viewport. A number is pixels; a string is used verbatim. */
+    viewportWidth: string | number;
+    viewportHeight: string | number;
 }

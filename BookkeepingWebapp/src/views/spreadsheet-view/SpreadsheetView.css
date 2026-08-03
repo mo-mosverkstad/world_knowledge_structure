@@ -1,0 +1,15 @@
+/*
+ * The scroll viewport.
+ *
+ * `position: relative` is what the selection boxes resolve against, so they pan
+ * with the table and are clipped by the viewport with no scroll handling.
+ *
+ * `max-width`/`max-height` rather than `width`/`height`: the viewport should stop
+ * growing at the given bound, not be forced to it, so a small table does not sit
+ * in a mostly empty box. The inline values from `viewportWidth`/`viewportHeight`
+ * are applied as maxima for the same reason.
+ */
+.spreadsheet-viewport {
+    position: relative;
+    overflow: auto;
+}

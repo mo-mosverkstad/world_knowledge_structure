@@ -228,6 +228,50 @@ describe("the host drives the selection", () => {
     });
 });
 
+describe("the viewport", () => {
+    /** Render with only the dimensions that matter and read the inline style. */
+    const styleFor = (w: string | number, h: string | number) => {
+        render(
+            <SpreadsheetView<Sheet>
+                data={{ rows: 30, cols: 3 }}
+                getRowCount={(d) => d.rows}
+                getColumnCount={(d) => d.cols}
+                getCell={(_d, row, col): CellDescriptor => ({ value: `${row}.${col}` })}
+                viewportWidth={w}
+                viewportHeight={h}
+            />,
+        );
+        return document.querySelector<HTMLElement>(".spreadsheet-viewport")!.style;
+    };
+
+    it("bounds the viewport rather than fixing its size", () => {
+        // A fixed height would force a small table into a large empty box.
+        const style = styleFor(500, 220);
+        expect(style.maxHeight).toBe("220px");
+        expect(style.height).toBe("");
+    });
+
+    it("accepts a unitless numeric STRING as pixels", () => {
+        // React appends `px` to numbers but passes strings verbatim, so "220"
+        // would become invalid CSS and be dropped — no bound, no scrollbar.
+        expect(styleFor("100%", "220").maxHeight).toBe("220px");
+    });
+
+    it("passes a string with a unit through untouched", () => {
+        const style = styleFor("50%", "30vh");
+        expect(style.maxWidth).toBe("50%");
+        expect(style.maxHeight).toBe("30vh");
+    });
+
+    it("scrolls, so a bounded viewport clips the table", () => {
+        const css = readFileSync(
+            "src/views/spreadsheet-view/SpreadsheetView.css",
+            "utf8",
+        );
+        expect(css).toMatch(/overflow:\s*auto/);
+    });
+});
+
 describe("without a selection controller", () => {
     it("still renders and reports clicks", () => {
         const clicks: string[] = [];

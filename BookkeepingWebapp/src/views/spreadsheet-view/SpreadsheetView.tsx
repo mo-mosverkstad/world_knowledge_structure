@@ -15,6 +15,16 @@ import "./SpreadsheetView.css";
  * would change identity on every selection change and the whole table would
  * re-render — measured at 650 `getCell` calls for a twelve-cell drag, versus 0.
  */
+/**
+ * React appends `px` to numbers but passes strings through verbatim, so a bare
+ * `"220"` becomes invalid CSS and the browser drops the declaration silently — no
+ * bound, no overflow, no scrollbar. Unitless digits are therefore read as pixels.
+ */
+const css = (value: string | number) =>
+    typeof value === "string" && /^\d+(\.\d+)?$/.test(value)
+        ? `${value}px`
+        : value;
+
 export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
     const {
         data,
@@ -60,7 +70,7 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
             className="spreadsheet-viewport"
             // Maxima, not fixed sizes: the viewport bounds the table and scrolls
             // beyond it, rather than forcing a small table into a large box.
-            style={{ maxWidth: viewportWidth, maxHeight: viewportHeight }}
+            style={{ width: css(viewportWidth), height: css(viewportHeight), overflow: "scroll"}}
         >
             <TableLayoutLayer<TData>
                 data={data}

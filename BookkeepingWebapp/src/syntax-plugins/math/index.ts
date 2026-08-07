@@ -1,4 +1,4 @@
-import type { MathNode } from "./types";
+// import type { MathNode } from "./types";
 import { syntaxParser } from "./SyntaxParser.ts";
 
 export const mathSyntaxPlugin: any = {

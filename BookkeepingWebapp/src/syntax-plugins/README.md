@@ -8,6 +8,12 @@
 4. Syntax uniqueness involves that a semantic representation can be expressed uniquely in the syntax system. Most of the syntax are not completely syntax unique, but they can almost be considered by disregarding whitespaces and newlines as placefiller for prettifying the syntax for better readability.
 5. For AST semantics, regular data structures, especially arrays/tuples are used as much as possible. 
 
+Below shows different DSL languages for different purposes and does not normally interchange with each other, unless specifically requested. They doesn't either mix with each other as well.
+
+Since several parts of the syntax are common, syntax definitions can be composed. Syntax definitions are stored in a PEG data structure, which can also be composed when giving dependencies between the syntaxes. All rules from one composable syntax collection definition can be exported into another one.
+
+Pick out several base syntaxes and figure out how some syntaxes can be depended on each other...
+
 ## Mathematical algebraic syntax: `math_algebra`
 
 ### Basic syntax
@@ -168,7 +174,89 @@ rendered
 
 Not yet decided...
 
-## Hexmaps/memory maps `hexmaps`
+## Physics diagrams `physics`
+
+Extended version of `math_geometry` with additional properties
+Not yet decided
+
+## Circuit diagrams `physics_circuit`
+
+Used for circuits/analog circuits. Used in physics (electricity and magnetism), electrical engineering and computer science/engineering (hardware)
+
+Not yet decided...
+
+Schematics using 5V (VCC) on top and GND at bottom. Resistors, capacitors, inductors, switches transistors, diodes and so on are numerated e.g. R1, C1, I1, SW1, TRANS1??? respective DIODE1???
+
+## Digital logic circuits
+
+Used for digital logic
+Combinational circuits represented as boolean algebra expression, with additional functions for sequential elements, KMAP, MUX, Truth table, Synchronous state machines as simplicity. More as a user-friendly versatile toolkit rather than a primitive diagram syntax. Is also interchangable in terms of representation, user can choose for boolean rendering, other rendering a
+
+```
+A(-B)+(-A)BC+B(-C)D+(-A)BD+A(-C)D = KMAP(0000 0111 0100 1111) = A(-B)+B(-C)D+(-A)BC
+```
+
+```
+MUX([10011111], [ACD]) = A+(-(C XOR D))
+MUX([10000001], [ABC]) = MUX([-C, 0, 0, C], [AB]) = MUX([-(B+C), BC], A)
+BC+(-A)(-B)(-C)+B(-C) = MUX([10110011], [ABC]) = MUX([1, B, B, B], [A, C]) = MUX([-(A+C), 1], B)
+KMAP(ABCD -> Y 0010 0111 1001 0111) -> MUX([(0001) (0110) (0111) (1110)] = [AB, A XOR B, A+B, -(AB)], CD)
+```
+
+Example of FSM (sequential Moore state machine)
+```
+FSM((001) (010) (011) (100) (101) (110) (111) (000)) = (Q[2]+ = Q[2] XOR (Q[1]Q[0]), Q[1]+ = Q[1] XOR Q[0], Q[0]+ = -Q[0])
+```
+
+## Lookup table diagram
+
+Not decided yet...
+
+## State machine diagram
+
+Not decided yet...
+
+## Timing diagram
+
+Not decided yet...
+
+## Send-recieve diagram
+
+Not decided yet...
+
+## Graph diagram
+
+Not decided yet...
+
+## Map (Geographical maps)
+
+Not decided yet...
+
+## Building indoor maps
+
+Not decided yet
+
+## Chemistry syntax
+
+Not decided yet
+
+## Chemical/Biological pathway
+
+Not decided yet
+
+## Anatomy diagram
+
+Not decided yet...
+
+## Algorithm path diagram
+
+Rendering high-level algorithms e.g. lifecycles, etc.
+
+## Topological structural diagram
+
+E.g. sliding window diagram, etc.
+
+## Hexmaps/memory maps `hexmap`
 
 Essentially a grid of sized numbers, can usually only store 1 byte and used in computing. Wraps around either at common sizes such as 16 grids, 32 grids, 64 grids or any of user's choise. Wrap-around behavior is automatic
 
@@ -210,3 +298,9 @@ TCP packet as a classical example
 ```
 
 Also supporting arrays as well, for instance array(<name>: <size>, <each>)
+
+## UML class diagram
+
+## UML sequence diagram
+
+## UML timing diagram

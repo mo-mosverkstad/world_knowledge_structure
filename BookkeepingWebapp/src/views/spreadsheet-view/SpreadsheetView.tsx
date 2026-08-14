@@ -7,7 +7,7 @@ import "./SpreadsheetView.css";
 /**
  * A data-driven grid.
  *
- *   TableLayoutLayer     the table markup (Row, Cell, ColumnHeader)
+ *   TableLayoutLayer     the table, drawn by table-view's behaviour-less TableView
  *   SelectionRangeLayer  the selection, drawn as boxes over the table
  *   SelectionController  who owns the selection; held by the host
  *

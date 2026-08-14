@@ -5,7 +5,7 @@
 ```
 Components:
 table-view (behavior-less):
-  *TableView.tsx
+  *TableView.tsx + TableView.css
   Cell.tsx + Cell.css
   ColumnHeader.tsx + ColumnHeader.css
   Row.tsx + Row.css
@@ -15,7 +15,7 @@ spreadsheet-view (spreadsheet-editor behavior):
   (update the selection state must be updated during insertion/deletion)
   *SpreadsheetView.tsx + SpreadsheetView.css
   Layer 1:
-    *TableLayoutView.tsx + TableLayoutView.css <- dirty mark rendering, virtualization
+    *TableLayoutLayer.tsx <- dirty mark rendering, virtualization
   Layer 2:
     SelectionController.ts <- for notifying selection controller
     SelectionRange.tsx + SelectionRange.css <- currently uses naive DOM lookup

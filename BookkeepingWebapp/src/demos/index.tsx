@@ -6,6 +6,7 @@ import { TabBarDemo } from "./TabBarDemo.tsx";
 import { HierarchicalLedgerDemo } from "./HierarchicalLedgerDemo";
 import { DataDrivenSpreadsheetDemo } from "./LedgerSpreadsheetDemo";
 import { SpreadsheetViewDemo } from "./SpreadsheetViewDemo.tsx";
+import { TableViewDemo } from "./TableViewDemo.tsx";
 
 import { MathSyntaxDemo } from "./MathSyntaxDemo.tsx"
 
@@ -13,16 +14,17 @@ export function Demos() {
     // useEffect(() => MathSyntaxDemo(), []);
     return (
         <>
+            <h1>Basic React demos</h1>
             <ReactCounterDemo />
             <ReactTimerDemo />
+            <h1>Editor toolkit components</h1>
             <TabBarDemo />
+            <TableViewDemo />
+            <SpreadsheetViewDemo />
+            <hr></hr>
             <h1>Old demos</h1>
             <DataDrivenSpreadsheetDemo />
-            {/* Hierarchy as a CUSTOMISATION: same flat grid, tree in the
-                caller. See HierarchicalLedgerDemo.tsx. */}
             <HierarchicalLedgerDemo />
-            <h1>New demos</h1>
-            <SpreadsheetViewDemo />
         </>
     );
 }

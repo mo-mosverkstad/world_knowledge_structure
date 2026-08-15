@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { TableLayoutLayer, type LayoutCell } from "./TableLayoutLayer";
 import { SelectionRangeLayer } from "./SelectionRangeLayer";
 import { type CellAddress, type SpreadsheetViewProps } from "./types";
@@ -25,7 +25,9 @@ const css = (value: string | number) =>
         ? `${value}px`
         : value;
 
-export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
+function SpreadsheetViewInner<TData>(props: SpreadsheetViewProps<TData>) {
+    console.log("SpreadsheetView rerender")
+
     const {
         data,
         getRowCount,
@@ -117,6 +119,23 @@ export function SpreadsheetView<TData>(props: SpreadsheetViewProps<TData>) {
         </div>
     );
 }
+
+/**
+ * Memoized, and that is part of the contract rather than a tuning detail: a host
+ * that subscribes to the selection (to show a readout, say) re-renders on every
+ * selection change, and without this the grid would be dragged along with it —
+ * undoing the whole point of keeping the selection out of the render tree.
+ *
+ * `memo` compares props shallowly, so it only bites if the host keeps its
+ * callbacks stable (`useCallback`, module constants, or a subscribing sibling
+ * instead of a subscribing parent). Inline arrow props defeat it.
+ *
+ * The cast restores the generic that `memo` erases.
+ */
+
+export const SpreadsheetView = memo(
+    SpreadsheetViewInner,
+) as typeof SpreadsheetViewInner;
 
 export default SpreadsheetView;
 

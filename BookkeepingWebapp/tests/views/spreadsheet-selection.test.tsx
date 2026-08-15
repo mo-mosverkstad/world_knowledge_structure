@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { readFileSync } from "node:fs";
+import { useSyncExternalStore } from "react";
 import {
     SpreadsheetView,
     useSelectionController,
@@ -215,6 +216,64 @@ describe("selection does not re-render the table", () => {
         act(() => s.controller.selectRange({ row: 0, col: 0 }, { row: 9, col: 4 }));
         act(() => s.controller.clear());
         expect(s.counter.calls).toBe(0);
+    });
+
+    /*
+     * A host that subscribes to the selection — to show a readout, say — renders
+     * on every selection change, and a re-rendered parent re-renders its child.
+     * The view is memoized so that this stops at its boundary; the props must be
+     * stable for the shallow compare to reach that conclusion.
+     */
+    it("costs nothing when the host itself subscribes to the selection", () => {
+        const counter = { calls: 0 };
+        const hostRenders = { count: 0 };
+        let controller!: SelectionController;
+
+        const sheet: Sheet = { rows: 10, cols: 5 };
+        const getRowCount = (d: Sheet) => d.rows;
+        const getColumnCount = (d: Sheet) => d.cols;
+        const getCell = (_d: Sheet, row: number, col: number): CellDescriptor => {
+            counter.calls++;
+            return { value: `${row}.${col}` };
+        };
+
+        function Host() {
+            controller = useSelectionController();
+            hostRenders.count++;
+            const snapshot = useSyncExternalStore(
+                controller.subscribe,
+                controller.getSnapshot,
+            );
+            return (
+                <>
+                    <span data-testid="readout">{snapshot.ranges.length}</span>
+                    <SpreadsheetView<Sheet>
+                        data={sheet}
+                        getRowCount={getRowCount}
+                        getColumnCount={getColumnCount}
+                        getCell={getCell}
+                        selectionController={controller}
+                        viewportWidth={400}
+                        viewportHeight={300}
+                    />
+                </>
+            );
+        }
+
+        render(<Host />);
+        const before = hostRenders.count;
+        counter.calls = 0;
+
+        const cell = document.querySelector<HTMLElement>(
+            `[data-row="2"][data-col="3"]`,
+        )!;
+        fireEvent.mouseDown(cell, { button: 0 });
+        fireEvent.mouseUp(window);
+
+        // The host did re-render — otherwise this proves nothing.
+        expect(hostRenders.count).toBeGreaterThan(before);
+        expect(screen.getByTestId("readout").textContent).toBe("1");
+        expect(counter.calls).toBe(0);
     });
 });
 

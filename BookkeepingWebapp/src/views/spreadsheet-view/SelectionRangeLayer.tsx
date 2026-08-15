@@ -61,6 +61,7 @@ export function SelectionRangeLayer({
     controller,
     scrollRef,
 }: SelectionRangeLayerProps) {
+    console.log("SelectionRangeLayer rerender")
     const selection = useSyncExternalStore(
         controller.subscribe,
         controller.getSnapshot,

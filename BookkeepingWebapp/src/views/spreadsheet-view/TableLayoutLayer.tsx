@@ -18,5 +18,6 @@ export type TableLayoutLayerProps<TData> = TableViewProps<TData>;
  * Until then it forwards its props verbatim.
  */
 export function TableLayoutLayer<TData>(props: TableLayoutLayerProps<TData>) {
+    console.log("TableLayoutLayer rendered");
     return <TableView<TData> {...props} />;
 }

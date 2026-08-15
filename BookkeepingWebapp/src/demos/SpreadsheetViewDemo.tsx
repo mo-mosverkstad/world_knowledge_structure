@@ -3,6 +3,7 @@ import {
     SpreadsheetView,
     useSelectionController,
     type CellDescriptor,
+    type SelectionController,
 } from "../views/spreadsheet-view";
 
 interface Txn {
@@ -55,16 +56,40 @@ const INITIAL: LedgerState = {
     ],
 };
 
-export function SpreadsheetViewDemo() {
-    const selection = useSelectionController();
+const getRowCount = (d: LedgerState) => d.rows.length;
+const getColumnCount = () => COLUMNS.length;
+const getCell = (d: LedgerState, row: number, col: number): CellDescriptor => ({
+    value: d.rows[row][COLUMNS[col].key],
+    align: COLUMNS[col].align,
+});
+const getColumnHeader = (_d: LedgerState, col: number) => COLUMNS[col].label;
+const getRowHeader = (_d: LedgerState, row: number) => row + 1;
+const getRowKey = (d: LedgerState, row: number) => d.rows[row].id;
 
-    // Subscribing here is what updates the readout below — and is why THIS
-    // component re-renders on selection change while the table does not.
+/**
+ * The readout lives in its own component so that subscribing to the selection
+ * re-renders THIS and not the demo — a subscribing parent would re-render
+ * `SpreadsheetView` as its child and defeat the controller.
+ */
+function SelectionReadout({ selection }: { selection: SelectionController }) {
     const snapshot = useSyncExternalStore(
         selection.subscribe,
         selection.getSnapshot,
     );
     const active = snapshot.activeCell;
+
+    return (
+        <div style={{ padding: "12px 4px", fontSize: 13 }}>
+            <strong>Selection:</strong> {snapshot.ranges.length} range(s),{" "}
+            {selection.countCells()} cell(s)
+            {active ? ` — active (${active.row}, ${active.col})` : " — none"}
+            {snapshot.dragging ? " [dragging]" : ""}
+        </div>
+    );
+}
+
+export function SpreadsheetViewDemo() {
+    const selection = useSelectionController();
 
     const lastRow = INITIAL.rows.length - 1;
     const lastCol = COLUMNS.length - 1;
@@ -74,27 +99,19 @@ export function SpreadsheetViewDemo() {
             <h3>Spreadsheet View Demo</h3>
             <SpreadsheetView<LedgerState>
                 data={INITIAL}
-                getRowCount={(d) => d.rows.length}
-                getColumnCount={() => COLUMNS.length}
-                getCell={(d, row, col): CellDescriptor => ({
-                    value: d.rows[row][COLUMNS[col].key],
-                    align: COLUMNS[col].align,
-                })}
-                getColumnHeader={(_d, col) => COLUMNS[col].label}
-                getRowHeader={(_d, row) => row + 1}
-                getRowKey={(d, row) => d.rows[row].id}
+                getRowCount={getRowCount}
+                getColumnCount={getColumnCount}
+                getCell={getCell}
+                getColumnHeader={getColumnHeader}
+                getRowHeader={getRowHeader}
+                getRowKey={getRowKey}
                 selectionController={selection}
                 editable
                 viewportWidth="100%"
                 viewportHeight={220}
             />
 
-            <div style={{ padding: "12px 4px", fontSize: 13 }}>
-                <strong>Selection:</strong> {snapshot.ranges.length} range(s),{" "}
-                {selection.countCells()} cell(s)
-                {active ? ` — active (${active.row}, ${active.col})` : " — none"}
-                {snapshot.dragging ? " [dragging]" : ""}
-            </div>
+            <SelectionReadout selection={selection} />
 
             <div style={{ display: "flex", gap: 8, padding: "0 4px 12px" }}>
                 {/* The host owns the controller, so these bypass the component. */}

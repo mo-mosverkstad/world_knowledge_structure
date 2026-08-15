@@ -1,6 +1,7 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { TableLayoutLayer, type LayoutCell } from "./TableLayoutLayer";
 import { SelectionRangeLayer } from "./SelectionRangeLayer";
+import { useDragAutoScroll } from "./useDragAutoScroll";
 import { type CellAddress, type SpreadsheetViewProps } from "./types";
 import "./SpreadsheetView.css";
 
@@ -50,12 +51,26 @@ function SpreadsheetViewInner<TData>(props: SpreadsheetViewProps<TData>) {
     // A ref, not state: a drag crosses dozens of cells and must not re-render.
     const dragging = useRef(false);
 
+    // Dragging to the edge scrolls the viewport, which needs pointer coordinates
+    // and a clock — neither of which a cell event can supply.
+    const extendTo = useCallback(
+        (row: number, col: number) => selectionController?.extendTo(row, col),
+        [selectionController],
+    );
+    const stopAutoScroll = useDragAutoScroll({
+        scrollRef,
+        active: dragging,
+        onCellUnderPointer: extendTo,
+    });
+
     // A drag usually ends outside the grid, so the release is caught on the window.
     useEffect(() => {
         if (!selectionController) return;
         const finish = () => {
             if (!dragging.current) return;
             dragging.current = false;
+            // Before `endDrag`, so no frame can land after the gesture is over.
+            stopAutoScroll();
             selectionController.endDrag();
         };
         window.addEventListener("mouseup", finish);
@@ -64,7 +79,7 @@ function SpreadsheetViewInner<TData>(props: SpreadsheetViewProps<TData>) {
             window.removeEventListener("mouseup", finish);
             window.removeEventListener("blur", finish);
         };
-    }, [selectionController]);
+    }, [selectionController, stopAutoScroll]);
 
     return (
         <div

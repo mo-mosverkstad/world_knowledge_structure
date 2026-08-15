@@ -11,3 +11,10 @@ export {
     contains,
 } from "./SelectionController";
 export type { SelectionRange, SelectionSnapshot } from "./SelectionController";
+export { useDragAutoScroll } from "./useDragAutoScroll";
+export {
+    autoScrollVelocity,
+    EDGE_THRESHOLD,
+    MAX_SPEED,
+    SPEED_RAMP,
+} from "./autoScrollVelocity";

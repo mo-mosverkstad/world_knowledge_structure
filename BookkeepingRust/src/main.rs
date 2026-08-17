@@ -4,6 +4,7 @@ use core::treearray::TreeArray;
 use core::table_column::Column;
 use core::table_column::TableColumn;
 use core::table_column::Value;
+use core::table_trait::TableTrait;
 
 /*
 fn main() {
@@ -31,13 +32,6 @@ use std::fmt::Debug;
 use std::collections::{HashSet};
 
 // ----------------------------- Table traits & OrderedTable (unchanged) -----------------------------
-trait TableTrait: Debug {
-    fn add_column<C: Column + 'static>(&mut self, col: C);
-    fn append_row(&mut self, row: Vec<Value>);
-    fn update_row(&mut self, idx: usize, row: Vec<Value>);
-    fn print_table(&self);
-}
-
 #[derive(Debug)]
 struct OrderedTable {
     columns: Vec<Box<dyn Column>>,

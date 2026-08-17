@@ -1,7 +1,7 @@
 use std::fmt::Debug;
 
 // ----------------------------- AVL Node -----------------------------
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Node<T> {
     value: T,
     size: usize,   // subtree size
@@ -39,13 +39,13 @@ impl<T> Node<T> {
 }
 
 // ----------------------------- TreeArray (AVL) -----------------------------
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TreeArray<T> {
     root: Option<Box<Node<T>>>,
 }
 
 #[allow(dead_code)]
-impl<T: Copy + Debug> TreeArray<T> {
+impl<T: Copy + Clone + Debug> TreeArray<T> {
     pub fn new() -> Self {
         Self { root: None }
     }

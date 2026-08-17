@@ -6,6 +6,7 @@ use core::table_column::TableColumn;
 use core::table_column::Value;
 use core::table_trait::TableTrait;
 use core::ordered_table::OrderedTable;
+use core::unordered_table::UnorderedTable;
 
 /*
 fn main() {
@@ -31,124 +32,6 @@ fn main() {
 
 use std::fmt::Debug;
 use std::collections::{HashSet};
-
-// ----------------------------- UnorderedTable with TreeArray + recycling -----------------------------
-#[derive(Debug)]
-struct UnorderedTable {
-    columns: Vec<Box<dyn Column>>,
-    logical_order: TreeArray<usize>, // user_index -> physical_index
-    next_physical_index: usize,
-    free_physical: HashSet<usize>, // recycling of freed physical indices
-}
-
-impl UnorderedTable {
-    pub fn new() -> Self {
-        Self {
-            columns: Vec::new(),
-            logical_order: TreeArray::new(),
-            next_physical_index: 0,
-            free_physical: HashSet::new(),
-        }
-    }
-
-    /// Delete a row by user index (mark physical slot as free)
-    pub fn delete_row(&mut self, user_idx: usize) {
-        if let Some(phys) = self.logical_order.get(user_idx) {
-            // remove logical mapping
-            self.logical_order.delete(user_idx);
-            // add to free set for reuse
-            self.free_physical.insert(phys);
-        }
-    }
-
-    /// Insert a row at user index (shifts subsequent)
-    pub fn insert_row(&mut self, user_idx: usize, row: Vec<Value>) {
-        assert_eq!(row.len(), self.columns.len(), "Row length mismatch");
-        // choose physical index: recycle or append
-        let phys_idx = if let Some(&p) = self.free_physical.iter().next() {
-            // take an arbitrary element from the set
-            self.free_physical.take(&p);
-            p
-        } else {
-            let p = self.next_physical_index;
-            self.next_physical_index += 1;
-            p
-        };
-
-        // ensure each column has space for phys_idx and set the value at phys_idx
-        for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
-            while phys_idx >= col.len() {
-                col.push_empty();
-            }
-            col.update(phys_idx, val);
-        }
-
-        // insert into logical array at user_idx
-        self.logical_order.insert(user_idx, phys_idx);
-    }
-
-    /// Rearrange user indices: swap two rows (swap physical indices)
-    pub fn swap_rows(&mut self, idx1: usize, idx2: usize) {
-        if idx1 == idx2 { return; }
-        if let (Some(p1), Some(p2)) = (self.logical_order.get(idx1), self.logical_order.get(idx2)) {
-            self.logical_order.set(idx1, p2);
-            self.logical_order.set(idx2, p1);
-        }
-    }
-
-    /// Get number of logical rows
-    pub fn nrows(&self) -> usize { self.logical_order.len() }
-}
-
-impl TableTrait for UnorderedTable {
-    fn add_column<C: Column + 'static>(&mut self, col: C) { self.columns.push(Box::new(col)) }
-
-    fn append_row(&mut self, row: Vec<Value>) {
-        let idx = self.logical_order.len();
-        self.insert_row(idx, row);
-    }
-
-    fn update_row(&mut self, idx: usize, row: Vec<Value>) {
-        assert_eq!(row.len(), self.columns.len(), "Row length mismatch");
-        if let Some(phys_idx) = self.logical_order.get(idx) {
-            for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
-                while phys_idx >= col.len() { col.push_empty(); }
-                col.update(phys_idx, val);
-            }
-        }
-    }
-
-    fn print_table(&self) {
-        if self.columns.is_empty() || self.logical_order.len() == 0 { println!("(empty table)"); return; }
-        let nrows = self.logical_order.len();
-        let mut widths = Vec::new();
-        for col in &self.columns {
-            let mut max_width = col.name().len();
-            for user_idx in 0..nrows {
-                if let Some(phys_idx) = self.logical_order.get(user_idx) {
-                    let val = col.get_value(phys_idx);
-                    if val.len() > max_width { max_width = val.len(); }
-                }
-            }
-            widths.push(max_width);
-        }
-        // header
-        for (i, (col, w)) in self.columns.iter().zip(&widths).enumerate() { if i>0 {print!(" ")}; print!("{:<width$}", col.name(), width=w); }
-        println!();
-        for (i, w) in widths.iter().enumerate() { if i>0 {print!(" ")}; print!("{}", "-".repeat(*w)); }
-        println!();
-        // rows
-        for user_idx in 0..nrows {
-            if let Some(phys_idx) = self.logical_order.get(user_idx) {
-                for (i, (col, w)) in self.columns.iter().zip(&widths).enumerate() {
-                    if i>0 { print!(" "); }
-                    print!("{:<width$}", col.get_value(phys_idx), width=w);
-                }
-                println!();
-            }
-        }
-    }
-}
 
 // ----------------------------- Demonstration in main -----------------------------
 fn main() {
@@ -183,15 +66,15 @@ fn main() {
     unord.delete_row(0);
     println!("\nAfter delete logical idx 0 (frees physical slot):");
     unord.print_table();
-    println!("Next physical index: {}", unord.next_physical_index);
-    println!("Free physical set: {:?}", unord.free_physical);
+    println!("Next physical index: {}", unord.get_next_physical_index());
+    println!("Free physical set: {:?}", unord.get_free_physical());
 
     // insert again (should reuse freed physical index)
     unord.insert_row(1, vec![Value::Int(27), Value::Str("Sam".to_string()), Value::Float(48000.0)]);
     println!("\nAfter insert at logical idx 0 (should reuse freed physical slot):");
     unord.print_table();
-    println!("Next physical index: {}", unord.next_physical_index);
-    println!("Free physical set: {:?}", unord.free_physical);
+    println!("Next physical index: {}", unord.get_next_physical_index());
+    println!("Free physical set: {:?}", unord.get_free_physical());
 
     // swap rows 0 and 2
     unord.swap_rows(0, 2);
@@ -204,7 +87,7 @@ fn main() {
     unord.print_table();
 
     // show internal mapping & recycling info
-    println!("\nInternal logical->physical (in-order): {:?}", unord.logical_order.in_order());
-    println!("Next physical index: {}", unord.next_physical_index);
-    println!("Free physical set: {:?}", unord.free_physical);
+    println!("\nInternal logical->physical (in-order): {:?}", unord.get_logical_order().in_order());
+    println!("Next physical index: {}", unord.get_next_physical_index());
+    println!("Free physical set: {:?}", unord.get_free_physical());
 }

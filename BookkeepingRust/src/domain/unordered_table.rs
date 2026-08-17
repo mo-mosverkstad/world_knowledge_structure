@@ -1,10 +1,10 @@
 use std::fmt::Debug;
 use std::collections::{HashSet};
 
-use crate::core::treearray::TreeArray;
-use crate::core::table_trait::TableTrait;
-use crate::core::table_column::Column;
-use crate::core::table_column::Value;
+use crate::domain::treearray::TreeArray;
+use crate::domain::table_trait::TableTrait;
+use crate::domain::table_column::Column;
+use crate::domain::table_column::Value;
 
 // ----------------------------- UnorderedTable with TreeArray + recycling -----------------------------
 #[derive(Debug)]

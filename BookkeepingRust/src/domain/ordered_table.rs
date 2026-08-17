@@ -1,8 +1,8 @@
 use std::fmt::Debug;
 
-use crate::core::table_trait::TableTrait;
-use crate::core::table_column::Column;
-use crate::core::table_column::Value;
+use crate::domain::table_trait::TableTrait;
+use crate::domain::table_column::Column;
+use crate::domain::table_column::Value;
 
 // ----------------------------- Table traits & OrderedTable (unchanged) -----------------------------
 #[derive(Debug)]

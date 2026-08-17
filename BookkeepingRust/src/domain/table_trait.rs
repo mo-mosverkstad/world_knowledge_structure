@@ -1,7 +1,7 @@
 use std::fmt::Debug;
 
-use crate::core::table_column::Column;
-use crate::core::table_column::Value;
+use crate::domain::table_column::Column;
+use crate::domain::table_column::Value;
 
 pub trait TableTrait: Debug {
     fn add_column<C: Column + 'static>(&mut self, col: C);

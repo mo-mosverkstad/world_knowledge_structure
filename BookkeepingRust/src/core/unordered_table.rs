@@ -15,6 +15,7 @@ pub struct UnorderedTable {
     free_physical: HashSet<usize>, // recycling of freed physical indices
 }
 
+#[allow(dead_code)]
 impl UnorderedTable {
     pub fn new() -> Self {
         Self {

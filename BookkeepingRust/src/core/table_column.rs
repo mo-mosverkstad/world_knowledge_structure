@@ -1,6 +1,7 @@
 use std::fmt::Debug;
 
 // ----------------------------- Value enum & Column traits -----------------------------
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub enum Value {
     Int(i32),

@@ -1,7 +1,5 @@
 mod core;
 
-use core::treearray::TreeArray;
-use core::table_column::Column;
 use core::table_column::TableColumn;
 use core::table_column::Value;
 use core::table_trait::TableTrait;
@@ -29,9 +27,6 @@ fn main() {
     println!("my_ref = {:p}, *my_ref = {}", my_ref, *my_ref);
 }
 */
-
-use std::fmt::Debug;
-use std::collections::{HashSet};
 
 // ----------------------------- Demonstration in main -----------------------------
 fn main() {

@@ -61,6 +61,10 @@ impl<T: Copy + Debug> TreeArray<T> {
     pub fn get_ref(&self, idx: usize) -> Option<&T> {
         Self::get_node_ref(&self.root, idx)
     }
+    /// Replaces the value at `idx`, returning the previous value when the index exists.
+    pub fn set(&mut self, idx: usize, value: T) -> Option<T> {
+        Self::set_node(&mut self.root, idx, value)
+    }
     pub fn append(&mut self, value: T) {
         self.insert(self.len(), value);
     }
@@ -90,6 +94,18 @@ impl<T: Copy + Debug> TreeArray<T> {
             Some(&node.value)
         } else {
             Self::get_node_ref(&node.right, idx - left_size - 1)
+        }
+    }
+
+    fn set_node(node: &mut Option<Box<Node<T>>>, idx: usize, value: T) -> Option<T> {
+        let node = node.as_mut()?;
+        let left_size = node.left.as_ref().map_or(0, |left| left.size);
+        if idx < left_size {
+            Self::set_node(&mut node.left, idx, value)
+        } else if idx == left_size {
+            Some(std::mem::replace(&mut node.value, value))
+        } else {
+            Self::set_node(&mut node.right, idx - left_size - 1, value)
         }
     }
 

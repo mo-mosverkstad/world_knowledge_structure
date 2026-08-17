@@ -1,10 +1,11 @@
 use std::fmt::Debug;
 
-use crate::domain::table_trait::TableTrait;
+use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
+use crate::domain::table_trait::TableTrait;
 
-// ----------------------------- Table traits & OrderedTable (unchanged) -----------------------------
+// ----------------------------- Table traits & OrderedTable -----------------------------
 #[derive(Debug)]
 pub struct OrderedTable {
     columns: Vec<Box<dyn Column>>,
@@ -12,33 +13,58 @@ pub struct OrderedTable {
 
 impl OrderedTable {
     pub fn new() -> Self { OrderedTable { columns: Vec::new() } }
+
+    /// Rejects a row whose arity or value types do not match the columns.
+    /// Validating up front keeps the table consistent when a row is refused.
+    fn validate_row(&self, row: &[Value]) -> DomainResult<()> {
+        if row.len() != self.columns.len() {
+            return Err(DomainError::RowLengthMismatch {
+                expected: self.columns.len(),
+                actual: row.len(),
+            });
+        }
+        for (val, col) in row.iter().zip(self.columns.iter()) {
+            col.accepts(val)?;
+        }
+        Ok(())
+    }
 }
 
 impl TableTrait for OrderedTable {
     fn add_column<C: Column + 'static>(&mut self, col: C) { self.columns.push(Box::new(col)) }
 
-    fn append_row(&mut self, row: Vec<Value>) {
-        assert_eq!(row.len(), self.columns.len(), "Row length mismatch");
+    fn append_row(&mut self, row: Vec<Value>) -> DomainResult<()> {
+        self.validate_row(&row)?;
         for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
-            col.push(val);
+            col.push(val)?;
         }
+        Ok(())
     }
 
-    fn update_row(&mut self, idx: usize, row: Vec<Value>) {
-        assert_eq!(row.len(), self.columns.len(), "Row length mismatch");
+    fn update_row(&mut self, idx: usize, row: Vec<Value>) -> DomainResult<()> {
+        self.validate_row(&row)?;
         for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
             while idx >= col.len() { col.push_empty(); }
-            col.update(idx, val);
+            col.update(idx, val)?;
         }
+        Ok(())
     }
 
-    fn print_table(&self) {
-        if self.columns.is_empty() { println!("(empty table)"); return; }
+    fn print_table(&self) -> DomainResult<()> {
+        if self.columns.is_empty() {
+            println!("(empty table)");
+            return Ok(());
+        }
         let nrows = self.columns.iter().map(|c| c.len()).max().unwrap_or(0);
         let mut widths = Vec::new();
         for col in &self.columns {
             let mut max_width = col.name().len();
-            for r in 0..nrows { let val = col.get_value(r); if val.len() > max_width { max_width = val.len(); } }
+            for r in 0..nrows {
+                if r < col.len() {
+                    let val = col.get_value(r)?;
+                    if val.len() > max_width { max_width = val.len(); }
+                }
+            }
             widths.push(max_width);
         }
         for (i, (col, w)) in self.columns.iter().zip(&widths).enumerate() { if i>0 {print!(" ")}; print!("{:<width$}", col.name(), width=w); }
@@ -48,10 +74,59 @@ impl TableTrait for OrderedTable {
         for r in 0..nrows {
             for (i, (col, w)) in self.columns.iter().zip(&widths).enumerate() {
                 if i>0 { print!(" "); }
-                let val = if r < col.len() { col.get_value(r) } else { "".to_string() };
+                let val = if r < col.len() { col.get_value(r)? } else { String::new() };
                 print!("{:<width$}", val, width=w);
             }
             println!();
         }
+        Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::domain::table_column::TableColumn;
+
+    fn table() -> OrderedTable {
+        let mut t = OrderedTable::new();
+        t.add_column(TableColumn::<i32>::new("Age"));
+        t.add_column(TableColumn::<String>::new("Name"));
+        t
+    }
+
+    #[test]
+    fn rejected_rows_leave_the_table_unchanged() {
+        let mut t = table();
+        t.append_row(vec![Value::Int(25), Value::Str("Alice".to_string())])
+            .expect("valid row");
+
+        assert_eq!(
+            t.append_row(vec![Value::Int(1)]),
+            Err(DomainError::RowLengthMismatch { expected: 2, actual: 1 })
+        );
+        assert_eq!(
+            t.append_row(vec![Value::Bool(true), Value::Str("x".to_string())]),
+            Err(DomainError::ColumnTypeMismatch {
+                column: "Age".to_string(),
+                expected: "Int",
+                actual: "Bool",
+            })
+        );
+        // Both columns still hold exactly the one accepted row.
+        assert!(t.print_table().is_ok());
+    }
+
+    #[test]
+    fn update_beyond_the_end_pads_instead_of_panicking() {
+        let mut t = table();
+        t.update_row(3, vec![Value::Int(7), Value::Str("Gap".to_string())])
+            .expect("padding rows is allowed");
+        assert!(t.print_table().is_ok());
+    }
+
+    #[test]
+    fn printing_an_empty_table_succeeds() {
+        assert!(OrderedTable::new().print_table().is_ok());
     }
 }

@@ -1,5 +1,7 @@
 use std::fmt::Debug;
 
+use crate::domain::error::{DomainError, DomainResult};
+
 // ----------------------------- AVL Node -----------------------------
 #[derive(Debug, Clone)]
 struct Node<T> {
@@ -54,32 +56,68 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
         self.root.as_ref().map_or(0, |n| n.size)
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.root.is_none()
+    }
+
     // Public interface
+    /// Absent indices yield `None`; use `try_get` when the caller should treat a
+    /// missing index as an error to propagate.
     pub fn get(&self, idx: usize) -> Option<T> {
         self.get_ref(idx).cloned()
     }
+
     pub fn get_ref(&self, idx: usize) -> Option<&T> {
         Self::get_node_ref(&self.root, idx)
     }
-    /// Replaces the value at `idx`, returning the previous value when the index exists.
-    pub fn set(&mut self, idx: usize, value: T) -> Option<T> {
+
+    pub fn try_get(&self, idx: usize) -> DomainResult<T> {
+        self.get(idx).ok_or(DomainError::IndexOutOfBounds {
+            index: idx,
+            len: self.len(),
+        })
+    }
+
+    /// Replaces the value at `idx`, returning the previous value.
+    pub fn set(&mut self, idx: usize, value: T) -> DomainResult<T> {
+        let len = self.len();
         Self::set_node(&mut self.root, idx, value)
+            .ok_or(DomainError::IndexOutOfBounds { index: idx, len })
     }
+
     pub fn append(&mut self, value: T) {
-        self.insert(self.len(), value);
+        // `len()` is always a valid insertion point, so this cannot fail.
+        // It must be read before `take()` empties the tree.
+        let idx = self.len();
+        self.root = Self::insert_node(self.root.take(), idx, value);
     }
+
     pub fn pop(&mut self) -> Option<T> {
         let idx = self.len().checked_sub(1)?;
         let val = self.get(idx)?;
-        self.delete(idx);
+        self.root = Self::delete_node(self.root.take(), idx);
         Some(val)
     }
-    pub fn insert(&mut self, idx: usize, value: T) {
+
+    /// Inserts before the element at `idx`. `idx == len()` appends.
+    pub fn insert(&mut self, idx: usize, value: T) -> DomainResult<()> {
+        let len = self.len();
+        if idx > len {
+            return Err(DomainError::IndexOutOfBounds { index: idx, len });
+        }
         self.root = Self::insert_node(self.root.take(), idx, value);
+        Ok(())
     }
-    pub fn delete(&mut self, idx: usize) {
+
+    pub fn delete(&mut self, idx: usize) -> DomainResult<()> {
+        let len = self.len();
+        if idx >= len {
+            return Err(DomainError::IndexOutOfBounds { index: idx, len });
+        }
         self.root = Self::delete_node(self.root.take(), idx);
+        Ok(())
     }
+
     pub fn clear(&mut self) {
         self.root = None
     }
@@ -109,8 +147,13 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
         }
     }
 
+    /// Rotations are only reached when the pivot child exists; if the invariant
+    /// were ever violated the node is returned unchanged rather than panicking.
     fn rotate_right(mut y: Box<Node<T>>) -> Box<Node<T>> {
-        let mut x = y.left.take().unwrap();
+        let Some(mut x) = y.left.take() else {
+            y.update();
+            return y;
+        };
         y.left = x.right.take();
         y.update();
         x.right = Some(y);
@@ -119,7 +162,10 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
     }
 
     fn rotate_left(mut x: Box<Node<T>>) -> Box<Node<T>> {
-        let mut y = x.right.take().unwrap();
+        let Some(mut y) = x.right.take() else {
+            x.update();
+            return x;
+        };
         x.right = y.left.take();
         x.update();
         y.left = Some(x);
@@ -131,15 +177,23 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
         node.update();
         let bf = node.balance_factor();
         if bf > 1 {
-            // Left heavy
-            if node.left.as_ref().unwrap().balance_factor() < 0 {
-                node.left = Some(Self::rotate_left(node.left.take().unwrap()));
+            // Left heavy: rotate the left child first on a left-right shape.
+            if let Some(left) = node.left.take() {
+                node.left = Some(if left.balance_factor() < 0 {
+                    Self::rotate_left(left)
+                } else {
+                    left
+                });
             }
             return Self::rotate_right(node);
         } else if bf < -1 {
-            // Right heavy
-            if node.right.as_ref().unwrap().balance_factor() > 0 {
-                node.right = Some(Self::rotate_right(node.right.take().unwrap()));
+            // Right heavy: rotate the right child first on a right-left shape.
+            if let Some(right) = node.right.take() {
+                node.right = Some(if right.balance_factor() > 0 {
+                    Self::rotate_right(right)
+                } else {
+                    right
+                });
             }
             return Self::rotate_left(node);
         }
@@ -172,23 +226,26 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
             if node.left.is_none() {
                 return node.right;
             }
-            if node.right.is_none() {
-                return node.left;
+            match node.right.take() {
+                None => return node.left,
+                Some(right) => {
+                    let (min_val, new_right) = Self::take_min(right);
+                    node.value = min_val;
+                    node.right = new_right;
+                }
             }
-            let (min_val, new_right) = Self::take_min(node.right.take().unwrap());
-            node.value = min_val;
-            node.right = new_right;
         }
         Some(Self::balance(node))
     }
 
     fn take_min(mut node: Box<Node<T>>) -> (T, Option<Box<Node<T>>>) {
-        if node.left.is_none() {
-            return (node.value, node.right.take());
-        } else {
-            let (min_val, new_left) = Self::take_min(node.left.take().unwrap());
-            node.left = new_left;
-            (min_val, Some(Self::balance(node)))
+        match node.left.take() {
+            None => (node.value, node.right.take()),
+            Some(left) => {
+                let (min_val, new_left) = Self::take_min(left);
+                node.left = new_left;
+                (min_val, Some(Self::balance(node)))
+            }
         }
     }
 
@@ -226,5 +283,65 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
         }
         println!("TreeArray structure:");
         recurse(&self.root, "".to_string(), false);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn out_of_range_access_returns_error() {
+        let mut t = TreeArray::<u8>::new();
+        t.append(1);
+
+        assert_eq!(
+            t.try_get(5),
+            Err(DomainError::IndexOutOfBounds { index: 5, len: 1 })
+        );
+        assert_eq!(
+            t.set(5, 9),
+            Err(DomainError::IndexOutOfBounds { index: 5, len: 1 })
+        );
+        assert_eq!(
+            t.delete(5),
+            Err(DomainError::IndexOutOfBounds { index: 5, len: 1 })
+        );
+        assert_eq!(
+            t.insert(9, 9),
+            Err(DomainError::IndexOutOfBounds { index: 9, len: 1 })
+        );
+        // The rejected operations left the tree untouched.
+        assert_eq!(t.in_order(), vec![1]);
+    }
+
+    #[test]
+    fn empty_tree_operations_do_not_panic() {
+        let mut t = TreeArray::<u8>::new();
+        assert!(t.is_empty());
+        assert_eq!(t.pop(), None);
+        assert_eq!(t.get(0), None);
+        assert!(t.delete(0).is_err());
+        assert!(t.insert(0, 7).is_ok()); // idx == len is a valid append
+        assert_eq!(t.in_order(), vec![7]);
+    }
+
+    #[test]
+    fn insert_delete_keeps_order_and_balance() {
+        let mut t = TreeArray::<u16>::new();
+        for v in 0..64u16 {
+            t.append(v);
+        }
+        for _ in 0..32 {
+            t.delete(0).expect("front element exists");
+        }
+        assert_eq!(t.len(), 32);
+        assert_eq!(t.in_order(), (32..64u16).collect::<Vec<_>>());
+
+        t.insert(0, 999).expect("front is a valid insertion point");
+        let len = t.len();
+        t.insert(len, 1000).expect("len is a valid insertion point");
+        assert_eq!(t.try_get(0), Ok(999));
+        assert_eq!(t.try_get(len), Ok(1000));
     }
 }

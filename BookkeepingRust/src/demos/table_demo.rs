@@ -1,21 +1,33 @@
-use crate::domain::table_column::Value;
-use crate::domain::table_column::TableColumn;
-use crate::domain::table_trait::TableTrait;
+use crate::domain::error::DomainResult;
 use crate::domain::ordered_table::OrderedTable;
+use crate::domain::table_column::TableColumn;
+use crate::domain::table_column::Value;
+use crate::domain::table_trait::TableTrait;
 use crate::domain::unordered_table::UnorderedTable;
 
-
-pub fn table_demo() {
+pub fn table_demo() -> DomainResult<()> {
     println!(" ------------------------------- Table Demo ------------------------------- ");
     // Ordered example
     let mut ord = OrderedTable::new();
     ord.add_column(TableColumn::<i32>::new("Age"));
     ord.add_column(TableColumn::<String>::new("Name"));
     ord.add_column(TableColumn::<f32>::new("Salary"));
-    ord.append_row(vec![Value::Int(25), Value::Str("Alice".to_string()), Value::Float(50000.0)]);
-    ord.append_row(vec![Value::Int(30), Value::Str("Bob".to_string()), Value::Float(60000.0)]);
+    ord.append_row(vec![Value::Int(25), Value::Str("Alice".to_string()), Value::Float(50000.0)])?;
+    ord.append_row(vec![Value::Int(30), Value::Str("Bob".to_string()), Value::Float(60000.0)])?;
     println!("OrderedTable:");
-    ord.print_table();
+    ord.print_table()?;
+
+    // A malformed row is rejected without corrupting the table.
+    match ord.append_row(vec![Value::Int(40), Value::Str("Carol".to_string())]) {
+        Ok(()) => println!("Unexpectedly accepted a short row"),
+        Err(err) => println!("\nRejected short row: {err}"),
+    }
+    match ord.append_row(vec![Value::Str("oops".to_string()), Value::Str("Dave".to_string()), Value::Float(1.0)]) {
+        Ok(()) => println!("Unexpectedly accepted a mistyped row"),
+        Err(err) => println!("Rejected mistyped row: {err}"),
+    }
+    println!("\nOrderedTable is unchanged after the rejections:");
+    ord.print_table()?;
 
     // Unordered example using TreeArray + recycling
     let mut unord = UnorderedTable::new();
@@ -24,39 +36,45 @@ pub fn table_demo() {
     unord.add_column(TableColumn::<f32>::new("Salary"));
 
     // append two rows
-    unord.append_row(vec![Value::Int(25), Value::Str("Alice".to_string()), Value::Float(50000.0)]);
-    unord.append_row(vec![Value::Int(30), Value::Str("Bob".to_string()), Value::Float(60000.0)]);
+    unord.append_row(vec![Value::Int(25), Value::Str("Alice".to_string()), Value::Float(50000.0)])?;
+    unord.append_row(vec![Value::Int(30), Value::Str("Bob".to_string()), Value::Float(60000.0)])?;
     println!("\nUnorderedTable after appends:");
-    unord.print_table();
+    unord.print_table()?;
 
     // insert at logical index 1
-    unord.insert_row(1, vec![Value::Int(22), Value::Str("Elina".to_string()), Value::Float(59929.0)]);
+    unord.insert_row(1, vec![Value::Int(22), Value::Str("Elina".to_string()), Value::Float(59929.0)])?;
     println!("\nAfter insert at logical idx 1:");
-    unord.print_table();
+    unord.print_table()?;
 
     // delete logical index 0 -> frees a physical slot
-    unord.delete_row(0);
+    unord.delete_row(0)?;
     println!("\nAfter delete logical idx 0 (frees physical slot):");
-    unord.print_table();
+    unord.print_table()?;
     println!("Next physical index: {}", unord.get_next_physical_index());
     println!("Free physical set: {:?}", unord.get_free_physical());
 
     // insert again (should reuse freed physical index)
-    unord.insert_row(1, vec![Value::Int(27), Value::Str("Sam".to_string()), Value::Float(48000.0)]);
+    unord.insert_row(1, vec![Value::Int(27), Value::Str("Sam".to_string()), Value::Float(48000.0)])?;
     println!("\nAfter insert at logical idx 0 (should reuse freed physical slot):");
-    unord.print_table();
+    unord.print_table()?;
     println!("Next physical index: {}", unord.get_next_physical_index());
     println!("Free physical set: {:?}", unord.get_free_physical());
 
     // swap rows 0 and 2
-    unord.swap_rows(0, 2);
+    unord.swap_rows(0, 2)?;
     println!("\nAfter swap rows 0 and 2:");
-    unord.print_table();
+    unord.print_table()?;
 
     // update row
-    unord.update_row(1, vec![Value::Int(99), Value::Str("Updated".to_string()), Value::Float(12345.0)]);
+    unord.update_row(1, vec![Value::Int(99), Value::Str("Updated".to_string()), Value::Float(12345.0)])?;
     println!("\nAfter update logical row 1:");
-    unord.print_table();
+    unord.print_table()?;
+
+    // Out-of-range row operations are recoverable errors, not panics.
+    match unord.delete_row(99) {
+        Ok(()) => println!("\nUnexpectedly deleted a nonexistent row"),
+        Err(err) => println!("\nRejected delete of row 99: {err}"),
+    }
 
     // show internal mapping & recycling info
     println!("\nInternal logical->physical (in-order): {:?}", unord.get_logical_order().in_order());
@@ -64,4 +82,5 @@ pub fn table_demo() {
     println!("Free physical set: {:?}", unord.get_free_physical());
 
     println!(" ------------------------------------------------------------------------------- \n");
+    Ok(())
 }

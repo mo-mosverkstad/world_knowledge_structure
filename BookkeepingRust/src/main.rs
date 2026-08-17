@@ -63,11 +63,21 @@ fn main() {
 mod demos;
 mod domain;
 
-use demos::tree_array_demo::tree_array_demo;
 use demos::table_demo::table_demo;
-// use demos::tree_array_demo::tree_array_demo;
+use demos::tree_array_demo::tree_array_demo;
+use domain::error::DomainError;
 
+/// The domain layer never panics: every failure reaches this single boundary as
+/// a `DomainError`, where it is reported and turned into a non-zero exit code.
 fn main() {
-    tree_array_demo();
-    table_demo();
+    if let Err(err) = run() {
+        eprintln!("domain error: {err}");
+        std::process::exit(1);
+    }
+}
+
+fn run() -> Result<(), DomainError> {
+    tree_array_demo()?;
+    table_demo()?;
+    Ok(())
 }

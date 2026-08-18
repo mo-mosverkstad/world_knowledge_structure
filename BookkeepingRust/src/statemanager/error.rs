@@ -6,7 +6,6 @@ use std::fmt;
 /// columns or trees, and the domain layer knows nothing about histories. Only
 /// code that combines both layers has to deal with both error types.
 #[derive(Debug, Clone, PartialEq, Eq)]
-#[allow(dead_code)]
 pub enum StatemanagerError {
     /// An undo was requested while the undo stack was empty.
     NothingToUndo,

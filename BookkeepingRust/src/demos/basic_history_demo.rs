@@ -1,6 +1,6 @@
 use crate::statemanager::error::StatemanagerResult;
-use crate::statemanager::history::TargetMementoTrait;
 use crate::statemanager::history::History;
+use crate::statemanager::history::TargetMementoTrait;
 
 struct NumberStore {
     value: i32,
@@ -37,25 +37,40 @@ pub fn basic_history_demo() -> StatemanagerResult<()> {
 
     println!("After second change: {}", store.value);
 
-    // Undo 30 -> 20.
-    history.undo(&mut store);
+    // Undo 30 -> 20. Both mementos are on the undo stack, so these succeed and
+    // the `?` never fires.
+    history.undo(&mut store)?;
 
     println!("After undo: {}", store.value);
 
     // Undo 20 -> 10.
-    history.undo(&mut store);
+    history.undo(&mut store)?;
 
     println!("After second undo: {}", store.value);
 
+    // The undo stack is now empty, so a third undo is an error. Handle it here
+    // instead of propagating, so the demo can show the failure and carry on.
+    match history.undo(&mut store) {
+        Ok(()) => println!("Unexpected: third undo succeeded"),
+        Err(err) => println!("Rejected third undo: {err}"),
+    }
+
     // Redo 10 -> 20.
-    history.redo(&mut store);
+    history.redo(&mut store)?;
 
     println!("After redo: {}", store.value);
 
     // Redo 20 -> 30.
-    history.redo(&mut store);
+    history.redo(&mut store)?;
 
     println!("After second redo: {}", store.value);
+
+    // Symmetrically, the redo stack is now drained.
+    match history.redo(&mut store) {
+        Ok(()) => println!("Unexpected: third redo succeeded"),
+        Err(err) => println!("Rejected third redo: {err}"),
+    }
+
     println!(" ------------------------------------------------------------------------------- \n");
     Ok(())
 }

@@ -1,12 +1,11 @@
-mod demos;
-mod domain;
-mod statemanager;
+//! Thin binary entry point. All logic lives in the `bookkeeping_rust` library
+//! (see `src/lib.rs`) so that it can be exercised from the `tests/` directory.
 
 use std::error::Error;
 
-use demos::basic_history_demo::basic_history_demo;
-use demos::table_demo::table_demo;
-use demos::tree_array_demo::tree_array_demo;
+use bookkeeping_rust::demos::basic_history_demo::basic_history_demo;
+use bookkeeping_rust::demos::table_demo::table_demo;
+use bookkeeping_rust::demos::tree_array_demo::tree_array_demo;
 
 /// `main` is the only place where the independent layers meet, so it is also the
 /// only place that has to accept more than one error type. Neither layer panics

@@ -3,4 +3,14 @@ name = "BookkeepingRust"
 version = "0.1.0"
 edition = "2024"
 
+# The core logic lives in a library so that integration tests under `tests/` can
+# use it. The binary is a thin entry point on top of the same library.
+[lib]
+name = "bookkeeping_rust"
+path = "src/lib.rs"
+
+[[bin]]
+name = "BookkeepingRust"
+path = "src/main.rs"
+
 [dependencies]

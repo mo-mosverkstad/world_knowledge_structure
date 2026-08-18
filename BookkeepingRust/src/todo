@@ -1,5 +1,5 @@
 Domain:
-1. Split the code between core logic and tests in separate folders
+1. Split the code between core logic and tests in separate folders (DONE: core in src/, tests mirrored under tests/)
 1. Implement a lazy-load iterator
 1.1 Implement a lazy-load iterator in tree-array. Consecutive queries produces O(m*log(n)), while an iterator provides O(log(n) + m). n is the size of tree-array and m is the size of number of queried elements
 1.2 Implement a lazy-load iterator fetch for both ordered_table and unordered_table

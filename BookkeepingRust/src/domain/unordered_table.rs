@@ -141,12 +141,13 @@ impl TableTrait for UnorderedTable {
             println!("(empty table)");
             return Ok(());
         }
-        let nrows = self.logical_order.len();
+        // One lazy walk of the logical order instead of a `try_get` per row per
+        // column: O(log n + m) rather than O(m log n) lookups.
+        let physical: Vec<usize> = self.logical_order.iter().copied().collect();
         let mut widths = Vec::new();
         for col in &self.columns {
             let mut max_width = col.name().len();
-            for user_idx in 0..nrows {
-                let phys_idx = self.logical_order.try_get(user_idx)?;
+            for &phys_idx in &physical {
                 let val = col.get_value(phys_idx)?;
                 if val.len() > max_width { max_width = val.len(); }
             }
@@ -158,8 +159,7 @@ impl TableTrait for UnorderedTable {
         for (i, w) in widths.iter().enumerate() { if i>0 {print!(" ")}; print!("{}", "-".repeat(*w)); }
         println!();
         // rows
-        for user_idx in 0..nrows {
-            let phys_idx = self.logical_order.try_get(user_idx)?;
+        for &phys_idx in &physical {
             for (i, (col, w)) in self.columns.iter().zip(&widths).enumerate() {
                 if i>0 { print!(" "); }
                 print!("{:<width$}", col.get_value(phys_idx)?, width=w);

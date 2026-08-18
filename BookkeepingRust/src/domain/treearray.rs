@@ -252,16 +252,46 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
     // -----------------In order --------------------
 
     pub fn in_order(&self) -> Vec<T> {
-        let mut result = Vec::with_capacity(self.len());
-        fn recurse<T: Clone>(node: &Option<Box<Node<T>>>, result: &mut Vec<T>) {
-            if let Some(n) = node {
-                recurse(&n.left, result);
-                result.push(n.value.clone());
-                recurse(&n.right, result);
-            }
+        // Backed by the lazy iterator: one O(log n) seek plus O(1) per element.
+        self.iter().cloned().collect()
+    }
+
+    // ----------------- Lazy iteration --------------------
+
+    /// Lazily walks the elements in index order without materialising them.
+    ///
+    /// Cost is `O(log n)` to reach the first element plus amortised `O(1)` per
+    /// step, so reading `m` consecutive elements is `O(log n + m)`. Repeated
+    /// `get(i)` calls instead cost `O(m log n)`, because every lookup restarts
+    /// the descent from the root.
+    pub fn iter(&self) -> TreeArrayIter<'_, T> {
+        self.iter_from(0)
+    }
+
+    /// Like [`iter`](Self::iter) but starts at `start`, which is the form that
+    /// replaces a run of `get(start..)` lookups. A `start` at or beyond `len()`
+    /// yields an empty iterator, mirroring slice semantics.
+    pub fn iter_from(&self, start: usize) -> TreeArrayIter<'_, T> {
+        TreeArrayIter::new(self.root.as_deref(), start, self.len())
+    }
+
+    /// Lazily walks `count` elements starting at `index`, the direct replacement
+    /// for a loop of `try_get` calls over a known range.
+    ///
+    /// The range is validated up front so an out-of-bounds request is reported
+    /// before any element is produced, rather than surfacing mid-iteration.
+    pub fn range(&self, index: usize, count: usize) -> DomainResult<TreeArrayIter<'_, T>> {
+        let len = self.len();
+        // `index == len` is valid only for an empty range (the position just past
+        // the end), matching how `insert` treats `len` as a valid position.
+        if index > len {
+            return Err(DomainError::IndexOutOfBounds { index, len });
         }
-        recurse(&self.root, &mut result);
-        result
+        if count > len - index {
+            // Report the first index the caller asked for that does not exist.
+            return Err(DomainError::IndexOutOfBounds { index: len, len });
+        }
+        Ok(TreeArrayIter::new(self.root.as_deref(), index, index + count))
     }
 
     // ------------------ Pretty print ------------------
@@ -283,5 +313,119 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
         }
         println!("TreeArray structure:");
         recurse(&self.root, "".to_string(), false);
+    }
+}
+
+// ----------------------------- Lazy in-order iterator -----------------------------
+
+/// Lazy in-order iterator over a [`TreeArray`].
+///
+/// The iterator keeps the path from the root down to the current element on an
+/// explicit stack instead of restarting the descent for every element:
+///
+/// * construction seeks to the start index in `O(log n)`, pushing at most
+///   `height` ancestors;
+/// * each [`Iterator::next`] pops one node and, when it has a right subtree,
+///   descends that subtree's left spine.
+///
+/// Every edge is pushed and popped at most once across a full traversal, so the
+/// per-step cost is amortised `O(1)` and reading `m` elements costs
+/// `O(log n + m)`. The stack never exceeds the tree height, which the AVL
+/// balancing keeps at `O(log n)`, so memory is `O(log n)` regardless of `m`.
+///
+/// Borrowing the tree immutably means the structure cannot be modified while an
+/// iterator is alive, so the cached path cannot go stale.
+pub struct TreeArrayIter<'a, T> {
+    /// Ancestors whose values have not been yielded yet, nearest last.
+    stack: Vec<&'a Node<T>>,
+    /// Index of the next element to yield.
+    next_idx: usize,
+    /// One past the last index to yield.
+    end_idx: usize,
+}
+
+impl<'a, T> TreeArrayIter<'a, T> {
+    /// Seeks to `start` in `O(log n)`, leaving the stack holding exactly the
+    /// ancestors whose values are still pending.
+    fn new(root: Option<&'a Node<T>>, start: usize, end: usize) -> Self {
+        let mut iter = Self {
+            stack: Vec::new(),
+            next_idx: start,
+            end_idx: end,
+        };
+        if start >= end {
+            // Empty range: leave the stack empty so `next` returns `None`.
+            return iter;
+        }
+
+        // Descend once, keeping only the nodes that still have to be yielded. A
+        // node is pushed when the target is in its left subtree or is the node
+        // itself; when the target is to the right, the node and its left subtree
+        // are already behind us and are skipped.
+        let mut node = root;
+        let mut rank = start;
+        while let Some(n) = node {
+            let left_size = n.left.as_ref().map_or(0, |l| l.size);
+            if rank < left_size {
+                iter.stack.push(n);
+                node = n.left.as_deref();
+            } else if rank == left_size {
+                iter.stack.push(n);
+                break;
+            } else {
+                rank -= left_size + 1;
+                node = n.right.as_deref();
+            }
+        }
+        iter
+    }
+
+    /// Pushes the left spine of `node`, so the smallest pending index ends up on
+    /// top of the stack.
+    fn push_left_spine(&mut self, node: Option<&'a Node<T>>) {
+        let mut node = node;
+        while let Some(n) = node {
+            self.stack.push(n);
+            node = n.left.as_deref();
+        }
+    }
+
+    /// Number of elements the iterator has still to yield.
+    fn remaining(&self) -> usize {
+        self.end_idx.saturating_sub(self.next_idx)
+    }
+}
+
+impl<'a, T> Iterator for TreeArrayIter<'a, T> {
+    type Item = &'a T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.next_idx >= self.end_idx {
+            return None;
+        }
+        let node = self.stack.pop()?;
+        // The successor is the left spine of the right subtree, or, when there is
+        // no right subtree, the nearest pending ancestor already on the stack.
+        self.push_left_spine(node.right.as_deref());
+        self.next_idx += 1;
+        Some(&node.value)
+    }
+
+    /// Exact, because the range is known up front; lets callers size buffers in
+    /// one allocation.
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        let remaining = self.remaining();
+        (remaining, Some(remaining))
+    }
+}
+
+impl<'a, T> ExactSizeIterator for TreeArrayIter<'a, T> {}
+
+impl<'a, T: Copy + Clone + Debug> IntoIterator for &'a TreeArray<T> {
+    type Item = &'a T;
+    type IntoIter = TreeArrayIter<'a, T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
     }
 }

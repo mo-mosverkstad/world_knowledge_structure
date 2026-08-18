@@ -80,6 +80,7 @@ fn clear_empties_both_stacks() {
 
     history.record(store.value);
     store.value = 9;
+    assert_eq!(store.value, 9);
     assert!(history.undoable());
 
     history.clear();

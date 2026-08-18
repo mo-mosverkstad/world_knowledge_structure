@@ -19,6 +19,22 @@ pub fn tree_array_demo() -> DomainResult<()> {
         Err(err) => println!("Recovered from bad index {out_of_range}: {err}"),
     }
 
+    // Lazy iteration: one O(log n) seek plus O(1) per element, so reading a
+    // window costs O(log n + m) instead of the O(m log n) of repeated `try_get`.
+    let window: Vec<u8> = t.range(2, 4)?.copied().collect();
+    println!("Lazy window of 4 elements from index 2: {window:?}");
+
+    // Nothing is materialised until the values are pulled, so a short prefix of a
+    // large tree does not pay for the whole traversal.
+    let first_three: Vec<u8> = t.iter().copied().take(3).collect();
+    println!("First three via lazy iterator: {first_three:?}");
+
+    // An out-of-bounds window is rejected before any element is yielded.
+    match t.range(t.len() - 1, 5) {
+        Ok(_) => println!("Unexpected: oversized window was accepted"),
+        Err(err) => println!("Rejected oversized window: {err}"),
+    }
+
     let x = 58;
     let my_ref = &x;
     println!("my_ref = {:p}, *my_ref = {}", my_ref, *my_ref);

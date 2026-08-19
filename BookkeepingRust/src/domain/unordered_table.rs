@@ -1,6 +1,7 @@
 use std::fmt::Debug;
 use std::ops::RangeBounds;
 
+use crate::data_structures::index_range::resolve_range;
 use crate::data_structures::slot_allocator::SlotAllocator;
 use crate::data_structures::treearray::TreeArray;
 use crate::domain::error::{DomainError, DomainResult};
@@ -43,6 +44,16 @@ impl UnorderedTable {
         (0..self.slots.capacity())
             .filter(|&slot| !self.slots.is_live(slot))
             .collect()
+    }
+
+    fn column(&self, col: usize) -> DomainResult<&dyn Column> {
+        self.columns
+            .get(col)
+            .map(|boxed| boxed.as_ref())
+            .ok_or(DomainError::IndexOutOfBounds {
+                index: col,
+                len: self.columns.len(),
+            })
     }
 
     /// Validated before any slot is allocated or mutated.
@@ -172,5 +183,96 @@ impl TableTrait for UnorderedTable {
         // `TreeArray::range` applies the same bound checks over the same length.
         let indices = self.logical_order.range(range)?;
         Ok(RowIter::new(&self.columns, indices.copied()))
+    }
+
+    fn insert_row_at(&mut self, idx: usize, row: Vec<Value>) -> DomainResult<()> {
+        self.insert_row(idx, row)
+    }
+
+    fn validate(&self, row: &[Value]) -> DomainResult<()> {
+        self.validate_row(row)
+    }
+
+    fn ncols(&self) -> usize {
+        self.columns.len()
+    }
+
+    fn column_names(&self) -> Vec<&str> {
+        self.columns.iter().map(|col| col.name()).collect()
+    }
+
+    fn row(&self, idx: usize) -> DomainResult<Vec<Value>> {
+        self.row_range(idx..=idx)?
+            .next()
+            .unwrap_or(Err(DomainError::IndexOutOfBounds {
+                index: idx,
+                len: self.nrows(),
+            }))
+    }
+
+    fn cell(&self, row: usize, col: usize) -> DomainResult<Value> {
+        let phys = self.logical_order.try_get(row)?;
+        self.column(col)?.get(phys)
+    }
+
+    fn cell_display(&self, row: usize, col: usize) -> DomainResult<String> {
+        let phys = self.logical_order.try_get(row)?;
+        self.column(col)?.get_value(phys)
+    }
+
+    fn iter_column(&self, col: usize) -> DomainResult<impl Iterator<Item = DomainResult<Value>>> {
+        let column = self.column(col)?;
+        // One lazy tree walk, so the whole column costs `O(log n + m)`.
+        Ok(self
+            .logical_order
+            .iter()
+            .copied()
+            .map(move |phys| column.get(phys)))
+    }
+
+    fn update_cell(&mut self, row: usize, col: usize, val: Value) -> DomainResult<()> {
+        let phys = self.logical_order.try_get(row)?;
+        let ncols = self.columns.len();
+        let column = self
+            .columns
+            .get_mut(col)
+            .ok_or(DomainError::IndexOutOfBounds { index: col, len: ncols })?;
+        column.accepts(&val)?;
+        while phys >= column.len() {
+            column.push_empty();
+        }
+        column.update(phys, val)
+    }
+
+    fn swap_rows_at(&mut self, first: usize, second: usize) -> DomainResult<()> {
+        self.swap_rows(first, second)
+    }
+
+    fn remove_row(&mut self, idx: usize) -> DomainResult<Vec<Value>> {
+        // Read before deleting, since the row is returned to the caller.
+        let removed = self.row(idx)?;
+        self.delete_row(idx)?;
+        Ok(removed)
+    }
+
+    fn remove_row_range<R: RangeBounds<usize>>(
+        &mut self,
+        range: R,
+    ) -> DomainResult<Vec<Vec<Value>>> {
+        let range = resolve_range(range, self.nrows())?;
+        let mut removed = Vec::with_capacity(range.len());
+        // Always removing at `start` walks the range as later rows shift down.
+        for _ in range.clone() {
+            removed.push(self.remove_row(range.start)?);
+        }
+        Ok(removed)
+    }
+
+    fn clear_rows(&mut self) {
+        for col in self.columns.iter_mut() {
+            col.clear();
+        }
+        self.logical_order.clear();
+        self.slots.clear();
     }
 }

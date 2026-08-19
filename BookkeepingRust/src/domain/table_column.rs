@@ -57,6 +57,11 @@ pub trait Column: Debug {
     fn push(&mut self, val: Value) -> DomainResult<()>;
     fn push_empty(&mut self);
     fn update(&mut self, idx: usize, val: Value) -> DomainResult<()>;
+    /// `idx == len()` appends.
+    fn insert(&mut self, idx: usize, val: Value) -> DomainResult<()>;
+    fn remove(&mut self, idx: usize) -> DomainResult<Value>;
+    fn swap(&mut self, first: usize, second: usize) -> DomainResult<()>;
+    fn clear(&mut self);
     fn get_value(&self, idx: usize) -> DomainResult<String>;
     // Reads the cell at `idx` back as the same `Value` variant it was written as
     fn get(&self, idx: usize) -> DomainResult<Value>;
@@ -136,6 +141,43 @@ impl<T: CellType> Column for TableColumn<T> {
         let val = self.checked(val)?;
         *self.slot_mut(idx)? = val;
         Ok(())
+    }
+
+    fn insert(&mut self, idx: usize, val: Value) -> DomainResult<()> {
+        let val = self.checked(val)?;
+        if idx > self.rows.len() {
+            return Err(DomainError::IndexOutOfBounds {
+                index: idx,
+                len: self.rows.len(),
+            });
+        }
+        self.rows.insert(idx, val);
+        Ok(())
+    }
+
+    fn remove(&mut self, idx: usize) -> DomainResult<Value> {
+        if idx >= self.rows.len() {
+            return Err(DomainError::IndexOutOfBounds {
+                index: idx,
+                len: self.rows.len(),
+            });
+        }
+        Ok(self.rows.remove(idx).to_value())
+    }
+
+    fn swap(&mut self, first: usize, second: usize) -> DomainResult<()> {
+        let len = self.rows.len();
+        for idx in [first, second] {
+            if idx >= len {
+                return Err(DomainError::IndexOutOfBounds { index: idx, len });
+            }
+        }
+        self.rows.swap(first, second);
+        Ok(())
+    }
+
+    fn clear(&mut self) {
+        self.rows.clear()
     }
 
     fn get_value(&self, idx: usize) -> DomainResult<String> {

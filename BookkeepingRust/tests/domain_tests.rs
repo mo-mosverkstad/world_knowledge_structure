@@ -3,7 +3,8 @@
 mod domain {
     mod cell_segments;
     mod ordered_table;
-    mod table_column;
+    mod table_column;
+    mod table_crud;
     mod table_row_iter;
     mod unordered_table;
 }

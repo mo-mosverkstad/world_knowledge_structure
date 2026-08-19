@@ -119,6 +119,72 @@ pub fn table_demo() -> DomainResult<()> {
         Err(err) => println!("Rejected row_range(2..1): {err}"),
     }
 
+    // ---------------- CRUD utilities ----------------
+    println!(" ---------------- CRUD utilities ---------------- ");
+    println!("\nShape: {} row(s) x {} column(s), columns {:?}",
+        unord.nrows(), unord.ncols(), unord.column_names());
+
+    println!("Row 1: {:?}", unord.row(1)?);
+    println!("Cell (1, 1): {:?}", unord.cell(1, 1)?);
+    println!("Cell (1, 1) displayed: {}", unord.cell_display(1, 1)?);
+    let ages: Vec<Value> = unord.iter_column(0)?.collect::<DomainResult<_>>()?;
+    println!("Column 0 top to bottom: {ages:?}");
+
+    let found = unord.find_row(|row| row[0] == Value::Int(22))?;
+    println!("Row with Age 22 is at index {found:?}");
+
+    unord.update_cell(0, 1, Value::Str("Renamed".to_string()))?;
+    println!("\nAfter update_cell(0, 1):");
+    unord.print_table()?;
+
+    unord.insert_row_at(1, vec![Value::Int(31), Value::Str("Inserted".to_string()), Value::Float(31000.0)])?;
+    println!("\nAfter insert_row_at(1):");
+    unord.print_table()?;
+
+    let removed = unord.remove_row_range(1..3)?;
+    println!("\nremove_row_range(1..3) removed {} row(s):", removed.len());
+    for row in &removed {
+        println!("  {row:?}");
+    }
+    unord.print_table()?;
+
+    // Batch append is all-or-nothing.
+    match unord.append_rows(vec![
+        vec![Value::Int(50), Value::Str("Valid".to_string()), Value::Float(1.0)],
+        vec![Value::Int(51)],
+    ]) {
+        Ok(()) => println!("\nUnexpectedly accepted a batch with a bad row"),
+        Err(err) => println!("\nRejected the whole batch: {err}"),
+    }
+    println!("Still {} row(s) after the rejected batch", unord.nrows());
+
+    // Moving relocates rows without changing their contents; `to` is where the
+    // block ends up.
+    unord.append_rows(vec![
+        vec![Value::Int(41), Value::Str("Rowan".to_string()), Value::Float(41000.0)],
+        vec![Value::Int(42), Value::Str("Sasha".to_string()), Value::Float(42000.0)],
+    ])?;
+    println!("\nBefore moving:");
+    unord.print_table()?;
+
+    unord.move_row(0, 2)?;
+    println!("\nAfter move_row(0, 2):");
+    unord.print_table()?;
+
+    unord.move_row_range(0..2, 1)?;
+    println!("\nAfter move_row_range(0..2, 1):");
+    unord.print_table()?;
+
+    // The furthest a 2-row block fits in 4 rows is index 2, so 3 is refused.
+    match unord.move_row_range(0..2, 3) {
+        Ok(()) => println!("Unexpectedly moved a block past the end"),
+        Err(err) => println!("\nRejected move_row_range(0..2, 3): {err}"),
+    }
+
+    unord.clear_rows();
+    println!("\nAfter clear_rows: {} row(s), {} column(s)", unord.nrows(), unord.ncols());
+
     println!(" ------------------------------------------------------------------------------- \n");
+
     Ok(())
 }

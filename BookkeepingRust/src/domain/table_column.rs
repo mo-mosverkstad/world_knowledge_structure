@@ -19,7 +19,7 @@ pub enum Value {
 }
 
 impl Value {
-    /// Name of the variant, used to build descriptive type-mismatch errors.
+    /// Name of the value width
     pub fn type_name(&self) -> &'static str {
         match self {
             Value::Int(_) => "Int",
@@ -36,20 +36,26 @@ impl Value {
     }
 }
 
+
+pub trait CellType: Debug + Sized {
+    const TYPE_NAME: &'static str;
+    fn matches(val: &Value) -> bool;
+    fn from_value(val: Value) -> Result<Self, Value>;
+    fn to_value(&self) -> Value;
+    fn empty() -> Self;
+    fn display(&self) -> String;
+}
+
 pub trait Column: Debug {
     fn name(&self) -> &str;
     fn len(&self) -> usize;
-    /// Checks whether `val` has the variant this column stores. Lets callers
-    /// validate a whole row before mutating anything, so a rejected row leaves
-    /// the table untouched.
+    // Checks whether `val` has the value width this column stores
     fn accepts(&self, val: &Value) -> DomainResult<()>;
     fn push(&mut self, val: Value) -> DomainResult<()>;
     fn push_empty(&mut self);
     fn update(&mut self, idx: usize, val: Value) -> DomainResult<()>;
     fn get_value(&self, idx: usize) -> DomainResult<String>;
-    /// Reads the cell at `idx` back as the same `Value` variant it was written
-    /// as, so a whole row can be handed back in the shape it was supplied in.
-    /// [`get_value`](Self::get_value) is the display form and loses that type.
+    // Reads the cell at `idx` back as the same `Value` value width
     fn get(&self, idx: usize) -> DomainResult<Value>;
 }
 
@@ -67,7 +73,7 @@ impl<T> TableColumn<T> {
         }
     }
 
-    /// Returns a mutable reference to the slot at `idx`, or an out-of-bounds error.
+    // Returns a mutable reference to the slot at `idx`, or an out-of-bounds error.
     fn slot_mut(&mut self, idx: usize) -> DomainResult<&mut T> {
         let len = self.rows.len();
         self.rows
@@ -75,7 +81,7 @@ impl<T> TableColumn<T> {
             .ok_or(DomainError::IndexOutOfBounds { index: idx, len })
     }
 
-    /// Returns a reference to the slot at `idx`, or an out-of-bounds error.
+    // Returns a reference to the slot at `idx`, or an out-of-bounds error.
     fn slot(&self, idx: usize) -> DomainResult<&T> {
         self.rows.get(idx).ok_or(DomainError::IndexOutOfBounds {
             index: idx,
@@ -92,92 +98,94 @@ impl<T> TableColumn<T> {
     }
 }
 
-impl Column for TableColumn<i32> {
-    fn name(&self) -> &str { &self.name }
-    fn len(&self) -> usize { self.rows.len() }
-    fn accepts(&self, val: &Value) -> DomainResult<()> {
-        match val {
-            Value::Int(_) => Ok(()),
-            other => Err(self.type_mismatch("Int", other)),
-        }
-    }
-    fn push(&mut self, val: Value) -> DomainResult<()> {
-        match val {
-            Value::Int(x) => { self.rows.push(x); Ok(()) }
-            other => Err(self.type_mismatch("Int", &other)),
-        }
-    }
-    fn push_empty(&mut self) { self.rows.push(0) }
-    fn update(&mut self, idx: usize, val: Value) -> DomainResult<()> {
-        match val {
-            Value::Int(x) => { *self.slot_mut(idx)? = x; Ok(()) }
-            other => Err(self.type_mismatch("Int", &other)),
-        }
-    }
-    fn get_value(&self, idx: usize) -> DomainResult<String> {
-        Ok(self.slot(idx)?.to_string())
-    }
-    fn get(&self, idx: usize) -> DomainResult<Value> {
-        Ok(Value::Int(*self.slot(idx)?))
+impl<T: CellType> TableColumn<T> {
+    fn checked(&self, val: Value) -> DomainResult<T> {
+        T::from_value(val).map_err(|other| self.type_mismatch(T::TYPE_NAME, &other))
     }
 }
 
-impl Column for TableColumn<String> {
-    fn name(&self) -> &str { &self.name }
-    fn len(&self) -> usize { self.rows.len() }
+impl<T: CellType> Column for TableColumn<T> {
+    fn name(&self) -> &str {
+        &self.name
+    }
+
+    fn len(&self) -> usize {
+        self.rows.len()
+    }
+
     fn accepts(&self, val: &Value) -> DomainResult<()> {
-        match val {
-            Value::Str(_) => Ok(()),
-            other => Err(self.type_mismatch("Str", other)),
+        if T::matches(val) {
+            Ok(())
+        } else {
+            Err(self.type_mismatch(T::TYPE_NAME, val))
         }
     }
+
     fn push(&mut self, val: Value) -> DomainResult<()> {
-        match val {
-            Value::Str(x) => { self.rows.push(x); Ok(()) }
-            other => Err(self.type_mismatch("Str", &other)),
-        }
+        let val = self.checked(val)?;
+        self.rows.push(val);
+        Ok(())
     }
-    fn push_empty(&mut self) { self.rows.push(String::new()) }
+
+    fn push_empty(&mut self) {
+        self.rows.push(T::empty())
+    }
+
     fn update(&mut self, idx: usize, val: Value) -> DomainResult<()> {
-        match val {
-            Value::Str(x) => { *self.slot_mut(idx)? = x; Ok(()) }
-            other => Err(self.type_mismatch("Str", &other)),
-        }
+        let val = self.checked(val)?;
+        *self.slot_mut(idx)? = val;
+        Ok(())
     }
+
     fn get_value(&self, idx: usize) -> DomainResult<String> {
-        Ok(self.slot(idx)?.clone())
+        Ok(self.slot(idx)?.display())
     }
+
     fn get(&self, idx: usize) -> DomainResult<Value> {
-        Ok(Value::Str(self.slot(idx)?.clone()))
+        Ok(self.slot(idx)?.to_value())
     }
 }
 
-impl Column for TableColumn<f32> {
-    fn name(&self) -> &str { &self.name }
-    fn len(&self) -> usize { self.rows.len() }
-    fn accepts(&self, val: &Value) -> DomainResult<()> {
-        match val {
-            Value::Float(_) => Ok(()),
-            other => Err(self.type_mismatch("Float", other)),
-        }
-    }
-    fn push(&mut self, val: Value) -> DomainResult<()> {
-        match val {
-            Value::Float(x) => { self.rows.push(x); Ok(()) }
-            other => Err(self.type_mismatch("Float", &other)),
-        }
-    }
-    fn push_empty(&mut self) { self.rows.push(0.0) }
-    fn update(&mut self, idx: usize, val: Value) -> DomainResult<()> {
-        match val {
-            Value::Float(x) => { *self.slot_mut(idx)? = x; Ok(()) }
-            other => Err(self.type_mismatch("Float", &other)),
-        }
-    }
-    fn get_value(&self, idx: usize) -> DomainResult<String> {
-        Ok(format!("{:.2}", self.slot(idx)?))
-    }
-    fn get(&self, idx: usize) -> DomainResult<Value> {
-        Ok(Value::Float(*self.slot(idx)?))
-    }
+macro_rules! cell_types {
+    ($($ty:ty => $value width:ident {
+        empty: $empty:expr,
+        display: |$this:ident| $display:expr
+    }),* $(,)?) => {
+        $(
+            impl CellType for $ty {
+                const TYPE_NAME: &'static str = stringify!($value width);
+
+                fn matches(val: &Value) -> bool {
+                    matches!(val, Value::$value width(_))
+                }
+
+                fn from_value(val: Value) -> Result<Self, Value> {
+                    match val {
+                        Value::$value width(x) => Ok(x),
+                        other => Err(other),
+                    }
+                }
+
+                fn to_value(&self) -> Value {
+                    Value::$value width(self.clone())
+                }
+
+                fn empty() -> Self {
+                    $empty
+                }
+
+                fn display(&self) -> String {
+                    let $this = self;
+                    $display
+                }
+            }
+        )*
+    };
+}
+
+cell_types! {
+    i32 => Int { empty: 0, display: |v| v.to_string() },
+    String => Str { empty: String::new(), display: |v| v.clone() },
+    // Fixed to two decimals so a column of money lines up in `print_table`.
+    f32 => Float { empty: 0.0, display: |v| format!("{v:.2}") },
 }

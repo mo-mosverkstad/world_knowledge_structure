@@ -8,7 +8,7 @@ mod domain {
     mod index_range;
     mod ordered_table;
     mod table_column;
-    mod table_rows;
+    mod table_row_iter;
     mod treearray;
     mod unordered_table;
 }

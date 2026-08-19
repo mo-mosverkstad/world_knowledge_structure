@@ -5,7 +5,7 @@ use std::ops::RangeBounds;
 use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
-use crate::domain::table_rows::{RowIter, UnorderedRowIter};
+use crate::domain::table_row_iter::{RowIter, UnorderedRowIter};
 use crate::domain::table_trait::TableTrait;
 use crate::domain::treearray::TreeArray;
 

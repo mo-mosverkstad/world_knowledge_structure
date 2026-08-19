@@ -2,7 +2,7 @@ Domain:
 1. Split the code between core logic and tests in separate folders (DONE: core in src/, tests mirrored under tests/)
 1. Implement a lazy-load iterator
 1.1 Implement a lazy-load iterator in tree-array. Consecutive queries produces O(m*log(n)), while an iterator provides O(log(n) + m). n is the size of tree-array and m is the size of number of queried elements (DONE: TreeArray::iter / range)
-1.2 Implement a lazy-load iterator fetch for both ordered_table and unordered_table (DONE: TableTrait::iter_rows / row_range, shared RowIter in domain/table_rows.rs)
+1.2 Implement a lazy-load iterator fetch for both ordered_table and unordered_table (DONE: TableTrait::iter_rows / row_range, shared RowIter in domain/table_row_iter.rs)
 (comments DONE: 1st: every reader now takes any Rust range (RangeBounds), normalised and bound-checked in one place, domain/index_range.rs::resolve_range; the row+count and start/count forms are gone, and the *_from variants are absorbed by range(start..) / row_range(start..). 2nd: moot once rows_from was removed — the windowed readers (.range / .row_range) return Result because a caller-named bound can be invalid, while the whole-collection readers (.iter / .iter_rows) cannot fail and return the iterator directly)
 1.3 Reduce the table_column duplicated code by templating???
 1.4 Extract number-index-reusal as a data structure??? and put it in separate directory alongside with treearray.rs???

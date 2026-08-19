@@ -1,4 +1,5 @@
-//! Tests for `domain::table_rows`, the lazy row iteration shared by both tables.
+//! Tests for `domain::table_row_iter`, the lazy row iteration shared by both
+//! tables.
 //!
 //! The two tables sequence physical indices differently, so each property is
 //! checked against both: `OrderedTable` walks a plain range, `UnorderedTable`

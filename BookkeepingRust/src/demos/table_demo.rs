@@ -181,7 +181,7 @@ pub fn table_demo() -> DomainResult<()> {
         Err(err) => println!("\nRejected move_row_range(0..2, 3): {err}"),
     }
 
-    unord.clear_rows();
+    unord.clear_rows()?;
     println!("\nAfter clear_rows: {} row(s), {} column(s)", unord.nrows(), unord.ncols());
 
     println!(" ------------------------------------------------------------------------------- \n");

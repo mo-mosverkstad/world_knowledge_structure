@@ -6,6 +6,7 @@ use std::error::Error;
 use bookkeeping_rust::demos::basic_history_demo::basic_history_demo;
 use bookkeeping_rust::demos::cell_segments_demo::cell_segments_demo;
 use bookkeeping_rust::demos::table_demo::table_demo;
+use bookkeeping_rust::demos::table_registry_demo::table_registry_demo;
 use bookkeeping_rust::demos::tree_array_demo::tree_array_demo;
 
 /// `main` is the only place where the independent layers meet, so it is also the
@@ -24,6 +25,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     tree_array_demo()?;
     table_demo()?;
     cell_segments_demo()?;
+    table_registry_demo()?;
     // State manager demo: fails with `StatemanagerError`.
     basic_history_demo()?;
     Ok(())

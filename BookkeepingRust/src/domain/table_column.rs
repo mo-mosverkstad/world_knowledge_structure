@@ -1,6 +1,7 @@
 use std::fmt::Debug;
 
 use crate::domain::cell_segments::Segments;
+use crate::domain::child_link::ChildLink;
 use crate::domain::error::{DomainError, DomainResult};
 
 // ----------------------------- Value enum & Column traits -----------------------------
@@ -11,6 +12,7 @@ pub enum Value {
     Float(f32),
     Str(String),
     MultiStr(Segments), // A cell split into ordered segments
+    Child(ChildLink),   // A link to a child table, or empty; written by the registry
     Bool(bool),
     Byte(u8),
     Double(f64),
@@ -28,6 +30,7 @@ impl Value {
             Value::Float(_) => "Float",
             Value::Str(_) => "Str",
             Value::MultiStr(_) => "MultiStr",
+            Value::Child(_) => "Child",
             Value::Bool(_) => "Bool",
             Value::Byte(_) => "Byte",
             Value::Double(_) => "Double",
@@ -236,4 +239,6 @@ cell_types! {
         empty: Segments::one(String::new()),
         display: |v| v.iter().collect::<Vec<_>>().join(" | ")
     },
+    // Padding is an empty link, so no edge is invented.
+    ChildLink => Child { empty: ChildLink::EMPTY, display: |v| v.render() },
 }

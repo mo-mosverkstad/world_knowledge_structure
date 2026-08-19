@@ -2,6 +2,7 @@ use std::fmt::Debug;
 use std::ops::RangeBounds;
 
 use crate::data_structures::index_range::resolve_range;
+use crate::domain::child_link::ChildLink;
 use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
@@ -14,6 +15,72 @@ pub trait TableTrait: Debug {
         Self: 'a;
 
     fn add_column<C: Column + 'static>(&mut self, col: C);
+
+    /// Index of the column holding child links, if this table is non-leaf.
+    fn child_column(&self) -> Option<usize>;
+
+    /// Reserves an existing `Child` column as this table's child column, after
+    /// which ordinary writes to it are refused and only the registry may set it.
+    fn set_child_column(&mut self, col: usize) -> DomainResult<()>;
+
+    /// Writes the child column, bypassing the guard that blocks ordinary writes.
+    ///
+    /// Crate-internal so only the registry can reach it: it is the counted write,
+    /// and calling it directly would leave the counts disagreeing with the links.
+    fn set_child_cell(&mut self, row: usize, col: usize, link: ChildLink) -> DomainResult<()>;
+
+    /// Rejects a write that would touch the child column outside the registry.
+    fn guard_child_column(&self, col: usize) -> DomainResult<()> {
+        match self.child_column() {
+            Some(child) if child == col => {
+                Err(DomainError::ChildColumnProtected { column: col })
+            }
+            _ => Ok(()),
+        }
+    }
+
+    /// Rejects a supplied row that carries a populated child link, since creating
+    /// an edge is what the registry counts.
+    fn guard_child_values(&self, row: &[Value]) -> DomainResult<()> {
+        if let Some(col) = self.child_column() {
+            match row.get(col) {
+                Some(Value::Child(link)) if !link.is_empty() => {
+                    return Err(DomainError::ChildColumnProtected { column: col });
+                }
+                _ => {}
+            }
+        }
+        Ok(())
+    }
+
+    /// Rejects clearing a table while any row still holds a child link.
+    fn guard_child_links_absent(&self) -> DomainResult<()> {
+        if let Some(col) = self.child_column() {
+            for row in 0..self.nrows() {
+                if let Ok(Value::Child(link)) = self.cell(row, col)
+                    && !link.is_empty()
+                {
+                    return Err(DomainError::ChildLinkPresent { row });
+                }
+            }
+        }
+        Ok(())
+    }
+
+    /// Rejects a whole-row write on a non-leaf table, since it would overwrite the
+    /// child link along with everything else.
+    fn guard_child_row(&self, row: usize) -> DomainResult<()> {
+        match self.child_column() {
+            Some(col) => match self.cell(row, col) {
+                // An empty link has nothing to lose, so the write is harmless.
+                Ok(Value::Child(link)) if link.is_empty() => Ok(()),
+                Ok(Value::Child(_)) => Err(DomainError::ChildLinkPresent { row }),
+                // A row that does not exist yet holds no link.
+                _ => Ok(()),
+            },
+            None => Ok(()),
+        }
+    }
     fn append_row(&mut self, row: Vec<Value>) -> DomainResult<()>;
     fn update_row(&mut self, idx: usize, row: Vec<Value>) -> DomainResult<()>;
     fn print_table(&self) -> DomainResult<()>;
@@ -136,5 +203,7 @@ pub trait TableTrait: Debug {
     ) -> DomainResult<Vec<Vec<Value>>>;
 
     /// Removes every row, keeping the columns.
-    fn clear_rows(&mut self);
+    /// Refused while any row still holds a child link, which must be cleared
+    /// through the registry first.
+    fn clear_rows(&mut self) -> DomainResult<()>;
 }

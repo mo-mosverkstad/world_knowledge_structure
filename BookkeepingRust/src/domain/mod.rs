@@ -1,6 +1,8 @@
 pub mod cell_segments;
+pub mod child_link;
 pub mod error;
 pub mod table_column;
+pub mod table_registry;
 pub mod table_row_iter;
 pub mod table_trait;
 pub mod ordered_table;

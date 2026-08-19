@@ -1,6 +1,7 @@
 use std::fmt::Debug;
 use std::ops::RangeBounds;
 
+use crate::domain::child_link::ChildLink;
 use crate::domain::error::{DomainError, DomainResult};
 use crate::data_structures::index_range::resolve_range;
 use crate::domain::table_column::Column;
@@ -12,10 +13,12 @@ use crate::domain::table_trait::TableTrait;
 #[derive(Debug)]
 pub struct OrderedTable {
     columns: Vec<Box<dyn Column>>,
+    /// Set once a column is reserved for child links.
+    child_column: Option<usize>,
 }
 
 impl OrderedTable {
-    pub fn new() -> Self { OrderedTable { columns: Vec::new() } }
+    pub fn new() -> Self { OrderedTable { columns: Vec::new(), child_column: None } }
 
     fn column(&self, col: usize) -> DomainResult<&dyn Column> {
         self.columns
@@ -58,8 +61,39 @@ impl TableTrait for OrderedTable {
 
     fn add_column<C: Column + 'static>(&mut self, col: C) { self.columns.push(Box::new(col)) }
 
+    fn set_child_cell(&mut self, row: usize, col: usize, link: ChildLink) -> DomainResult<()> {
+        let nrows = self.nrows();
+        if row >= nrows {
+            return Err(DomainError::IndexOutOfBounds { index: row, len: nrows });
+        }
+        let column = self
+            .columns
+            .get_mut(col)
+            .ok_or(DomainError::IndexOutOfBounds { index: col, len: 0 })?;
+        while row >= column.len() {
+            column.push_empty();
+        }
+        column.update(row, Value::Child(link))
+    }
+
+    fn child_column(&self) -> Option<usize> {
+        self.child_column
+    }
+
+    fn set_child_column(&mut self, col: usize) -> DomainResult<()> {
+        let column = self.column(col)?;
+        // Only a `Child` column can hold links, so anything else is a mistake
+        // rather than something to coerce.
+        if column.accepts(&Value::Child(ChildLink::EMPTY)).is_err() {
+            return Err(DomainError::NotAChildColumn { column: col });
+        }
+        self.child_column = Some(col);
+        Ok(())
+    }
+
     fn append_row(&mut self, row: Vec<Value>) -> DomainResult<()> {
         self.validate_row(&row)?;
+        self.guard_child_values(&row)?;
         for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
             col.push(val)?;
         }
@@ -68,6 +102,8 @@ impl TableTrait for OrderedTable {
 
     fn update_row(&mut self, idx: usize, row: Vec<Value>) -> DomainResult<()> {
         self.validate_row(&row)?;
+        self.guard_child_row(idx)?;
+        self.guard_child_values(&row)?;
         for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
             while idx >= col.len() { col.push_empty(); }
             col.update(idx, val)?;
@@ -124,6 +160,7 @@ impl TableTrait for OrderedTable {
 
     fn insert_row_at(&mut self, idx: usize, row: Vec<Value>) -> DomainResult<()> {
         self.validate_row(&row)?;
+        self.guard_child_values(&row)?;
         let nrows = self.nrows();
         if idx > nrows {
             return Err(DomainError::IndexOutOfBounds { index: idx, len: nrows });
@@ -172,6 +209,7 @@ impl TableTrait for OrderedTable {
     }
 
     fn update_cell(&mut self, row: usize, col: usize, val: Value) -> DomainResult<()> {
+        self.guard_child_column(col)?;
         let nrows = self.nrows();
         if row >= nrows {
             return Err(DomainError::IndexOutOfBounds { index: row, len: nrows });
@@ -206,6 +244,7 @@ impl TableTrait for OrderedTable {
     }
 
     fn remove_row(&mut self, idx: usize) -> DomainResult<Vec<Value>> {
+        self.guard_child_row(idx)?;
         let nrows = self.nrows();
         if idx >= nrows {
             return Err(DomainError::IndexOutOfBounds { index: idx, len: nrows });
@@ -231,9 +270,11 @@ impl TableTrait for OrderedTable {
         Ok(removed)
     }
 
-    fn clear_rows(&mut self) {
+    fn clear_rows(&mut self) -> DomainResult<()> {
+        self.guard_child_links_absent()?;
         for col in self.columns.iter_mut() {
             col.clear();
         }
+        Ok(())
     }
 }

@@ -76,7 +76,7 @@ trait TableAccess {
     fn remove_at(&mut self, idx: usize) -> DomainResultRow;
     fn remove_range(&mut self, from: usize, to: usize) -> Result<Vec<Vec<Value>>, DomainError>;
     fn remove_tail(&mut self, from: usize) -> Result<Vec<Vec<Value>>, DomainError>;
-    fn clear(&mut self);
+    fn clear(&mut self) -> Result<(), DomainError>;
     fn validate_row(&self, row: &[Value]) -> Result<(), DomainError>;
 }
 
@@ -156,7 +156,7 @@ macro_rules! impl_access {
             fn remove_tail(&mut self, from: usize) -> Result<Vec<Vec<Value>>, DomainError> {
                 TableTrait::remove_row_range(self, from..)
             }
-            fn clear(&mut self) {
+            fn clear(&mut self) -> Result<(), DomainError> {
                 TableTrait::clear_rows(self)
             }
             fn validate_row(&self, row: &[Value]) -> Result<(), DomainError> {
@@ -470,7 +470,7 @@ fn an_empty_range_removes_nothing() {
 fn clearing_removes_every_row_but_keeps_the_columns() {
     both(4, |make| {
         let mut t = make();
-        t.clear();
+        t.clear().expect("no child links");
         assert!(t.is_empty());
         assert_eq!(t.nrows(), 0);
         assert_eq!(t.ncols(), 2, "columns survive");
@@ -483,7 +483,7 @@ fn clearing_removes_every_row_but_keeps_the_columns() {
 fn rows_can_be_appended_again_after_clearing() {
     both(3, |make| {
         let mut t = make();
-        t.clear();
+        t.clear().expect("no child links");
         t.insert_at(0, row(1, "fresh")).expect("0 is valid on empty");
         assert_eq!(t.all_rows(), vec![row(1, "fresh")]);
     });
@@ -540,7 +540,7 @@ fn clearing_an_unordered_table_frees_its_slots_for_reuse() {
     let mut t = unordered(4);
     assert_eq!(t.physical_capacity(), 4);
 
-    t.clear_rows();
+    t.clear_rows().expect("no child links");
     assert_eq!(
         t.physical_capacity(),
         0,

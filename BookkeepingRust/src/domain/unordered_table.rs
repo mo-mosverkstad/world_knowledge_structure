@@ -4,6 +4,7 @@ use std::ops::RangeBounds;
 use crate::data_structures::index_range::resolve_range;
 use crate::data_structures::slot_allocator::SlotAllocator;
 use crate::data_structures::treearray::TreeArray;
+use crate::domain::child_link::ChildLink;
 use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
@@ -17,6 +18,8 @@ pub struct UnorderedTable {
     columns: Vec<Box<dyn Column>>,
     logical_order: TreeArray<usize>, // user_index -> physical slot
     slots: SlotAllocator,
+    /// Set once a column is reserved for child links.
+    child_column: Option<usize>,
 }
 
 #[allow(dead_code)]
@@ -26,6 +29,7 @@ impl UnorderedTable {
             columns: Vec::new(),
             logical_order: TreeArray::<usize>::new(),
             slots: SlotAllocator::new(),
+            child_column: None,
         }
     }
 
@@ -72,6 +76,7 @@ impl UnorderedTable {
 
     /// Frees the row's physical slot for reuse.
     pub fn delete_row(&mut self, user_idx: usize) -> DomainResult<()> {
+        self.guard_child_row(user_idx)?;
         let phys = self.logical_order.try_get(user_idx)?;
         self.logical_order.delete(user_idx)?;
         self.slots.free(phys)?;
@@ -81,6 +86,7 @@ impl UnorderedTable {
     /// Shifts subsequent rows up.
     pub fn insert_row(&mut self, user_idx: usize, row: Vec<Value>) -> DomainResult<()> {
         self.validate_row(&row)?;
+        self.guard_child_values(&row)?;
         if user_idx > self.logical_order.len() {
             return Err(DomainError::IndexOutOfBounds {
                 index: user_idx,
@@ -121,6 +127,31 @@ impl TableTrait for UnorderedTable {
 
     fn add_column<C: Column + 'static>(&mut self, col: C) { self.columns.push(Box::new(col)) }
 
+    fn set_child_cell(&mut self, row: usize, col: usize, link: ChildLink) -> DomainResult<()> {
+        let phys = self.logical_order.try_get(row)?;
+        let column = self
+            .columns
+            .get_mut(col)
+            .ok_or(DomainError::IndexOutOfBounds { index: col, len: 0 })?;
+        while phys >= column.len() {
+            column.push_empty();
+        }
+        column.update(phys, Value::Child(link))
+    }
+
+    fn child_column(&self) -> Option<usize> {
+        self.child_column
+    }
+
+    fn set_child_column(&mut self, col: usize) -> DomainResult<()> {
+        let column = self.column(col)?;
+        if column.accepts(&Value::Child(ChildLink::EMPTY)).is_err() {
+            return Err(DomainError::NotAChildColumn { column: col });
+        }
+        self.child_column = Some(col);
+        Ok(())
+    }
+
     fn append_row(&mut self, row: Vec<Value>) -> DomainResult<()> {
         let idx = self.logical_order.len();
         self.insert_row(idx, row)
@@ -128,6 +159,8 @@ impl TableTrait for UnorderedTable {
 
     fn update_row(&mut self, idx: usize, row: Vec<Value>) -> DomainResult<()> {
         self.validate_row(&row)?;
+        self.guard_child_row(idx)?;
+        self.guard_child_values(&row)?;
         let phys_idx = self.logical_order.try_get(idx)?;
         for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
             while phys_idx >= col.len() { col.push_empty(); }
@@ -231,6 +264,7 @@ impl TableTrait for UnorderedTable {
     }
 
     fn update_cell(&mut self, row: usize, col: usize, val: Value) -> DomainResult<()> {
+        self.guard_child_column(col)?;
         let phys = self.logical_order.try_get(row)?;
         let ncols = self.columns.len();
         let column = self
@@ -249,6 +283,7 @@ impl TableTrait for UnorderedTable {
     }
 
     fn remove_row(&mut self, idx: usize) -> DomainResult<Vec<Value>> {
+        self.guard_child_row(idx)?;
         // Read before deleting, since the row is returned to the caller.
         let removed = self.row(idx)?;
         self.delete_row(idx)?;
@@ -268,11 +303,13 @@ impl TableTrait for UnorderedTable {
         Ok(removed)
     }
 
-    fn clear_rows(&mut self) {
+    fn clear_rows(&mut self) -> DomainResult<()> {
+        self.guard_child_links_absent()?;
         for col in self.columns.iter_mut() {
             col.clear();
         }
         self.logical_order.clear();
         self.slots.clear();
+        Ok(())
     }
 }

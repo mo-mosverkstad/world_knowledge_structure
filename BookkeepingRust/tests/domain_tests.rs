@@ -5,6 +5,7 @@ mod domain {
     mod ordered_table;
     mod table_column;
     mod table_crud;
+    mod table_registry;
     mod table_row_iter;
     mod unordered_table;
 }

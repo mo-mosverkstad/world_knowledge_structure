@@ -24,6 +24,21 @@ pub enum DomainError {
     EmptyCell,
     /// The last remaining segment of a cell cannot be removed.
     LastSegment { column: String },
+    /// No table is registered under this id.
+    TableNotFound { table: usize },
+    /// A table cannot be deleted while rows still reference it.
+    TableStillReferenced { table: usize, references: usize },
+    /// A reference was dropped from a table that had none recorded, so the count
+    /// no longer matches reality.
+    RefcountCorrupted { table: usize },
+    /// A child link was written through the ordinary cell API instead of the
+    /// registry, which is what keeps the reference counts correct.
+    ChildColumnProtected { column: usize },
+    /// A row holding a child link was removed or overwritten outside the
+    /// registry, which would drop the link without decrementing its count.
+    ChildLinkPresent { row: usize },
+    /// The column named as a table's child column does not hold child links.
+    NotAChildColumn { column: usize },
 }
 
 /// Lets `?` on a data-structure operation produce a `DomainError` without an
@@ -64,6 +79,28 @@ impl fmt::Display for DomainError {
                 f,
                 "cannot remove the last segment of a cell in column '{column}'"
             ),
+            DomainError::TableNotFound { table } => {
+                write!(f, "no table registered under id {table}")
+            }
+            DomainError::TableStillReferenced { table, references } => write!(
+                f,
+                "table {table} still has {references} reference(s) and cannot be deleted"
+            ),
+            DomainError::RefcountCorrupted { table } => write!(
+                f,
+                "reference count for table {table} is corrupted: dropped a reference it did not have"
+            ),
+            DomainError::ChildColumnProtected { column } => write!(
+                f,
+                "column {column} holds child links and can only be written through the registry"
+            ),
+            DomainError::ChildLinkPresent { row } => write!(
+                f,
+                "row {row} holds a child link; clear it through the registry first"
+            ),
+            DomainError::NotAChildColumn { column } => {
+                write!(f, "column {column} does not hold child links")
+            }
             DomainError::IndexOutOfBounds { index, len } => {
                 write!(f, "index {index} is out of bounds (length {len})")
             }

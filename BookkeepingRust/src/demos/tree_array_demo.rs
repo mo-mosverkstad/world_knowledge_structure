@@ -1,5 +1,5 @@
 use crate::domain::error::DomainResult;
-use crate::domain::treearray::TreeArray;
+use crate::data_structures::treearray::TreeArray;
 
 pub fn tree_array_demo() -> DomainResult<()> {
     let mut t = TreeArray::<u8>::new();

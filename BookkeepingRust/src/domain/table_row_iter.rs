@@ -21,7 +21,7 @@ use std::ops::Range;
 
 use crate::domain::error::DomainResult;
 use crate::domain::table_column::{Column, Value};
-use crate::domain::treearray::TreeArrayIter;
+use crate::data_structures::treearray::TreeArrayIter;
 
 /// Lazy iterator over table rows, yielding each row as the `Vec<Value>` it was
 /// fed to the table as.

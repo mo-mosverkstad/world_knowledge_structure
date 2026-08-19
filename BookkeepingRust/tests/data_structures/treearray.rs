@@ -1,8 +1,8 @@
-//! Tests for `domain::treearray`. Kept out of the implementation file: these
+//! Tests for `data_structures::treearray`. Kept out of the implementation file: these
 //! exercise `TreeArray` strictly through its public API.
 
-use bookkeeping_rust::domain::error::DomainError;
-use bookkeeping_rust::domain::treearray::TreeArray;
+use bookkeeping_rust::data_structures::error::StructureError;
+use bookkeeping_rust::data_structures::treearray::TreeArray;
 
 #[test]
 fn out_of_range_access_returns_error() {
@@ -11,19 +11,19 @@ fn out_of_range_access_returns_error() {
 
     assert_eq!(
         t.try_get(5),
-        Err(DomainError::IndexOutOfBounds { index: 5, len: 1 })
+        Err(StructureError::IndexOutOfBounds { index: 5, len: 1 })
     );
     assert_eq!(
         t.set(5, 9),
-        Err(DomainError::IndexOutOfBounds { index: 5, len: 1 })
+        Err(StructureError::IndexOutOfBounds { index: 5, len: 1 })
     );
     assert_eq!(
         t.delete(5),
-        Err(DomainError::IndexOutOfBounds { index: 5, len: 1 })
+        Err(StructureError::IndexOutOfBounds { index: 5, len: 1 })
     );
     assert_eq!(
         t.insert(9, 9),
-        Err(DomainError::IndexOutOfBounds { index: 9, len: 1 })
+        Err(StructureError::IndexOutOfBounds { index: 9, len: 1 })
     );
     // The rejected operations left the tree untouched.
     assert_eq!(t.in_order(), vec![1]);
@@ -109,7 +109,7 @@ fn range_from_seeks_to_the_requested_index() {
     // caller named has to exist.
     assert_eq!(
         t.range(100..).err(),
-        Some(DomainError::IndexOutOfBounds { index: 100, len: 64 })
+        Some(StructureError::IndexOutOfBounds { index: 100, len: 64 })
     );
 }
 
@@ -165,20 +165,20 @@ fn range_validates_bounds_before_yielding_anything() {
     // Start beyond the end is rejected, reporting the index the caller named.
     assert_eq!(
         t.range(11..12).err(),
-        Some(DomainError::IndexOutOfBounds { index: 11, len: 10 })
+        Some(StructureError::IndexOutOfBounds { index: 11, len: 10 })
     );
     // A start in bounds but a window running past the end is rejected up front,
     // rather than yielding some elements and then failing. The end is exclusive,
     // so the error names `len`, the first index that does not exist.
     assert_eq!(
         t.range(8..13).err(),
-        Some(DomainError::IndexOutOfBounds { index: 10, len: 10 })
+        Some(StructureError::IndexOutOfBounds { index: 10, len: 10 })
     );
     // An inclusive end at the last index is in bounds; one past it is not.
     assert!(t.range(8..=9).is_ok());
     assert_eq!(
         t.range(8..=10).err(),
-        Some(DomainError::IndexOutOfBounds { index: 10, len: 10 })
+        Some(StructureError::IndexOutOfBounds { index: 10, len: 10 })
     );
 }
 
@@ -192,18 +192,18 @@ fn backwards_ranges_are_rejected_as_malformed() {
     // error: the range itself is not well formed.
     assert_eq!(
         t.range(7..3).err(),
-        Some(DomainError::InvalidRange { start: 7, end: 3 })
+        Some(StructureError::InvalidRange { start: 7, end: 3 })
     );
     // Reported as malformed even when the bounds are also out of bounds, since
     // that is the more specific description of the mistake.
     assert_eq!(
         t.range(99..50).err(),
-        Some(DomainError::InvalidRange { start: 99, end: 50 })
+        Some(StructureError::InvalidRange { start: 99, end: 50 })
     );
     // An inclusive range whose end is below its start is malformed too.
     assert_eq!(
         t.range(5..=3).err(),
-        Some(DomainError::InvalidRange { start: 5, end: 4 })
+        Some(StructureError::InvalidRange { start: 5, end: 4 })
     );
     // `n..=n` is a single element, not an empty or malformed range.
     assert_eq!(

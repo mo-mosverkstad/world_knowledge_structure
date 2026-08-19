@@ -1,6 +1,6 @@
 //! Resolution of caller-supplied ranges into a validated half-open interval.
 //!
-//! Every indexed collection in the domain layer (the tree and both tables)
+//! Every indexed collection here (and, through them, the domain layer's tables)
 //! accepts ranges in the same form and rejects them with the same errors, so the
 //! rules live here once rather than being restated per collection:
 //!
@@ -15,7 +15,7 @@
 
 use std::ops::{Bound, Range, RangeBounds};
 
-use crate::domain::error::{DomainError, DomainResult};
+use crate::data_structures::error::{StructureError, StructureResult};
 
 /// Normalises `range` into a half-open `start..end` and checks it against a
 /// collection of `len` elements.
@@ -23,21 +23,21 @@ use crate::domain::error::{DomainError, DomainResult};
 /// Checks run in this order, which mirrors how slice indexing reports the same
 /// mistakes:
 ///
-/// 1. `start > end` is [`DomainError::InvalidRange`] — the range is not well
+/// 1. `start > end` is [`StructureError::InvalidRange`] — the range is not well
 ///    formed, which is a distinct mistake from asking for something past the end,
 ///    and stays the diagnosis even when the bounds are also out of bounds. This
 ///    applies only when the caller actually supplied an end; an omitted one
 ///    cannot contradict the start.
-/// 2. `start > len` is [`DomainError::IndexOutOfBounds`] reporting `start`, the
+/// 2. `start > len` is [`StructureError::IndexOutOfBounds`] reporting `start`, the
 ///    value the caller supplied;
-/// 3. `end > len` is [`DomainError::IndexOutOfBounds`] reporting `len`, the first
+/// 3. `end > len` is [`StructureError::IndexOutOfBounds`] reporting `len`, the first
 ///    index that does not exist. The end is exclusive, so `..end` never names
 ///    that index and echoing the caller's bound back would be misleading.
 ///
 /// `start == len` is accepted for an empty range, i.e. the position just past the
 /// last element, matching how the insert operations treat `len` as a valid
 /// position. So `len..` and `len..len` are empty, not errors.
-pub fn resolve_range<R: RangeBounds<usize>>(range: R, len: usize) -> DomainResult<Range<usize>> {
+pub fn resolve_range<R: RangeBounds<usize>>(range: R, len: usize) -> StructureResult<Range<usize>> {
     // `saturating_add` cannot mask a real request: a collection can never hold
     // `usize::MAX + 1` elements, so a bound that saturates is out of bounds and
     // is caught by the checks below.
@@ -58,14 +58,14 @@ pub fn resolve_range<R: RangeBounds<usize>>(range: R, len: usize) -> DomainResul
     if let Some(end) = end
         && start > end
     {
-        return Err(DomainError::InvalidRange { start, end });
+        return Err(StructureError::InvalidRange { start, end });
     }
     if start > len {
-        return Err(DomainError::IndexOutOfBounds { index: start, len });
+        return Err(StructureError::IndexOutOfBounds { index: start, len });
     }
     let end = end.unwrap_or(len);
     if end > len {
-        return Err(DomainError::IndexOutOfBounds { index: len, len });
+        return Err(StructureError::IndexOutOfBounds { index: len, len });
     }
     Ok(start..end)
 }

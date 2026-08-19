@@ -1,6 +1,8 @@
 use std::error::Error;
 use std::fmt;
 
+use crate::data_structures::error::StructureError;
+
 /// Every fallible domain operation reports failures through this type, so the
 /// caller (ultimately `main`) decides how to react. The domain layer never
 /// panics on invalid input.
@@ -21,6 +23,28 @@ pub enum DomainError {
     InvalidRange { start: usize, end: usize },
     /// No more physical slots can be handed out (index counter would overflow).
     CapacityExceeded,
+}
+
+/// Lifts a failure from the data structures into the domain layer.
+///
+/// The three container failures exist in both types: `data_structures` cannot
+/// depend on this module, so it has its own
+/// [`StructureError`] describing
+/// the same situations. This conversion is what keeps that separation free at the
+/// call site — a `?` on a tree or range operation inside domain code produces a
+/// `DomainError` without an explicit `map_err`.
+impl From<StructureError> for DomainError {
+    fn from(err: StructureError) -> Self {
+        match err {
+            StructureError::IndexOutOfBounds { index, len } => {
+                DomainError::IndexOutOfBounds { index, len }
+            }
+            StructureError::InvalidRange { start, end } => {
+                DomainError::InvalidRange { start, end }
+            }
+            StructureError::CapacityExceeded => DomainError::CapacityExceeded,
+        }
+    }
 }
 
 impl fmt::Display for DomainError {

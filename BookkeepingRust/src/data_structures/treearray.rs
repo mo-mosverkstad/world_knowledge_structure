@@ -1,8 +1,8 @@
 use std::fmt::Debug;
 use std::ops::{Range, RangeBounds};
 
-use crate::domain::error::{DomainError, DomainResult};
-use crate::domain::index_range::resolve_range;
+use crate::data_structures::error::{StructureError, StructureResult};
+use crate::data_structures::index_range::resolve_range;
 
 // ----------------------------- AVL Node -----------------------------
 #[derive(Debug, Clone)]
@@ -73,18 +73,18 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
         Self::get_node_ref(&self.root, idx)
     }
 
-    pub fn try_get(&self, idx: usize) -> DomainResult<T> {
-        self.get(idx).ok_or(DomainError::IndexOutOfBounds {
+    pub fn try_get(&self, idx: usize) -> StructureResult<T> {
+        self.get(idx).ok_or(StructureError::IndexOutOfBounds {
             index: idx,
             len: self.len(),
         })
     }
 
     /// Replaces the value at `idx`, returning the previous value.
-    pub fn set(&mut self, idx: usize, value: T) -> DomainResult<T> {
+    pub fn set(&mut self, idx: usize, value: T) -> StructureResult<T> {
         let len = self.len();
         Self::set_node(&mut self.root, idx, value)
-            .ok_or(DomainError::IndexOutOfBounds { index: idx, len })
+            .ok_or(StructureError::IndexOutOfBounds { index: idx, len })
     }
 
     pub fn append(&mut self, value: T) {
@@ -102,19 +102,19 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
     }
 
     /// Inserts before the element at `idx`. `idx == len()` appends.
-    pub fn insert(&mut self, idx: usize, value: T) -> DomainResult<()> {
+    pub fn insert(&mut self, idx: usize, value: T) -> StructureResult<()> {
         let len = self.len();
         if idx > len {
-            return Err(DomainError::IndexOutOfBounds { index: idx, len });
+            return Err(StructureError::IndexOutOfBounds { index: idx, len });
         }
         self.root = Self::insert_node(self.root.take(), idx, value);
         Ok(())
     }
 
-    pub fn delete(&mut self, idx: usize) -> DomainResult<()> {
+    pub fn delete(&mut self, idx: usize) -> StructureResult<()> {
         let len = self.len();
         if idx >= len {
-            return Err(DomainError::IndexOutOfBounds { index: idx, len });
+            return Err(StructureError::IndexOutOfBounds { index: idx, len });
         }
         self.root = Self::delete_node(self.root.take(), idx);
         Ok(())
@@ -283,7 +283,7 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
     /// request is reported before any element is produced rather than surfacing
     /// mid-iteration. An omitted bound cannot be out of bounds, so `range(..)`
     /// always succeeds.
-    pub fn range<R: RangeBounds<usize>>(&self, range: R) -> DomainResult<TreeArrayIter<'_, T>> {
+    pub fn range<R: RangeBounds<usize>>(&self, range: R) -> StructureResult<TreeArrayIter<'_, T>> {
         let range = resolve_range(range, self.len())?;
         Ok(TreeArrayIter::new(self.root.as_deref(), range))
     }
@@ -344,8 +344,8 @@ impl<'a, T> TreeArrayIter<'a, T> {
     ///
     /// The range must already have been validated by the caller; this is why the
     /// constructor is private and reached only through
-    /// [`TreeArray::range`](super::treearray::TreeArray::range) and
-    /// [`iter`](super::treearray::TreeArray::iter).
+    /// [`TreeArray::range`](TreeArray::range) and
+    /// [`iter`](TreeArray::iter).
     fn new(root: Option<&'a Node<T>>, pending: Range<usize>) -> Self {
         let mut iter = Self {
             stack: Vec::new(),

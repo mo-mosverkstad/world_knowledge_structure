@@ -2,7 +2,7 @@ use std::fmt::Debug;
 use std::ops::RangeBounds;
 
 use crate::domain::error::{DomainError, DomainResult};
-use crate::domain::index_range::resolve_range;
+use crate::data_structures::index_range::resolve_range;
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
 use crate::domain::table_row_iter::{OrderedRowIter, RowIter};

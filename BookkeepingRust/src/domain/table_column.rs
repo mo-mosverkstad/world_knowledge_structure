@@ -19,7 +19,7 @@ pub enum Value {
 }
 
 impl Value {
-    /// Name of the value width
+    /// Name of the variant, used to build descriptive type-mismatch errors.
     pub fn type_name(&self) -> &'static str {
         match self {
             Value::Int(_) => "Int",
@@ -49,13 +49,13 @@ pub trait CellType: Debug + Sized {
 pub trait Column: Debug {
     fn name(&self) -> &str;
     fn len(&self) -> usize;
-    // Checks whether `val` has the value width this column stores
+    // Checks whether `val` has the variant this column stores
     fn accepts(&self, val: &Value) -> DomainResult<()>;
     fn push(&mut self, val: Value) -> DomainResult<()>;
     fn push_empty(&mut self);
     fn update(&mut self, idx: usize, val: Value) -> DomainResult<()>;
     fn get_value(&self, idx: usize) -> DomainResult<String>;
-    // Reads the cell at `idx` back as the same `Value` value width
+    // Reads the cell at `idx` back as the same `Value` variant it was written as
     fn get(&self, idx: usize) -> DomainResult<Value>;
 }
 
@@ -147,27 +147,27 @@ impl<T: CellType> Column for TableColumn<T> {
 }
 
 macro_rules! cell_types {
-    ($($ty:ty => $value width:ident {
+    ($($ty:ty => $variant:ident {
         empty: $empty:expr,
         display: |$this:ident| $display:expr
     }),* $(,)?) => {
         $(
             impl CellType for $ty {
-                const TYPE_NAME: &'static str = stringify!($value width);
+                const TYPE_NAME: &'static str = stringify!($variant);
 
                 fn matches(val: &Value) -> bool {
-                    matches!(val, Value::$value width(_))
+                    matches!(val, Value::$variant(_))
                 }
 
                 fn from_value(val: Value) -> Result<Self, Value> {
                     match val {
-                        Value::$value width(x) => Ok(x),
+                        Value::$variant(x) => Ok(x),
                         other => Err(other),
                     }
                 }
 
                 fn to_value(&self) -> Value {
-                    Value::$value width(self.clone())
+                    Value::$variant(self.clone())
                 }
 
                 fn empty() -> Self {

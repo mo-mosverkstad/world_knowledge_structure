@@ -7,7 +7,7 @@ use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
 use crate::domain::table_row_iter::{RowIter, UnorderedRowIter};
 use crate::domain::table_trait::TableTrait;
-use crate::domain::treearray::TreeArray;
+use crate::data_structures::treearray::TreeArray;
 
 // ----------------------------- UnorderedTable with TreeArray + recycling -----------------------------
 #[derive(Debug)]
@@ -98,8 +98,11 @@ impl UnorderedTable {
             col.update(phys_idx, val)?;
         }
 
-        // insert into logical array at user_idx
-        self.logical_order.insert(user_idx, phys_idx)
+        // insert into logical array at user_idx. `?` rather than a tail
+        // expression, so the `StructureError` is lifted into a `DomainError`
+        // by the `From` conversion.
+        self.logical_order.insert(user_idx, phys_idx)?;
+        Ok(())
     }
 
     /// Rearrange user indices: swap two rows (swap physical indices)

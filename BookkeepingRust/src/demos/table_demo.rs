@@ -50,15 +50,15 @@ pub fn table_demo() -> DomainResult<()> {
     unord.delete_row(0)?;
     println!("\nAfter delete logical idx 0 (frees physical slot):");
     unord.print_table()?;
-    println!("Next physical index: {}", unord.get_next_physical_index());
-    println!("Free physical set: {:?}", unord.get_free_physical());
+    println!("Physical capacity: {}", unord.physical_capacity());
+    println!("Free physical slots: {:?}", unord.free_physical_slots());
 
     // insert again (should reuse freed physical index)
     unord.insert_row(1, vec![Value::Int(27), Value::Str("Sam".to_string()), Value::Float(48000.0)])?;
     println!("\nAfter insert at logical idx 0 (should reuse freed physical slot):");
     unord.print_table()?;
-    println!("Next physical index: {}", unord.get_next_physical_index());
-    println!("Free physical set: {:?}", unord.get_free_physical());
+    println!("Physical capacity: {}", unord.physical_capacity());
+    println!("Free physical slots: {:?}", unord.free_physical_slots());
 
     // swap rows 0 and 2
     unord.swap_rows(0, 2)?;
@@ -78,8 +78,8 @@ pub fn table_demo() -> DomainResult<()> {
 
     // show internal mapping & recycling info
     println!("\nInternal logical->physical (in-order): {:?}", unord.get_logical_order().in_order());
-    println!("Next physical index: {}", unord.get_next_physical_index());
-    println!("Free physical set: {:?}", unord.get_free_physical());
+    println!("Physical capacity: {}", unord.physical_capacity());
+    println!("Free physical slots: {:?}", unord.free_physical_slots());
 
     // Lazy row fetch: rows come back as the `Vec<Value>` they were fed in as,
     // assembled one at a time rather than materialising the whole table.

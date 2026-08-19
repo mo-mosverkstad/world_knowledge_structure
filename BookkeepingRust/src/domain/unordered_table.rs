@@ -1,21 +1,21 @@
-use std::collections::HashSet;
 use std::fmt::Debug;
 use std::ops::RangeBounds;
 
+use crate::data_structures::slot_allocator::SlotAllocator;
+use crate::data_structures::treearray::TreeArray;
 use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
 use crate::domain::table_row_iter::{RowIter, UnorderedRowIter};
 use crate::domain::table_trait::TableTrait;
-use crate::data_structures::treearray::TreeArray;
 
-// ----------------------------- UnorderedTable with TreeArray + recycling -----------------------------
+/// Rows are stored at physical slots shared across all columns, with a tree
+/// mapping user index to slot so reordering moves no cells.
 #[derive(Debug)]
 pub struct UnorderedTable {
     columns: Vec<Box<dyn Column>>,
-    logical_order: TreeArray<usize>, // user_index -> physical_index
-    next_physical_index: usize,
-    free_physical: HashSet<usize>, // recycling of freed physical indices
+    logical_order: TreeArray<usize>, // user_index -> physical slot
+    slots: SlotAllocator,
 }
 
 #[allow(dead_code)]
@@ -24,8 +24,7 @@ impl UnorderedTable {
         Self {
             columns: Vec::new(),
             logical_order: TreeArray::<usize>::new(),
-            next_physical_index: 0usize,
-            free_physical: HashSet::<usize>::new(),
+            slots: SlotAllocator::new(),
         }
     }
 
@@ -33,12 +32,17 @@ impl UnorderedTable {
         self.logical_order.clone()
     }
 
-    pub fn get_next_physical_index(&self) -> usize {
-        self.next_physical_index
+    /// How far the columns extend, which exceeds [`nrows`](TableTrait::nrows)
+    /// while freed slots await reuse.
+    pub fn physical_capacity(&self) -> usize {
+        self.slots.capacity()
     }
 
-    pub fn get_free_physical(&self) -> HashSet<usize> {
-        self.free_physical.clone()
+    /// Freed slots awaiting reuse, ascending.
+    pub fn free_physical_slots(&self) -> Vec<usize> {
+        (0..self.slots.capacity())
+            .filter(|&slot| !self.slots.is_live(slot))
+            .collect()
     }
 
     /// Validated before any slot is allocated or mutated.
@@ -55,24 +59,11 @@ impl UnorderedTable {
         Ok(())
     }
 
-    /// Reuses a freed slot when available, otherwise hands out the next one.
-    fn allocate_physical_index(&mut self) -> DomainResult<usize> {
-        if let Some(&p) = self.free_physical.iter().next() {
-            self.free_physical.remove(&p);
-            return Ok(p);
-        }
-        let p = self.next_physical_index;
-        self.next_physical_index = p
-            .checked_add(1)
-            .ok_or(DomainError::CapacityExceeded)?;
-        Ok(p)
-    }
-
     /// Frees the row's physical slot for reuse.
     pub fn delete_row(&mut self, user_idx: usize) -> DomainResult<()> {
         let phys = self.logical_order.try_get(user_idx)?;
         self.logical_order.delete(user_idx)?;
-        self.free_physical.insert(phys);
+        self.slots.free(phys)?;
         Ok(())
     }
 
@@ -86,7 +77,8 @@ impl UnorderedTable {
             });
         }
 
-        let phys_idx = self.allocate_physical_index()?;
+        // Allocated only after the checks above, so a rejected row leaks no slot.
+        let phys_idx = self.slots.allocate()?;
 
         for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
             while phys_idx >= col.len() {

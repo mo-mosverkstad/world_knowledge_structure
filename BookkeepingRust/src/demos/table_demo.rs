@@ -94,8 +94,8 @@ pub fn table_demo() -> DomainResult<()> {
     }
 
     // A window of rows, validated up front, plus an early-terminating walk.
-    println!("\nUnorderedTable row_range(1, 2):");
-    for row in unord.row_range(1, 2)? {
+    println!("\nUnorderedTable row_range(1..3):");
+    for row in unord.row_range(1..3)? {
         println!("  {:?}", row?);
     }
 
@@ -105,9 +105,18 @@ pub fn table_demo() -> DomainResult<()> {
     }
 
     // An out-of-range window is reported before any row is produced.
-    match unord.row_range(1, 99) {
+    match unord.row_range(1..99) {
         Ok(_) => println!("\nUnexpectedly accepted an out-of-range row window"),
-        Err(err) => println!("\nRejected row_range(1, 99): {err}"),
+        Err(err) => println!("\nRejected row_range(1..99): {err}"),
+    }
+
+    // A backwards range is a distinct mistake from asking past the end. Built
+    // from variables because that is how one actually arises — computed bounds
+    // that end up crossed — and a literal `2..1` is rejected at compile time.
+    let (from, to) = (2, 1);
+    match unord.row_range(from..to) {
+        Ok(_) => println!("Unexpectedly accepted a backwards row range"),
+        Err(err) => println!("Rejected row_range(2..1): {err}"),
     }
 
     println!(" ------------------------------------------------------------------------------- \n");

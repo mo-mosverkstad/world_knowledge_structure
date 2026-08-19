@@ -1,5 +1,6 @@
 use std::collections::HashSet;
 use std::fmt::Debug;
+use std::ops::RangeBounds;
 
 use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
@@ -177,17 +178,14 @@ impl TableTrait for UnorderedTable {
     /// Walks the logical order lazily, so `m` rows cost `O(log n + m)` tree steps
     /// rather than the `O(m log n)` of one `try_get` per row.
     fn iter_rows(&self) -> Self::Rows<'_> {
-        self.rows_from(0)
+        RowIter::new(&self.columns, self.logical_order.iter().copied())
     }
 
-    fn rows_from(&self, start: usize) -> Self::Rows<'_> {
-        RowIter::new(&self.columns, self.logical_order.iter_from(start).copied())
-    }
-
-    fn row_range(&self, index: usize, count: usize) -> DomainResult<Self::Rows<'_>> {
-        // `TreeArray::range` validates the range itself and reports the same
-        // out-of-bounds error, so there is nothing to check here.
-        let indices = self.logical_order.range(index, count)?;
+    fn row_range<R: RangeBounds<usize>>(&self, range: R) -> DomainResult<Self::Rows<'_>> {
+        // `TreeArray::range` applies the same bound checks over the same length,
+        // since the logical order has exactly one entry per row, so there is
+        // nothing to validate here.
+        let indices = self.logical_order.range(range)?;
         Ok(RowIter::new(&self.columns, indices.copied()))
     }
 }

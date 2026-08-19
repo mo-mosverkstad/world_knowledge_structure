@@ -16,6 +16,9 @@ pub enum DomainError {
     },
     /// An index was outside the valid range `0..len`.
     IndexOutOfBounds { index: usize, len: usize },
+    /// A range was given with its start after its end. Both bounds are in
+    /// bounds individually; the range itself is not well formed.
+    InvalidRange { start: usize, end: usize },
     /// No more physical slots can be handed out (index counter would overflow).
     CapacityExceeded,
 }
@@ -37,6 +40,9 @@ impl fmt::Display for DomainError {
             ),
             DomainError::IndexOutOfBounds { index, len } => {
                 write!(f, "index {index} is out of bounds (length {len})")
+            }
+            DomainError::InvalidRange { start, end } => {
+                write!(f, "invalid range {start}..{end}: start is after end")
             }
             DomainError::CapacityExceeded => {
                 write!(f, "capacity exceeded: no further indices can be allocated")

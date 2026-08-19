@@ -1,9 +1,11 @@
 use std::fmt::Debug;
+use std::ops::RangeBounds;
 
 use crate::domain::error::{DomainError, DomainResult};
+use crate::domain::index_range::resolve_range;
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
-use crate::domain::table_rows::{OrderedRowIter, RowIter, validate_range};
+use crate::domain::table_rows::{OrderedRowIter, RowIter};
 use crate::domain::table_trait::TableTrait;
 
 // ----------------------------- Table traits & OrderedTable -----------------------------
@@ -94,18 +96,12 @@ impl TableTrait for OrderedTable {
     /// Rows sit at consecutive physical indices here, so the walk is a plain
     /// range and each row costs `O(columns)`.
     fn iter_rows(&self) -> Self::Rows<'_> {
-        self.rows_from(0)
+        // `..` covers the whole table and is valid by construction.
+        RowIter::new(&self.columns, 0..self.nrows())
     }
 
-    fn rows_from(&self, start: usize) -> Self::Rows<'_> {
-        let nrows = self.nrows();
-        // `start.min(nrows)` keeps the range well formed, so an out-of-range
-        // start simply yields nothing.
-        RowIter::new(&self.columns, start.min(nrows)..nrows)
-    }
-
-    fn row_range(&self, index: usize, count: usize) -> DomainResult<Self::Rows<'_>> {
-        validate_range(index, count, self.nrows())?;
-        Ok(RowIter::new(&self.columns, index..index + count))
+    fn row_range<R: RangeBounds<usize>>(&self, range: R) -> DomainResult<Self::Rows<'_>> {
+        let range = resolve_range(range, self.nrows())?;
+        Ok(RowIter::new(&self.columns, range))
     }
 }

@@ -6,10 +6,10 @@
 //! order:
 //!
 //! * [`OrderedTable`](crate::domain::ordered_table::OrderedTable) stores rows in
-//!   user order, so the index sequence is simply `0..nrows`;
+//!   user order, so the index sequence is the requested range itself;
 //! * [`UnorderedTable`](crate::domain::unordered_table::UnorderedTable) keeps a
 //!   `TreeArray<usize>` mapping user index to physical slot, so the sequence is
-//!   that tree walked in order.
+//!   that tree walked over the requested range.
 //!
 //! [`RowIter`] therefore takes the index sequence as a type parameter and owns
 //! only the row-materialising half. Both tables reuse it, and the lazy
@@ -19,7 +19,7 @@
 use std::iter::Copied;
 use std::ops::Range;
 
-use crate::domain::error::{DomainError, DomainResult};
+use crate::domain::error::DomainResult;
 use crate::domain::table_column::{Column, Value};
 use crate::domain::treearray::TreeArrayIter;
 
@@ -51,6 +51,9 @@ pub type OrderedRowIter<'a> = RowIter<'a, Range<usize>>;
 pub type UnorderedRowIter<'a> = RowIter<'a, Copied<TreeArrayIter<'a, usize>>>;
 
 impl<'a, I> RowIter<'a, I> {
+    /// Wraps an already-validated index sequence. The bound checks belong to the
+    /// table, which is why this is crate-internal: by the time a `RowIter`
+    /// exists, every index it will visit is known to be in bounds.
     pub(crate) fn new(columns: &'a [Box<dyn Column>], indices: I) -> Self {
         Self { columns, indices }
     }
@@ -82,20 +85,3 @@ impl<'a, I: Iterator<Item = usize>> Iterator for RowIter<'a, I> {
 }
 
 impl<'a, I: ExactSizeIterator<Item = usize>> ExactSizeIterator for RowIter<'a, I> {}
-
-/// Validates `index..index + count` against a table of `len` rows, up front, so
-/// an out-of-bounds request is reported before any row is produced instead of
-/// surfacing part-way through iteration.
-///
-/// `index == len` is accepted only for an empty range, i.e. the position just
-/// past the last row, matching how the insert operations treat `len`.
-pub(crate) fn validate_range(index: usize, count: usize, len: usize) -> DomainResult<()> {
-    if index > len {
-        return Err(DomainError::IndexOutOfBounds { index, len });
-    }
-    if count > len - index {
-        // Report the first requested index that does not exist.
-        return Err(DomainError::IndexOutOfBounds { index: len, len });
-    }
-    Ok(())
-}

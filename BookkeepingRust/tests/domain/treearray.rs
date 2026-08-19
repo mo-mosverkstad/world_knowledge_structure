@@ -78,6 +78,9 @@ fn iter_visits_every_element_in_index_order() {
     assert_eq!(seen, (0..64u16).collect::<Vec<_>>());
     // The iterator is the source of truth for `in_order`, so they must agree.
     assert_eq!(seen, t.in_order());
+    // `iter` is the whole-tree case of `range`, so the two must not drift.
+    let full: Vec<u16> = t.range(..).expect("`..` is always valid").copied().collect();
+    assert_eq!(full, seen);
 }
 
 #[test]
@@ -85,18 +88,29 @@ fn iter_on_an_empty_tree_yields_nothing() {
     let t = TreeArray::<u16>::new();
     assert_eq!(t.iter().next(), None);
     assert_eq!(t.iter().count(), 0);
+    // An unbounded range on an empty tree is valid, not out of bounds.
+    assert_eq!(t.range(..).expect("`..` is always valid").count(), 0);
+    assert_eq!(t.range(0..0).expect("empty range at 0").count(), 0);
 }
 
 #[test]
-fn iter_from_seeks_to_the_requested_index() {
+fn range_from_seeks_to_the_requested_index() {
     let t = indexed_tree(64);
     // Every start offset must land exactly on that index, including the ends.
     for start in 0..=64usize {
-        let seen: Vec<u16> = t.iter_from(start).copied().collect();
+        let seen: Vec<u16> = t
+            .range(start..)
+            .expect("start is in bounds")
+            .copied()
+            .collect();
         assert_eq!(seen, (start as u16..64).collect::<Vec<_>>(), "start {start}");
     }
-    // Past the end is empty rather than an error, mirroring slice semantics.
-    assert_eq!(t.iter_from(100).count(), 0);
+    // Past the end is now an error rather than an empty iterator: an index the
+    // caller named has to exist.
+    assert_eq!(
+        t.range(100..).err(),
+        Some(DomainError::IndexOutOfBounds { index: 100, len: 64 })
+    );
 }
 
 #[test]
@@ -118,37 +132,90 @@ fn iteration_agrees_with_repeated_get() {
 fn range_yields_exactly_the_requested_window() {
     let t = indexed_tree(32);
     let window: Vec<u16> = t
-        .range(8, 5)
+        .range(8..13)
         .expect("8..13 is in bounds")
         .copied()
         .collect();
     assert_eq!(window, vec![8, 9, 10, 11, 12]);
 
+    // An inclusive end covers one more element than the exclusive form.
+    let inclusive: Vec<u16> = t
+        .range(8..=13)
+        .expect("8..=13 is in bounds")
+        .copied()
+        .collect();
+    assert_eq!(inclusive, vec![8, 9, 10, 11, 12, 13]);
+
+    // An open end runs to the last element; an open start begins at 0.
+    let head: Vec<u16> = t.range(..4).expect("..4 is in bounds").copied().collect();
+    assert_eq!(head, vec![0, 1, 2, 3]);
+    let tail: Vec<u16> = t.range(29..).expect("29.. is in bounds").copied().collect();
+    assert_eq!(tail, vec![29, 30, 31]);
+
     // A zero-length range is valid anywhere in bounds, including at the end.
-    assert_eq!(t.range(32, 0).expect("empty range at end").count(), 0);
-    assert_eq!(t.range(0, 0).expect("empty range at start").count(), 0);
+    assert_eq!(t.range(32..32).expect("empty range at end").count(), 0);
+    assert_eq!(t.range(0..0).expect("empty range at start").count(), 0);
+    // `len..` is the empty range at the end, not an out-of-bounds start.
+    assert_eq!(t.range(32..).expect("empty tail at end").count(), 0);
 }
 
 #[test]
 fn range_validates_bounds_before_yielding_anything() {
     let t = indexed_tree(10);
-    // Start beyond the end is rejected.
+    // Start beyond the end is rejected, reporting the index the caller named.
     assert_eq!(
-        t.range(11, 1).err(),
+        t.range(11..12).err(),
         Some(DomainError::IndexOutOfBounds { index: 11, len: 10 })
     );
     // A start in bounds but a window running past the end is rejected up front,
-    // rather than yielding some elements and then failing.
+    // rather than yielding some elements and then failing. The end is exclusive,
+    // so the error names `len`, the first index that does not exist.
     assert_eq!(
-        t.range(8, 5).err(),
+        t.range(8..13).err(),
         Some(DomainError::IndexOutOfBounds { index: 10, len: 10 })
+    );
+    // An inclusive end at the last index is in bounds; one past it is not.
+    assert!(t.range(8..=9).is_ok());
+    assert_eq!(
+        t.range(8..=10).err(),
+        Some(DomainError::IndexOutOfBounds { index: 10, len: 10 })
+    );
+}
+
+#[test]
+// These ranges are backwards on purpose: rejecting them is the behaviour under
+// test, so the lint that normally catches the typo does not apply here.
+#[allow(clippy::reversed_empty_ranges)]
+fn backwards_ranges_are_rejected_as_malformed() {
+    let t = indexed_tree(10);
+    // Both bounds are individually in bounds, so this is not an out-of-bounds
+    // error: the range itself is not well formed.
+    assert_eq!(
+        t.range(7..3).err(),
+        Some(DomainError::InvalidRange { start: 7, end: 3 })
+    );
+    // Reported as malformed even when the bounds are also out of bounds, since
+    // that is the more specific description of the mistake.
+    assert_eq!(
+        t.range(99..50).err(),
+        Some(DomainError::InvalidRange { start: 99, end: 50 })
+    );
+    // An inclusive range whose end is below its start is malformed too.
+    assert_eq!(
+        t.range(5..=3).err(),
+        Some(DomainError::InvalidRange { start: 5, end: 4 })
+    );
+    // `n..=n` is a single element, not an empty or malformed range.
+    assert_eq!(
+        t.range(5..=5).expect("single element").copied().collect::<Vec<_>>(),
+        vec![5]
     );
 }
 
 #[test]
 fn size_hint_is_exact() {
     let t = indexed_tree(20);
-    let mut it = t.iter_from(5);
+    let mut it = t.range(5..).expect("5.. is in bounds");
     assert_eq!(it.len(), 15);
     assert_eq!(it.size_hint(), (15, Some(15)));
 
@@ -159,7 +226,7 @@ fn size_hint_is_exact() {
     let consumed = it.count();
     assert_eq!(consumed, 14);
 
-    let ranged = t.range(2, 7).expect("2..9 is in bounds");
+    let ranged = t.range(2..9).expect("2..9 is in bounds");
     assert_eq!(ranged.len(), 7);
 }
 
@@ -182,7 +249,7 @@ fn iteration_is_lazy_and_stops_early() {
     let first_three: Vec<u16> = t.iter().copied().take(3).collect();
     assert_eq!(first_three, vec![0, 1, 2]);
 
-    let mut it = t.iter_from(1000);
+    let mut it = t.range(1000..).expect("1000.. is in bounds");
     assert_eq!(it.next(), Some(&1000));
     assert_eq!(it.len(), 23);
 }
@@ -204,8 +271,13 @@ fn full_traversal_visits_each_index_exactly_once() {
     }
     assert_eq!(expected, 1024);
 
-    let it = t.iter_from(512);
+    let it = t.range(512..).expect("512.. is in bounds");
     assert_eq!(it.len(), 512);
-    let tail: Vec<u16> = t.iter_from(512).copied().take(4).collect();
+    let tail: Vec<u16> = t
+        .range(512..)
+        .expect("512.. is in bounds")
+        .copied()
+        .take(4)
+        .collect();
     assert_eq!(tail, vec![512, 513, 514, 515]);
 }

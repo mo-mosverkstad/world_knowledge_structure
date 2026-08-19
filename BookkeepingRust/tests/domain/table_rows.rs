@@ -55,6 +55,16 @@ fn rows_come_back_exactly_as_they_were_fed_in() {
 
     let unord = unordered(5);
     assert_eq!(collect::<UnorderedTable>(unord.iter_rows()), expected);
+
+    // `iter_rows` is the whole-table case of `row_range(..)`, so they must agree.
+    assert_eq!(
+        collect::<OrderedTable>(ord.row_range(..).expect("`..` is always valid")),
+        expected
+    );
+    assert_eq!(
+        collect::<UnorderedTable>(unord.row_range(..).expect("`..` is always valid")),
+        expected
+    );
 }
 
 #[test]
@@ -64,28 +74,39 @@ fn iterating_an_empty_table_yields_nothing() {
     // A table with no columns at all is empty too, not a row of no values.
     assert_eq!(OrderedTable::new().iter_rows().count(), 0);
     assert_eq!(UnorderedTable::new().iter_rows().count(), 0);
+    // An unbounded range on an empty table is valid, not out of bounds.
+    assert_eq!(
+        ordered(0).row_range(..).expect("`..` is always valid").count(),
+        0
+    );
+    assert_eq!(
+        unordered(0).row_range(..).expect("`..` is always valid").count(),
+        0
+    );
 }
 
 #[test]
-fn rows_from_seeks_to_the_requested_user_index() {
+fn an_open_start_seeks_to_the_requested_user_index() {
     let ord = ordered(16);
     let unord = unordered(16);
     for start in 0..=16usize {
         let expected: Vec<Vec<Value>> = (start..16).map(indexed_row).collect();
         assert_eq!(
-            collect::<OrderedTable>(ord.rows_from(start)),
+            collect::<OrderedTable>(ord.row_range(start..).expect("start is in bounds")),
             expected,
             "ordered start {start}"
         );
         assert_eq!(
-            collect::<UnorderedTable>(unord.rows_from(start)),
+            collect::<UnorderedTable>(unord.row_range(start..).expect("start is in bounds")),
             expected,
             "unordered start {start}"
         );
     }
-    // Past the end is empty rather than an error, mirroring slice semantics.
-    assert_eq!(ord.rows_from(100).count(), 0);
-    assert_eq!(unord.rows_from(100).count(), 0);
+    // Past the end is an error rather than an empty iterator: an index the caller
+    // named has to exist.
+    for err in [ord.row_range(100..).err(), unord.row_range(100..).err()] {
+        assert_eq!(err, Some(DomainError::IndexOutOfBounds { index: 100, len: 16 }));
+    }
 }
 
 #[test]
@@ -93,16 +114,34 @@ fn row_range_yields_exactly_the_requested_window() {
     let expected: Vec<Vec<Value>> = (3..7).map(indexed_row).collect();
 
     let ord = ordered(10);
-    let window = ord.row_range(3, 4).expect("3..7 is in bounds");
-    assert_eq!(collect::<OrderedTable>(window), expected);
-
     let unord = unordered(10);
-    let window = unord.row_range(3, 4).expect("3..7 is in bounds");
-    assert_eq!(collect::<UnorderedTable>(window), expected);
+    assert_eq!(
+        collect::<OrderedTable>(ord.row_range(3..7).expect("3..7 is in bounds")),
+        expected
+    );
+    assert_eq!(
+        collect::<UnorderedTable>(unord.row_range(3..7).expect("3..7 is in bounds")),
+        expected
+    );
+
+    // Every range syntax is accepted, with the same bound checks in each case.
+    let inclusive: Vec<Vec<Value>> = (3..=7).map(indexed_row).collect();
+    assert_eq!(
+        collect::<OrderedTable>(ord.row_range(3..=7).expect("3..=7 is in bounds")),
+        inclusive
+    );
+    let head: Vec<Vec<Value>> = (0..3).map(indexed_row).collect();
+    assert_eq!(
+        collect::<UnorderedTable>(unord.row_range(..3).expect("..3 is in bounds")),
+        head
+    );
 
     // A zero-length range is valid anywhere in bounds, including just past the end.
-    assert_eq!(ord.row_range(10, 0).expect("empty at end").count(), 0);
-    assert_eq!(unord.row_range(10, 0).expect("empty at end").count(), 0);
+    assert_eq!(ord.row_range(10..10).expect("empty at end").count(), 0);
+    assert_eq!(unord.row_range(10..10).expect("empty at end").count(), 0);
+    // `nrows..` is the empty range at the end, not an out-of-bounds start.
+    assert_eq!(ord.row_range(10..).expect("empty tail at end").count(), 0);
+    assert_eq!(unord.row_range(10..).expect("empty tail at end").count(), 0);
 }
 
 #[test]
@@ -110,37 +149,63 @@ fn row_range_validates_bounds_before_yielding_anything() {
     let ord = ordered(10);
     let unord = unordered(10);
 
-    // Start beyond the end is rejected.
-    for err in [ord.row_range(11, 1).err(), unord.row_range(11, 1).err()] {
+    // Start beyond the end is rejected, reporting the index the caller named.
+    for err in [ord.row_range(11..12).err(), unord.row_range(11..12).err()] {
         assert_eq!(err, Some(DomainError::IndexOutOfBounds { index: 11, len: 10 }));
     }
     // A start in bounds whose window runs past the end is rejected up front,
-    // rather than yielding some rows and then failing part-way through.
-    for err in [ord.row_range(8, 5).err(), unord.row_range(8, 5).err()] {
+    // rather than yielding some rows and then failing part-way through. The end
+    // is exclusive, so the error names `len`, the first row that does not exist.
+    for err in [ord.row_range(8..13).err(), unord.row_range(8..13).err()] {
         assert_eq!(err, Some(DomainError::IndexOutOfBounds { index: 10, len: 10 }));
+    }
+    // An inclusive end at the last row is in bounds; one past it is not.
+    assert!(ord.row_range(8..=9).is_ok());
+    assert!(unord.row_range(8..=9).is_ok());
+    for err in [ord.row_range(8..=10).err(), unord.row_range(8..=10).err()] {
+        assert_eq!(err, Some(DomainError::IndexOutOfBounds { index: 10, len: 10 }));
+    }
+}
+
+#[test]
+// These ranges are backwards on purpose: rejecting them is the behaviour under
+// test, so the lint that normally catches the typo does not apply here.
+#[allow(clippy::reversed_empty_ranges)]
+fn backwards_row_ranges_are_rejected_as_malformed() {
+    let ord = ordered(10);
+    let unord = unordered(10);
+    // Both bounds are individually in bounds, so this is not an out-of-bounds
+    // error: the range itself is not well formed. Both tables agree.
+    for err in [ord.row_range(7..3).err(), unord.row_range(7..3).err()] {
+        assert_eq!(err, Some(DomainError::InvalidRange { start: 7, end: 3 }));
+    }
+    // Malformed takes precedence over out of bounds, as the more specific
+    // description of the mistake.
+    for err in [ord.row_range(99..50).err(), unord.row_range(99..50).err()] {
+        assert_eq!(err, Some(DomainError::InvalidRange { start: 99, end: 50 }));
     }
 }
 
 #[test]
 fn size_hint_is_exact() {
     let ord = ordered(20);
-    let mut it = ord.rows_from(5);
+    let mut it = ord.row_range(5..).expect("5.. is in bounds");
     assert_eq!(it.size_hint(), (15, Some(15)));
     it.next();
     assert_eq!(it.size_hint(), (14, Some(14)));
 
     let unord = unordered(20);
-    let mut it = unord.rows_from(5);
+    let mut it = unord.row_range(5..).expect("5.. is in bounds");
     assert_eq!(it.size_hint(), (15, Some(15)));
     it.next();
     assert_eq!(it.size_hint(), (14, Some(14)));
 
     assert_eq!(
-        ord.row_range(2, 7).expect("in bounds").size_hint(),
+        ord.row_range(2..9).expect("in bounds").size_hint(),
         (7, Some(7))
     );
     assert_eq!(
-        unord.row_range(2, 7).expect("in bounds").size_hint(),
+        unord.row_range(2..9).expect("in bounds").size_hint(),
         (7, Some(7))
     );
 }

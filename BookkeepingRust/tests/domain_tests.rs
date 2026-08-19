@@ -5,6 +5,7 @@
 //! one-to-one.
 
 mod domain {
+    mod index_range;
     mod ordered_table;
     mod table_column;
     mod table_rows;

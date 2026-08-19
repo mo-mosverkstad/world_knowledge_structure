@@ -1,6 +1,8 @@
 use std::fmt::Debug;
+use std::ops::{Range, RangeBounds};
 
 use crate::domain::error::{DomainError, DomainResult};
+use crate::domain::index_range::resolve_range;
 
 // ----------------------------- AVL Node -----------------------------
 #[derive(Debug, Clone)]
@@ -258,40 +260,32 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
 
     // ----------------- Lazy iteration --------------------
 
-    /// Lazily walks the elements in index order without materialising them.
+    /// Lazily walks every element in index order without materialising them.
     ///
     /// Cost is `O(log n)` to reach the first element plus amortised `O(1)` per
     /// step, so reading `m` consecutive elements is `O(log n + m)`. Repeated
     /// `get(i)` calls instead cost `O(m log n)`, because every lookup restarts
     /// the descent from the root.
-    pub fn iter(&self) -> TreeArrayIter<'_, T> {
-        self.iter_from(0)
-    }
-
-    /// Like [`iter`](Self::iter) but starts at `start`, which is the form that
-    /// replaces a run of `get(start..)` lookups. A `start` at or beyond `len()`
-    /// yields an empty iterator, mirroring slice semantics.
-    pub fn iter_from(&self, start: usize) -> TreeArrayIter<'_, T> {
-        TreeArrayIter::new(self.root.as_deref(), start, self.len())
-    }
-
-    /// Lazily walks `count` elements starting at `index`, the direct replacement
-    /// for a loop of `try_get` calls over a known range.
     ///
-    /// The range is validated up front so an out-of-bounds request is reported
-    /// before any element is produced, rather than surfacing mid-iteration.
-    pub fn range(&self, index: usize, count: usize) -> DomainResult<TreeArrayIter<'_, T>> {
-        let len = self.len();
-        // `index == len` is valid only for an empty range (the position just past
-        // the end), matching how `insert` treats `len` as a valid position.
-        if index > len {
-            return Err(DomainError::IndexOutOfBounds { index, len });
-        }
-        if count > len - index {
-            // Report the first index the caller asked for that does not exist.
-            return Err(DomainError::IndexOutOfBounds { index: len, len });
-        }
-        Ok(TreeArrayIter::new(self.root.as_deref(), index, index + count))
+    /// This is the whole-tree case of [`range`](Self::range) and cannot fail, so
+    /// it returns the iterator directly.
+    pub fn iter(&self) -> TreeArrayIter<'_, T> {
+        // `..` covers the whole tree and is valid by construction.
+        TreeArrayIter::new(self.root.as_deref(), 0..self.len())
+    }
+
+    /// Lazily walks the elements in `range`, the form that replaces a run of
+    /// `get(i)` lookups over a known window.
+    ///
+    /// Any Rust range syntax works — `t.range(..)`, `t.range(5..)`,
+    /// `t.range(..10)`, `t.range(2..=7)` — with the same bound checks in each
+    /// case. The range is validated up front, so an out-of-bounds or malformed
+    /// request is reported before any element is produced rather than surfacing
+    /// mid-iteration. An omitted bound cannot be out of bounds, so `range(..)`
+    /// always succeeds.
+    pub fn range<R: RangeBounds<usize>>(&self, range: R) -> DomainResult<TreeArrayIter<'_, T>> {
+        let range = resolve_range(range, self.len())?;
+        Ok(TreeArrayIter::new(self.root.as_deref(), range))
     }
 
     // ------------------ Pretty print ------------------
@@ -338,22 +332,26 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
 pub struct TreeArrayIter<'a, T> {
     /// Ancestors whose values have not been yielded yet, nearest last.
     stack: Vec<&'a Node<T>>,
-    /// Index of the next element to yield.
-    next_idx: usize,
-    /// One past the last index to yield.
-    end_idx: usize,
+    /// Indices still to yield: `start` is the next one, `end` is exclusive.
+    /// Kept as a `Range` so the remaining window is one value rather than two
+    /// fields that have to be kept consistent by hand.
+    pending: Range<usize>,
 }
 
 impl<'a, T> TreeArrayIter<'a, T> {
-    /// Seeks to `start` in `O(log n)`, leaving the stack holding exactly the
-    /// ancestors whose values are still pending.
-    fn new(root: Option<&'a Node<T>>, start: usize, end: usize) -> Self {
+    /// Seeks to the start of `pending` in `O(log n)`, leaving the stack holding
+    /// exactly the ancestors whose values are still pending.
+    ///
+    /// The range must already have been validated by the caller; this is why the
+    /// constructor is private and reached only through
+    /// [`TreeArray::range`](super::treearray::TreeArray::range) and
+    /// [`iter`](super::treearray::TreeArray::iter).
+    fn new(root: Option<&'a Node<T>>, pending: Range<usize>) -> Self {
         let mut iter = Self {
             stack: Vec::new(),
-            next_idx: start,
-            end_idx: end,
+            pending: pending.clone(),
         };
-        if start >= end {
+        if pending.is_empty() {
             // Empty range: leave the stack empty so `next` returns `None`.
             return iter;
         }
@@ -363,7 +361,7 @@ impl<'a, T> TreeArrayIter<'a, T> {
         // itself; when the target is to the right, the node and its left subtree
         // are already behind us and are skipped.
         let mut node = root;
-        let mut rank = start;
+        let mut rank = pending.start;
         while let Some(n) = node {
             let left_size = n.left.as_ref().map_or(0, |l| l.size);
             if rank < left_size {
@@ -392,7 +390,7 @@ impl<'a, T> TreeArrayIter<'a, T> {
 
     /// Number of elements the iterator has still to yield.
     fn remaining(&self) -> usize {
-        self.end_idx.saturating_sub(self.next_idx)
+        self.pending.len()
     }
 }
 
@@ -400,14 +398,13 @@ impl<'a, T> Iterator for TreeArrayIter<'a, T> {
     type Item = &'a T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.next_idx >= self.end_idx {
-            return None;
-        }
+        // Advancing the range is what bounds the walk; `Range::next` yields
+        // `None` once the window is exhausted.
+        self.pending.next()?;
         let node = self.stack.pop()?;
         // The successor is the left spine of the right subtree, or, when there is
         // no right subtree, the nearest pending ancestor already on the stack.
         self.push_left_spine(node.right.as_deref());
-        self.next_idx += 1;
         Some(&node.value)
     }
 

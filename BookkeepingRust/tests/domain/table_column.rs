@@ -2,6 +2,7 @@
 //! every supported type, since a wrong macro entry compiles silently.
 
 use bookkeeping_rust::domain::error::DomainError;
+use bookkeeping_rust::domain::cell_segments::Segments;
 use bookkeeping_rust::domain::table_column::{CellType, Column, TableColumn, Value};
 
 #[test]
@@ -140,4 +141,61 @@ fn a_rejected_value_leaves_the_column_untouched() {
     // The rejected push neither grew the column nor disturbed the existing cell.
     assert_eq!(col.len(), 1);
     assert_eq!(col.get(0), Ok(Value::Int(1)));
+}
+
+#[test]
+fn a_multistr_column_stores_segmented_cells() {
+    let mut col = TableColumn::<Segments>::new("Notes");
+    let mut cell = Segments::one("first");
+    cell.push("second");
+    col.push(Value::MultiStr(cell.clone()))
+        .expect("matching variant");
+
+    assert_eq!(col.get(0), Ok(Value::MultiStr(cell)));
+    assert_eq!(col.get_value(0), Ok("first | second".to_string()));
+}
+
+#[test]
+fn segmentation_is_confined_to_multistr_columns() {
+    // `Str` is a single unsegmented value, so a segmented cell cannot be written
+    // to one, nor a plain value to a segmented column.
+    let str_col = TableColumn::<String>::new("Name");
+    assert_eq!(
+        str_col.accepts(&Value::MultiStr(Segments::one("a"))),
+        Err(DomainError::ColumnTypeMismatch {
+            column: "Name".to_string(),
+            expected: "Str",
+            actual: "MultiStr",
+        })
+    );
+
+    let multi_col = TableColumn::<Segments>::new("Notes");
+    assert_eq!(
+        multi_col.accepts(&Value::Str("plain".to_string())),
+        Err(DomainError::ColumnTypeMismatch {
+            column: "Notes".to_string(),
+            expected: "MultiStr",
+            actual: "Str",
+        })
+    );
+    assert!(multi_col.accepts(&Value::MultiStr(Segments::one("a"))).is_ok());
+}
+
+#[test]
+fn a_padded_multistr_cell_holds_one_empty_segment_not_zero() {
+    let mut col = TableColumn::<Segments>::new("Notes");
+    col.push_empty();
+    let Ok(Value::MultiStr(cell)) = col.get(0) else {
+        panic!("a padded cell reads back as MultiStr");
+    };
+    assert_eq!(cell.len(), 1);
+    assert_eq!(cell.get(0), Ok(""));
+}
+
+#[test]
+fn a_single_segment_multistr_cell_displays_like_a_plain_value() {
+    let mut col = TableColumn::<Segments>::new("Notes");
+    col.push(Value::MultiStr(Segments::one("solo")))
+        .expect("matching variant");
+    assert_eq!(col.get_value(0), Ok("solo".to_string()));
 }

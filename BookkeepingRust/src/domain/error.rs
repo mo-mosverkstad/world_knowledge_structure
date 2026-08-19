@@ -20,6 +20,10 @@ pub enum DomainError {
     InvalidRange { start: usize, end: usize },
     /// No more physical slots can be handed out (index counter would overflow).
     CapacityExceeded,
+    /// A cell was given no segments; a cell always holds at least one.
+    EmptyCell,
+    /// The last remaining segment of a cell cannot be removed.
+    LastSegment { column: String },
 }
 
 /// Lets `?` on a data-structure operation produce a `DomainError` without an
@@ -52,6 +56,13 @@ impl fmt::Display for DomainError {
             } => write!(
                 f,
                 "type mismatch for column '{column}': expected {expected}, got {actual}"
+            ),
+            DomainError::EmptyCell => {
+                write!(f, "a cell must have at least one segment, got none")
+            }
+            DomainError::LastSegment { column } => write!(
+                f,
+                "cannot remove the last segment of a cell in column '{column}'"
             ),
             DomainError::IndexOutOfBounds { index, len } => {
                 write!(f, "index {index} is out of bounds (length {len})")

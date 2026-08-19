@@ -4,6 +4,7 @@
 use std::error::Error;
 
 use bookkeeping_rust::demos::basic_history_demo::basic_history_demo;
+use bookkeeping_rust::demos::cell_segments_demo::cell_segments_demo;
 use bookkeeping_rust::demos::table_demo::table_demo;
 use bookkeeping_rust::demos::tree_array_demo::tree_array_demo;
 
@@ -22,6 +23,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     // Domain layer demos: fail with `DomainError`.
     tree_array_demo()?;
     table_demo()?;
+    cell_segments_demo()?;
     // State manager demo: fails with `StatemanagerError`.
     basic_history_demo()?;
     Ok(())

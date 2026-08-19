@@ -1,5 +1,6 @@
 use std::fmt::Debug;
 
+use crate::domain::cell_segments::Segments;
 use crate::domain::error::{DomainError, DomainResult};
 
 // ----------------------------- Value enum & Column traits -----------------------------
@@ -9,6 +10,7 @@ pub enum Value {
     Int(i32),
     Float(f32),
     Str(String),
+    MultiStr(Segments), // A cell split into ordered segments
     Bool(bool),
     Byte(u8),
     Double(f64),
@@ -25,6 +27,7 @@ impl Value {
             Value::Int(_) => "Int",
             Value::Float(_) => "Float",
             Value::Str(_) => "Str",
+            Value::MultiStr(_) => "MultiStr",
             Value::Bool(_) => "Bool",
             Value::Byte(_) => "Byte",
             Value::Double(_) => "Double",
@@ -186,4 +189,9 @@ cell_types! {
     String => Str { empty: String::new(), display: |v| v.clone() },
     // Fixed to two decimals so a column of money lines up in `print_table`.
     f32 => Float { empty: 0.0, display: |v| format!("{v:.2}") },
+    // Padding is one empty segment, never zero.
+    Segments => MultiStr {
+        empty: Segments::one(String::new()),
+        display: |v| v.iter().collect::<Vec<_>>().join(" | ")
+    },
 }

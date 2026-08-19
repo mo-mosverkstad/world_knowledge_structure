@@ -1,3 +1,4 @@
+pub mod cell_segments;
 pub mod error;
 pub mod table_column;
 pub mod table_row_iter;

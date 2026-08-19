@@ -2,11 +2,16 @@ Domain:
 1. Split the code between core logic and tests in separate folders (DONE: core in src/, tests mirrored under tests/)
 1. Implement a lazy-load iterator
 1.1 Implement a lazy-load iterator in tree-array. Consecutive queries produces O(m*log(n)), while an iterator provides O(log(n) + m). n is the size of tree-array and m is the size of number of queried elements (DONE: TreeArray::iter / iter_from / range)
-1.2 Implement a lazy-load iterator fetch for both ordered_table and unordered_table
+1.2 Implement a lazy-load iterator fetch for both ordered_table and unordered_table (DONE: TableTrait::iter_rows / rows_from / row_range, shared RowIter in domain/table_rows.rs)
+(comments: 1st: non-uniform input (some using range (RowIter::new), some as row+count (.row_range in ordered_table and unordered_table, .range in treearray, start and end in TreeArrayIter)) and very confusing, better to use Rust ranges instead, 2nd: .range has result, should .rows_from have result???)
+1.3 Reduce the table_column duplicated code by templating???
+1.4 Extract number-index-reusal as a data structure??? and put it in separate directory alongside with treearray.rs???
 
 2. Each cell may have cell segments
 
 3. Add more utility methods for ordered_table and unordered_table
+
+4. Add a separate child table addressing id/index + table collection register for tables
 
 Statemanger:
 1. Add state stores with delta and current cursor position informations

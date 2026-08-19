@@ -81,6 +81,35 @@ pub fn table_demo() -> DomainResult<()> {
     println!("Next physical index: {}", unord.get_next_physical_index());
     println!("Free physical set: {:?}", unord.get_free_physical());
 
+    // Lazy row fetch: rows come back as the `Vec<Value>` they were fed in as,
+    // assembled one at a time rather than materialising the whole table.
+    println!("\nOrderedTable rows via iter_rows():");
+    for row in ord.iter_rows() {
+        println!("  {:?}", row?);
+    }
+
+    println!("\nUnorderedTable rows via iter_rows() (user order):");
+    for row in unord.iter_rows() {
+        println!("  {:?}", row?);
+    }
+
+    // A window of rows, validated up front, plus an early-terminating walk.
+    println!("\nUnorderedTable row_range(1, 2):");
+    for row in unord.row_range(1, 2)? {
+        println!("  {:?}", row?);
+    }
+
+    println!("\nFirst row only (the rest is never assembled):");
+    if let Some(row) = unord.iter_rows().next() {
+        println!("  {:?}", row?);
+    }
+
+    // An out-of-range window is reported before any row is produced.
+    match unord.row_range(1, 99) {
+        Ok(_) => println!("\nUnexpectedly accepted an out-of-range row window"),
+        Err(err) => println!("\nRejected row_range(1, 99): {err}"),
+    }
+
     println!(" ------------------------------------------------------------------------------- \n");
     Ok(())
 }

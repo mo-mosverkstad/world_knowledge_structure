@@ -4,6 +4,7 @@ use std::fmt::Debug;
 use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
+use crate::domain::table_rows::{RowIter, UnorderedRowIter};
 use crate::domain::table_trait::TableTrait;
 use crate::domain::treearray::TreeArray;
 
@@ -111,14 +112,11 @@ impl UnorderedTable {
         self.logical_order.set(idx2, p1)?;
         Ok(())
     }
-
-    /// Get number of logical rows
-    pub fn nrows(&self) -> usize {
-        self.logical_order.len()
-    }
 }
 
 impl TableTrait for UnorderedTable {
+    type Rows<'a> = UnorderedRowIter<'a>;
+
     fn add_column<C: Column + 'static>(&mut self, col: C) { self.columns.push(Box::new(col)) }
 
     fn append_row(&mut self, row: Vec<Value>) -> DomainResult<()> {
@@ -167,5 +165,29 @@ impl TableTrait for UnorderedTable {
             println!();
         }
         Ok(())
+    }
+
+    /// Rows exist only where the logical order maps them, so its length is the
+    /// row count; the columns may be longer because freed physical slots stay
+    /// allocated for recycling.
+    fn nrows(&self) -> usize {
+        self.logical_order.len()
+    }
+
+    /// Walks the logical order lazily, so `m` rows cost `O(log n + m)` tree steps
+    /// rather than the `O(m log n)` of one `try_get` per row.
+    fn iter_rows(&self) -> Self::Rows<'_> {
+        self.rows_from(0)
+    }
+
+    fn rows_from(&self, start: usize) -> Self::Rows<'_> {
+        RowIter::new(&self.columns, self.logical_order.iter_from(start).copied())
+    }
+
+    fn row_range(&self, index: usize, count: usize) -> DomainResult<Self::Rows<'_>> {
+        // `TreeArray::range` validates the range itself and reports the same
+        // out-of-bounds error, so there is nothing to check here.
+        let indices = self.logical_order.range(index, count)?;
+        Ok(RowIter::new(&self.columns, indices.copied()))
     }
 }

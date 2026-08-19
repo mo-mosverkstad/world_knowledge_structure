@@ -3,6 +3,7 @@ use std::fmt::Debug;
 use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
+use crate::domain::table_rows::{OrderedRowIter, RowIter, validate_range};
 use crate::domain::table_trait::TableTrait;
 
 // ----------------------------- Table traits & OrderedTable -----------------------------
@@ -31,6 +32,8 @@ impl OrderedTable {
 }
 
 impl TableTrait for OrderedTable {
+    type Rows<'a> = OrderedRowIter<'a>;
+
     fn add_column<C: Column + 'static>(&mut self, col: C) { self.columns.push(Box::new(col)) }
 
     fn append_row(&mut self, row: Vec<Value>) -> DomainResult<()> {
@@ -55,7 +58,7 @@ impl TableTrait for OrderedTable {
             println!("(empty table)");
             return Ok(());
         }
-        let nrows = self.columns.iter().map(|c| c.len()).max().unwrap_or(0);
+        let nrows = self.nrows();
         let mut widths = Vec::new();
         for col in &self.columns {
             let mut max_width = col.name().len();
@@ -80,5 +83,29 @@ impl TableTrait for OrderedTable {
             println!();
         }
         Ok(())
+    }
+
+    /// Every column holds one slot per row, because a row is only ever accepted
+    /// with the full column arity, so the longest column is the row count.
+    fn nrows(&self) -> usize {
+        self.columns.iter().map(|c| c.len()).max().unwrap_or(0)
+    }
+
+    /// Rows sit at consecutive physical indices here, so the walk is a plain
+    /// range and each row costs `O(columns)`.
+    fn iter_rows(&self) -> Self::Rows<'_> {
+        self.rows_from(0)
+    }
+
+    fn rows_from(&self, start: usize) -> Self::Rows<'_> {
+        let nrows = self.nrows();
+        // `start.min(nrows)` keeps the range well formed, so an out-of-range
+        // start simply yields nothing.
+        RowIter::new(&self.columns, start.min(nrows)..nrows)
+    }
+
+    fn row_range(&self, index: usize, count: usize) -> DomainResult<Self::Rows<'_>> {
+        validate_range(index, count, self.nrows())?;
+        Ok(RowIter::new(&self.columns, index..index + count))
     }
 }

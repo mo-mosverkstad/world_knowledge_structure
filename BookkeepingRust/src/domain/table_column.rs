@@ -4,7 +4,7 @@ use crate::domain::error::{DomainError, DomainResult};
 
 // ----------------------------- Value enum & Column traits -----------------------------
 #[allow(dead_code)]
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Value {
     Int(i32),
     Float(f32),
@@ -47,6 +47,10 @@ pub trait Column: Debug {
     fn push_empty(&mut self);
     fn update(&mut self, idx: usize, val: Value) -> DomainResult<()>;
     fn get_value(&self, idx: usize) -> DomainResult<String>;
+    /// Reads the cell at `idx` back as the same `Value` variant it was written
+    /// as, so a whole row can be handed back in the shape it was supplied in.
+    /// [`get_value`](Self::get_value) is the display form and loses that type.
+    fn get(&self, idx: usize) -> DomainResult<Value>;
 }
 
 #[derive(Debug)]
@@ -113,6 +117,9 @@ impl Column for TableColumn<i32> {
     fn get_value(&self, idx: usize) -> DomainResult<String> {
         Ok(self.slot(idx)?.to_string())
     }
+    fn get(&self, idx: usize) -> DomainResult<Value> {
+        Ok(Value::Int(*self.slot(idx)?))
+    }
 }
 
 impl Column for TableColumn<String> {
@@ -140,6 +147,9 @@ impl Column for TableColumn<String> {
     fn get_value(&self, idx: usize) -> DomainResult<String> {
         Ok(self.slot(idx)?.clone())
     }
+    fn get(&self, idx: usize) -> DomainResult<Value> {
+        Ok(Value::Str(self.slot(idx)?.clone()))
+    }
 }
 
 impl Column for TableColumn<f32> {
@@ -166,5 +176,8 @@ impl Column for TableColumn<f32> {
     }
     fn get_value(&self, idx: usize) -> DomainResult<String> {
         Ok(format!("{:.2}", self.slot(idx)?))
+    }
+    fn get(&self, idx: usize) -> DomainResult<Value> {
+        Ok(Value::Float(*self.slot(idx)?))
     }
 }

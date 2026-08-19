@@ -41,8 +41,7 @@ impl UnorderedTable {
         self.free_physical.clone()
     }
 
-    /// Rejects a row whose arity or value types do not match the columns, before
-    /// any slot is allocated or mutated.
+    /// Validated before any slot is allocated or mutated.
     fn validate_row(&self, row: &[Value]) -> DomainResult<()> {
         if row.len() != self.columns.len() {
             return Err(DomainError::RowLengthMismatch {
@@ -56,8 +55,7 @@ impl UnorderedTable {
         Ok(())
     }
 
-    /// Reuses a freed physical slot when available, otherwise hands out the next
-    /// one. Errors instead of overflowing once `usize` is exhausted.
+    /// Reuses a freed slot when available, otherwise hands out the next one.
     fn allocate_physical_index(&mut self) -> DomainResult<usize> {
         if let Some(&p) = self.free_physical.iter().next() {
             self.free_physical.remove(&p);
@@ -70,7 +68,7 @@ impl UnorderedTable {
         Ok(p)
     }
 
-    /// Delete a row by user index (mark physical slot as free)
+    /// Frees the row's physical slot for reuse.
     pub fn delete_row(&mut self, user_idx: usize) -> DomainResult<()> {
         let phys = self.logical_order.try_get(user_idx)?;
         self.logical_order.delete(user_idx)?;
@@ -78,7 +76,7 @@ impl UnorderedTable {
         Ok(())
     }
 
-    /// Insert a row at user index (shifts subsequent)
+    /// Shifts subsequent rows up.
     pub fn insert_row(&mut self, user_idx: usize, row: Vec<Value>) -> DomainResult<()> {
         self.validate_row(&row)?;
         if user_idx > self.logical_order.len() {
@@ -90,7 +88,6 @@ impl UnorderedTable {
 
         let phys_idx = self.allocate_physical_index()?;
 
-        // ensure each column has space for phys_idx and set the value at phys_idx
         for (val, col) in row.into_iter().zip(self.columns.iter_mut()) {
             while phys_idx >= col.len() {
                 col.push_empty();
@@ -98,14 +95,12 @@ impl UnorderedTable {
             col.update(phys_idx, val)?;
         }
 
-        // insert into logical array at user_idx. `?` rather than a tail
-        // expression, so the `StructureError` is lifted into a `DomainError`
-        // by the `From` conversion.
+        // `?` rather than a tail expression, so the error is converted.
         self.logical_order.insert(user_idx, phys_idx)?;
         Ok(())
     }
 
-    /// Rearrange user indices: swap two rows (swap physical indices)
+    /// Exchanges two rows' user indices, leaving their physical slots in place.
     pub fn swap_rows(&mut self, idx1: usize, idx2: usize) -> DomainResult<()> {
         if idx1 == idx2 {
             return Ok(());
@@ -143,8 +138,7 @@ impl TableTrait for UnorderedTable {
             println!("(empty table)");
             return Ok(());
         }
-        // One lazy walk of the logical order instead of a `try_get` per row per
-        // column: O(log n + m) rather than O(m log n) lookups.
+        // One lazy walk instead of a `try_get` per row per column.
         let physical: Vec<usize> = self.logical_order.iter().copied().collect();
         let mut widths = Vec::new();
         for col in &self.columns {
@@ -171,23 +165,19 @@ impl TableTrait for UnorderedTable {
         Ok(())
     }
 
-    /// Rows exist only where the logical order maps them, so its length is the
-    /// row count; the columns may be longer because freed physical slots stay
-    /// allocated for recycling.
+    /// The logical order's length, which the columns may exceed because freed
+    /// slots stay allocated.
     fn nrows(&self) -> usize {
         self.logical_order.len()
     }
 
-    /// Walks the logical order lazily, so `m` rows cost `O(log n + m)` tree steps
-    /// rather than the `O(m log n)` of one `try_get` per row.
+    /// `O(log n + m)` for `m` rows rather than `O(m log n)`.
     fn iter_rows(&self) -> Self::Rows<'_> {
         RowIter::new(&self.columns, self.logical_order.iter().copied())
     }
 
     fn row_range<R: RangeBounds<usize>>(&self, range: R) -> DomainResult<Self::Rows<'_>> {
-        // `TreeArray::range` applies the same bound checks over the same length,
-        // since the logical order has exactly one entry per row, so there is
-        // nothing to validate here.
+        // `TreeArray::range` applies the same bound checks over the same length.
         let indices = self.logical_order.range(range)?;
         Ok(RowIter::new(&self.columns, indices.copied()))
     }

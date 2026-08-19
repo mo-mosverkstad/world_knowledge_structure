@@ -63,8 +63,7 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
     }
 
     // Public interface
-    /// Absent indices yield `None`; use `try_get` when the caller should treat a
-    /// missing index as an error to propagate.
+    /// Absent indices yield `None`; `try_get` reports them as an error instead.
     pub fn get(&self, idx: usize) -> Option<T> {
         self.get_ref(idx).cloned()
     }
@@ -149,8 +148,8 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
         }
     }
 
-    /// Rotations are only reached when the pivot child exists; if the invariant
-    /// were ever violated the node is returned unchanged rather than panicking.
+    /// Returns the node unchanged if the pivot child is absent, rather than
+    /// panicking.
     fn rotate_right(mut y: Box<Node<T>>) -> Box<Node<T>> {
         let Some(mut x) = y.left.take() else {
             y.update();
@@ -260,29 +259,17 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
 
     // ----------------- Lazy iteration --------------------
 
-    /// Lazily walks every element in index order without materialising them.
+    /// Lazily walks every element in index order.
     ///
-    /// Cost is `O(log n)` to reach the first element plus amortised `O(1)` per
-    /// step, so reading `m` consecutive elements is `O(log n + m)`. Repeated
-    /// `get(i)` calls instead cost `O(m log n)`, because every lookup restarts
-    /// the descent from the root.
-    ///
-    /// This is the whole-tree case of [`range`](Self::range) and cannot fail, so
-    /// it returns the iterator directly.
+    /// `O(log n)` to the first element plus amortised `O(1)` per step, so reading
+    /// `m` elements is `O(log n + m)` against `O(m log n)` for repeated `get`.
     pub fn iter(&self) -> TreeArrayIter<'_, T> {
         // `..` covers the whole tree and is valid by construction.
         TreeArrayIter::new(self.root.as_deref(), 0..self.len())
     }
 
-    /// Lazily walks the elements in `range`, the form that replaces a run of
-    /// `get(i)` lookups over a known window.
-    ///
-    /// Any Rust range syntax works — `t.range(..)`, `t.range(5..)`,
-    /// `t.range(..10)`, `t.range(2..=7)` — with the same bound checks in each
-    /// case. The range is validated up front, so an out-of-bounds or malformed
-    /// request is reported before any element is produced rather than surfacing
-    /// mid-iteration. An omitted bound cannot be out of bounds, so `range(..)`
-    /// always succeeds.
+    /// Lazily walks the elements in `range`, accepting any Rust range syntax and
+    /// validating it up front. `range(..)` always succeeds.
     pub fn range<R: RangeBounds<usize>>(&self, range: R) -> StructureResult<TreeArrayIter<'_, T>> {
         let range = resolve_range(range, self.len())?;
         Ok(TreeArrayIter::new(self.root.as_deref(), range))
@@ -314,38 +301,19 @@ impl<T: Copy + Clone + Debug> TreeArray<T> {
 
 /// Lazy in-order iterator over a [`TreeArray`].
 ///
-/// The iterator keeps the path from the root down to the current element on an
-/// explicit stack instead of restarting the descent for every element:
-///
-/// * construction seeks to the start index in `O(log n)`, pushing at most
-///   `height` ancestors;
-/// * each [`Iterator::next`] pops one node and, when it has a right subtree,
-///   descends that subtree's left spine.
-///
-/// Every edge is pushed and popped at most once across a full traversal, so the
-/// per-step cost is amortised `O(1)` and reading `m` elements costs
-/// `O(log n + m)`. The stack never exceeds the tree height, which the AVL
-/// balancing keeps at `O(log n)`, so memory is `O(log n)` regardless of `m`.
-///
-/// Borrowing the tree immutably means the structure cannot be modified while an
-/// iterator is alive, so the cached path cannot go stale.
+/// Keeps the root-to-current path on a stack rather than re-descending per
+/// element: every edge is pushed and popped at most once, so steps are amortised
+/// `O(1)` and memory is `O(log n)`.
 pub struct TreeArrayIter<'a, T> {
     /// Ancestors whose values have not been yielded yet, nearest last.
     stack: Vec<&'a Node<T>>,
-    /// Indices still to yield: `start` is the next one, `end` is exclusive.
-    /// Kept as a `Range` so the remaining window is one value rather than two
-    /// fields that have to be kept consistent by hand.
+    /// Indices still to yield.
     pending: Range<usize>,
 }
 
 impl<'a, T> TreeArrayIter<'a, T> {
-    /// Seeks to the start of `pending` in `O(log n)`, leaving the stack holding
-    /// exactly the ancestors whose values are still pending.
-    ///
-    /// The range must already have been validated by the caller; this is why the
-    /// constructor is private and reached only through
-    /// [`TreeArray::range`](TreeArray::range) and
-    /// [`iter`](TreeArray::iter).
+    /// Seeks to the start of `pending` in `O(log n)`. The range must already be
+    /// validated, hence private.
     fn new(root: Option<&'a Node<T>>, pending: Range<usize>) -> Self {
         let mut iter = Self {
             stack: Vec::new(),
@@ -356,10 +324,8 @@ impl<'a, T> TreeArrayIter<'a, T> {
             return iter;
         }
 
-        // Descend once, keeping only the nodes that still have to be yielded. A
-        // node is pushed when the target is in its left subtree or is the node
-        // itself; when the target is to the right, the node and its left subtree
-        // are already behind us and are skipped.
+        // Push only nodes still to be yielded: when the target lies right, the node
+        // and its left subtree are already behind us.
         let mut node = root;
         let mut rank = pending.start;
         while let Some(n) = node {
@@ -378,8 +344,7 @@ impl<'a, T> TreeArrayIter<'a, T> {
         iter
     }
 
-    /// Pushes the left spine of `node`, so the smallest pending index ends up on
-    /// top of the stack.
+    /// Pushes the left spine, putting the smallest pending index on top.
     fn push_left_spine(&mut self, node: Option<&'a Node<T>>) {
         let mut node = node;
         while let Some(n) = node {
@@ -388,7 +353,6 @@ impl<'a, T> TreeArrayIter<'a, T> {
         }
     }
 
-    /// Number of elements the iterator has still to yield.
     fn remaining(&self) -> usize {
         self.pending.len()
     }
@@ -408,8 +372,7 @@ impl<'a, T> Iterator for TreeArrayIter<'a, T> {
         Some(&node.value)
     }
 
-    /// Exact, because the range is known up front; lets callers size buffers in
-    /// one allocation.
+    /// Exact, since the range is known up front.
     fn size_hint(&self) -> (usize, Option<usize>) {
         let remaining = self.remaining();
         (remaining, Some(remaining))

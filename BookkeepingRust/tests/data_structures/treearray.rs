@@ -167,9 +167,8 @@ fn range_validates_bounds_before_yielding_anything() {
         t.range(11..12).err(),
         Some(StructureError::IndexOutOfBounds { index: 11, len: 10 })
     );
-    // A start in bounds but a window running past the end is rejected up front,
-    // rather than yielding some elements and then failing. The end is exclusive,
-    // so the error names `len`, the first index that does not exist.
+    // Rejected up front rather than part-way through; the exclusive end means the
+    // error names `len`.
     assert_eq!(
         t.range(8..13).err(),
         Some(StructureError::IndexOutOfBounds { index: 10, len: 10 })
@@ -256,10 +255,8 @@ fn iteration_is_lazy_and_stops_early() {
 
 #[test]
 fn full_traversal_visits_each_index_exactly_once() {
-    // The amortised O(1) step cost cannot be observed through the public API, so
-    // this covers the behaviour that the stack-based walk has to get right: no
-    // element is skipped or repeated, and a mid-tree seek reports the correct
-    // remaining count without having to touch the prefix.
+    // No element skipped or repeated, and a mid-tree seek reports the right
+    // remaining count without touching the prefix.
     let t = indexed_tree(1024);
 
     assert_eq!(t.iter().count(), 1024);

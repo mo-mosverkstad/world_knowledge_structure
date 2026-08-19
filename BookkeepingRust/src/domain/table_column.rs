@@ -73,7 +73,6 @@ impl<T> TableColumn<T> {
         }
     }
 
-    // Returns a mutable reference to the slot at `idx`, or an out-of-bounds error.
     fn slot_mut(&mut self, idx: usize) -> DomainResult<&mut T> {
         let len = self.rows.len();
         self.rows
@@ -81,7 +80,6 @@ impl<T> TableColumn<T> {
             .ok_or(DomainError::IndexOutOfBounds { index: idx, len })
     }
 
-    // Returns a reference to the slot at `idx`, or an out-of-bounds error.
     fn slot(&self, idx: usize) -> DomainResult<&T> {
         self.rows.get(idx).ok_or(DomainError::IndexOutOfBounds {
             index: idx,

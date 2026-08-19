@@ -3,9 +3,7 @@ use std::fmt;
 
 use crate::data_structures::error::StructureError;
 
-/// Every fallible domain operation reports failures through this type, so the
-/// caller (ultimately `main`) decides how to react. The domain layer never
-/// panics on invalid input.
+/// Failures from the domain layer, which never panics on invalid input.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum DomainError {
     /// A row was supplied with a different number of values than the table has columns.
@@ -18,21 +16,14 @@ pub enum DomainError {
     },
     /// An index was outside the valid range `0..len`.
     IndexOutOfBounds { index: usize, len: usize },
-    /// A range was given with its start after its end. Both bounds are in
-    /// bounds individually; the range itself is not well formed.
+    /// A range whose start is after its end; both bounds may be individually valid.
     InvalidRange { start: usize, end: usize },
     /// No more physical slots can be handed out (index counter would overflow).
     CapacityExceeded,
 }
 
-/// Lifts a failure from the data structures into the domain layer.
-///
-/// The three container failures exist in both types: `data_structures` cannot
-/// depend on this module, so it has its own
-/// [`StructureError`] describing
-/// the same situations. This conversion is what keeps that separation free at the
-/// call site — a `?` on a tree or range operation inside domain code produces a
-/// `DomainError` without an explicit `map_err`.
+/// Lets `?` on a data-structure operation produce a `DomainError` without an
+/// explicit `map_err`.
 impl From<StructureError> for DomainError {
     fn from(err: StructureError) -> Self {
         match err {

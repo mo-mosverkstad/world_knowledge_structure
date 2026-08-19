@@ -1,9 +1,4 @@
-//! Tests for `data_structures::index_range`, which defines the range semantics that every
-//! indexed collection shares.
-//!
-//! The collections are tested separately; these cover the rules themselves, in
-//! particular the boundary cases where "empty at the end" has to be accepted and
-//! a malformed range has to be told apart from an out-of-bounds one.
+//! Tests for `data_structures::index_range`.
 
 use bookkeeping_rust::data_structures::error::StructureError;
 use bookkeeping_rust::data_structures::index_range::resolve_range;
@@ -56,10 +51,8 @@ fn a_start_past_the_end_reports_the_index_the_caller_named() {
 // purpose, so the lint that normally catches the typo does not apply here.
 #[allow(clippy::reversed_empty_ranges)]
 fn an_omitted_end_never_makes_a_range_look_backwards() {
-    // The end defaults to `len`, so resolving it before the ordering check would
-    // turn `11..` on a 10-element collection into a bogus `InvalidRange`. The
-    // caller supplied no end, so there is nothing for the start to contradict:
-    // this is an out-of-bounds start.
+    // No end was supplied, so nothing contradicts the start: out of bounds, not
+    // a backwards range.
     assert_eq!(
         resolve_range(11.., 10),
         Err(StructureError::IndexOutOfBounds { index: 11, len: 10 })
@@ -81,9 +74,7 @@ fn an_omitted_end_never_makes_a_range_look_backwards() {
 
 #[test]
 fn an_end_past_the_end_reports_len_because_the_end_is_exclusive() {
-    // The caller never named index 10 — they asked for everything below it — so
-    // echoing their bound back would be misleading. `len` is the first index that
-    // does not exist.
+    // The caller never named index 10, so the error reports `len` instead.
     assert_eq!(
         resolve_range(8..13, 10),
         Err(StructureError::IndexOutOfBounds { index: 10, len: 10 })
@@ -134,9 +125,7 @@ fn an_inclusive_range_of_one_element_is_not_confused_with_an_empty_one() {
 
 #[test]
 fn saturating_bounds_are_reported_as_out_of_bounds() {
-    // A collection can never hold `usize::MAX + 1` elements, so a bound that
-    // saturates during normalisation is out of bounds rather than silently
-    // clamped to something valid.
+    // A saturating bound is out of bounds rather than silently clamped.
     assert!(resolve_range(..=usize::MAX, 10).is_err());
     assert!(resolve_range(usize::MAX.., 10).is_err());
 }

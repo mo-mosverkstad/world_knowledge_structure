@@ -17,8 +17,7 @@ pub struct OrderedTable {
 impl OrderedTable {
     pub fn new() -> Self { OrderedTable { columns: Vec::new() } }
 
-    /// Rejects a row whose arity or value types do not match the columns.
-    /// Validating up front keeps the table consistent when a row is refused.
+    /// Validated up front, so a refused row leaves the table unchanged.
     fn validate_row(&self, row: &[Value]) -> DomainResult<()> {
         if row.len() != self.columns.len() {
             return Err(DomainError::RowLengthMismatch {
@@ -87,16 +86,13 @@ impl TableTrait for OrderedTable {
         Ok(())
     }
 
-    /// Every column holds one slot per row, because a row is only ever accepted
-    /// with the full column arity, so the longest column is the row count.
+    /// The longest column, since a row is only accepted with the full arity.
     fn nrows(&self) -> usize {
         self.columns.iter().map(|c| c.len()).max().unwrap_or(0)
     }
 
-    /// Rows sit at consecutive physical indices here, so the walk is a plain
-    /// range and each row costs `O(columns)`.
+    /// Rows sit at consecutive indices, so the walk is a plain range.
     fn iter_rows(&self) -> Self::Rows<'_> {
-        // `..` covers the whole table and is valid by construction.
         RowIter::new(&self.columns, 0..self.nrows())
     }
 

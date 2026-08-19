@@ -1,10 +1,5 @@
-//! Tests for `domain::table_row_iter`, the lazy row iteration shared by both
-//! tables.
-//!
-//! The two tables sequence physical indices differently, so each property is
-//! checked against both: `OrderedTable` walks a plain range, `UnorderedTable`
-//! walks its logical-order `TreeArray` and can have rows whose physical slots
-//! are out of order or recycled.
+//! Tests for `domain::table_row_iter`. Each property is checked against both
+//! tables, since they sequence physical indices differently.
 
 use bookkeeping_rust::domain::error::DomainError;
 use bookkeeping_rust::domain::ordered_table::OrderedTable;
@@ -154,9 +149,8 @@ fn row_range_validates_bounds_before_yielding_anything() {
     for err in [ord.row_range(11..12).err(), unord.row_range(11..12).err()] {
         assert_eq!(err, Some(DomainError::IndexOutOfBounds { index: 11, len: 10 }));
     }
-    // A start in bounds whose window runs past the end is rejected up front,
-    // rather than yielding some rows and then failing part-way through. The end
-    // is exclusive, so the error names `len`, the first row that does not exist.
+    // Rejected up front rather than part-way through; the exclusive end means the
+    // error names `len`.
     for err in [ord.row_range(8..13).err(), unord.row_range(8..13).err()] {
         assert_eq!(err, Some(DomainError::IndexOutOfBounds { index: 10, len: 10 }));
     }
@@ -236,9 +230,8 @@ fn iteration_is_lazy_and_stops_early() {
 
 #[test]
 fn iteration_follows_user_order_not_physical_order() {
-    // The point of the unordered table: after inserts, swaps and a recycled
-    // slot, physical order no longer matches user order, and iteration must
-    // follow the latter.
+    // After inserts, swaps and a recycled slot, physical order no longer matches
+    // user order.
     let mut t = unordered(3); // rows 0, 1, 2
     t.insert_row(1, row(99, "inserted")).expect("valid row");
     t.delete_row(0).expect("row 0 exists");

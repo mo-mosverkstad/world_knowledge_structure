@@ -1,27 +1,15 @@
 use std::error::Error;
 use std::fmt;
 
-/// Failures reported by the general-purpose data structures.
-///
-/// This type is deliberately independent of the other layers, in the same way
-/// [`StatemanagerError`](crate::statemanager::error::StatemanagerError) is: the
-/// structures in this module know nothing about tables, columns or undo/redo, so
-/// they cannot report a business-rule failure and must not depend on a type that
-/// can describe one.
-///
-/// The variants are exactly the ways an indexed container can be *asked for*
-/// something it cannot provide. Whether that is acceptable is the caller's
-/// business — the domain layer converts these into
-/// [`DomainError`](crate::domain::error::DomainError) via `From`, so a `?` in
-/// domain code keeps working unchanged.
+/// Failures reported by the data structures, independent of the other layers so
+/// that nothing here depends on `domain`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum StructureError {
     /// An index was outside the valid range `0..len`.
     IndexOutOfBounds { index: usize, len: usize },
-    /// A range was given with its start after its end. Both bounds are in
-    /// bounds individually; the range itself is not well formed.
+    /// A range whose start is after its end; both bounds may be individually valid.
     InvalidRange { start: usize, end: usize },
-    /// No more indices can be handed out (the index counter would overflow).
+    /// No more indices can be handed out.
     CapacityExceeded,
 }
 
@@ -43,5 +31,4 @@ impl fmt::Display for StructureError {
 
 impl Error for StructureError {}
 
-/// Shorthand for results produced by the data structures.
 pub type StructureResult<T> = Result<T, StructureError>;

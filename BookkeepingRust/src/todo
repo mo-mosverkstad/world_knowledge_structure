@@ -73,7 +73,9 @@ With text navigation normal mode, visual mode and insertion mode, only exception
 
 ---
 
-For the core API, I’d make the keystrokes dispatch into a relatively small set of semantic operations rather than having one API function per key. The key handler can translate keys/motions into these operations.
+Note that multiple cores may exist, due to different ingestion methods, also consider about aggregation insertion
+
+For the editor core API, I’d make the keystrokes dispatch into a relatively small set of semantic operations rather than having one API function per key. The key handler can translate keys/motions into these operations.
 
 Table navigation — normal mode
 Key	Core operation	Intended behavior

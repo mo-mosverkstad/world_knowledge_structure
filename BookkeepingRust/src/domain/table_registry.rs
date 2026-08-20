@@ -34,7 +34,7 @@ struct Entry<T> {
 /// is only safe because a referenced table cannot be deleted: no live reference can
 /// outlive its target and be silently reattached to a different table.
 #[derive(Debug)]
-pub struct TableRegistry<T> {
+pub struct TableRegistry<T> { // Comment: use generic T, since both ordered and unordered tables are allowed
     /// Indexed by id; `None` where an id has been freed.
     entries: Vec<Option<Entry<T>>>,
     ids: SlotAllocator,
@@ -199,7 +199,7 @@ impl<T> TableRegistry<T> {
                 references: entry.references,
             });
         }
-        self.ids.free(id.0)?;
+        self.ids.free(id.0)?; // Comment: may not free if the table cannot be taken???
         let entry = self.entries[id.0]
             .take()
             .ok_or(DomainError::TableNotFound { table: id.0 })?;

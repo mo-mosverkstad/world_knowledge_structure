@@ -214,7 +214,7 @@ impl TableRegistry {
                 references: entry.references,
             });
         }
-        self.ids.free(id.0)?; // Comment: may not free if the table cannot be taken???
+        self.ids.free(id.0)?;
         let entry = self.entries[id.0]
             .take()
             .ok_or(DomainError::TableNotFound { table: id.0 })?;

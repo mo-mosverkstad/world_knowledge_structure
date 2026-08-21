@@ -358,6 +358,31 @@ fn a_removed_table_comes_back_as_a_usable_trait_object() {
 }
 
 #[test]
+fn a_refused_removal_leaves_the_id_and_the_entry_alone() {
+    // `remove` frees the id before taking the entry, so a refusal must not have
+    // released the id: the table stays reachable and its id is not handed out again.
+    let (mut reg, root, a, _) = hierarchy(1);
+    reg.set_child(root, 0, a).expect("valid");
+
+    assert!(reg.remove(a).is_err(), "still referenced");
+    assert!(reg.contains(a), "the id is still live");
+    assert!(reg.get(a).is_ok(), "the entry is still there");
+    assert_eq!(reg.name(a), Ok("A"));
+    assert_eq!(reg.len(), 3);
+
+    // The id was not pushed onto the free list, so a new table gets a fresh one.
+    let fresh = reg.register("Fresh", leaf()).expect("space available");
+    assert_ne!(fresh.index(), a.index(), "a refused removal freed nothing");
+
+    // And once the link is gone the removal succeeds, freeing the id exactly once.
+    reg.clear_child(root, 0).expect("valid");
+    assert!(reg.remove(a).is_ok());
+    assert!(!reg.contains(a));
+    let reused = reg.register("Reused", leaf()).expect("space available");
+    assert_eq!(reused.index(), a.index(), "now the id is reusable");
+}
+
+#[test]
 fn iteration_skips_deleted_tables() {
     let (mut reg, root, a, b) = hierarchy(0);
     assert_eq!(reg.ids().collect::<Vec<_>>(), vec![root, a, b]);

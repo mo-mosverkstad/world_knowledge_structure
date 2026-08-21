@@ -13,6 +13,68 @@ Domain:
 
 4. Add a separate child table addressing id/index + table collection register for tables
 
+---
+
+Update domain model:
+
+Each table (ordered vs unordered table) must cover all
+OrderedTable and UnorderedTable are themselves domain entities, and a larger hierarchical table is composed linearly out of these entities.
+
+```
+Chemical substances
++-- Organic compounds
+|   +-- Hydrocarbons
+|   |   +-- Alkanes
+|   |   +-- Alkenes
+|   |   └-- Alkynes
+|   +-- Alcohols
+|   +-- Aldehydes
+|   └-- ...
++-- Inorganic compounds
++-- Organometallic compounds
+└-- Biochemical compounds
+    +-- Amino acids
+    +-- Carbohydrates
+    +-- Lipids
+    └-- Proteins
+
+Chemical reactions
++-- Reaction types
+|   +-- Synthesis
+|   +-- Decomposition
+|   +-- Substitution
+|   └-- Redox
++-- Organic reaction pathways
+|   +-- Addition
+|   +-- Elimination
+|   +-- SN1
+|   └-- SN2
++-- Inorganic reactions
+└-- Biochemical pathways
+    +-- Glycolysis
+    +-- Citric acid cycle
+    └-- Oxidative phosphorylation
+
+Mathematics / Physics / Chemistry
++-- Mathematics
+|   +-- Algebra
+|   +-- Calculus
+|   +-- Linear algebra
+|   └-- Probability
++-- Physics
+|   +-- Mechanics
+|   +-- Electromagnetism
+|   +-- Thermodynamics
+|   └-- Quantum mechanics
+└-- Chemistry
+    +-- Stoichiometry
+    +-- Thermochemistry
+    +-- Chemical equilibrium
+    └-- Kinetics
+```
+
+---
+
 Statemanger:
 1. Add state stores with delta and current cursor position informations
 

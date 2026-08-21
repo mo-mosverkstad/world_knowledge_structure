@@ -8,3 +8,4 @@ pub mod data_structures;
 pub mod demos;
 pub mod domain;
 pub mod statemanager;
+pub mod tui_view;

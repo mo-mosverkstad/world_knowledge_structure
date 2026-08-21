@@ -4,7 +4,7 @@
 use bookkeeping_rust::domain::error::DomainError;
 use bookkeeping_rust::domain::ordered_table::OrderedTable;
 use bookkeeping_rust::domain::table_column::{TableColumn, Value};
-use bookkeeping_rust::domain::table_trait::TableTrait;
+use bookkeeping_rust::domain::table_trait::{BoxRows, TableExt, TableTrait};
 use bookkeeping_rust::domain::unordered_table::UnorderedTable;
 
 fn row(age: i32, name: &str) -> Vec<Value> {
@@ -37,7 +37,10 @@ fn unordered(n: usize) -> UnorderedTable {
 }
 
 /// Collects a row iterator, failing the test if any row could not be read.
-fn collect<T: TableTrait>(rows: T::Rows<'_>) -> Vec<Vec<Value>> {
+///
+/// Takes the boxed iterator every table now returns, so it no longer needs to be
+/// told which table produced it.
+fn collect(rows: BoxRows<'_>) -> Vec<Vec<Value>> {
     rows.collect::<Result<Vec<_>, _>>()
         .expect("every row of a consistent table reads back")
 }
@@ -47,18 +50,18 @@ fn rows_come_back_exactly_as_they_were_fed_in() {
     let expected: Vec<Vec<Value>> = (0..5).map(indexed_row).collect();
 
     let ord = ordered(5);
-    assert_eq!(collect::<OrderedTable>(ord.iter_rows()), expected);
+    assert_eq!(collect(ord.iter_rows()), expected);
 
     let unord = unordered(5);
-    assert_eq!(collect::<UnorderedTable>(unord.iter_rows()), expected);
+    assert_eq!(collect(unord.iter_rows()), expected);
 
     // `iter_rows` is the whole-table case of `row_range(..)`, so they must agree.
     assert_eq!(
-        collect::<OrderedTable>(ord.row_range(..).expect("`..` is always valid")),
+        collect(ord.row_range(..).expect("`..` is always valid")),
         expected
     );
     assert_eq!(
-        collect::<UnorderedTable>(unord.row_range(..).expect("`..` is always valid")),
+        collect(unord.row_range(..).expect("`..` is always valid")),
         expected
     );
 }
@@ -88,12 +91,12 @@ fn an_open_start_seeks_to_the_requested_user_index() {
     for start in 0..=16usize {
         let expected: Vec<Vec<Value>> = (start..16).map(indexed_row).collect();
         assert_eq!(
-            collect::<OrderedTable>(ord.row_range(start..).expect("start is in bounds")),
+            collect(ord.row_range(start..).expect("start is in bounds")),
             expected,
             "ordered start {start}"
         );
         assert_eq!(
-            collect::<UnorderedTable>(unord.row_range(start..).expect("start is in bounds")),
+            collect(unord.row_range(start..).expect("start is in bounds")),
             expected,
             "unordered start {start}"
         );
@@ -112,23 +115,23 @@ fn row_range_yields_exactly_the_requested_window() {
     let ord = ordered(10);
     let unord = unordered(10);
     assert_eq!(
-        collect::<OrderedTable>(ord.row_range(3..7).expect("3..7 is in bounds")),
+        collect(ord.row_range(3..7).expect("3..7 is in bounds")),
         expected
     );
     assert_eq!(
-        collect::<UnorderedTable>(unord.row_range(3..7).expect("3..7 is in bounds")),
+        collect(unord.row_range(3..7).expect("3..7 is in bounds")),
         expected
     );
 
     // Every range syntax is accepted, with the same bound checks in each case.
     let inclusive: Vec<Vec<Value>> = (3..=7).map(indexed_row).collect();
     assert_eq!(
-        collect::<OrderedTable>(ord.row_range(3..=7).expect("3..=7 is in bounds")),
+        collect(ord.row_range(3..=7).expect("3..=7 is in bounds")),
         inclusive
     );
     let head: Vec<Vec<Value>> = (0..3).map(indexed_row).collect();
     assert_eq!(
-        collect::<UnorderedTable>(unord.row_range(..3).expect("..3 is in bounds")),
+        collect(unord.row_range(..3).expect("..3 is in bounds")),
         head
     );
 
@@ -239,7 +242,7 @@ fn iteration_follows_user_order_not_physical_order() {
     t.append_row(row(77, "recycled")).expect("valid row");
     t.swap_rows(0, 1).expect("both rows exist");
 
-    let rows = collect::<UnorderedTable>(t.iter_rows());
+    let rows = collect(t.iter_rows());
     assert_eq!(
         rows,
         vec![
@@ -259,7 +262,7 @@ fn iteration_agrees_with_the_printed_table() {
     let mut t = unordered(4);
     t.delete_row(2).expect("row 2 exists");
     t.swap_rows(0, 2).expect("both rows exist");
-    assert_eq!(collect::<UnorderedTable>(t.iter_rows()).len(), t.nrows());
+    assert_eq!(collect(t.iter_rows()).len(), t.nrows());
     assert!(t.print_table().is_ok());
 }
 
@@ -268,14 +271,14 @@ fn updates_are_visible_to_later_iteration() {
     let mut ord = ordered(3);
     ord.update_row(1, row(42, "changed")).expect("valid row");
     assert_eq!(
-        collect::<OrderedTable>(ord.iter_rows()),
+        collect(ord.iter_rows()),
         vec![indexed_row(0), row(42, "changed"), indexed_row(2)]
     );
 
     let mut unord = unordered(3);
     unord.update_row(1, row(42, "changed")).expect("valid row");
     assert_eq!(
-        collect::<UnorderedTable>(unord.iter_rows()),
+        collect(unord.iter_rows()),
         vec![indexed_row(0), row(42, "changed"), indexed_row(2)]
     );
 }
@@ -288,7 +291,7 @@ fn padded_ordered_rows_read_back_as_the_column_defaults() {
     t.update_row(2, row(7, "gap")).expect("padding is allowed");
     assert_eq!(t.nrows(), 3);
     assert_eq!(
-        collect::<OrderedTable>(t.iter_rows()),
+        collect(t.iter_rows()),
         vec![indexed_row(0), row(0, ""), row(7, "gap")]
     );
 }

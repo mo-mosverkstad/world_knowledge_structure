@@ -19,7 +19,8 @@ fn main() {
         eprintln!("error: {err}");
         std::process::exit(1);
     }
-    ncursesdemo();
+    // suppress TUI demo by now
+    // ncursesdemo();
 }
 
 

@@ -1,12 +1,10 @@
 //! Lazy row iteration shared by the table implementations.
 //!
 //! A row is one cell per column at the same physical index; the tables differ only
-//! in which indices to visit, so that sequence is a type parameter.
+//! in which indices to visit, so that sequence is a type parameter. The tables hand
+//! the result out as a boxed iterator (`BoxRows`), so this type is generic here and
+//! erased at the trait boundary.
 
-use std::iter::Copied;
-use std::ops::Range;
-
-use crate::data_structures::treearray::TreeArrayIter;
 use crate::domain::error::DomainResult;
 use crate::domain::table_column::{Column, Value};
 
@@ -19,13 +17,6 @@ pub struct RowIter<'a, I> {
     /// Physical indices still to visit, in user order.
     indices: I,
 }
-
-/// Row iterator over an `OrderedTable`, whose rows sit at consecutive indices.
-pub type OrderedRowIter<'a> = RowIter<'a, Range<usize>>;
-
-/// Row iterator over an `UnorderedTable`, driven by the lazy walk of its
-/// logical-order tree.
-pub type UnorderedRowIter<'a> = RowIter<'a, Copied<TreeArrayIter<'a, usize>>>;
 
 impl<'a, I> RowIter<'a, I> {
     /// Crate-internal: the indices are bound-checked by the table beforehand.

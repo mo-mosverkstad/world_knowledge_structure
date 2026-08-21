@@ -1,13 +1,13 @@
 use std::fmt::Debug;
-use std::ops::RangeBounds;
+use std::ops::Range;
 
+use crate::data_structures::index_range::resolve_range;
 use crate::domain::child_link::ChildLink;
 use crate::domain::error::{DomainError, DomainResult};
-use crate::data_structures::index_range::resolve_range;
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
-use crate::domain::table_row_iter::{OrderedRowIter, RowIter};
-use crate::domain::table_trait::TableTrait;
+use crate::domain::table_row_iter::RowIter;
+use crate::domain::table_trait::{BoxColumn, BoxRows, TableTrait};
 
 /// Rows sit at consecutive physical indices, so user order is storage order.
 #[derive(Debug)]
@@ -57,9 +57,7 @@ impl OrderedTable {
 }
 
 impl TableTrait for OrderedTable {
-    type Rows<'a> = OrderedRowIter<'a>;
-
-    fn add_column<C: Column + 'static>(&mut self, col: C) { self.columns.push(Box::new(col)) }
+    fn push_column(&mut self, col: Box<dyn Column>) { self.columns.push(col) }
 
     fn set_child_cell(&mut self, row: usize, col: usize, link: ChildLink) -> DomainResult<()> {
         let nrows = self.nrows();
@@ -149,13 +147,15 @@ impl TableTrait for OrderedTable {
     }
 
     /// Rows sit at consecutive indices, so the walk is a plain range.
-    fn iter_rows(&self) -> Self::Rows<'_> {
-        RowIter::new(&self.columns, 0..self.nrows())
+    fn iter_rows(&self) -> BoxRows<'_> {
+        Box::new(RowIter::new(&self.columns, 0..self.nrows()))
     }
 
-    fn row_range<R: RangeBounds<usize>>(&self, range: R) -> DomainResult<Self::Rows<'_>> {
+    /// Checked here rather than trusting the caller, since this is reachable
+    /// directly through `dyn TableTrait` and not only via `TableExt::row_range`.
+    fn rows_in(&self, range: Range<usize>) -> DomainResult<BoxRows<'_>> {
         let range = resolve_range(range, self.nrows())?;
-        Ok(RowIter::new(&self.columns, range))
+        Ok(Box::new(RowIter::new(&self.columns, range)))
     }
 
     fn insert_row_at(&mut self, idx: usize, row: Vec<Value>) -> DomainResult<()> {
@@ -187,7 +187,7 @@ impl TableTrait for OrderedTable {
     }
 
     fn row(&self, idx: usize) -> DomainResult<Vec<Value>> {
-        self.row_range(idx..=idx)?
+        self.rows_in(idx..idx + 1)?
             .next()
             .unwrap_or(Err(DomainError::IndexOutOfBounds {
                 index: idx,
@@ -203,9 +203,9 @@ impl TableTrait for OrderedTable {
         self.column(col)?.get_value(row)
     }
 
-    fn iter_column(&self, col: usize) -> DomainResult<impl Iterator<Item = DomainResult<Value>>> {
+    fn iter_column(&self, col: usize) -> DomainResult<BoxColumn<'_>> {
         let column = self.column(col)?;
-        Ok((0..self.nrows()).map(move |row| column.get(row)))
+        Ok(Box::new((0..self.nrows()).map(move |row| column.get(row))))
     }
 
     fn update_cell(&mut self, row: usize, col: usize, val: Value) -> DomainResult<()> {
@@ -257,10 +257,7 @@ impl TableTrait for OrderedTable {
         Ok(removed)
     }
 
-    fn remove_row_range<R: RangeBounds<usize>>(
-        &mut self,
-        range: R,
-    ) -> DomainResult<Vec<Vec<Value>>> {
+    fn remove_rows_in(&mut self, range: Range<usize>) -> DomainResult<Vec<Vec<Value>>> {
         let range = resolve_range(range, self.nrows())?;
         let mut removed = Vec::with_capacity(range.len());
         // Always removing at `start` walks the range as earlier rows shift down.

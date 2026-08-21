@@ -4,7 +4,16 @@ use crate::domain::ordered_table::OrderedTable;
 use crate::domain::table_column::TableColumn;
 use crate::domain::table_column::Value;
 use crate::domain::table_registry::TableRegistry;
-use crate::domain::table_trait::TableTrait;
+use crate::domain::table_trait::{TableExt, TableTrait};
+use crate::domain::unordered_table::UnorderedTable;
+
+/// A leaf table stored unordered, to show that one registry takes both types.
+fn unordered_leaf_table() -> UnorderedTable {
+    let mut t = UnorderedTable::new();
+    t.add_column(TableColumn::<String>::new("Item"));
+    t.add_column(TableColumn::<f32>::new("Amount"));
+    t
+}
 
 /// A leaf table: items and amounts, no child column.
 fn leaf_table() -> OrderedTable {
@@ -30,12 +39,18 @@ pub fn table_registry_demo() -> DomainResult<()> {
     let mut registry = TableRegistry::new();
     let root = registry.register("Root", parent_table()?)?;
     let expenses = registry.register("Expenses", leaf_table())?;
-    let income = registry.register("Income", leaf_table())?;
+    // Stored unordered while its siblings are ordered: the registry holds tables as
+    // `Box<dyn TableTrait>`, so the types can be mixed in one hierarchy.
+    let income = registry.register("Income", unordered_leaf_table())?;
 
     println!("Registered {} table(s):", registry.len());
     for id in registry.ids() {
         println!("  id {} -> {}", id.index(), registry.name(id)?);
     }
+    println!(
+        "Income is an UnorderedTable, Expenses an OrderedTable; both hold {} column(s)",
+        registry.get(income)?.ncols()
+    );
 
     // Rows are appended normally; the child column defaults to empty.
     registry.get_mut(root)?.append_rows(vec![

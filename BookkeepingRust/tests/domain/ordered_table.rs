@@ -3,7 +3,7 @@
 use bookkeeping_rust::domain::error::DomainError;
 use bookkeeping_rust::domain::ordered_table::OrderedTable;
 use bookkeeping_rust::domain::table_column::{TableColumn, Value};
-use bookkeeping_rust::domain::table_trait::TableTrait;
+use bookkeeping_rust::domain::table_trait::{TableExt, TableTrait};
 
 fn table() -> OrderedTable {
     let mut t = OrderedTable::new();

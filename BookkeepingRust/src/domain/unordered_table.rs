@@ -1,5 +1,5 @@
 use std::fmt::Debug;
-use std::ops::RangeBounds;
+use std::ops::Range;
 
 use crate::data_structures::index_range::resolve_range;
 use crate::data_structures::slot_allocator::SlotAllocator;
@@ -8,8 +8,8 @@ use crate::domain::child_link::ChildLink;
 use crate::domain::error::{DomainError, DomainResult};
 use crate::domain::table_column::Column;
 use crate::domain::table_column::Value;
-use crate::domain::table_row_iter::{RowIter, UnorderedRowIter};
-use crate::domain::table_trait::TableTrait;
+use crate::domain::table_row_iter::RowIter;
+use crate::domain::table_trait::{BoxColumn, BoxRows, TableTrait};
 
 /// Rows are stored at physical slots shared across all columns, with a tree
 /// mapping user index to slot so reordering moves no cells.
@@ -123,9 +123,7 @@ impl UnorderedTable {
 }
 
 impl TableTrait for UnorderedTable {
-    type Rows<'a> = UnorderedRowIter<'a>;
-
-    fn add_column<C: Column + 'static>(&mut self, col: C) { self.columns.push(Box::new(col)) }
+    fn push_column(&mut self, col: Box<dyn Column>) { self.columns.push(col) }
 
     fn set_child_cell(&mut self, row: usize, col: usize, link: ChildLink) -> DomainResult<()> {
         let phys = self.logical_order.try_get(row)?;
@@ -208,14 +206,14 @@ impl TableTrait for UnorderedTable {
     }
 
     /// `O(log n + m)` for `m` rows rather than `O(m log n)`.
-    fn iter_rows(&self) -> Self::Rows<'_> {
-        RowIter::new(&self.columns, self.logical_order.iter().copied())
+    fn iter_rows(&self) -> BoxRows<'_> {
+        Box::new(RowIter::new(&self.columns, self.logical_order.iter().copied()))
     }
 
-    fn row_range<R: RangeBounds<usize>>(&self, range: R) -> DomainResult<Self::Rows<'_>> {
+    fn rows_in(&self, range: Range<usize>) -> DomainResult<BoxRows<'_>> {
         // `TreeArray::range` applies the same bound checks over the same length.
         let indices = self.logical_order.range(range)?;
-        Ok(RowIter::new(&self.columns, indices.copied()))
+        Ok(Box::new(RowIter::new(&self.columns, indices.copied())))
     }
 
     fn insert_row_at(&mut self, idx: usize, row: Vec<Value>) -> DomainResult<()> {
@@ -235,7 +233,7 @@ impl TableTrait for UnorderedTable {
     }
 
     fn row(&self, idx: usize) -> DomainResult<Vec<Value>> {
-        self.row_range(idx..=idx)?
+        self.rows_in(idx..idx + 1)?
             .next()
             .unwrap_or(Err(DomainError::IndexOutOfBounds {
                 index: idx,
@@ -253,14 +251,15 @@ impl TableTrait for UnorderedTable {
         self.column(col)?.get_value(phys)
     }
 
-    fn iter_column(&self, col: usize) -> DomainResult<impl Iterator<Item = DomainResult<Value>>> {
+    fn iter_column(&self, col: usize) -> DomainResult<BoxColumn<'_>> {
         let column = self.column(col)?;
         // One lazy tree walk, so the whole column costs `O(log n + m)`.
-        Ok(self
-            .logical_order
-            .iter()
-            .copied()
-            .map(move |phys| column.get(phys)))
+        Ok(Box::new(
+            self.logical_order
+                .iter()
+                .copied()
+                .map(move |phys| column.get(phys)),
+        ))
     }
 
     fn update_cell(&mut self, row: usize, col: usize, val: Value) -> DomainResult<()> {
@@ -290,10 +289,7 @@ impl TableTrait for UnorderedTable {
         Ok(removed)
     }
 
-    fn remove_row_range<R: RangeBounds<usize>>(
-        &mut self,
-        range: R,
-    ) -> DomainResult<Vec<Vec<Value>>> {
+    fn remove_rows_in(&mut self, range: Range<usize>) -> DomainResult<Vec<Vec<Value>>> {
         let range = resolve_range(range, self.nrows())?;
         let mut removed = Vec::with_capacity(range.len());
         // Always removing at `start` walks the range as later rows shift down.

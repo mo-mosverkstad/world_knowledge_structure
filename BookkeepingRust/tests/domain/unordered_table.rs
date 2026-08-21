@@ -2,7 +2,7 @@
 
 use bookkeeping_rust::domain::error::DomainError;
 use bookkeeping_rust::domain::table_column::{TableColumn, Value};
-use bookkeeping_rust::domain::table_trait::TableTrait;
+use bookkeeping_rust::domain::table_trait::{TableExt, TableTrait};
 use bookkeeping_rust::domain::unordered_table::UnorderedTable;
 
 fn table() -> UnorderedTable {

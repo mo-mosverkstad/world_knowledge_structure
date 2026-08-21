@@ -2,7 +2,7 @@ use crate::domain::error::DomainResult;
 use crate::domain::ordered_table::OrderedTable;
 use crate::domain::table_column::TableColumn;
 use crate::domain::table_column::Value;
-use crate::domain::table_trait::TableTrait;
+use crate::domain::table_trait::{TableExt, TableTrait};
 use crate::domain::unordered_table::UnorderedTable;
 
 pub fn table_demo() -> DomainResult<()> {

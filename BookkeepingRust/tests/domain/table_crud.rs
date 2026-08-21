@@ -4,7 +4,7 @@
 use bookkeeping_rust::domain::error::DomainError;
 use bookkeeping_rust::domain::ordered_table::OrderedTable;
 use bookkeeping_rust::domain::table_column::{TableColumn, Value};
-use bookkeeping_rust::domain::table_trait::TableTrait;
+use bookkeeping_rust::domain::table_trait::{TableExt, TableTrait};
 use bookkeeping_rust::domain::unordered_table::UnorderedTable;
 
 fn row(age: i32, name: &str) -> Vec<Value> {
@@ -35,32 +35,34 @@ fn unordered(n: usize) -> UnorderedTable {
     t
 }
 
-fn rows_of<T: TableTrait>(t: &T) -> Vec<Vec<Value>> {
+fn rows_of(t: &dyn TableTrait) -> Vec<Vec<Value>> {
     t.iter_rows()
         .collect::<Result<Vec<_>, _>>()
         .expect("every row reads back")
 }
 
 /// Runs `check` against both tables, so a divergence fails rather than hiding.
+///
+/// Both arrive as `Box<dyn TableTrait>`: the trait is dyn-compatible, so one test
+/// body drives either table with no per-type shim.
 fn both<F>(n: usize, mut check: F)
 where
-    F: FnMut(&mut dyn FnMut() -> Box<dyn TableAccess>),
+    F: FnMut(&mut dyn FnMut() -> Box<dyn TableTrait>),
 {
-    let mut make_ordered: Box<dyn FnMut() -> Box<dyn TableAccess>> =
+    let mut make_ordered: Box<dyn FnMut() -> Box<dyn TableTrait>> =
         Box::new(move || Box::new(ordered(n)));
     check(&mut *make_ordered);
-    let mut make_unordered: Box<dyn FnMut() -> Box<dyn TableAccess>> =
+    let mut make_unordered: Box<dyn FnMut() -> Box<dyn TableTrait>> =
         Box::new(move || Box::new(unordered(n)));
     check(&mut *make_unordered);
 }
 
-/// Object-safe view of the parts of `TableTrait` these tests exercise, so one
-/// test body can drive either table.
+type DomainResultRow = Result<Vec<Value>, DomainError>;
+
+/// Short names for the operations these tests drive, so each assertion reads as the
+/// behaviour under test rather than the call that produces it. One impl covers both
+/// tables, since `dyn TableTrait` is the only receiver.
 trait TableAccess {
-    fn nrows(&self) -> usize;
-    fn ncols(&self) -> usize;
-    fn is_empty(&self) -> bool;
-    fn column_names(&self) -> Vec<&str>;
     fn all_rows(&self) -> Vec<Vec<Value>>;
     fn row_at(&self, idx: usize) -> DomainResultRow;
     fn cell_at(&self, row: usize, col: usize) -> Result<Value, DomainError>;
@@ -80,94 +82,59 @@ trait TableAccess {
     fn validate_row(&self, row: &[Value]) -> Result<(), DomainError>;
 }
 
-type DomainResultRow = Result<Vec<Value>, DomainError>;
-
-macro_rules! impl_access {
-    ($ty:ty) => {
-        impl TableAccess for $ty {
-            fn nrows(&self) -> usize {
-                TableTrait::nrows(self)
-            }
-            fn ncols(&self) -> usize {
-                TableTrait::ncols(self)
-            }
-            fn is_empty(&self) -> bool {
-                TableTrait::is_empty(self)
-            }
-            fn column_names(&self) -> Vec<&str> {
-                TableTrait::column_names(self)
-            }
-            fn all_rows(&self) -> Vec<Vec<Value>> {
-                rows_of(self)
-            }
-            fn row_at(&self, idx: usize) -> DomainResultRow {
-                TableTrait::row(self, idx)
-            }
-            fn cell_at(&self, row: usize, col: usize) -> Result<Value, DomainError> {
-                TableTrait::cell(self, row, col)
-            }
-            fn cell_display_at(&self, row: usize, col: usize) -> Result<String, DomainError> {
-                TableTrait::cell_display(self, row, col)
-            }
-            fn column_values(&self, col: usize) -> Result<Vec<Value>, DomainError> {
-                TableTrait::iter_column(self, col)?.collect()
-            }
-            fn find(&self, needle: i32) -> Result<Option<usize>, DomainError> {
-                TableTrait::find_row(self, |row| row[0] == Value::Int(needle))
-            }
-            fn insert_at(&mut self, idx: usize, row: Vec<Value>) -> Result<(), DomainError> {
-                TableTrait::insert_row_at(self, idx, row)
-            }
-            fn append_many(&mut self, rows: Vec<Vec<Value>>) -> Result<(), DomainError> {
-                TableTrait::append_rows(self, rows)
-            }
-            fn update_one_cell(
-                &mut self,
-                row: usize,
-                col: usize,
-                val: Value,
-            ) -> Result<(), DomainError> {
-                TableTrait::update_cell(self, row, col, val)
-            }
-            fn swap(&mut self, first: usize, second: usize) -> Result<(), DomainError> {
-                TableTrait::swap_rows_at(self, first, second)
-            }
-            fn move_one(&mut self, from: usize, to: usize) -> Result<(), DomainError> {
-                TableTrait::move_row(self, from, to)
-            }
-            fn move_block(
-                &mut self,
-                from: usize,
-                upto: usize,
-                to: usize,
-            ) -> Result<(), DomainError> {
-                TableTrait::move_row_range(self, from..upto, to)
-            }
-            fn remove_at(&mut self, idx: usize) -> DomainResultRow {
-                TableTrait::remove_row(self, idx)
-            }
-            fn remove_range(
-                &mut self,
-                from: usize,
-                to: usize,
-            ) -> Result<Vec<Vec<Value>>, DomainError> {
-                TableTrait::remove_row_range(self, from..to)
-            }
-            fn remove_tail(&mut self, from: usize) -> Result<Vec<Vec<Value>>, DomainError> {
-                TableTrait::remove_row_range(self, from..)
-            }
-            fn clear(&mut self) -> Result<(), DomainError> {
-                TableTrait::clear_rows(self)
-            }
-            fn validate_row(&self, row: &[Value]) -> Result<(), DomainError> {
-                TableTrait::validate(self, row)
-            }
-        }
-    };
+impl TableAccess for dyn TableTrait {
+    fn all_rows(&self) -> Vec<Vec<Value>> {
+        rows_of(self)
+    }
+    fn row_at(&self, idx: usize) -> DomainResultRow {
+        self.row(idx)
+    }
+    fn cell_at(&self, row: usize, col: usize) -> Result<Value, DomainError> {
+        self.cell(row, col)
+    }
+    fn cell_display_at(&self, row: usize, col: usize) -> Result<String, DomainError> {
+        self.cell_display(row, col)
+    }
+    fn column_values(&self, col: usize) -> Result<Vec<Value>, DomainError> {
+        self.iter_column(col)?.collect()
+    }
+    fn find(&self, needle: i32) -> Result<Option<usize>, DomainError> {
+        self.find_row(|row| row[0] == Value::Int(needle))
+    }
+    fn insert_at(&mut self, idx: usize, row: Vec<Value>) -> Result<(), DomainError> {
+        self.insert_row_at(idx, row)
+    }
+    fn append_many(&mut self, rows: Vec<Vec<Value>>) -> Result<(), DomainError> {
+        self.append_rows(rows)
+    }
+    fn update_one_cell(&mut self, row: usize, col: usize, val: Value) -> Result<(), DomainError> {
+        self.update_cell(row, col, val)
+    }
+    fn swap(&mut self, first: usize, second: usize) -> Result<(), DomainError> {
+        self.swap_rows_at(first, second)
+    }
+    fn move_one(&mut self, from: usize, to: usize) -> Result<(), DomainError> {
+        self.move_row(from, to)
+    }
+    fn move_block(&mut self, from: usize, upto: usize, to: usize) -> Result<(), DomainError> {
+        self.move_row_range(from..upto, to)
+    }
+    fn remove_at(&mut self, idx: usize) -> DomainResultRow {
+        self.remove_row(idx)
+    }
+    fn remove_range(&mut self, from: usize, to: usize) -> Result<Vec<Vec<Value>>, DomainError> {
+        self.remove_row_range(from..to)
+    }
+    fn remove_tail(&mut self, from: usize) -> Result<Vec<Vec<Value>>, DomainError> {
+        self.remove_row_range(from..)
+    }
+    fn clear(&mut self) -> Result<(), DomainError> {
+        self.clear_rows()
+    }
+    fn validate_row(&self, row: &[Value]) -> Result<(), DomainError> {
+        self.validate(row)
+    }
 }
-
-impl_access!(OrderedTable);
-impl_access!(UnorderedTable);
 
 #[test]
 fn shape_is_reported_for_both_tables() {

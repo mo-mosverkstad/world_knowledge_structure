@@ -8,7 +8,8 @@ use bookkeeping_rust::domain::error::DomainError;
 use bookkeeping_rust::domain::ordered_table::OrderedTable;
 use bookkeeping_rust::domain::table_column::{TableColumn, Value};
 use bookkeeping_rust::domain::table_registry::{TableId, TableRegistry};
-use bookkeeping_rust::domain::table_trait::TableTrait;
+use bookkeeping_rust::domain::table_trait::{TableExt, TableTrait};
+use bookkeeping_rust::domain::unordered_table::UnorderedTable;
 
 fn leaf() -> OrderedTable {
     let mut t = OrderedTable::new();
@@ -33,7 +34,7 @@ fn row(item: &str) -> Vec<Value> {
 }
 
 /// A registry holding one parent with `rows` empty rows, plus two leaf children.
-fn hierarchy(rows: usize) -> (TableRegistry<OrderedTable>, TableId, TableId, TableId) {
+fn hierarchy(rows: usize) -> (TableRegistry, TableId, TableId, TableId) {
     let mut reg = TableRegistry::new();
     let root = reg.register("Root", parent()).expect("space available");
     let a = reg.register("A", leaf()).expect("space available");
@@ -49,7 +50,7 @@ fn hierarchy(rows: usize) -> (TableRegistry<OrderedTable>, TableId, TableId, Tab
 
 #[test]
 fn a_new_registry_is_empty() {
-    let reg: TableRegistry<OrderedTable> = TableRegistry::new();
+    let reg = TableRegistry::new();
     assert!(reg.is_empty());
     assert_eq!(reg.len(), 0);
     assert_eq!(reg.ids().count(), 0);
@@ -265,6 +266,95 @@ fn a_deleted_id_is_reused_with_a_fresh_count() {
     let reused = reg.register("C", leaf()).expect("space available");
     assert_eq!(reused.index(), a.index());
     assert_eq!(reg.references(reused), Ok(0), "counts do not carry over");
+}
+
+/// An unordered leaf, to pair with the ordered ones the other tests build.
+fn unordered_leaf() -> UnorderedTable {
+    let mut t = UnorderedTable::new();
+    t.add_column(TableColumn::<String>::new("Item"));
+    t
+}
+
+/// A parent whose column 1 is reserved for child links, stored unordered.
+fn unordered_parent() -> UnorderedTable {
+    let mut t = UnorderedTable::new();
+    t.add_column(TableColumn::<String>::new("Item"));
+    t.add_column(TableColumn::<ChildLink>::new("Child"));
+    t.set_child_column(1).expect("column 1 holds child links");
+    t
+}
+
+#[test]
+fn one_registry_holds_both_table_types_at_once() {
+    // The point of storing `Box<dyn TableTrait>`: the registry is not fixed to a
+    // single table type, so a hierarchy can mix them.
+    let mut reg = TableRegistry::new();
+    let ord_root = reg.register("OrderedRoot", parent()).expect("space available");
+    let unord_root = reg
+        .register("UnorderedRoot", unordered_parent())
+        .expect("space available");
+    let ord_leaf = reg.register("OrderedLeaf", leaf()).expect("space available");
+    let unord_leaf = reg
+        .register("UnorderedLeaf", unordered_leaf())
+        .expect("space available");
+    assert_eq!(reg.len(), 4);
+
+    for root in [ord_root, unord_root] {
+        reg.get_mut(root)
+            .expect("registered")
+            .append_row(row("r0"))
+            .expect("valid row");
+    }
+
+    // Links cross the type boundary in both directions.
+    reg.set_child(ord_root, 0, unord_leaf).expect("valid");
+    reg.set_child(unord_root, 0, ord_leaf).expect("valid");
+    assert_eq!(reg.child_of(ord_root, 0), Ok(Some(unord_leaf)));
+    assert_eq!(reg.child_of(unord_root, 0), Ok(Some(ord_leaf)));
+    assert_eq!(reg.references(unord_leaf), Ok(1));
+    assert_eq!(reg.references(ord_leaf), Ok(1));
+
+    // Protection applies to whichever type holds the link.
+    assert_eq!(
+        reg.remove(ord_leaf).err(),
+        Some(DomainError::TableStillReferenced {
+            table: ord_leaf.index(),
+            references: 1
+        })
+    );
+
+    // Iteration yields both as `&dyn TableTrait`, so one loop reads every table.
+    let names: Vec<&str> = reg
+        .iter()
+        .map(|(id, _)| reg.name(id).expect("registered"))
+        .collect();
+    assert_eq!(
+        names,
+        vec!["OrderedRoot", "UnorderedRoot", "OrderedLeaf", "UnorderedLeaf"]
+    );
+    for (_, table) in reg.iter() {
+        assert_eq!(table.ncols(), if table.child_column().is_some() { 2 } else { 1 });
+    }
+
+    reg.clear_child(ord_root, 0).expect("valid");
+    reg.clear_child(unord_root, 0).expect("valid");
+    assert!(reg.remove(ord_leaf).is_ok());
+    assert!(reg.remove(unord_leaf).is_ok());
+}
+
+#[test]
+fn a_removed_table_comes_back_as_a_usable_trait_object() {
+    // `remove` hands back `Box<dyn TableTrait>` rather than the concrete type, so
+    // the rows are still readable without knowing which table it was.
+    let (mut reg, root, _, _) = hierarchy(0);
+    reg.get_mut(root)
+        .expect("registered")
+        .append_row(row("kept"))
+        .expect("valid row");
+
+    let removed = reg.remove(root).expect("unreferenced");
+    assert_eq!(removed.nrows(), 1);
+    assert_eq!(removed.row(0).expect("row exists")[0], Value::Str("kept".to_string()));
 }
 
 #[test]

@@ -21,8 +21,8 @@ impl TableId {
 
 /// A registered table together with the number of rows pointing at it.
 #[derive(Debug)]
-struct Entry<T> {
-    table: T,
+struct Entry {
+    table: Box<dyn TableTrait>,
     name: String,
     /// One per referencing row, so a table referenced by two rows counts 2.
     references: usize,
@@ -33,14 +33,20 @@ struct Entry<T> {
 /// Ids come from a [`SlotAllocator`], so a deleted table's id is reused later. That
 /// is only safe because a referenced table cannot be deleted: no live reference can
 /// outlive its target and be silently reattached to a different table.
+///
+/// Tables are held as `Box<dyn TableTrait>` rather than behind a type parameter, so
+/// one registry can mix ordered and unordered tables: a hierarchy is free to give a
+/// stable-order parent an insertion-order child. The cost is dynamic dispatch per
+/// call, and [`remove`](Self::remove) handing back a `Box<dyn TableTrait>` rather
+/// than the concrete type that was registered.
 #[derive(Debug)]
-pub struct TableRegistry<T> { // Comment: use generic T, since both ordered and unordered tables are allowed
+pub struct TableRegistry {
     /// Indexed by id; `None` where an id has been freed.
-    entries: Vec<Option<Entry<T>>>,
+    entries: Vec<Option<Entry>>,
     ids: SlotAllocator,
 }
 
-impl<T> TableRegistry<T> {
+impl TableRegistry {
     pub fn new() -> Self {
         Self {
             entries: Vec::new(),
@@ -61,7 +67,21 @@ impl<T> TableRegistry<T> {
         self.ids.is_live(id.0)
     }
 
-    pub fn register(&mut self, name: &str, table: T) -> DomainResult<TableId> {
+    /// Takes any table type, since the registry is not tied to one.
+    pub fn register<T: TableTrait + 'static>(
+        &mut self,
+        name: &str,
+        table: T,
+    ) -> DomainResult<TableId> {
+        self.register_boxed(name, Box::new(table))
+    }
+
+    /// Registers an already-boxed table, for a caller holding a `dyn TableTrait`.
+    pub fn register_boxed(
+        &mut self,
+        name: &str,
+        table: Box<dyn TableTrait>,
+    ) -> DomainResult<TableId> {
         let slot = self.ids.allocate()?;
         if slot >= self.entries.len() {
             self.entries.resize_with(slot + 1, || None);
@@ -74,12 +94,16 @@ impl<T> TableRegistry<T> {
         Ok(TableId(slot))
     }
 
-    pub fn get(&self, id: TableId) -> DomainResult<&T> {
-        Ok(&self.entry(id)?.table)
+    /// The table behind `id`, whatever its concrete type.
+    ///
+    /// `TableTrait` is dyn-compatible and `TableExt` is implemented for
+    /// `dyn TableTrait`, so the full table API is available through this.
+    pub fn get(&self, id: TableId) -> DomainResult<&dyn TableTrait> {
+        Ok(self.entry(id)?.table.as_ref())
     }
 
-    pub fn get_mut(&mut self, id: TableId) -> DomainResult<&mut T> {
-        Ok(&mut self.entry_mut(id)?.table)
+    pub fn get_mut(&mut self, id: TableId) -> DomainResult<&mut dyn TableTrait> {
+        Ok(self.entry_mut(id)?.table.as_mut())
     }
 
     pub fn name(&self, id: TableId) -> DomainResult<&str> {
@@ -118,10 +142,7 @@ impl<T> TableRegistry<T> {
     }
 
     /// Reads the child link in `parent`'s row, if the table has a child column.
-    pub fn child_of(&self, parent: TableId, row: usize) -> DomainResult<Option<TableId>>
-    where
-        T: TableTrait,
-    {
+    pub fn child_of(&self, parent: TableId, row: usize) -> DomainResult<Option<TableId>> {
         let table = self.get(parent)?;
         let Some(col) = table.child_column() else {
             return Ok(None);
@@ -137,10 +158,7 @@ impl<T> TableRegistry<T> {
     /// This is the only way to create a child link, which is what keeps the counts
     /// in step with the links that actually exist. Replacing an existing link
     /// releases the old target in the same call.
-    pub fn set_child(&mut self, parent: TableId, row: usize, child: TableId) -> DomainResult<()>
-    where
-        T: TableTrait,
-    {
+    pub fn set_child(&mut self, parent: TableId, row: usize, child: TableId) -> DomainResult<()> {
         if !self.contains(child) {
             return Err(DomainError::TableNotFound { table: child.0 });
         }
@@ -164,10 +182,7 @@ impl<T> TableRegistry<T> {
     }
 
     /// Clears the child link in `parent`'s row, releasing its target.
-    pub fn clear_child(&mut self, parent: TableId, row: usize) -> DomainResult<()>
-    where
-        T: TableTrait,
-    {
+    pub fn clear_child(&mut self, parent: TableId, row: usize) -> DomainResult<()> {
         let Some(previous) = self.child_of(parent, row)? else {
             return Ok(());
         };
@@ -191,7 +206,7 @@ impl<T> TableRegistry<T> {
     ///
     /// A table with references is refused with
     /// [`DomainError::TableStillReferenced`]; the caller clears them and retries.
-    pub fn remove(&mut self, id: TableId) -> DomainResult<T> {
+    pub fn remove(&mut self, id: TableId) -> DomainResult<Box<dyn TableTrait>> {
         let entry = self.entry(id)?;
         if entry.references > 0 {
             return Err(DomainError::TableStillReferenced {
@@ -212,11 +227,11 @@ impl<T> TableRegistry<T> {
     }
 
     /// Every registered table with its id, ascending by id.
-    pub fn iter(&self) -> impl Iterator<Item = (TableId, &T)> + '_ {
+    pub fn iter(&self) -> impl Iterator<Item = (TableId, &dyn TableTrait)> + '_ {
         self.entries
             .iter()
             .enumerate()
-            .filter_map(|(slot, entry)| entry.as_ref().map(|e| (TableId(slot), &e.table)))
+            .filter_map(|(slot, entry)| entry.as_ref().map(|e| (TableId(slot), e.table.as_ref())))
     }
 
     /// Id of the first table registered under `name`.
@@ -230,14 +245,14 @@ impl<T> TableRegistry<T> {
             })
     }
 
-    fn entry(&self, id: TableId) -> DomainResult<&Entry<T>> {
+    fn entry(&self, id: TableId) -> DomainResult<&Entry> {
         self.entries
             .get(id.0)
             .and_then(|entry| entry.as_ref())
             .ok_or(DomainError::TableNotFound { table: id.0 })
     }
 
-    fn entry_mut(&mut self, id: TableId) -> DomainResult<&mut Entry<T>> {
+    fn entry_mut(&mut self, id: TableId) -> DomainResult<&mut Entry> {
         self.entries
             .get_mut(id.0)
             .and_then(|entry| entry.as_mut())
@@ -245,7 +260,7 @@ impl<T> TableRegistry<T> {
     }
 }
 
-impl<T> Default for TableRegistry<T> {
+impl Default for TableRegistry {
     fn default() -> Self {
         Self::new()
     }

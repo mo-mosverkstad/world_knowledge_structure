@@ -75,8 +75,153 @@ Mathematics / Physics / Chemistry
 
 ---
 
-Statemanger:
+Statemanger + tui_view:
 1. Add state stores with delta and current cursor position informations
+2. Build TUI macros similar below:
+For instance, I have a TUI lifecycle problem with keymap. Some keys are composite keys, which means when it is pressed, another key is waited. More like:
+tui_view!(
+    keymap!{
+        "a" => ...
+        "b" => ...
+        "ga" => ...
+        "gb" => ...
+        // "g" => ... // this compile fails because if a key is used for composition, it cannot be used as single address
+    },
+    ...// how to render and etc.
+)
+
+Make tui_view! as a macro as well for macro lifecycle? Make it more sophisticated than the one currently implemented
+
+Use procedural macros and I don't want to store tries but better generating match expressions chained in each other for zero memory usage in runtime. For instance, loop over all the arms of keymap! check the string literal as key and do certain things and convert into relevant match statements and chain relevant match statements
+
+Similar implementation to, but make it rather more direct:
+
+```rust
+extern crate proc_macro;
+use proc_macro::TokenStream;
+use quote::quote;
+use std::collections::BTreeMap;
+use syn::{
+    parse::{Parse, ParseStream},
+    parse_macro_input, Expr, LitStr, Token,
+};
+
+// Represents a key-action pair: "ga" => expr
+struct KeyBinding {
+    key: LitStr,
+    action: Expr,
+}
+
+impl Parse for KeyBinding {
+    fn parse(input: ParseStream) -> syn::Result<Self> {
+        let key: LitStr = input.parse()?;
+        input.parse::<Token![:]>()?;
+        let action: Expr = input.parse()?;
+        Ok(KeyBinding { key, action })
+    }
+}
+
+struct KeyMapInput {
+    bindings: Vec<KeyBinding>,
+}
+
+impl Parse for KeyMapInput {
+    fn parse(input: ParseStream) -> syn::Result<Self> {
+        let bindings = input.parse_terminated(KeyBinding::parse, Token![,])?;
+        Ok(KeyMapInput {
+            bindings: bindings.into_iter().collect(),
+        })
+    }
+}
+
+// Compile-time Trie Node
+#[derive(Default)]
+struct TrieNode {
+    action: Option<Expr>,
+    children: BTreeMap<char, TrieNode>,
+}
+
+impl TrieNode {
+    fn insert(&mut self, key: &str, action: Expr, span: proc_macro2::Span) -> syn::Result<()> {
+        let mut current = self;
+        let chars: Vec<char> = key.chars().collect();
+
+        for (i, &ch) in chars.iter().enumerate() {
+            // Conflict Rule 1: A prefix of this key already triggers an action
+            if current.action.is_some() {
+                return Err(syn::Error::new(
+                    span,
+                    format!("Key sequence '{}' conflicts with an already defined shorter key sequence.", key),
+                ));
+            }
+
+            current = current.children.entry(ch).or_default();
+
+            // Conflict Rule 2: This key is a prefix of an existing longer sequence
+            if i == chars.len() - 1 && (!current.children.is_empty() || current.action.is_some()) {
+                return Err(syn::Error::new(
+                    span,
+                    format!("Key sequence '{}' cannot be mapped because it is a prefix for composite keys.", key),
+                ));
+            }
+        }
+
+        current.action = Some(action);
+        Ok(())
+    }
+}
+
+#[proc_macro]
+pub fn keymap(input: TokenStream) -> TokenStream {
+    let KeyMapInput { bindings } = parse_macro_input!(input as KeyMapInput);
+    let mut root = TrieNode::default();
+
+    for binding in bindings {
+        let key_str = binding.key.value();
+        if let Err(err) = root.insert(&key_str, binding.action, binding.key.span()) {
+            return err.into_compile_error().into();
+        }
+    }
+
+    let match_tree = generate_match_level(&root);
+
+    let expanded = quote! {
+        // Enclosure expecting a key-fetching closure or iterator
+        move |mut get_next_key: impl FnMut() -> Option<char>| {
+            #match_tree
+        }
+    };
+
+    TokenStream::from(expanded)
+}
+
+// Recursively builds nested `match` statements
+fn generate_match_level(node: &TrieNode) -> proc_macro2::TokenStream {
+    if let Some(ref action) = node.action {
+        return quote! { Some(#action) };
+    }
+
+    let arms = node.children.iter().map(|(&ch, child_node)| {
+        let child_match = generate_match_level(child_node);
+        quote! {
+            #ch => #child_match,
+        }
+    });
+
+    quote! {
+        if let Some(key) = get_next_key() {
+            match key {
+                #(#arms)*
+                _ => None,
+            }
+        } else {
+            None
+        }
+    }
+}
+```
+
+---
 
 Core: (vim-like keybinding)
 
